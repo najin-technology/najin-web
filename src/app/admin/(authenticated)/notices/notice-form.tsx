@@ -4,10 +4,10 @@ import { useActionState, useState } from "react";
 import { createNotice, updateNotice } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { TiptapEditor } from "@/components/admin/tiptap-editor";
 
 type NoticeData = {
   id?: string;
@@ -30,11 +30,15 @@ export function NoticeForm({
   const [isPublished, setIsPublished] = useState(
     notice?.is_published ?? false
   );
+  const [contentKo, setContentKo] = useState(notice?.content_ko || "");
+  const [contentEn, setContentEn] = useState(notice?.content_en || "");
 
   return (
     <form action={formAction} className="space-y-6">
       {notice?.id && <input type="hidden" name="id" value={notice.id} />}
       <input type="hidden" name="is_published" value={String(isPublished)} />
+      <input type="hidden" name="content_ko" value={contentKo} />
+      <input type="hidden" name="content_en" value={contentEn} />
 
       {state.error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
@@ -68,13 +72,11 @@ export function NoticeForm({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="content_ko">내용 (한국어)</Label>
-            <Textarea
-              id="content_ko"
-              name="content_ko"
-              defaultValue={notice?.content_ko || ""}
+            <Label>내용 (한국어)</Label>
+            <TiptapEditor
+              content={contentKo}
+              onChange={setContentKo}
               placeholder="공지사항 내용을 입력하세요"
-              rows={12}
             />
           </div>
         </TabsContent>
@@ -90,13 +92,11 @@ export function NoticeForm({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="content_en">Content (English)</Label>
-            <Textarea
-              id="content_en"
-              name="content_en"
-              defaultValue={notice?.content_en || ""}
+            <Label>Content (English)</Label>
+            <TiptapEditor
+              content={contentEn}
+              onChange={setContentEn}
               placeholder="Enter notice content"
-              rows={12}
             />
           </div>
         </TabsContent>

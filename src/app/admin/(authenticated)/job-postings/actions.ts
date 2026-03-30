@@ -172,7 +172,10 @@ export async function deleteJobPosting(id: string) {
     .update({ deleted_at: new Date().toISOString() })
     .eq("id", id);
 
-  if (error) return;
+  if (error) {
+    console.error("Failed to delete job posting:", error);
+    return;
+  }
 
   await logAudit({
     action: "delete",
