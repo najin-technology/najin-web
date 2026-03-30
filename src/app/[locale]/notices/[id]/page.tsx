@@ -2,6 +2,7 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getNoticeById } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
+import DOMPurify from "isomorphic-dompurify";
 
 export async function generateMetadata({
   params,
@@ -34,6 +35,10 @@ export default async function NoticeDetailPage({
       : notice.content_en || notice.content_ko;
   const date = notice.published_at || notice.created_at;
 
+  // Check if content contains HTML tags (from Tiptap editor)
+  const isHtml = content ? /<[a-z][\s\S]*>/i.test(content) : false;
+  const sanitizedHtml = isHtml && content ? DOMPurify.sanitize(content) : null;
+
   return (
     <>
       <section className="bg-[#1B2A4A] text-white py-16 md:py-20">
@@ -50,9 +55,16 @@ export default async function NoticeDetailPage({
 
       <section className="py-12 md:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-gray max-w-none text-[#2D3748] leading-relaxed whitespace-pre-line">
-            {content}
-          </div>
+          {sanitizedHtml ? (
+            <div
+              className="prose prose-gray max-w-none text-[#2D3748] leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+            />
+          ) : (
+            <div className="prose prose-gray max-w-none text-[#2D3748] leading-relaxed whitespace-pre-line">
+              {content}
+            </div>
+          )}
 
           <div className="mt-12 pt-8 border-t border-gray-200">
             <Link
