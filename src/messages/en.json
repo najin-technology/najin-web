@@ -3,7 +3,16 @@
     "companyName": "NAJIN TECH",
     "companyNameFull": "NAJIN TECH",
     "requestQuote": "Request Quote",
-    "language": "KO"
+    "language": "KO",
+    "backToList": "Back to list",
+    "noData": "No data available.",
+    "submit": "Submit",
+    "required": "Required",
+    "privacyAgree": "I agree to the collection and use of personal information.",
+    "privacyAgreeRequired": "You must agree to the privacy policy.",
+    "submitSuccess": "Successfully submitted.",
+    "submitError": "An error occurred. Please try again.",
+    "fileSizeError": "File size must be 10MB or less."
   },
   "nav": {
     "home": "Home",
@@ -26,6 +35,124 @@
     "certTitle": "Certifications & Patents",
     "businessTitle": "Business Areas",
     "numbersTitle": "NAJIN TECH at a Glance"
+  },
+  "about": {
+    "pageTitle": "About Us",
+    "pageDescription": "Learn about NAJIN TECH's history, vision, and certifications.",
+    "ceoTitle": "CEO's Message",
+    "ceoContent": "Greetings from NAJIN TECH.\n\nSince our establishment in 2002, NAJIN TECH has been building expertise in urethane molding, synthetic resin processing, and CNC precision machining.\n\nWith ISO 9001 and CLEAN workplace certifications, we supply reliable parts to major domestic companies like Major automaker and SK, as well as international clients including Overseas automaker.\n\nWe will continue to prioritize customer satisfaction and technological innovation as we grow into a world-class precision manufacturing company.\n\nThank you.",
+    "visionTitle": "Vision",
+    "visionContent": "A world-class precision manufacturing company that grows with our customers",
+    "missionTitle": "Mission",
+    "missionContent": "To enhance our customers' competitiveness through top-quality products and services, while providing growth opportunities for our employees.",
+    "historyTitle": "History",
+    "certTitle": "Certifications & Patents",
+    "certIso": "International Quality Management System Certification",
+    "certClean": "Excellent Occupational Safety and Health Workplace",
+    "certPatent": "Patent Acquired Through Proprietary Technology",
+    "mapTitle": "Location",
+    "mapAddress": "170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea"
+  },
+  "business": {
+    "pageTitle": "Business Areas",
+    "pageDescription": "Explore NAJIN TECH's core business areas.",
+    "urethane": {
+      "title": "Urethane Molding",
+      "desc": "We specialize in urethane molding using our patented mold base technology. We precision-mold a wide range of urethane products including automotive parts, industrial rollers, and shock absorbers to meet customer specifications.",
+      "features": "Patented Mold Base · Automotive Parts · Industrial Rollers · Shock Absorbers · Custom Molding"
+    },
+    "resin": {
+      "title": "Synthetic Resin Processing",
+      "desc": "We precisely process various engineering plastics including PC, PE, Acetal (POM), Nylon, and PTFE. Custom part manufacturing is available based on customer drawings.",
+      "features": "PC · PE · Acetal (POM) · Nylon · PTFE · Custom Processing"
+    },
+    "cnc": {
+      "title": "CNC/MCT Precision Machining",
+      "desc": "Using state-of-the-art CNC/MCT equipment, we perform high-precision machining on various materials including aluminum, brass, stainless steel, and synthetic resins.",
+      "features": "Aluminum · Brass · Stainless Steel · Synthetic Resin · High Precision · Mass Production"
+    },
+    "mold": {
+      "title": "Mold Fabrication",
+      "desc": "We provide one-stop service from precision mold design to fabrication. We have extensive experience in high-difficulty mold manufacturing for EV parts and battery packs.",
+      "features": "Mold Design · Mold Fabrication · EV Parts Molds · Battery Pack Molds · One-Stop Service"
+    },
+    "ev": {
+      "title": "EV Parts Processing",
+      "desc": "Keeping pace with the EV era, we process battery pack components, motor-related parts, and other EV-specific parts. We contribute to the eco-friendly future industry.",
+      "features": "Battery Pack Parts · Motor Parts · EV Specialized · Eco-friendly Industry"
+    }
+  },
+  "portfolio": {
+    "pageTitle": "Portfolio",
+    "pageDescription": "NAJIN TECH's major clients and delivery track record.",
+    "clientsTitle": "Major Clients",
+    "clientsDesc": "NAJIN TECH supplies reliable parts to major domestic and international companies.",
+    "galleryTitle": "Delivery Track Record",
+    "galleryPlaceholder": "Gallery is being prepared."
+  },
+  "quote": {
+    "pageTitle": "Request a Quote",
+    "pageDescription": "Request a quote from NAJIN TECH.",
+    "formTitle": "Quote Request Form",
+    "companyName": "Company Name",
+    "contactName": "Contact Person",
+    "phone": "Phone",
+    "email": "Email",
+    "processingType": "Processing Type",
+    "processingTypes": {
+      "urethane": "Urethane Molding",
+      "resin": "Resin Processing",
+      "cnc": "CNC/MCT Machining",
+      "mold": "Mold Fabrication",
+      "ev": "EV Parts Processing",
+      "other": "Other"
+    },
+    "material": "Material",
+    "materialPlaceholder": "e.g., PC, PE, Acetal, Aluminum",
+    "quantity": "Quantity",
+    "quantityPlaceholder": "e.g., 100 pcs, 1,000 pcs",
+    "deadline": "Desired Delivery Date",
+    "description": "Details",
+    "descriptionPlaceholder": "Please describe your processing requirements, drawing details, etc.",
+    "attachment": "Drawing Attachment",
+    "attachmentHelp": "PDF, DWG, DXF, STEP, IGS, JPG, PNG (max 10MB)",
+    "selectType": "Select processing type",
+    "successTitle": "Quote request has been received",
+    "successMessage": "Our team will review and contact you shortly.",
+    "contactInfo": "Urgent inquiries: TEL 055-367-2596"
+  },
+  "careers": {
+    "pageTitle": "Careers",
+    "pageDescription": "Join the NAJIN TECH team.",
+    "openPositions": "Open Positions",
+    "noOpenings": "No open positions at this time. Please check back later.",
+    "department": "Department",
+    "employmentType": "Employment Type",
+    "deadlineLabel": "Deadline",
+    "requirements": "Requirements",
+    "benefits": "Benefits",
+    "applyTitle": "Apply",
+    "applyDesc": "Please fill out the form below to apply.",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "position": "Position",
+    "positionPlaceholder": "e.g., CNC Operator, Sales",
+    "coverLetter": "Cover Letter",
+    "coverLetterPlaceholder": "Please write a brief introduction and motivation.",
+    "resume": "Resume",
+    "resumeHelp": "PDF, DOC, DOCX (max 10MB)",
+    "successTitle": "Application has been received",
+    "successMessage": "We will contact you after reviewing your application. Thank you."
+  },
+  "notices": {
+    "pageTitle": "Notices",
+    "pageDescription": "Latest notices from NAJIN TECH.",
+    "noNotices": "No notices available."
+  },
+  "privacy": {
+    "pageTitle": "Privacy Policy",
+    "pageDescription": "NAJIN TECH Privacy Policy."
   },
   "footer": {
     "address": "170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea",
