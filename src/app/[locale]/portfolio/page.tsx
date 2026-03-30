@@ -109,34 +109,41 @@ export default function PortfolioPage() {
             {t("galleryTitle")}
           </h2>
 
-          {/* Gallery Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {galleryItems.map((item, i) => (
-              <div
-                key={`${item.src}-${i}`}
-                className="bg-white rounded-xl border border-surface-warm-200 overflow-hidden hover-lift"
-                data-animate="fade-up"
-                data-animate-delay={String(Math.min((i % 4) + 1, 4))}
-              >
-                <div className="relative aspect-square">
-                  <Image
-                    src={item.src}
-                    alt={item.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  />
+          {/* Gallery Grid — varied sizes for rhythm */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            {galleryItems.map((item, i) => {
+              // First 2 items are large (span 2 cols), rest are normal
+              const isLarge = i < 2;
+              return (
+                <div
+                  key={`${item.src}-${i}`}
+                  className={`group bg-white rounded-xl overflow-hidden border border-surface-warm-200 hover-lift ${
+                    isLarge ? "md:col-span-2 md:row-span-2" : ""
+                  }`}
+                  data-animate="fade-up"
+                  data-animate-delay={String(Math.min((i % 4) + 1, 4))}
+                >
+                  <div className={`relative overflow-hidden ${isLarge ? "aspect-[4/3]" : "aspect-square"}`}>
+                    <Image
+                      src={item.src}
+                      alt={item.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes={isLarge ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform">
+                      <span className="inline-block text-xs font-medium text-white bg-brand-copper px-2 py-0.5 rounded-full">
+                        {item.category}
+                      </span>
+                      <p className={`font-medium text-white mt-1 ${isLarge ? "text-base" : "text-sm"}`}>
+                        {item.title}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="p-3">
-                  <span className="inline-block text-xs font-medium text-brand-copper bg-brand-copper/10 px-2 py-0.5 rounded-full mb-1">
-                    {item.category}
-                  </span>
-                  <p className="text-sm font-medium text-brand-navy">
-                    {item.title}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

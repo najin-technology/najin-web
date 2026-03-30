@@ -21,33 +21,46 @@ export function StatsCounter({
     const el = ref.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          observer.disconnect();
+    const startAnimation = () => {
+      if (hasAnimated.current) return;
+      hasAnimated.current = true;
 
-          const startTime = performance.now();
+      const startTime = performance.now();
 
-          function animate(currentTime: number) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 4); // easeOutQuart
-            setCount(Math.round(eased * end));
+      function animate(currentTime: number) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        setCount(Math.round(eased * end));
 
-            if (progress < 1) {
-              requestAnimationFrame(animate);
-            }
-          }
-
+        if (progress < 1) {
           requestAnimationFrame(animate);
         }
+      }
+
+      requestAnimationFrame(animate);
+    };
+
+    // Try IntersectionObserver first
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          startAnimation();
+          observer.disconnect();
+        }
       },
-      { threshold: 0.5 }
+      { threshold: 0.1 }
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+
+    // Fallback: start after 2s regardless
+    const fallbackTimer = setTimeout(startAnimation, 2000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallbackTimer);
+    };
   }, [end, duration]);
 
   return (

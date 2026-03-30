@@ -1,7 +1,7 @@
 export default function NoticesLoading() {
   return (
     <>
-      <div className="bg-[#1B2A4A] py-16 md:py-20">
+      <div className="bg-brand-navy py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-9 w-40 bg-white/20 rounded animate-pulse" />
         </div>
