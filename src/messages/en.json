@@ -1,0 +1,37 @@
+{
+  "common": {
+    "companyName": "NAJIN TECH",
+    "companyNameFull": "NAJIN TECH",
+    "requestQuote": "Request Quote",
+    "language": "KO"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "business": "Business",
+    "portfolio": "Portfolio",
+    "quote": "Quote",
+    "careers": "Careers",
+    "notices": "Notices"
+  },
+  "home": {
+    "heroTitle": "Precision Manufacturing Since 2002",
+    "heroSubtitle": "Urethane Molding · Synthetic Resin Processing · CNC Machining · Mold Fabrication",
+    "heroCta": "Request a Quote",
+    "statsYears": "Years of History",
+    "statsClients": "Major Clients",
+    "statsCertified": "ISO 9001 Certified",
+    "statsPatent": "Patent Holder",
+    "clientsTitle": "Our Clients",
+    "certTitle": "Certifications & Patents",
+    "businessTitle": "Business Areas",
+    "numbersTitle": "NAJIN TECH at a Glance"
+  },
+  "footer": {
+    "address": "170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea",
+    "phone": "055-367-2596",
+    "fax": "055-367-2597",
+    "privacy": "Privacy Policy",
+    "copyright": "© {year} NAJIN TECH. All rights reserved."
+  }
+}
