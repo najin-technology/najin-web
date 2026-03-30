@@ -10,8 +10,11 @@ export default async function proxy(request: NextRequest) {
 
   // Admin routes: auth check + session refresh
   if (pathname.startsWith("/admin")) {
-    // Allow login page without auth
-    if (pathname === "/admin/login") {
+    // Allow login and auth callback without auth
+    if (
+      pathname === "/admin/login" ||
+      pathname.startsWith("/admin/auth/")
+    ) {
       return NextResponse.next();
     }
 
