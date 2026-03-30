@@ -5,6 +5,8 @@ import { Link, usePathname } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/logo";
+import { Menu, X } from "lucide-react";
 
 const navItems = [
   { href: "/about", key: "about" },
@@ -24,26 +26,24 @@ export function Header() {
   const otherLocale = locale === "ko" ? "en" : "ko";
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-[#1B2A4A]">
-              {tc("companyName")}
-            </span>
+          <Link href="/" className="flex items-center">
+            <Logo variant="dark" size="sm" />
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-7">
             {navItems.map((item) => (
               <Link
                 key={item.key}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-[#3182CE] ${
+                className={`nav-underline text-sm font-medium transition-colors hover:text-brand-navy ${
                   pathname === item.href
-                    ? "text-[#3182CE]"
-                    : "text-[#2D3748]"
+                    ? "text-brand-navy active"
+                    : "text-brand-charcoal"
                 }`}
               >
                 {t(item.key)}
@@ -61,7 +61,7 @@ export function Header() {
             <Link href="/quote">
               <Button
                 size="sm"
-                className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+                className="bg-brand-copper hover:bg-brand-copper-light text-white"
               >
                 {tc("requestQuote")}
               </Button>
@@ -74,41 +74,28 @@ export function Header() {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            <svg
-              className="w-6 h-6 text-[#2D3748]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {mobileOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
+            {mobileOpen ? (
+              <X className="w-6 h-6 text-brand-charcoal" />
+            ) : (
+              <Menu className="w-6 h-6 text-brand-charcoal" />
+            )}
           </button>
         </div>
       </div>
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white">
+        <div className="md:hidden border-t border-gray-100 bg-white animate-in slide-in-from-top duration-200">
           <nav className="px-4 py-4 space-y-3">
             {navItems.map((item) => (
               <Link
                 key={item.key}
                 href={item.href}
-                className="block text-sm font-medium text-[#2D3748] hover:text-[#3182CE]"
+                className={`block text-sm font-medium transition-colors hover:text-brand-blue ${
+                  pathname === item.href
+                    ? "text-brand-blue"
+                    : "text-brand-charcoal"
+                }`}
                 onClick={() => setMobileOpen(false)}
               >
                 {t(item.key)}
@@ -128,7 +115,7 @@ export function Header() {
               <Link href="/quote">
                 <Button
                   size="sm"
-                  className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+                  className="bg-brand-copper hover:bg-brand-copper-light text-white"
                   onClick={() => setMobileOpen(false)}
                 >
                   {tc("requestQuote")}

@@ -1,7 +1,7 @@
 {
   "common": {
     "companyName": "나진테크",
-    "companyNameFull": "나진테크 (NAJIN TECH)",
+    "companyNameFull": "나진테크 (NAJIN TECHNOLOGY)",
     "requestQuote": "견적문의",
     "language": "EN",
     "backToList": "목록으로",
@@ -34,12 +34,18 @@
     "clientsTitle": "주요 거래처",
     "certTitle": "인증 및 특허",
     "businessTitle": "사업영역",
-    "numbersTitle": "나진테크 한눈에 보기"
+    "numbersTitle": "나진테크 한눈에 보기",
+    "aboutLink": "회사소개 보기",
+    "ctaTitle": "프로젝트를 함께 시작하세요",
+    "ctaSubtitle": "25년의 경험으로 최적의 솔루션을 제공합니다",
+    "ctaPersuasion": "온라인 견적 요청으로 빠르게 회신 드리겠습니다",
+    "ctaPhone": "전화 상담: 055-367-2596"
   },
   "about": {
     "pageTitle": "회사소개",
     "pageDescription": "나진테크의 역사, 비전, 인증현황을 소개합니다.",
     "ceoTitle": "CEO 인사말",
+    "ceoName": "대표이사 김학기",
     "ceoContent": "안녕하십니까, 나진테크 대표이사입니다.\n\n저희 나진테크는 2002년 설립 이래 우레탄 성형, 합성수지 가공, CNC 정밀가공 분야에서 꾸준히 기술력을 쌓아왔습니다.\n\nISO 9001 인증과 CLEAN 사업장 인증을 바탕으로, 현대자동차, SK 등 국내 대기업과 GM Shanghai 등 해외 기업에 신뢰할 수 있는 부품을 공급하고 있습니다.\n\n앞으로도 고객 만족과 기술 혁신을 최우선으로 하여 세계적인 정밀 가공 전문기업으로 성장하겠습니다.\n\n감사합니다.",
     "visionTitle": "비전",
     "visionContent": "고객과 함께 성장하는 세계적인 정밀 가공 전문기업",
@@ -119,7 +125,13 @@
     "selectType": "가공종류를 선택하세요",
     "successTitle": "견적 요청이 접수되었습니다",
     "successMessage": "담당자가 확인 후 빠른 시일 내에 연락드리겠습니다.",
-    "contactInfo": "긴급 문의: TEL 055-367-2596"
+    "contactInfo": "긴급 문의: TEL 055-367-2596",
+    "responsePromise": "24시간 내 회신 드리겠습니다",
+    "processTitle": "견적 프로세스",
+    "processStep1": "견적 요청서 제출",
+    "processStep2": "담당자 검토",
+    "processStep3": "견적서 회신",
+    "processStep4": "상담 및 진행"
   },
   "careers": {
     "pageTitle": "채용정보",
@@ -159,6 +171,9 @@
     "phone": "055-367-2596",
     "fax": "055-367-2597",
     "privacy": "개인정보처리방침",
-    "copyright": "© {year} 나진테크. All rights reserved."
+    "copyright": "© {year} 나진테크. All rights reserved.",
+    "tagline": "25년 전통의 정밀 가공 전문기업",
+    "quickLinks": "바로가기",
+    "contactInfo": "연락처 정보"
   }
 }
