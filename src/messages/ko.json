@@ -1,0 +1,37 @@
+{
+  "common": {
+    "companyName": "나진테크",
+    "companyNameFull": "나진테크 (NAJIN TECH)",
+    "requestQuote": "견적문의",
+    "language": "EN"
+  },
+  "nav": {
+    "home": "홈",
+    "about": "회사소개",
+    "business": "사업영역",
+    "portfolio": "주요실적",
+    "quote": "견적문의",
+    "careers": "채용정보",
+    "notices": "공지사항"
+  },
+  "home": {
+    "heroTitle": "25년 전통의 정밀 가공 전문기업",
+    "heroSubtitle": "우레탄 성형 · 합성수지 가공 · CNC 정밀가공 · 금형 제작",
+    "heroCta": "견적 요청하기",
+    "statsYears": "년 역사",
+    "statsClients": "주요 거래처",
+    "statsCertified": "ISO 9001 인증",
+    "statsPatent": "특허 보유",
+    "clientsTitle": "주요 거래처",
+    "certTitle": "인증 및 특허",
+    "businessTitle": "사업영역",
+    "numbersTitle": "나진테크 한눈에 보기"
+  },
+  "footer": {
+    "address": "경상남도 양산시 산막공단남14길 170 (북정동)",
+    "phone": "055-367-2596",
+    "fax": "055-367-2597",
+    "privacy": "개인정보처리방침",
+    "copyright": "© {year} 나진테크. All rights reserved."
+  }
+}
