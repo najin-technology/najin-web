@@ -42,7 +42,8 @@ export default async function AboutPage() {
   } catch {
     // fallback to empty if fetch fails
   }
-  if (historyItems.length === 0) {
+  // Use fallback if DB has fewer items than static data
+  if (historyItems.length < fallbackHistory.length) {
     historyItems = fallbackHistory as typeof historyItems;
   }
 
