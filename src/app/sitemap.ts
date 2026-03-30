@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic notice pages
   let noticeEntries: MetadataRoute.Sitemap = [];
   try {
+    if (!supabase) throw new Error("Supabase not configured");
     const { data: notices } = await supabase
       .from("notices")
       .select("id, updated_at")
