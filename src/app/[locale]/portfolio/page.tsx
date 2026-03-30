@@ -131,12 +131,13 @@ export default function PortfolioPage() {
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes={isLarge ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform">
-                      <span className="inline-block text-xs font-medium text-white bg-brand-copper px-2 py-0.5 rounded-full">
+                    {/* Always-visible gradient + label on mobile, hover on desktop */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent md:from-black/40 md:opacity-0 md:group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3 md:translate-y-full md:group-hover:translate-y-0 transition-transform">
+                      <span className="inline-block text-[10px] md:text-xs font-medium text-white bg-brand-copper px-1.5 py-0.5 rounded-full">
                         {item.category}
                       </span>
-                      <p className={`font-medium text-white mt-1 ${isLarge ? "text-base" : "text-sm"}`}>
+                      <p className={`font-medium text-white mt-0.5 ${isLarge ? "text-sm md:text-base" : "text-xs md:text-sm"}`}>
                         {item.title}
                       </p>
                     </div>
