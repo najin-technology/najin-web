@@ -3,7 +3,16 @@
     "companyName": "나진테크",
     "companyNameFull": "나진테크 (NAJIN TECH)",
     "requestQuote": "견적문의",
-    "language": "EN"
+    "language": "EN",
+    "backToList": "목록으로",
+    "noData": "등록된 내용이 없습니다.",
+    "submit": "제출하기",
+    "required": "필수",
+    "privacyAgree": "개인정보 수집 및 이용에 동의합니다.",
+    "privacyAgreeRequired": "개인정보 수집 동의가 필요합니다.",
+    "submitSuccess": "성공적으로 제출되었습니다.",
+    "submitError": "제출 중 오류가 발생했습니다. 다시 시도해주세요.",
+    "fileSizeError": "파일 크기는 10MB 이하만 가능합니다."
   },
   "nav": {
     "home": "홈",
@@ -26,6 +35,124 @@
     "certTitle": "인증 및 특허",
     "businessTitle": "사업영역",
     "numbersTitle": "나진테크 한눈에 보기"
+  },
+  "about": {
+    "pageTitle": "회사소개",
+    "pageDescription": "나진테크의 역사, 비전, 인증현황을 소개합니다.",
+    "ceoTitle": "CEO 인사말",
+    "ceoContent": "안녕하십니까, 나진테크 대표이사입니다.\n\n저희 나진테크는 2002년 설립 이래 우레탄 성형, 합성수지 가공, CNC 정밀가공 분야에서 꾸준히 기술력을 쌓아왔습니다.\n\nISO 9001 인증과 CLEAN 사업장 인증을 바탕으로, 국내외 주요 완성차사, SK 등 국내 대기업과 Overseas automaker 등 해외 기업에 신뢰할 수 있는 부품을 공급하고 있습니다.\n\n앞으로도 고객 만족과 기술 혁신을 최우선으로 하여 세계적인 정밀 가공 전문기업으로 성장하겠습니다.\n\n감사합니다.",
+    "visionTitle": "비전",
+    "visionContent": "고객과 함께 성장하는 세계적인 정밀 가공 전문기업",
+    "missionTitle": "미션",
+    "missionContent": "최고 품질의 제품과 서비스를 통해 고객의 경쟁력을 높이고, 직원들에게는 성장의 기회를 제공합니다.",
+    "historyTitle": "연혁",
+    "certTitle": "인증 및 특허 현황",
+    "certIso": "품질경영시스템 국제 인증",
+    "certClean": "산업안전보건 우수 사업장",
+    "certPatent": "자체 기술력으로 취득한 특허",
+    "mapTitle": "오시는길",
+    "mapAddress": "경상남도 양산시 산막공단남14길 170 (북정동)"
+  },
+  "business": {
+    "pageTitle": "사업영역",
+    "pageDescription": "나진테크의 주요 사업영역을 소개합니다.",
+    "urethane": {
+      "title": "우레탄 성형",
+      "desc": "특허 금형베이스 기술을 활용한 우레탄 성형 전문 분야입니다. 자동차 부품, 산업용 롤러, 완충재 등 다양한 우레탄 제품을 고객의 요구에 맞춰 정밀 성형합니다.",
+      "features": "특허 금형베이스 기술 · 자동차 부품 전문 · 산업용 롤러 · 완충재 · 맞춤 성형"
+    },
+    "resin": {
+      "title": "합성수지 가공",
+      "desc": "PC, PE, 아세탈(POM), 나일론, 테프론(PTFE) 등 다양한 엔지니어링 플라스틱 소재를 정밀 가공합니다. 고객 도면에 따른 맞춤형 부품 제작이 가능합니다.",
+      "features": "PC · PE · 아세탈(POM) · 나일론 · 테프론(PTFE) · 맞춤 가공"
+    },
+    "cnc": {
+      "title": "CNC/MCT 정밀가공",
+      "desc": "최신 CNC/MCT 장비를 활용하여 알루미늄, 황동, 스테인리스, 합성수지 등 다양한 소재의 고정밀 가공을 수행합니다.",
+      "features": "알루미늄 · 황동 · 스테인리스 · 합성수지 · 고정밀 · 양산 대응"
+    },
+    "mold": {
+      "title": "금형 제작",
+      "desc": "고정밀 금형 설계부터 제작까지 원스톱 서비스를 제공합니다. EV 부품, 배터리팩 관련 금형 등 고난이도 금형 제작 경험이 풍부합니다.",
+      "features": "금형 설계 · 금형 제작 · EV 부품 금형 · 배터리팩 금형 · 원스톱 서비스"
+    },
+    "ev": {
+      "title": "EV 부품 가공",
+      "desc": "전기차 시대에 발맞춰 배터리팩 구성 부품, 모터 관련 부품 등 EV(전기차) 전용 부품을 가공합니다. 친환경 미래 산업에 기여하고 있습니다.",
+      "features": "배터리팩 부품 · 모터 부품 · 전기차 전용 · 친환경 산업"
+    }
+  },
+  "portfolio": {
+    "pageTitle": "주요실적",
+    "pageDescription": "나진테크의 주요 거래처와 납품 실적을 소개합니다.",
+    "clientsTitle": "주요 거래처",
+    "clientsDesc": "나진테크는 국내외 주요 기업에 신뢰할 수 있는 부품을 공급하고 있습니다.",
+    "galleryTitle": "납품 실적",
+    "galleryPlaceholder": "납품 실적 갤러리가 준비 중입니다."
+  },
+  "quote": {
+    "pageTitle": "견적문의",
+    "pageDescription": "나진테크에 견적을 요청하세요.",
+    "formTitle": "견적 요청서",
+    "companyName": "회사명",
+    "contactName": "담당자명",
+    "phone": "연락처",
+    "email": "이메일",
+    "processingType": "가공종류",
+    "processingTypes": {
+      "urethane": "우레탄 성형",
+      "resin": "합성수지 가공",
+      "cnc": "CNC/MCT 정밀가공",
+      "mold": "금형 제작",
+      "ev": "EV 부품 가공",
+      "other": "기타"
+    },
+    "material": "소재",
+    "materialPlaceholder": "예: PC, PE, 아세탈, 알루미늄 등",
+    "quantity": "수량",
+    "quantityPlaceholder": "예: 100개, 1,000개",
+    "deadline": "희망 납기",
+    "description": "상세 내용",
+    "descriptionPlaceholder": "가공 요청 사항, 도면 관련 설명 등을 입력해주세요.",
+    "attachment": "도면 첨부",
+    "attachmentHelp": "PDF, DWG, DXF, STEP, IGS, JPG, PNG (최대 10MB)",
+    "selectType": "가공종류를 선택하세요",
+    "successTitle": "견적 요청이 접수되었습니다",
+    "successMessage": "담당자가 확인 후 빠른 시일 내에 연락드리겠습니다.",
+    "contactInfo": "긴급 문의: TEL 055-367-2596"
+  },
+  "careers": {
+    "pageTitle": "채용정보",
+    "pageDescription": "나진테크와 함께할 인재를 찾습니다.",
+    "openPositions": "채용 공고",
+    "noOpenings": "현재 채용 공고가 없습니다. 추후 공고가 등록되면 확인해주세요.",
+    "department": "부서",
+    "employmentType": "고용형태",
+    "deadlineLabel": "마감일",
+    "requirements": "자격요건",
+    "benefits": "복리후생",
+    "applyTitle": "입사 지원",
+    "applyDesc": "아래 양식을 작성하여 지원해주세요.",
+    "name": "이름",
+    "phone": "연락처",
+    "email": "이메일",
+    "position": "지원 포지션",
+    "positionPlaceholder": "예: CNC 가공직, 영업직",
+    "coverLetter": "자기소개",
+    "coverLetterPlaceholder": "간단한 자기소개와 지원 동기를 작성해주세요.",
+    "resume": "이력서 첨부",
+    "resumeHelp": "PDF, DOC, DOCX (최대 10MB)",
+    "successTitle": "지원서가 접수되었습니다",
+    "successMessage": "서류 검토 후 연락드리겠습니다. 감사합니다."
+  },
+  "notices": {
+    "pageTitle": "공지사항",
+    "pageDescription": "나진테크의 공지사항을 확인하세요.",
+    "noNotices": "등록된 공지사항이 없습니다."
+  },
+  "privacy": {
+    "pageTitle": "개인정보처리방침",
+    "pageDescription": "나진테크의 개인정보처리방침입니다."
   },
   "footer": {
     "address": "경상남도 양산시 산막공단남14길 170 (북정동)",
