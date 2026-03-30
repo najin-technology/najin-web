@@ -35,10 +35,20 @@ export async function createProduct(
   const imageUrls: string[] = [];
   const images = formData.getAll("images") as File[];
 
+  const validImageTypes = ["image/jpeg", "image/png", "image/webp", "image/svg+xml"];
+  const maxImageSize = 5 * 1024 * 1024; // 5MB
+
   for (const image of images) {
     if (image.size === 0) continue;
 
-    const ext = image.name.split(".").pop();
+    if (!validImageTypes.includes(image.type)) {
+      return { error: `허용되지 않는 파일 형식입니다: ${image.name}` };
+    }
+    if (image.size > maxImageSize) {
+      return { error: `파일 크기가 5MB를 초과합니다: ${image.name}` };
+    }
+
+    const ext = image.name.split(".").pop()?.toLowerCase() || "jpg";
     const fileName = `${category}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
     const { error: uploadError } = await supabase.storage
@@ -106,7 +116,14 @@ export async function updateProduct(
   const supabase = await createSupabaseServerClient();
 
   // Keep existing image URLs
-  let imageUrls: string[] = existingUrls ? JSON.parse(existingUrls) : [];
+  let imageUrls: string[] = [];
+  if (existingUrls) {
+    try {
+      imageUrls = JSON.parse(existingUrls);
+    } catch {
+      imageUrls = [];
+    }
+  }
 
   // Handle new image uploads
   const images = formData.getAll("images") as File[];
@@ -201,7 +218,10 @@ export async function deleteProduct(id: string) {
     .update({ deleted_at: new Date().toISOString() })
     .eq("id", id);
 
-  if (error) return;
+  if (error) {
+    console.error("Failed to delete product:", error);
+    return;
+  }
 
   await logAudit({
     action: "delete",
