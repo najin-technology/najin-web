@@ -161,7 +161,10 @@ export async function deleteNotice(id: string) {
     .update({ deleted_at: new Date().toISOString() })
     .eq("id", id);
 
-  if (error) return;
+  if (error) {
+    console.error("Delete notice error:", error);
+    return;
+  }
 
   await logAudit({
     action: "delete",
@@ -170,4 +173,6 @@ export async function deleteNotice(id: string) {
   });
 
   revalidatePath("/admin/notices");
+  revalidatePath("/ko/notices");
+  revalidatePath("/en/notices");
 }

@@ -115,7 +115,10 @@ export async function deleteHistoryItem(id: string) {
     .delete()
     .eq("id", id);
 
-  if (error) return;
+  if (error) {
+    console.error("Failed to delete history item:", error);
+    return;
+  }
 
   await logAudit({
     action: "delete",
