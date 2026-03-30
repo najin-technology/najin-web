@@ -33,44 +33,19 @@ const clients = [
 
 const businessAreas: {
   key: string;
-  titleKo: string;
-  descKo: string;
   icon: LucideIcon;
   image: string;
 }[] = [
-  {
-    key: "urethane",
-    titleKo: "우레탄 성형",
-    descKo: "특허 금형베이스 기술을 활용한 우레탄 성형 전문",
-    icon: Droplets,
-    image: "/images/factory/urethane-machine.jpg",
-  },
-  {
-    key: "resin",
-    titleKo: "합성수지 가공",
-    descKo: "PC, PE, 아세탈 등 다양한 소재의 정밀 가공",
-    icon: FlaskConical,
-    image: "/images/products/pe-rod-1.jpg",
-  },
-  {
-    key: "cnc",
-    titleKo: "CNC/MCT 정밀가공",
-    descKo: "알루미늄, 황동, 합성수지 등 CNC/MCT 정밀 가공",
-    icon: Cog,
-    image: "/images/products/3d-mc-part-1.jpg",
-  },
-  {
-    key: "mold",
-    titleKo: "금형 제작",
-    descKo: "EV 부품, 배터리팩 등 고정밀 금형 설계 및 제작",
-    icon: Box,
-    image: "/images/products/machined-part-1.jpg",
-  },
+  { key: "urethane", icon: Droplets, image: "/images/factory/urethane-machine.jpg" },
+  { key: "resin", icon: FlaskConical, image: "/images/products/pe-rod-1.jpg" },
+  { key: "cnc", icon: Cog, image: "/images/products/3d-mc-part-1.jpg" },
+  { key: "mold", icon: Box, image: "/images/products/3d-mc-part-2.jpg" },
 ];
 
 export default function HomePage() {
   const t = useTranslations("home");
   const tc = useTranslations("common");
+  const tb = useTranslations("business");
 
   return (
     <>
@@ -198,7 +173,7 @@ export default function HomePage() {
                 <div className="relative h-48 overflow-hidden">
                   <Image
                     src={area.image}
-                    alt={area.titleKo}
+                    alt={tb(`${area.key}.title`)}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, 25vw"
@@ -212,10 +187,10 @@ export default function HomePage() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-brand-navy group-hover:text-brand-blue transition-colors flex items-center gap-1">
-                    {area.titleKo}
+                    {tb(`${area.key}.title`)}
                     <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </h3>
-                  <p className="text-sm text-gray-500 mt-1">{area.descKo}</p>
+                  <p className="text-sm text-gray-500 mt-1">{tb(`${area.key}.desc`).substring(0, 40)}...</p>
                 </div>
               </Link>
             ))}
