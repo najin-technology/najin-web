@@ -1,0 +1,74 @@
+import Link from "next/link";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { StatusBadge } from "@/components/admin/status-badge";
+import { EmptyState } from "@/components/admin/empty-state";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+export const metadata = { title: "채용 관리" };
+
+export default async function ApplicationsPage() {
+  const supabase = await createSupabaseServerClient();
+
+  const { data: applications } = await supabase
+    .from("applications")
+    .select("id, name, phone, email, position, status, created_at")
+    .is("deleted_at", null)
+    .order("created_at", { ascending: false });
+
+  return (
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold text-[#1B2A4A]">채용 관리</h1>
+
+      <div className="bg-white rounded-lg border border-gray-200">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>이름</TableHead>
+              <TableHead>연락처</TableHead>
+              <TableHead>포지션</TableHead>
+              <TableHead>상태</TableHead>
+              <TableHead>지원일</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {applications && applications.length > 0 ? (
+              applications.map((a) => (
+                <TableRow key={a.id}>
+                  <TableCell>
+                    <Link
+                      href={`/admin/applications/${a.id}`}
+                      className="text-[#3182CE] hover:underline"
+                    >
+                      {a.name}
+                    </Link>
+                  </TableCell>
+                  <TableCell>{a.phone || "-"}</TableCell>
+                  <TableCell>{a.position || "-"}</TableCell>
+                  <TableCell>
+                    <StatusBadge status={a.status} type="application" />
+                  </TableCell>
+                  <TableCell className="text-sm text-gray-500">
+                    {new Date(a.created_at).toLocaleDateString("ko-KR")}
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5}>
+                  <EmptyState message="지원서가 없습니다." />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+}
