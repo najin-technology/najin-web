@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/page-header";
 import { QuoteForm } from "./quote-form";
+import Image from "next/image";
 import { Phone, MapPin, Mail } from "lucide-react";
 
 export const metadata = {
@@ -23,7 +24,18 @@ export default function QuotePage() {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14">
             {/* Left: Contact Info Card (40%) */}
             <div className="lg:col-span-2" data-animate="slide-right">
-              <div className="bg-white rounded-2xl border border-surface-warm-200 p-8 shadow-sm sticky top-28">
+              <div className="bg-white rounded-2xl border border-surface-warm-200 overflow-hidden shadow-sm sticky top-28">
+                {/* Factory photo for trust */}
+                <div className="relative h-40 overflow-hidden">
+                  <Image
+                    src="/images/factory/workshop-2.jpg"
+                    alt="나진테크 작업장"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent" />
+                </div>
+                <div className="p-8 -mt-8 relative">
                 <h2 className="text-xl font-bold text-brand-navy mb-6">
                   {t("formTitle")}
                 </h2>
@@ -110,6 +122,7 @@ export default function QuotePage() {
                     ))}
                   </div>
                 </div>
+              </div>
               </div>
             </div>
 
