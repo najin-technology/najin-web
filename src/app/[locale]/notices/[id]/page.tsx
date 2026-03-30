@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getNoticeById } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
 import DOMPurify from "isomorphic-dompurify";
+import { ArrowLeft, Calendar } from "lucide-react";
 
 export async function generateMetadata({
   params,
@@ -37,41 +38,62 @@ export default async function NoticeDetailPage({
 
   // Check if content contains HTML tags (from Tiptap editor)
   const isHtml = content ? /<[a-z][\s\S]*>/i.test(content) : false;
-  const sanitizedHtml = isHtml && content ? DOMPurify.sanitize(content) : null;
+  const sanitizedHtml =
+    isHtml && content ? DOMPurify.sanitize(content) : null;
 
   return (
     <>
-      <section className="bg-[#1B2A4A] text-white py-16 md:py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-2xl md:text-3xl font-bold mb-3">{title}</h1>
-          <p className="text-gray-300 text-sm">
-            {new Date(date).toLocaleDateString(
-              locale === "ko" ? "ko-KR" : "en-US",
-              { year: "numeric", month: "long", day: "numeric" }
-            )}
-          </p>
+      <section className="hero-gradient hero-pattern text-white py-16 md:py-24 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <h1
+            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4"
+            data-animate="fade-up"
+          >
+            {title}
+          </h1>
+          <div
+            className="flex items-center gap-2 text-gray-300 text-sm"
+            data-animate="fade-up"
+            data-animate-delay="1"
+          >
+            <Calendar className="w-4 h-4" />
+            <span>
+              {new Date(date).toLocaleDateString(
+                locale === "ko" ? "ko-KR" : "en-US",
+                { year: "numeric", month: "long", day: "numeric" }
+              )}
+            </span>
+          </div>
         </div>
+        {/* Diagonal bottom clip */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-8 bg-surface-warm-50"
+          style={{ clipPath: "polygon(0 100%, 100% 0, 100% 100%)" }}
+        />
       </section>
 
-      <section className="py-12 md:py-16">
+      <section className="py-12 md:py-16 bg-surface-warm-50" data-animate="fade-up">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {sanitizedHtml ? (
-            <div
-              className="prose prose-gray max-w-none text-[#2D3748] leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-            />
-          ) : (
-            <div className="prose prose-gray max-w-none text-[#2D3748] leading-relaxed whitespace-pre-line">
-              {content}
-            </div>
-          )}
+          <div className="bg-white rounded-2xl border border-surface-warm-200 p-8 md:p-12 shadow-sm">
+            {sanitizedHtml ? (
+              <div
+                className="prose prose-gray max-w-none text-brand-charcoal leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+              />
+            ) : (
+              <div className="prose prose-gray max-w-none text-brand-charcoal leading-relaxed whitespace-pre-line">
+                {content}
+              </div>
+            )}
+          </div>
 
-          <div className="mt-12 pt-8 border-t border-gray-200">
+          <div className="mt-10">
             <Link
               href="/notices"
-              className="text-sm font-medium text-[#3182CE] hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-medium text-brand-blue hover:text-brand-blue-hover transition-colors"
             >
-              ← {tc("backToList")}
+              <ArrowLeft className="w-4 h-4" />
+              {tc("backToList")}
             </Link>
           </div>
         </div>
