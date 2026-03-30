@@ -95,15 +95,15 @@ export default function BusinessPage() {
 
               {/* Product image */}
               <div
-                className={`rounded-xl overflow-hidden border border-surface-warm-200 shadow-sm ${index % 2 === 1 ? "md:order-1" : ""}`}
+                className={`relative aspect-[4/3] rounded-xl overflow-hidden border border-surface-warm-200 shadow-sm ${index % 2 === 1 ? "md:order-1" : ""}`}
                 data-animate={index % 2 === 1 ? "slide-right" : "slide-left"}
               >
                 <Image
                   src={cat.image}
                   alt={cat.imageAlt}
-                  width={600}
-                  height={450}
-                  className="w-full h-auto object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
             </div>

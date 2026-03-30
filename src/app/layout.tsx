@@ -17,14 +17,14 @@ const notoSansKR = Noto_Sans_KR({
 
 export const metadata: Metadata = {
   title: {
-    default: "나진테크 | NAJIN TECH",
+    default: "나진테크 | NAJIN TECHNOLOGY",
     template: "%s | 나진테크",
   },
   description:
     "경남 양산 우레탄 성형, 합성수지 가공, CNC 정밀가공, 금형 제작 전문기업 나진테크",
   keywords: [
     "나진테크",
-    "NAJIN TECH",
+    "NAJIN TECHNOLOGY",
     "우레탄 성형",
     "합성수지 가공",
     "CNC 가공",
