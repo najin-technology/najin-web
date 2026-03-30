@@ -1,54 +1,84 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { Logo } from "@/components/logo";
+import { Phone, MapPin, Mail, Printer } from "lucide-react";
 
 export function Footer() {
   const t = useTranslations("footer");
   const tc = useTranslations("common");
+  const tn = useTranslations("nav");
 
   return (
-    <footer className="bg-[#1B2A4A] text-white">
+    <footer className="bg-gradient-to-b from-brand-navy to-[#111D33] text-white">
+      {/* Copper accent line */}
+      <div className="h-1 bg-gradient-to-r from-brand-copper/0 via-brand-copper to-brand-copper/0" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Company Info */}
           <div>
-            <h3 className="text-lg font-bold mb-4">
-              {tc("companyNameFull")}
-            </h3>
-            <p className="text-sm text-gray-300 leading-relaxed">
-              {t("address")}
+            <Logo variant="light" size="lg" />
+            <p className="text-sm text-gray-400 mt-4 leading-relaxed">
+              {t("tagline")}
             </p>
           </div>
 
-          {/* Contact */}
+          {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Contact</h3>
-            <div className="space-y-2 text-sm text-gray-300">
-              <p>TEL: {t("phone")}</p>
-              <p>FAX: {t("fax")}</p>
-            </div>
-          </div>
-
-          {/* Links */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">Links</h3>
-            <div className="space-y-2 text-sm">
+            <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">
+              {t("quickLinks")}
+            </h3>
+            <div className="space-y-2.5 text-sm">
+              <Link
+                href="/about"
+                className="block text-gray-400 hover:text-white transition-colors"
+              >
+                {tn("about")}
+              </Link>
+              <Link
+                href="/business"
+                className="block text-gray-400 hover:text-white transition-colors"
+              >
+                {tn("business")}
+              </Link>
               <Link
                 href="/quote"
-                className="block text-gray-300 hover:text-white transition-colors"
+                className="block text-gray-400 hover:text-white transition-colors"
               >
                 {tc("requestQuote")}
               </Link>
               <Link
                 href="/privacy"
-                className="block text-gray-300 hover:text-white transition-colors"
+                className="block text-gray-400 hover:text-white transition-colors"
               >
                 {t("privacy")}
               </Link>
             </div>
           </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">
+              {t("contactInfo")}
+            </h3>
+            <div className="space-y-3 text-sm text-gray-400">
+              <div className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 mt-0.5 text-brand-copper shrink-0" />
+                <span>{t("address")}</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-brand-copper shrink-0" />
+                <span>{t("phone")}</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Printer className="w-4 h-4 text-brand-copper shrink-0" />
+                <span>{t("fax")}</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-white/10 text-center text-sm text-gray-400">
+        <div className="mt-10 pt-6 border-t border-white/10 text-center text-xs text-gray-500">
           {t("copyright", { year: new Date().getFullYear() })}
         </div>
       </div>

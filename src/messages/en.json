@@ -1,7 +1,7 @@
 {
   "common": {
-    "companyName": "NAJIN TECH",
-    "companyNameFull": "NAJIN TECH",
+    "companyName": "NAJIN TECHNOLOGY",
+    "companyNameFull": "NAJIN TECHNOLOGY",
     "requestQuote": "Request Quote",
     "language": "KO",
     "backToList": "Back to list",
@@ -34,13 +34,19 @@
     "clientsTitle": "Our Clients",
     "certTitle": "Certifications & Patents",
     "businessTitle": "Business Areas",
-    "numbersTitle": "NAJIN TECH at a Glance"
+    "numbersTitle": "NAJIN TECHNOLOGY at a Glance",
+    "aboutLink": "About Us",
+    "ctaTitle": "Start Your Project With Us",
+    "ctaSubtitle": "25 years of experience delivering optimal solutions",
+    "ctaPersuasion": "Quick response to your online quote request",
+    "ctaPhone": "Call: 055-367-2596"
   },
   "about": {
     "pageTitle": "About Us",
-    "pageDescription": "Learn about NAJIN TECH's history, vision, and certifications.",
+    "pageDescription": "Learn about NAJIN TECHNOLOGY's history, vision, and certifications.",
     "ceoTitle": "CEO's Message",
-    "ceoContent": "Greetings from NAJIN TECH.\n\nSince our establishment in 2002, NAJIN TECH has been building expertise in urethane molding, synthetic resin processing, and CNC precision machining.\n\nWith ISO 9001 and CLEAN workplace certifications, we supply reliable parts to major domestic companies like Hyundai Motor and SK, as well as international clients including GM Shanghai.\n\nWe will continue to prioritize customer satisfaction and technological innovation as we grow into a world-class precision manufacturing company.\n\nThank you.",
+    "ceoName": "CEO Kim Hak-gi",
+    "ceoContent": "Greetings from NAJIN TECHNOLOGY.\n\nSince our establishment in 2002, NAJIN TECHNOLOGY has been building expertise in urethane molding, synthetic resin processing, and CNC precision machining.\n\nWith ISO 9001 and CLEAN workplace certifications, we supply reliable parts to major domestic companies like Hyundai Motor and SK, as well as international clients including GM Shanghai.\n\nWe will continue to prioritize customer satisfaction and technological innovation as we grow into a world-class precision manufacturing company.\n\nThank you.",
     "visionTitle": "Vision",
     "visionContent": "A world-class precision manufacturing company that grows with our customers",
     "missionTitle": "Mission",
@@ -55,7 +61,7 @@
   },
   "business": {
     "pageTitle": "Business Areas",
-    "pageDescription": "Explore NAJIN TECH's core business areas.",
+    "pageDescription": "Explore NAJIN TECHNOLOGY's core business areas.",
     "urethane": {
       "title": "Urethane Molding",
       "desc": "We specialize in urethane molding using our patented mold base technology. We precision-mold a wide range of urethane products including automotive parts, industrial rollers, and shock absorbers to meet customer specifications.",
@@ -84,15 +90,15 @@
   },
   "portfolio": {
     "pageTitle": "Portfolio",
-    "pageDescription": "NAJIN TECH's major clients and delivery track record.",
+    "pageDescription": "NAJIN TECHNOLOGY's major clients and delivery track record.",
     "clientsTitle": "Major Clients",
-    "clientsDesc": "NAJIN TECH supplies reliable parts to major domestic and international companies.",
+    "clientsDesc": "NAJIN TECHNOLOGY supplies reliable parts to major domestic and international companies.",
     "galleryTitle": "Delivery Track Record",
     "galleryPlaceholder": "Gallery is being prepared."
   },
   "quote": {
     "pageTitle": "Request a Quote",
-    "pageDescription": "Request a quote from NAJIN TECH.",
+    "pageDescription": "Request a quote from NAJIN TECHNOLOGY.",
     "formTitle": "Quote Request Form",
     "companyName": "Company Name",
     "contactName": "Contact Person",
@@ -119,11 +125,17 @@
     "selectType": "Select processing type",
     "successTitle": "Quote request has been received",
     "successMessage": "Our team will review and contact you shortly.",
-    "contactInfo": "Urgent inquiries: TEL 055-367-2596"
+    "contactInfo": "Urgent inquiries: TEL 055-367-2596",
+    "responsePromise": "We'll respond within 24 hours",
+    "processTitle": "Quote Process",
+    "processStep1": "Submit Quote Request",
+    "processStep2": "Review by Our Team",
+    "processStep3": "Quote Response",
+    "processStep4": "Consultation & Proceed"
   },
   "careers": {
     "pageTitle": "Careers",
-    "pageDescription": "Join the NAJIN TECH team.",
+    "pageDescription": "Join the NAJIN TECHNOLOGY team.",
     "openPositions": "Open Positions",
     "noOpenings": "No open positions at this time. Please check back later.",
     "department": "Department",
@@ -147,18 +159,21 @@
   },
   "notices": {
     "pageTitle": "Notices",
-    "pageDescription": "Latest notices from NAJIN TECH.",
+    "pageDescription": "Latest notices from NAJIN TECHNOLOGY.",
     "noNotices": "No notices available."
   },
   "privacy": {
     "pageTitle": "Privacy Policy",
-    "pageDescription": "NAJIN TECH Privacy Policy."
+    "pageDescription": "NAJIN TECHNOLOGY Privacy Policy."
   },
   "footer": {
     "address": "170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea",
     "phone": "055-367-2596",
     "fax": "055-367-2597",
     "privacy": "Privacy Policy",
-    "copyright": "© {year} NAJIN TECH. All rights reserved."
+    "copyright": "© {year} NAJIN TECHNOLOGY. All rights reserved.",
+    "tagline": "Precision Manufacturing Experts Since 2002",
+    "quickLinks": "Quick Links",
+    "contactInfo": "Contact Info"
   }
 }

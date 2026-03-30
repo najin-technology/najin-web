@@ -1,36 +1,50 @@
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/page-header";
+import Image from "next/image";
+import {
+  Droplets,
+  FlaskConical,
+  Cog,
+  Box,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 
 export const metadata = {
   title: "사업영역",
 };
 
-const categories = [
-  { key: "urethane", icon: "🔧" },
-  { key: "resin", icon: "⚙️" },
-  { key: "cnc", icon: "🏭" },
-  { key: "mold", icon: "🔩" },
-  { key: "ev", icon: "🔋" },
-] as const;
+const categories: {
+  key: string;
+  icon: LucideIcon;
+  image: string;
+  imageAlt: string;
+}[] = [
+  { key: "urethane", icon: Droplets, image: "/images/factory/urethane-machine.jpg", imageAlt: "우레탄 성형 장비" },
+  { key: "resin", icon: FlaskConical, image: "/images/products/pe-rod-1.jpg", imageAlt: "PE 환봉 가공" },
+  { key: "cnc", icon: Cog, image: "/images/products/3d-mc-part-1.jpg", imageAlt: "3D MC 형상 가공품" },
+  { key: "mold", icon: Box, image: "/images/products/machined-part-1.jpg", imageAlt: "금형 가공품" },
+  { key: "ev", icon: Zap, image: "/images/products/machined-part-4.jpg", imageAlt: "EV 부품 가공" },
+];
 
 export default function BusinessPage() {
   const t = useTranslations("business");
 
   return (
     <>
-      <PageHeader titleKey="pageTitle" namespace="business" />
+      <PageHeader titleKey="pageTitle" namespace="business" descriptionKey="pageDescription" />
 
       {/* Category Quick Nav */}
-      <nav className="sticky top-16 z-40 bg-white/95 backdrop-blur border-b border-gray-100">
+      <nav className="sticky top-16 z-40 bg-white/95 backdrop-blur border-b border-surface-warm-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex gap-1 overflow-x-auto py-3 -mx-4 px-4 sm:mx-0 sm:px-0">
             {categories.map((cat) => (
               <a
                 key={cat.key}
                 href={`#${cat.key}`}
-                className="flex-shrink-0 px-4 py-2 text-sm font-medium text-[#2D3748] hover:text-[#3182CE] hover:bg-gray-50 rounded-md transition-colors"
+                className="group flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-brand-charcoal rounded-lg transition-all hover:bg-brand-copper/10 hover:text-brand-copper"
               >
-                <span className="mr-1">{cat.icon}</span>
+                <cat.icon className="w-4 h-4 text-gray-400 group-hover:text-brand-copper transition-colors" />
                 {t(`${cat.key}.title`)}
               </a>
             ))}
@@ -43,30 +57,54 @@ export default function BusinessPage() {
         <section
           key={cat.key}
           id={cat.key}
-          className={`py-12 md:py-16 ${index % 2 === 1 ? "bg-gray-50" : ""}`}
+          className={`py-16 md:py-24 ${index % 2 === 1 ? "bg-surface-warm-50" : ""}`}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-4xl">{cat.icon}</span>
-                <h2 className="text-2xl md:text-3xl font-bold text-[#1B2A4A]">
-                  {t(`${cat.key}.title`)}
-                </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+              {/* Text content */}
+              <div className={index % 2 === 1 ? "md:order-2" : ""} data-animate="fade-up">
+                {/* Icon + title */}
+                <div className="flex items-center gap-5 mb-6">
+                  <div className="w-16 h-16 rounded-full bg-brand-copper/10 flex items-center justify-center shrink-0">
+                    <cat.icon className="w-8 h-8 text-brand-copper" />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-brand-navy">
+                    {t(`${cat.key}.title`)}
+                  </h2>
+                </div>
+
+                {/* Description */}
+                <p className="text-brand-charcoal leading-relaxed text-base md:text-lg mb-8">
+                  {t(`${cat.key}.desc`)}
+                </p>
+
+                {/* Feature tags */}
+                <div className="flex flex-wrap gap-2">
+                  {t(`${cat.key}.features`)
+                    .split(" · ")
+                    .map((feature) => (
+                      <span
+                        key={feature}
+                        className="inline-block px-3.5 py-1.5 text-sm font-medium text-brand-copper bg-brand-copper/10 rounded-full"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                </div>
               </div>
-              <p className="text-[#2D3748] leading-relaxed mb-6">
-                {t(`${cat.key}.desc`)}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {t(`${cat.key}.features`)
-                  .split(" · ")
-                  .map((feature) => (
-                    <span
-                      key={feature}
-                      className="inline-block px-3 py-1 text-xs font-medium text-[#3182CE] bg-blue-50 rounded-full"
-                    >
-                      {feature}
-                    </span>
-                  ))}
+
+              {/* Product image */}
+              <div
+                className={`rounded-xl overflow-hidden border border-surface-warm-200 shadow-sm ${index % 2 === 1 ? "md:order-1" : ""}`}
+                data-animate={index % 2 === 1 ? "slide-right" : "slide-left"}
+              >
+                <Image
+                  src={cat.image}
+                  alt={cat.imageAlt}
+                  width={600}
+                  height={450}
+                  className="w-full h-auto object-cover"
+                />
               </div>
             </div>
           </div>

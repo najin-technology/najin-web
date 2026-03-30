@@ -2,6 +2,7 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { getPublishedNotices } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
+import { FileText, Calendar } from "lucide-react";
 
 export const metadata = {
   title: "공지사항",
@@ -20,36 +21,60 @@ export default async function NoticesPage() {
 
   return (
     <>
-      <PageHeader titleKey="pageTitle" namespace="notices" />
+      <PageHeader
+        titleKey="pageTitle"
+        namespace="notices"
+        descriptionKey="pageDescription"
+      />
 
-      <section className="py-12 md:py-16">
+      <section className="py-12 md:py-20 bg-surface-warm-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {notices.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-gray-500">{t("noNotices")}</p>
+            <div
+              className="text-center py-16 bg-white rounded-2xl border border-surface-warm-200"
+              data-animate="fade-up"
+            >
+              <FileText className="w-10 h-10 text-brand-charcoal/30 mx-auto mb-3" />
+              <p className="text-brand-charcoal/60">{t("noNotices")}</p>
             </div>
           ) : (
             <div className="space-y-4">
-              {notices.map((notice) => (
+              {notices.map((notice, index) => (
                 <Link
                   key={notice.id}
                   href={`/notices/${notice.id}`}
-                  className="block bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
+                  className="block bg-white rounded-xl border border-surface-warm-200 border-l-4 border-l-transparent p-6 hover:border-l-brand-copper hover:shadow-md transition-all hover-lift"
+                  data-animate="fade-up"
+                  data-animate-delay={String(Math.min(index + 1, 6))}
                 >
-                  <h3 className="font-semibold text-[#1B2A4A] mb-2">
-                    {locale === "ko"
-                      ? notice.title_ko
-                      : notice.title_en || notice.title_ko}
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {notice.published_at
-                      ? new Date(notice.published_at).toLocaleDateString(
-                          locale === "ko" ? "ko-KR" : "en-US"
-                        )
-                      : new Date(notice.created_at).toLocaleDateString(
-                          locale === "ko" ? "ko-KR" : "en-US"
-                        )}
-                  </p>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-brand-copper/10 flex items-center justify-center mt-0.5">
+                      <FileText className="w-5 h-5 text-brand-copper" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-brand-navy mb-2 truncate">
+                        {locale === "ko"
+                          ? notice.title_ko
+                          : notice.title_en || notice.title_ko}
+                      </h3>
+                      <div className="flex items-center gap-1.5 text-sm text-brand-charcoal/60">
+                        <Calendar className="w-3.5 h-3.5" />
+                        <span>
+                          {notice.published_at
+                            ? new Date(
+                                notice.published_at
+                              ).toLocaleDateString(
+                                locale === "ko" ? "ko-KR" : "en-US"
+                              )
+                            : new Date(
+                                notice.created_at
+                              ).toLocaleDateString(
+                                locale === "ko" ? "ko-KR" : "en-US"
+                              )}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </Link>
               ))}
             </div>

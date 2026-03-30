@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { AdminFab } from "@/components/admin-fab";
@@ -7,6 +7,12 @@ import { AdminFab } from "@/components/admin-fab";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const notoSansKR = Noto_Sans_KR({
+  variable: "--font-noto-sans-kr",
+  weight: ["400", "500", "700"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -34,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={`${geistSans.variable} h-full antialiased`}>
+    <html className={`${geistSans.variable} ${notoSansKR.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         {children}
         <Analytics />
