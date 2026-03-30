@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { StatsCounter } from "@/components/stats-counter";
+import Image from "next/image";
 import {
   Droplets,
   FlaskConical,
@@ -13,6 +14,7 @@ import {
   Calendar,
   Users,
   Phone,
+  ArrowRight,
   type LucideIcon,
 } from "lucide-react";
 
@@ -32,42 +34,37 @@ const clients = [
 const businessAreas: {
   key: string;
   titleKo: string;
-  titleEn: string;
   descKo: string;
-  descEn: string;
   icon: LucideIcon;
+  image: string;
 }[] = [
   {
     key: "urethane",
     titleKo: "우레탄 성형",
-    titleEn: "Urethane Molding",
     descKo: "특허 금형베이스 기술을 활용한 우레탄 성형 전문",
-    descEn: "Specialized urethane molding with patented mold base technology",
     icon: Droplets,
+    image: "/images/factory/urethane-machine.jpg",
   },
   {
     key: "resin",
     titleKo: "합성수지 가공",
-    titleEn: "Resin Processing",
     descKo: "PC, PE, 아세탈 등 다양한 소재의 정밀 가공",
-    descEn: "Precision processing of PC, PE, acetal and other materials",
     icon: FlaskConical,
+    image: "/images/products/pe-rod-1.jpg",
   },
   {
     key: "cnc",
     titleKo: "CNC/MCT 정밀가공",
-    titleEn: "CNC/MCT Machining",
     descKo: "알루미늄, 황동, 합성수지 등 CNC/MCT 정밀 가공",
-    descEn: "CNC/MCT precision machining for aluminum, brass, and synthetics",
     icon: Cog,
+    image: "/images/products/3d-mc-part-1.jpg",
   },
   {
     key: "mold",
     titleKo: "금형 제작",
-    titleEn: "Mold Fabrication",
     descKo: "EV 부품, 배터리팩 등 고정밀 금형 설계 및 제작",
-    descEn: "High-precision mold design for EV parts and battery packs",
     icon: Box,
+    image: "/images/products/machined-part-1.jpg",
   },
 ];
 
@@ -77,14 +74,23 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative hero-gradient hero-pattern text-white min-h-[85vh] flex items-center overflow-hidden">
-        {/* Background image slot */}
-        <div className="absolute inset-0 bg-cover bg-center opacity-10" />
+      {/* Hero with photo background */}
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
+        {/* Background photo */}
+        <Image
+          src="/images/factory/workshop-1.jpg"
+          alt="나진테크 공장"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-brand-navy/80" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 relative z-10">
           <div className="max-w-3xl">
             <h1
-              className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4"
+              className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 text-white"
               data-animate="fade-up"
             >
               {t("heroTitle")}
@@ -97,7 +103,7 @@ export default function HomePage() {
               {t("heroSubtitle")}
             </p>
             <div
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-4 mb-12"
               data-animate="fade-up"
               data-animate-delay="2"
             >
@@ -119,8 +125,27 @@ export default function HomePage() {
                 </Button>
               </Link>
             </div>
+
+            {/* Inline certifications */}
+            <div
+              className="flex flex-wrap gap-6 items-center"
+              data-animate="fade-up"
+              data-animate-delay="3"
+            >
+              {[
+                { icon: Award, label: "ISO 9001" },
+                { icon: Building2, label: "CLEAN 사업장" },
+                { icon: FileCheck, label: "특허 보유" },
+              ].map((cert) => (
+                <div key={cert.label} className="flex items-center gap-2">
+                  <cert.icon className="w-4 h-4 text-brand-copper" />
+                  <span className="text-sm text-gray-300 font-medium">{cert.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+
         {/* Diagonal bottom */}
         <div
           className="absolute bottom-0 left-0 right-0 h-16 bg-white"
@@ -128,20 +153,20 @@ export default function HomePage() {
         />
       </section>
 
-      {/* Client Logos */}
-      <section className="py-14 md:py-20 bg-surface-warm-50">
+      {/* Client Logo Wall — big text, high impact */}
+      <section className="py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2
+          <p
             className="text-center text-sm font-semibold text-gray-400 uppercase tracking-widest mb-10"
             data-animate="fade-in"
           >
             {t("clientsTitle")}
-          </h2>
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 items-center">
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-6 md:gap-x-16">
             {clients.map((client, i) => (
               <span
                 key={client}
-                className="text-sm font-medium text-brand-charcoal/60 tracking-wide"
+                className="text-lg md:text-2xl font-bold text-brand-navy/30 hover:text-brand-navy transition-colors duration-300"
                 data-animate="fade-in"
                 data-animate-delay={String((i % 5) + 1)}
               >
@@ -152,51 +177,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Certifications */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2
-            className="text-center text-2xl md:text-3xl font-bold text-brand-navy mb-10"
-            data-animate="fade-up"
-          >
-            {t("certTitle")}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { icon: Award, title: "ISO 9001", year: "2013 ~" },
-              { icon: Building2, title: "CLEAN 사업장", year: "2013 ~" },
-              {
-                icon: FileCheck,
-                title: "우레탄 금형베이스 특허",
-                year: "2016 ~",
-              },
-            ].map((cert, i) => (
-              <div
-                key={cert.title}
-                className="flex items-start gap-4 p-6 border-l-4 border-brand-copper bg-surface-warm-50 rounded-r-lg hover-lift"
-                data-animate="fade-up"
-                data-animate-delay={String(i + 1)}
-              >
-                <div className="w-12 h-12 rounded-full bg-brand-copper/10 flex items-center justify-center shrink-0">
-                  <cert.icon className="w-6 h-6 text-brand-copper" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-brand-navy">
-                    {cert.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 mt-0.5">{cert.year}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Business Areas */}
+      {/* Business Areas — photo cards */}
       <section className="py-16 md:py-20 bg-surface-warm-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
-            className="text-center text-2xl md:text-3xl font-bold text-brand-navy mb-10"
+            className="text-2xl md:text-3xl font-bold text-brand-navy mb-10"
             data-animate="fade-up"
           >
             {t("businessTitle")}
@@ -206,17 +191,32 @@ export default function HomePage() {
               <Link
                 key={area.key}
                 href="/business"
-                className="group block bg-white rounded-lg p-6 border border-surface-warm-200 hover-lift"
+                className="group block bg-white rounded-xl overflow-hidden border border-surface-warm-200 hover-lift"
                 data-animate="fade-up"
                 data-animate-delay={String(i + 1)}
               >
-                <div className="w-12 h-12 rounded-full bg-brand-copper/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <area.icon className="w-6 h-6 text-brand-copper" />
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={area.image}
+                    alt={area.titleKo}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 to-transparent" />
+                  <div className="absolute bottom-3 left-3">
+                    <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <area.icon className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-lg font-semibold text-brand-navy group-hover:text-brand-blue transition-colors">
-                  {area.titleKo}
-                </h3>
-                <p className="text-sm text-gray-500 mt-2">{area.descKo}</p>
+                <div className="p-4">
+                  <h3 className="font-semibold text-brand-navy group-hover:text-brand-blue transition-colors flex items-center gap-1">
+                    {area.titleKo}
+                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1">{area.descKo}</p>
+                </div>
               </Link>
             ))}
           </div>
@@ -225,7 +225,7 @@ export default function HomePage() {
 
       {/* Stats */}
       <section className="py-16 md:py-20 bg-brand-navy text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
             className="text-center text-2xl md:text-3xl font-bold mb-12"
             data-animate="fade-up"
@@ -233,53 +233,34 @@ export default function HomePage() {
             {t("numbersTitle")}
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              {
-                icon: Calendar,
-                end: 25,
-                suffix: "",
-                label: t("statsYears"),
-              },
-              {
-                icon: Users,
-                end: 20,
-                suffix: "+",
-                label: t("statsClients"),
-              },
-              {
-                icon: Award,
-                end: 0,
-                suffix: "",
-                prefix: "ISO",
-                label: t("statsCertified"),
-              },
-              {
-                icon: FileCheck,
-                end: 1,
-                suffix: "+",
-                label: t("statsPatent"),
-              },
-            ].map((stat, i) => (
-              <div
-                key={stat.label}
-                data-animate="fade-up"
-                data-animate-delay={String(i + 1)}
-              >
-                <stat.icon className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
-                <div className="text-4xl md:text-5xl font-bold mb-2">
-                  {stat.prefix ? (
-                    <span>{stat.prefix}</span>
-                  ) : (
-                    <StatsCounter
-                      end={stat.end}
-                      suffix={stat.suffix}
-                    />
-                  )}
-                </div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
-                <div className="w-8 h-0.5 bg-brand-copper mx-auto mt-3" />
+            <div data-animate="fade-up" data-animate-delay="1">
+              <Calendar className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
+              <div className="text-4xl md:text-5xl font-bold mb-2">
+                <StatsCounter end={24} suffix="+" />
               </div>
-            ))}
+              <div className="text-sm text-gray-400">{t("statsYears")}</div>
+            </div>
+            <div data-animate="fade-up" data-animate-delay="2">
+              <Users className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
+              <div className="text-4xl md:text-5xl font-bold mb-2">
+                <StatsCounter end={20} suffix="+" />
+              </div>
+              <div className="text-sm text-gray-400">{t("statsClients")}</div>
+            </div>
+            <div data-animate="fade-up" data-animate-delay="3">
+              <Award className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
+              <div className="text-4xl md:text-5xl font-bold mb-2">
+                ISO 9001
+              </div>
+              <div className="text-sm text-gray-400">{t("statsCertified")}</div>
+            </div>
+            <div data-animate="fade-up" data-animate-delay="4">
+              <FileCheck className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
+              <div className="text-4xl md:text-5xl font-bold mb-2">
+                <StatsCounter end={1} suffix="+" />
+              </div>
+              <div className="text-sm text-gray-400">{t("statsPatent")}</div>
+            </div>
           </div>
         </div>
       </section>
