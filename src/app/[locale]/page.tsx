@@ -71,7 +71,7 @@ export default function HomePage() {
               {t("heroTitle")}
             </h1>
             <p
-              className="text-lg md:text-xl text-white/70 mb-10 max-w-2xl"
+              className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl"
               data-animate="fade-up"
               data-animate-delay="1"
             >
@@ -94,7 +94,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/40 text-white bg-transparent hover:bg-white/10 text-lg px-8 py-3"
+                  className="border-white/60 text-white bg-white/10 hover:bg-white/20 text-lg px-8 py-3"
                 >
                   {t("aboutLink")}
                 </Button>
@@ -114,7 +114,7 @@ export default function HomePage() {
               ].map((cert) => (
                 <div key={cert.label} className="flex items-center gap-2">
                   <cert.icon className="w-4 h-4 text-brand-copper" />
-                  <span className="text-sm text-white/70 font-medium">{cert.label}</span>
+                  <span className="text-sm text-white/80 font-medium">{cert.label}</span>
                 </div>
               ))}
             </div>
@@ -145,7 +145,7 @@ export default function HomePage() {
                 data-animate="fade-in"
                 data-animate-delay={String((i % 5) + 1)}
               >
-                <span className="text-sm md:text-base font-bold text-brand-navy/70 hover:text-brand-navy transition-colors tracking-tight text-center leading-tight">
+                <span className="text-sm md:text-base font-bold text-brand-navy/80 hover:text-brand-navy transition-colors tracking-tight text-center leading-tight">
                   {client}
                 </span>
               </div>
@@ -192,7 +192,7 @@ export default function HomePage() {
                     {tb(`${area.key}.title`)}
                     <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </h3>
-                  <p className="text-sm text-brand-charcoal/60 mt-1">{tb(`${area.key}.desc`).substring(0, 40)}...</p>
+                  <p className="text-sm text-brand-charcoal/70 mt-1">{tb(`${area.key}.desc`).substring(0, 40)}...</p>
                 </div>
               </Link>
             ))}
@@ -215,28 +215,28 @@ export default function HomePage() {
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={24} suffix="+" />
               </div>
-              <div className="text-sm text-white/50">{t("statsYears")}</div>
+              <div className="text-sm text-white/70">{t("statsYears")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="2">
               <Users className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={20} suffix="+" />
               </div>
-              <div className="text-sm text-white/50">{t("statsClients")}</div>
+              <div className="text-sm text-white/70">{t("statsClients")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="3">
               <Award className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 ISO 9001
               </div>
-              <div className="text-sm text-white/50">{t("statsCertified")}</div>
+              <div className="text-sm text-white/70">{t("statsCertified")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="4">
               <FileCheck className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={1} suffix="+" />
               </div>
-              <div className="text-sm text-white/50">{t("statsPatent")}</div>
+              <div className="text-sm text-white/70">{t("statsPatent")}</div>
             </div>
           </div>
         </div>
@@ -252,7 +252,7 @@ export default function HomePage() {
             {t("ctaTitle")}
           </h2>
           <p
-            className="text-white/70 mb-4"
+            className="text-white/80 mb-4"
             data-animate="fade-up"
             data-animate-delay="1"
           >
@@ -280,7 +280,7 @@ export default function HomePage() {
             </Link>
             <a
               href="tel:055-367-2596"
-              className="flex items-center gap-2 text-white/40 hover:text-white/70 transition-colors text-sm mt-2"
+              className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm mt-2"
             >
               <Phone className="w-4 h-4" />
               <span>{t("ctaPhone")}</span>
