@@ -63,9 +63,9 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-brand-navy/80" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 relative z-10">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <h1
-              className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 text-white"
+              className="text-3xl md:text-[44px] lg:text-[52px] font-bold leading-[1.2] mb-4 text-white whitespace-pre-line"
               data-animate="fade-up"
             >
               {t("heroTitle")}
@@ -128,8 +128,8 @@ export default function HomePage() {
         />
       </section>
 
-      {/* Client Logo Wall — structured grid */}
-      <section className="py-14 md:py-20 bg-surface-warm-50 border-y border-surface-warm-200">
+      {/* Client Logo Wall — structured grid (tight padding for rhythm) */}
+      <section className="py-10 md:py-14 bg-surface-warm-50 border-y border-surface-warm-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <p
             className="text-center text-sm font-semibold text-brand-charcoal/60 uppercase tracking-[0.2em] mb-8"
@@ -172,7 +172,7 @@ export default function HomePage() {
                 data-animate="fade-up"
                 data-animate-delay={String(i + 1)}
               >
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-36 md:h-48 overflow-hidden">
                   <Image
                     src={area.image}
                     alt={tb(`${area.key}.title`)}
@@ -200,8 +200,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-16 md:py-20 bg-brand-navy text-white">
+      {/* Stats — generous padding for emphasis */}
+      <section className="py-20 md:py-28 bg-brand-navy text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
             className="text-center text-2xl md:text-3xl font-bold mb-12"
@@ -242,8 +242,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 md:py-20 hero-gradient text-white text-center">
+      {/* CTA Section — tighter to stats */}
+      <section className="py-12 md:py-16 hero-gradient text-white text-center">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
             className="text-2xl md:text-3xl font-bold mb-4"
