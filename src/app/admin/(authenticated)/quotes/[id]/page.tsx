@@ -1,11 +1,11 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { getQuoteAttachmentUrls } from "../actions";
 import { QuoteStatusForm } from "./quote-status-form";
 import { StatusBadge } from "@/components/admin/status-badge";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Download } from "lucide-react";
+import { DetailPageHeader } from "@/components/admin/detail-page-header";
+import { InfoGrid } from "@/components/admin/info-grid";
+import { Download } from "lucide-react";
 
 export const metadata = { title: "견적 상세" };
 
@@ -31,25 +31,13 @@ export default async function QuoteDetailPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Link href="/admin/quotes">
-          <Button variant="ghost" size="icon-sm" className="rounded-lg" aria-label="뒤로 가기">
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-lg font-bold text-brand-navy">견적 상세</h1>
-          <p className="text-xs text-gray-400">
-            {new Date(quote.created_at).toLocaleDateString("ko-KR")} 접수
-          </p>
-        </div>
-      </div>
+      <DetailPageHeader backHref="/admin/quotes" title="견적 상세" subtitle={`${new Date(quote.created_at).toLocaleDateString("ko-KR")} 접수`} />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Quote Details */}
         <div className="md:col-span-2 space-y-6">
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
               <div>
                 <h2 className="text-base font-semibold text-brand-navy">
                   {quote.company_name}
@@ -59,58 +47,18 @@ export default async function QuoteDetailPage({
               <StatusBadge status={quote.status} type="quote" />
             </div>
 
-            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6">
-              <div>
-                <dt className="text-xs text-gray-400 font-medium">회사명</dt>
-                <dd className="mt-1 text-sm font-medium">{quote.company_name}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400 font-medium">담당자</dt>
-                <dd className="mt-1 text-sm font-medium">{quote.contact_name}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">연락처</dt>
-                <dd className="mt-1 text-sm font-medium">{quote.phone || "-"}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">이메일</dt>
-                <dd className="mt-1 text-sm font-medium">{quote.email || "-"}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">가공종류</dt>
-                <dd className="mt-1 text-sm font-medium">
-                  {quote.processing_type || "-"}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">소재</dt>
-                <dd className="mt-1 text-sm font-medium">{quote.material || "-"}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">수량</dt>
-                <dd className="mt-1 text-sm font-medium">{quote.quantity || "-"}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">납기일</dt>
-                <dd className="mt-1 text-sm font-medium">
-                  {quote.deadline
-                    ? new Date(quote.deadline).toLocaleDateString("ko-KR")
-                    : "-"}
-                </dd>
-              </div>
-              <div className="sm:col-span-2">
-                <dt className="text-xs text-gray-400">상세 설명</dt>
-                <dd className="mt-1 whitespace-pre-wrap">
-                  {quote.description || "-"}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">접수일</dt>
-                <dd className="mt-1 text-sm text-gray-600">
-                  {new Date(quote.created_at).toLocaleString("ko-KR")}
-                </dd>
-              </div>
-            </dl>
+            <InfoGrid items={[
+              { label: "회사명", value: quote.company_name },
+              { label: "담당자", value: quote.contact_name },
+              { label: "연락처", value: quote.phone },
+              { label: "이메일", value: quote.email },
+              { label: "가공종류", value: quote.processing_type },
+              { label: "소재", value: quote.material },
+              { label: "수량", value: quote.quantity },
+              { label: "납기일", value: quote.deadline ? new Date(quote.deadline).toLocaleDateString("ko-KR") : null },
+              { label: "상세 설명", value: quote.description ? <span className="whitespace-pre-wrap">{quote.description}</span> : null, fullWidth: true },
+              { label: "접수일", value: new Date(quote.created_at).toLocaleString("ko-KR") },
+            ]} />
           </div>
 
           {/* Attachments */}

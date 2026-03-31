@@ -1,11 +1,11 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { getResumeUrl } from "../actions";
 import { ApplicationStatusForm } from "./application-status-form";
 import { StatusBadge } from "@/components/admin/status-badge";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Download } from "lucide-react";
+import { DetailPageHeader } from "@/components/admin/detail-page-header";
+import { InfoGrid } from "@/components/admin/info-grid";
+import { Download } from "lucide-react";
 
 export const metadata = { title: "지원서 상세" };
 
@@ -31,25 +31,13 @@ export default async function ApplicationDetailPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Link href="/admin/applications">
-          <Button variant="ghost" size="icon-sm" className="rounded-lg" aria-label="뒤로 가기">
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-lg font-bold text-brand-navy">지원서 상세</h1>
-          <p className="text-xs text-gray-400">
-            {new Date(application.created_at).toLocaleDateString("ko-KR")} 지원
-          </p>
-        </div>
-      </div>
+      <DetailPageHeader backHref="/admin/applications" title="지원서 상세" subtitle={`${new Date(application.created_at).toLocaleDateString("ko-KR")} 지원`} />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Application Details */}
         <div className="md:col-span-2 space-y-6">
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
               <div>
                 <h2 className="text-base font-semibold text-brand-navy">
                   {application.name}
@@ -59,42 +47,14 @@ export default async function ApplicationDetailPage({
               <StatusBadge status={application.status} type="application" />
             </div>
 
-            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6">
-              <div>
-                <dt className="text-xs text-gray-400">이름</dt>
-                <dd className="mt-1 text-sm font-medium">{application.name}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">연락처</dt>
-                <dd className="mt-1 text-sm font-medium">
-                  {application.phone || "-"}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">이메일</dt>
-                <dd className="mt-1 text-sm font-medium">
-                  {application.email || "-"}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">지원 포지션</dt>
-                <dd className="mt-1 text-sm font-medium">
-                  {application.position || "-"}
-                </dd>
-              </div>
-              <div className="sm:col-span-2">
-                <dt className="text-xs text-gray-400">자기소개서</dt>
-                <dd className="mt-1 whitespace-pre-wrap">
-                  {application.cover_letter || "-"}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs text-gray-400">지원일</dt>
-                <dd className="mt-1 text-sm text-gray-600">
-                  {new Date(application.created_at).toLocaleString("ko-KR")}
-                </dd>
-              </div>
-            </dl>
+            <InfoGrid items={[
+              { label: "이름", value: application.name },
+              { label: "연락처", value: application.phone },
+              { label: "이메일", value: application.email },
+              { label: "지원 포지션", value: application.position },
+              { label: "자기소개서", value: application.cover_letter ? <span className="whitespace-pre-wrap">{application.cover_letter}</span> : null, fullWidth: true },
+              { label: "지원일", value: new Date(application.created_at).toLocaleString("ko-KR") },
+            ]} />
           </div>
 
           {/* Resume Attachments */}

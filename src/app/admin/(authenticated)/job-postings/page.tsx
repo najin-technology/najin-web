@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
+import { ListPageHeader } from "@/components/admin/list-page-header";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -10,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { JobPostingActiveToggle } from "./job-posting-toggle";
 import { JobPostingDeleteButton } from "./job-posting-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
@@ -39,20 +40,7 @@ export default async function JobPostingsPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold text-brand-navy">채용공고</h1>
-          {postings && postings.length > 0 && (
-            <span className="text-xs text-gray-400 tabular-nums">{postings.length}건</span>
-          )}
-        </div>
-        <Link href="/admin/job-postings/new">
-          <Button className="bg-brand-navy hover:bg-brand-navy-light text-white gap-1.5 rounded-lg shadow-sm">
-            <Plus className="w-4 h-4" />
-            새 공고 작성
-          </Button>
-        </Link>
-      </div>
+      <ListPageHeader title="채용공고" count={postings?.length} createHref="/admin/job-postings/new" createLabel="새 공고 작성" />
 
       <SearchFilterBar
         searchPlaceholder="공고 제목 검색..."
@@ -119,6 +107,11 @@ export default async function JobPostingsPage({
             )}
           </TableBody>
         </Table>
+        {postings && postings.length > 0 && (
+          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400">
+            총 {postings.length}건
+          </div>
+        )}
       </div>
     </div>
   );

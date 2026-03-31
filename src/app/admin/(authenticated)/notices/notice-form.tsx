@@ -5,8 +5,8 @@ import { createNotice, updateNotice } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { FormStatusBar } from "@/components/admin/form-status-bar";
 import { TiptapEditor } from "@/components/admin/tiptap-editor";
 import { AlertMessage } from "@/components/admin/alert-message";
 import { Eye, EyeOff } from "lucide-react";
@@ -48,17 +48,10 @@ export function NoticeForm({
         <AlertMessage>{state.error}</AlertMessage>
       )}
 
-      <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4">
-        <Switch
-          checked={isPublished}
-          onCheckedChange={(checked: boolean) => setIsPublished(checked)}
-        />
-        <div>
-          <Label className="text-sm font-medium">{isPublished ? "공개" : "비공개"}</Label>
-          <p className="text-xs text-gray-400 mt-0.5">
-            {isPublished ? "웹사이트에 표시됩니다" : "관리자만 볼 수 있습니다"}
-          </p>
-        </div>
+      <FormStatusBar checked={isPublished} onCheckedChange={setIsPublished} activeLabel="공개" inactiveLabel="비공개" />
+
+      <div className="border-t border-gray-100 pt-2">
+        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">콘텐츠</p>
       </div>
 
       <Tabs defaultValue="ko">

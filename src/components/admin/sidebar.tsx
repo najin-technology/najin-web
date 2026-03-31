@@ -71,7 +71,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
                   }`}
                 >
                   {active && (
-                    <span className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r-full bg-white/60" />
+                    <span className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r-full bg-white/70 shadow-[2px_0_8px_rgba(255,255,255,0.15)]" />
                   )}
                   <Icon className="w-[18px] h-[18px] flex-shrink-0" />
                   <span className="flex-1">{item.label}</span>
@@ -112,7 +112,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200/80 z-40 transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200/80 z-40 shadow-[1px_0_3px_rgba(0,0,0,0.03)] transition-transform duration-200 lg:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >

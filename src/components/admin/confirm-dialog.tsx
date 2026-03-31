@@ -52,7 +52,7 @@ export function ConfirmDialog({
             </div>
           </div>
         </DialogHeader>
-        <DialogFooter className="gap-2 sm:gap-2">
+        <DialogFooter className="gap-2">
           <Button variant="outline" onClick={() => setOpen(false)} className="flex-1 sm:flex-none">
             취소
           </Button>

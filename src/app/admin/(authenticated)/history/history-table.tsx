@@ -50,7 +50,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {items.map((item) =>
+          {items.map((item, idx) =>
             editingId === item.id ? (
               <TableRow key={item.id}>
                 <TableCell colSpan={6} className="p-3">
@@ -61,7 +61,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
                 </TableCell>
               </TableRow>
             ) : (
-              <TableRow key={item.id}>
+              <TableRow key={item.id} className={idx > 0 && items[idx - 1].year !== item.year ? "border-t-2 border-t-gray-200" : ""}>
                 <TableCell className="font-medium">{item.year}</TableCell>
                 <TableCell>{item.month ?? "-"}</TableCell>
                 <TableCell>{item.description_ko}</TableCell>

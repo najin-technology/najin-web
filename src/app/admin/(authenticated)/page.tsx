@@ -25,14 +25,24 @@ import {
 export const metadata = { title: "대시보드" };
 
 function relativeTime(dateStr: string) {
-  const now = Date.now();
-  const diff = now - new Date(dateStr).getTime();
+  const date = new Date(dateStr);
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
   const hours = Math.floor(diff / 3600000);
   const days = Math.floor(diff / 86400000);
-  if (hours < 1) return "방금";
-  if (hours < 24) return `${hours}시간 전`;
+
+  const isToday = date.toDateString() === now.toDateString();
+  const yesterday = new Date(now);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const isYesterday = date.toDateString() === yesterday.toDateString();
+
+  if (isToday) {
+    if (hours < 1) return "방금";
+    return `오늘 ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+  }
+  if (isYesterday) return "어제";
   if (days < 7) return `${days}일 전`;
-  return new Date(dateStr).toLocaleDateString("ko-KR");
+  return date.toLocaleDateString("ko-KR");
 }
 
 function isStale(dateStr: string) {
@@ -139,14 +149,14 @@ export default async function AdminDashboard() {
                   </div>
                   <p className="text-sm font-medium text-white/80">미처리 견적</p>
                 </div>
-                <p className="text-3xl font-bold tabular-nums">
+                <p className="text-3xl font-bold tabular-nums stat-number">
                   {pendingQuotes || 0}<span className="text-base font-normal text-white/60 ml-1">건</span>
                 </p>
               </div>
               <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-white/80 group-hover:translate-x-0.5 transition-all" />
             </div>
             {(pendingQuotes || 0) > 0 && (
-              <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span className="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-white animate-pulse ring-2 ring-white/30" />
             )}
           </Link>
           <Link
@@ -161,14 +171,14 @@ export default async function AdminDashboard() {
                   </div>
                   <p className="text-sm font-medium text-white/80">미처리 지원서</p>
                 </div>
-                <p className="text-3xl font-bold tabular-nums">
+                <p className="text-3xl font-bold tabular-nums stat-number">
                   {pendingApps || 0}<span className="text-base font-normal text-white/60 ml-1">건</span>
                 </p>
               </div>
               <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-white/80 group-hover:translate-x-0.5 transition-all" />
             </div>
             {(pendingApps || 0) > 0 && (
-              <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span className="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-white animate-pulse ring-2 ring-white/30" />
             )}
           </Link>
         </div>
@@ -186,7 +196,7 @@ export default async function AdminDashboard() {
                 <Inbox className="w-[18px] h-[18px] text-amber-600" />
               </div>
               <p className="text-xs font-medium text-gray-400 mb-0.5">미처리 견적</p>
-              <p className="text-2xl font-bold text-brand-navy tabular-nums">
+              <p className="text-2xl font-bold text-brand-navy tabular-nums stat-number">
                 {pendingQuotes || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
               </p>
             </Link>
@@ -198,7 +208,7 @@ export default async function AdminDashboard() {
                 <Users className="w-[18px] h-[18px] text-rose-600" />
               </div>
               <p className="text-xs font-medium text-gray-400 mb-0.5">미처리 지원서</p>
-              <p className="text-2xl font-bold text-brand-navy tabular-nums">
+              <p className="text-2xl font-bold text-brand-navy tabular-nums stat-number">
                 {pendingApps || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
               </p>
             </Link>
@@ -212,7 +222,7 @@ export default async function AdminDashboard() {
             <Package className="w-[18px] h-[18px] text-blue-600" />
           </div>
           <p className="text-xs font-medium text-gray-400 mb-0.5">활성 제품</p>
-          <p className="text-2xl font-bold text-gray-700 tabular-nums">
+          <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
             {activeProducts || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
           </p>
         </Link>
@@ -224,7 +234,7 @@ export default async function AdminDashboard() {
             <Briefcase className="w-[18px] h-[18px] text-emerald-600" />
           </div>
           <p className="text-xs font-medium text-gray-400 mb-0.5">활성 채용공고</p>
-          <p className="text-2xl font-bold text-gray-700 tabular-nums">
+          <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
             {activeJobs || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
           </p>
         </Link>
@@ -236,7 +246,7 @@ export default async function AdminDashboard() {
             <Bell className="w-[18px] h-[18px] text-violet-600" />
           </div>
           <p className="text-xs font-medium text-gray-400 mb-0.5">공개 공지</p>
-          <p className="text-2xl font-bold text-gray-700 tabular-nums">
+          <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
             {publishedNotices || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
           </p>
         </Link>
@@ -245,19 +255,19 @@ export default async function AdminDashboard() {
       {/* Quick Actions */}
       <div className="flex flex-wrap gap-2">
         <Link href="/admin/notices/new">
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg">
+          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 공지사항을 작성합니다">
             <Plus className="w-3.5 h-3.5" />
             새 공지 작성
           </Button>
         </Link>
         <Link href="/admin/products/new">
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg">
+          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 제품을 등록합니다">
             <Plus className="w-3.5 h-3.5" />
             새 제품 등록
           </Button>
         </Link>
         <Link href="/admin/job-postings/new">
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg">
+          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 채용공고를 작성합니다">
             <Plus className="w-3.5 h-3.5" />
             새 채용공고
           </Button>
@@ -307,7 +317,7 @@ export default async function AdminDashboard() {
                     <StatusBadge status={q.status} type="quote" />
                   </TableCell>
                   <TableCell className="text-sm text-gray-500">
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1" title={new Date(q.created_at).toLocaleString("ko-KR")}>
                       {relativeTime(q.created_at)}
                       {q.status === "접수" && isStale(q.created_at) && (
                         <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
@@ -365,7 +375,7 @@ export default async function AdminDashboard() {
                     <StatusBadge status={a.status} type="application" />
                   </TableCell>
                   <TableCell className="text-sm text-gray-500">
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1" title={new Date(a.created_at).toLocaleString("ko-KR")}>
                       {relativeTime(a.created_at)}
                       {a.status === "서류검토" && isStale(a.created_at) && (
                         <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
