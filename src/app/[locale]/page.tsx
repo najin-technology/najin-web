@@ -8,6 +8,7 @@ import {
   FlaskConical,
   Cog,
   Box,
+  Zap,
   Award,
   Building2,
   FileCheck,
@@ -18,17 +19,17 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-const clients = [
-  "현대자동차",
-  "현대파워텍",
-  "르노삼성",
-  "SK",
-  "한화케미칼",
-  "동희산업",
-  "화신",
-  "성우하이텍",
-  "GM Shanghai",
-  "Lear Dymos",
+const clients: { name: string; logo?: string }[] = [
+  { name: "현대자동차", logo: "/images/logos/hyundai.png" },
+  { name: "현대파워텍", logo: "/images/logos/hyundai-powertech.svg" },
+  { name: "르노삼성", logo: "/images/logos/renault.svg" },
+  { name: "SK", logo: "/images/logos/sk.png" },
+  { name: "한화케미칼" },
+  { name: "동희산업", logo: "/images/logos/donghee.png" },
+  { name: "화신" },
+  { name: "성우하이텍" },
+  { name: "GM Shanghai", logo: "/images/logos/gm.png" },
+  { name: "Lear Dymos", logo: "/images/logos/lear.svg" },
 ];
 
 const businessAreas: {
@@ -40,6 +41,7 @@ const businessAreas: {
   { key: "resin", icon: FlaskConical, image: "/images/products/pe-rod-1.jpg" },
   { key: "cnc", icon: Cog, image: "/images/products/3d-mc-part-1.jpg" },
   { key: "mold", icon: Box, image: "/images/products/3d-mc-part-2.jpg" },
+  { key: "ev", icon: Zap, image: "/images/products/db-4421a7e9-0.jpg" },
 ];
 
 export default function HomePage() {
@@ -140,14 +142,24 @@ export default function HomePage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-px bg-surface-warm-200">
             {clients.map((client, i) => (
               <div
-                key={client}
+                key={client.name}
                 className="bg-white flex items-center justify-center py-6 px-4 hover:bg-surface-warm-50 transition-colors duration-300"
                 data-animate="fade-in"
                 data-animate-delay={String((i % 5) + 1)}
               >
-                <span className="text-sm md:text-base font-bold text-brand-navy/80 hover:text-brand-navy transition-colors tracking-tight text-center leading-tight">
-                  {client}
-                </span>
+                {client.logo ? (
+                  <Image
+                    src={client.logo}
+                    alt={client.name}
+                    width={120}
+                    height={40}
+                    className="h-7 md:h-9 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  />
+                ) : (
+                  <span className="text-sm md:text-base font-bold text-brand-navy/80 hover:text-brand-navy transition-colors tracking-tight text-center leading-tight">
+                    {client.name}
+                  </span>
+                )}
               </div>
             ))}
           </div>
@@ -163,7 +175,7 @@ export default function HomePage() {
           >
             {t("businessTitle")}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {businessAreas.map((area, i) => (
               <Link
                 key={area.key}
@@ -172,29 +184,83 @@ export default function HomePage() {
                 data-animate="fade-up"
                 data-animate-delay={String(i + 1)}
               >
-                <div className="relative h-36 md:h-48 overflow-hidden">
+                <div className="relative h-36 md:h-44 overflow-hidden">
                   <Image
                     src={area.image}
                     alt={tb(`${area.key}.title`)}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, 25vw"
+                    sizes="(max-width: 768px) 100vw, 20vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 to-transparent" />
-                  <div className="absolute bottom-3 left-3">
-                    <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                      <area.icon className="w-4 h-4 text-white" />
-                    </div>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/50 to-transparent" />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-brand-navy group-hover:text-brand-blue transition-colors flex items-center gap-1">
+                  <h3 className="font-semibold text-brand-navy group-hover:text-brand-blue transition-colors flex items-center gap-1.5">
+                    <area.icon className="w-4 h-4 text-brand-copper shrink-0" />
                     {tb(`${area.key}.title`)}
-                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity ml-auto shrink-0" />
                   </h3>
-                  <p className="text-sm text-brand-charcoal/70 mt-1">{tb(`${area.key}.desc`).substring(0, 40)}...</p>
+                  <p className="text-sm text-brand-charcoal/70 mt-1 line-clamp-2">{tb(`${area.key}.desc`)}</p>
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why NAJIN — differentiators */}
+      <section className="py-16 md:py-20 bg-surface-warm-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            className="text-2xl md:text-3xl font-bold text-brand-navy mb-3"
+            data-animate="fade-up"
+          >
+            {t("whyTitle")}
+          </h2>
+          <p
+            className="text-brand-charcoal/70 mb-10 max-w-2xl"
+            data-animate="fade-up"
+            data-animate-delay="1"
+          >
+            {t("whySubtitle")}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {([
+              {
+                title: t("why1Title"),
+                desc: t("why1Desc"),
+                icon: FileCheck,
+              },
+              {
+                title: t("why2Title"),
+                desc: t("why2Desc"),
+                icon: Cog,
+              },
+              {
+                title: t("why3Title"),
+                desc: t("why3Desc"),
+                icon: Users,
+              },
+              {
+                title: t("why4Title"),
+                desc: t("why4Desc"),
+                icon: Zap,
+              },
+            ] as const).map((item, i) => (
+              <div
+                key={i}
+                className="flex gap-4 p-5 bg-white rounded-xl border border-surface-warm-200 shadow-sm"
+                data-animate="fade-up"
+                data-animate-delay={String(i + 1)}
+              >
+                <div className="w-10 h-10 rounded-lg bg-brand-copper/10 flex items-center justify-center shrink-0">
+                  <item.icon className="w-5 h-5 text-brand-copper" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-brand-navy mb-1">{item.title}</h3>
+                  <p className="text-sm text-brand-charcoal/70 leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
