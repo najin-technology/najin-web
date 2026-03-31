@@ -128,25 +128,27 @@ export default function HomePage() {
         />
       </section>
 
-      {/* Client Logo Wall — big text, high impact */}
-      <section className="py-16 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Client Logo Wall — structured grid */}
+      <section className="py-14 md:py-20 bg-surface-warm-50 border-y border-surface-warm-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <p
-            className="text-center text-sm font-semibold text-gray-400 uppercase tracking-widest mb-10"
+            className="text-center text-xs font-semibold text-brand-charcoal/40 uppercase tracking-[0.2em] mb-8"
             data-animate="fade-in"
           >
             {t("clientsTitle")}
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-6 md:gap-x-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-px bg-surface-warm-200">
             {clients.map((client, i) => (
-              <span
+              <div
                 key={client}
-                className="text-lg md:text-2xl font-bold text-brand-navy/30 hover:text-brand-navy transition-colors duration-300"
+                className="bg-white flex items-center justify-center py-6 px-4 hover:bg-surface-warm-50 transition-colors duration-300"
                 data-animate="fade-in"
                 data-animate-delay={String((i % 5) + 1)}
               >
-                {client}
-              </span>
+                <span className="text-sm md:text-base font-bold text-brand-navy/50 hover:text-brand-navy transition-colors tracking-tight text-center leading-tight">
+                  {client}
+                </span>
+              </div>
             ))}
           </div>
         </div>
