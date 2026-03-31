@@ -11,10 +11,21 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-export const metadata = {
-  title: "사업영역",
-  description: "나진테크 사업영역. 우레탄 성형, 합성수지 가공, CNC/MCT 정밀가공, 금형 제작, EV 부품 가공 전문.",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return createPageMetadata({
+    locale,
+    path: "/business",
+    titles: { ko: "사업영역", en: "Business Areas", zh: "业务领域" },
+    descriptions: {
+      ko: "나진테크 사업영역. 우레탄 성형, 합성수지 가공, CNC/MCT 정밀가공, 금형 제작, EV 부품 가공 전문.",
+      en: "NAJIN TECHNOLOGY business areas. Urethane molding, synthetic resin processing, CNC machining, mold fabrication, EV parts.",
+      zh: "纳进科技业务领域。聚氨酯成型、合成树脂加工、CNC精密加工、模具制作、电动汽车零部件加工。",
+    },
+  });
+}
 
 const categories: {
   key: string;

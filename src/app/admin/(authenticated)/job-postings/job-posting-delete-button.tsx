@@ -3,30 +3,30 @@
 import { useTransition } from "react";
 import { deleteJobPosting } from "./actions";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
-export function JobPostingDeleteButton({
-  postingId,
-}: {
-  postingId: string;
-}) {
+export function JobPostingDeleteButton({ postingId }: { postingId: string }) {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <Button
-      variant="ghost"
-      size="icon-sm"
-      disabled={isPending}
-      className="text-red-500 hover:text-red-700"
-      onClick={() => {
-        if (confirm("정말 삭제하시겠습니까?")) {
-          startTransition(() => {
-            deleteJobPosting(postingId);
-          });
-        }
+    <ConfirmDialog
+      onConfirm={() => {
+        startTransition(async () => {
+          await deleteJobPosting(postingId);
+          toast.success("삭제되었습니다");
+        });
       }}
     >
-      <Trash2 className="w-4 h-4" />
-    </Button>
+      <Button
+        variant="ghost"
+        size="icon-sm"
+        disabled={isPending}
+        className="text-red-500 hover:text-red-700"
+      >
+        <Trash2 className="w-4 h-4" />
+      </Button>
+    </ConfirmDialog>
   );
 }

@@ -9,6 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Plus, FileText, Package, Briefcase } from "lucide-react";
 
 export const metadata = { title: "대시보드" };
 
@@ -18,6 +20,9 @@ export default async function AdminDashboard() {
   const [
     { count: pendingQuotes },
     { count: pendingApps },
+    { count: activeProducts },
+    { count: activeJobs },
+    { count: publishedNotices },
     { data: recentQuotes },
     { data: recentApps },
   ] = await Promise.all([
@@ -30,6 +35,21 @@ export default async function AdminDashboard() {
       .from("applications")
       .select("*", { count: "exact", head: true })
       .eq("status", "서류검토")
+      .is("deleted_at", null),
+    supabase
+      .from("products")
+      .select("*", { count: "exact", head: true })
+      .eq("is_active", true)
+      .is("deleted_at", null),
+    supabase
+      .from("job_postings")
+      .select("*", { count: "exact", head: true })
+      .eq("is_active", true)
+      .is("deleted_at", null),
+    supabase
+      .from("notices")
+      .select("*", { count: "exact", head: true })
+      .eq("is_published", true)
       .is("deleted_at", null),
     supabase
       .from("quotes")
@@ -50,24 +70,76 @@ export default async function AdminDashboard() {
       <h1 className="text-2xl font-bold text-[#1B2A4A]">대시보드</h1>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <Link
           href="/admin/quotes"
-          className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow"
         >
-          <p className="text-sm text-gray-500">미처리 견적</p>
-          <p className="text-3xl font-bold text-[#3182CE] mt-1">
+          <p className="text-xs text-gray-500">미처리 견적</p>
+          <p className="text-2xl font-bold text-[#3182CE] mt-1">
             {pendingQuotes || 0}건
           </p>
         </Link>
         <Link
           href="/admin/applications"
-          className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow"
         >
-          <p className="text-sm text-gray-500">미처리 지원서</p>
-          <p className="text-3xl font-bold text-[#3182CE] mt-1">
+          <p className="text-xs text-gray-500">미처리 지원서</p>
+          <p className="text-2xl font-bold text-[#3182CE] mt-1">
             {pendingApps || 0}건
           </p>
+        </Link>
+        <Link
+          href="/admin/products"
+          className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow"
+        >
+          <p className="text-xs text-gray-500">활성 제품</p>
+          <p className="text-2xl font-bold text-gray-700 mt-1">
+            {activeProducts || 0}개
+          </p>
+        </Link>
+        <Link
+          href="/admin/job-postings"
+          className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow"
+        >
+          <p className="text-xs text-gray-500">활성 채용공고</p>
+          <p className="text-2xl font-bold text-gray-700 mt-1">
+            {activeJobs || 0}개
+          </p>
+        </Link>
+        <Link
+          href="/admin/notices"
+          className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow"
+        >
+          <p className="text-xs text-gray-500">공개 공지</p>
+          <p className="text-2xl font-bold text-gray-700 mt-1">
+            {publishedNotices || 0}개
+          </p>
+        </Link>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="flex flex-wrap gap-3">
+        <Link href="/admin/notices/new">
+          <Button variant="outline" size="sm" className="gap-1.5">
+            <Plus className="w-4 h-4" />
+            <FileText className="w-4 h-4" />
+            새 공지 작성
+          </Button>
+        </Link>
+        <Link href="/admin/products/new">
+          <Button variant="outline" size="sm" className="gap-1.5">
+            <Plus className="w-4 h-4" />
+            <Package className="w-4 h-4" />
+            새 제품 등록
+          </Button>
+        </Link>
+        <Link href="/admin/job-postings/new">
+          <Button variant="outline" size="sm" className="gap-1.5">
+            <Plus className="w-4 h-4" />
+            <Briefcase className="w-4 h-4" />
+            새 채용공고
+          </Button>
         </Link>
       </div>
 

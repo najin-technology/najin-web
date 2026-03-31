@@ -5,10 +5,21 @@ import { QuoteForm } from "./quote-form";
 import Image from "next/image";
 import { Phone, MapPin, Mail } from "lucide-react";
 
-export const metadata = {
-  title: "견적문의",
-  description: "나진테크 견적문의. 도면 첨부 가능, 24시간 내 회신. 우레탄, 합성수지, CNC, 금형 견적 요청.",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return createPageMetadata({
+    locale,
+    path: "/quote",
+    titles: { ko: "견적문의", en: "Request a Quote", zh: "询价咨询" },
+    descriptions: {
+      ko: "나진테크 견적문의. 도면 첨부 가능, 24시간 내 회신. 우레탄, 합성수지, CNC, 금형 견적 요청.",
+      en: "Request a quote from NAJIN TECHNOLOGY. Attach drawings, 24-hour response. Urethane, resin, CNC, mold quotes.",
+      zh: "纳进科技询价咨询。可附图纸，24小时内回复。聚氨酯、合成树脂、CNC、模具报价。",
+    },
+  });
+}
 
 export default function QuotePage() {
   const t = useTranslations("quote");

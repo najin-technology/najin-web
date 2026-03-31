@@ -10,21 +10,48 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 
 export const metadata = { title: "채용 관리" };
 
-export default async function ApplicationsPage() {
+export default async function ApplicationsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; status?: string }>;
+}) {
+  const { q, status } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
-  const { data: applications } = await supabase
+  let query = supabase
     .from("applications")
     .select("id, name, phone, email, position, status, created_at")
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
+  if (q) query = query.or(`name.ilike.%${q}%,email.ilike.%${q}%`);
+  if (status) query = query.eq("status", status);
+
+  const { data: applications } = await query;
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-[#1B2A4A]">채용 관리</h1>
+
+      <SearchFilterBar
+        searchPlaceholder="이름/이메일 검색..."
+        filters={[
+          {
+            key: "status",
+            label: "전체 상태",
+            options: [
+              { value: "서류검토", label: "서류검토" },
+              { value: "면접예정", label: "면접예정" },
+              { value: "합격", label: "합격" },
+              { value: "불합격", label: "불합격" },
+            ],
+          },
+        ]}
+      />
 
       <div className="bg-white rounded-lg border border-gray-200">
         <Table>
