@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { ProductForm } from "../../product-form";
 
-export const metadata = { title: "제품 수정" };
+export const metadata = { title: "제품 수정", description: "제품 정보 수정", robots: "noindex, nofollow" };
 
 export default async function EditProductPage({
   params,

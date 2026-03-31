@@ -5,9 +5,10 @@ import { ApplicationStatusForm } from "./application-status-form";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { InfoGrid } from "@/components/admin/info-grid";
+import { CopyButton } from "@/components/admin/copy-button";
 import { Download } from "lucide-react";
 
-export const metadata = { title: "지원서 상세" };
+export const metadata = { title: "지원서 상세", description: "지원서 상세 정보", robots: "noindex, nofollow" };
 
 export default async function ApplicationDetailPage({
   params,
@@ -49,8 +50,8 @@ export default async function ApplicationDetailPage({
 
             <InfoGrid items={[
               { label: "이름", value: application.name },
-              { label: "연락처", value: application.phone },
-              { label: "이메일", value: application.email },
+              { label: "연락처", value: application.phone ? <span className="flex items-center gap-1">{application.phone} <CopyButton text={application.phone} /></span> : null },
+              { label: "이메일", value: application.email ? <span className="flex items-center gap-1">{application.email} <CopyButton text={application.email} /></span> : null },
               { label: "지원 포지션", value: application.position },
               { label: "자기소개서", value: application.cover_letter ? <span className="whitespace-pre-wrap">{application.cover_letter}</span> : null, fullWidth: true },
               { label: "지원일", value: new Date(application.created_at).toLocaleString("ko-KR") },

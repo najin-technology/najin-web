@@ -1,7 +1,7 @@
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { NoticeForm } from "../notice-form";
 
-export const metadata = { title: "공지사항 작성" };
+export const metadata = { title: "새 공지 작성", description: "새 공지 작성", robots: "noindex, nofollow" };
 
 export default function NewNoticePage() {
   return (

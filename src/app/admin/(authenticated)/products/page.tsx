@@ -32,7 +32,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   EV: "bg-teal-100 text-teal-800",
 };
 
-export const metadata = { title: "제품 관리" };
+export const metadata = { title: "제품 관리", description: "제품 목록 관리", robots: "noindex, nofollow" };
 
 export default async function ProductsPage({
   searchParams,

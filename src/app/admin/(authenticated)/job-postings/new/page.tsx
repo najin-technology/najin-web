@@ -1,7 +1,7 @@
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { JobPostingForm } from "../job-posting-form";
 
-export const metadata = { title: "채용공고 작성" };
+export const metadata = { title: "새 공고 작성", description: "새 채용공고 작성", robots: "noindex, nofollow" };
 
 export default function NewJobPostingPage() {
   return (

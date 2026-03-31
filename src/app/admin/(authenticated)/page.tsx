@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { StatusProgress } from "@/components/admin/status-progress";
 
-export const metadata = { title: "대시보드" };
+export const metadata = { title: "대시보드", description: "나진테크 관리자 대시보드", robots: "noindex, nofollow" };
 
 function relativeTime(dateStr: string) {
   const date = new Date(dateStr);
@@ -126,6 +126,13 @@ export default async function AdminDashboard() {
         <h1 className="text-xl font-bold text-brand-navy">{getGreeting()}</h1>
         <p className="text-sm text-gray-400 mt-0.5">{formatToday()}</p>
         <p className="text-xs text-gray-400 mt-1">현재 운영 현황을 한눈에 확인하세요</p>
+        {((pendingQuotes || 0) > 0 || (pendingApps || 0) > 0) && (
+          <p className="text-xs text-gray-500 mt-1">
+            {(pendingQuotes || 0) > 0 && `처리 대기 견적 ${pendingQuotes}건`}
+            {(pendingQuotes || 0) > 0 && (pendingApps || 0) > 0 && " · "}
+            {(pendingApps || 0) > 0 && `검토 대기 지원서 ${pendingApps}건`}
+          </p>
+        )}
       </div>
 
       {/* All caught up message */}
