@@ -34,18 +34,20 @@ const clients = [
   { name: "해외 부품사", nameEn: "해외 부품사", category: "overseas" },
 ];
 
-// High-res images first (966x725), then low-res last (240-259px)
+// All high-res images (660px+)
 const galleryItems = [
   { src: "/images/products/3d-mc-part-1.jpg", title: "3D MC 형상가공품", category: "3D가공" },
-  { src: "/images/products/pe-rod-1.jpg", title: "PE 환봉 가공", category: "합성수지" },
+  { src: "/images/products/tank-pad-1.jpg", title: "TANK PAD 우레탄", category: "우레탄" },
   { src: "/images/products/3d-mc-part-2.jpg", title: "3D MC 형상가공품", category: "3D가공" },
+  { src: "/images/products/pe-rod-1.jpg", title: "PE 환봉 가공", category: "합성수지" },
+  { src: "/images/products/product-2026-1.jpg", title: "최신 납품 제품", category: "CNC/MCT" },
   { src: "/images/products/pe-rod-2.jpg", title: "PE 환봉 소재", category: "합성수지" },
+  { src: "/images/products/product-2026-2.jpg", title: "정밀 가공품", category: "CNC/MCT" },
+  { src: "/images/products/product-assembly-1.jpg", title: "조립 완성품", category: "금형" },
   { src: "/images/products/pe-rod-3.jpg", title: "PE 가공 완성품", category: "합성수지" },
+  { src: "/images/products/product-old-1.jpg", title: "우레탄 성형품", category: "우레탄" },
   { src: "/images/products/pe-rod-4.jpg", title: "PE 가공 완성품", category: "합성수지" },
-  { src: "/images/products/machined-part-1.jpg", title: "합성수지 가공품", category: "CNC/MCT" },
-  { src: "/images/products/machined-part-3.jpg", title: "정밀 가공품", category: "CNC/MCT" },
-  { src: "/images/products/machined-part-5.jpg", title: "금형 가공품", category: "금형" },
-  { src: "/images/products/machined-part-6.jpg", title: "금형 가공품", category: "금형" },
+  { src: "/images/products/product-new-1.jpg", title: "신규 가공품", category: "CNC/MCT" },
 ];
 
 export default function PortfolioPage() {
