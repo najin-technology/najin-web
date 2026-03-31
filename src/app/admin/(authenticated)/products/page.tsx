@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Pencil } from "lucide-react";
+import { Package, Pencil } from "lucide-react";
 import { ProductActiveToggle } from "./product-toggle";
 import { ProductDeleteButton } from "./product-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
@@ -87,9 +87,23 @@ export default async function ProductsPage({
         ]}
       />
 
+      {categories.length > 1 && (
+        <div className="flex flex-wrap gap-1.5">
+          {categories.map((cat) => (
+            <a
+              key={cat}
+              href={`#category-${cat}`}
+              className="text-xs px-2.5 py-1 rounded-full border border-gray-200 text-gray-500 hover:text-brand-navy hover:border-brand-navy/30 transition-colors"
+            >
+              {CATEGORY_LABELS[cat] || cat}
+            </a>
+          ))}
+        </div>
+      )}
+
       {categories.length > 0 ? (
         categories.map((cat) => (
-          <div key={cat} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div key={cat} id={`category-${cat}`} className="bg-white rounded-xl border border-gray-200 overflow-hidden scroll-mt-6">
             <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2.5">
               <span
                 className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}
@@ -110,7 +124,14 @@ export default async function ProductsPage({
               <TableBody>
                 {grouped[cat]!.map((p) => (
                   <TableRow key={p.id}>
-                    <TableCell className="font-medium">{p.name_ko}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-md bg-gray-100 flex items-center justify-center flex-shrink-0">
+                          <Package className="w-4 h-4 text-gray-300" />
+                        </div>
+                        <span className="font-medium">{p.name_ko}</span>
+                      </div>
+                    </TableCell>
                     <TableCell>{p.sort_order}</TableCell>
                     <TableCell>
                       <ProductActiveToggle
@@ -136,7 +157,7 @@ export default async function ProductsPage({
         ))
       ) : (
         <div className="bg-white rounded-lg border border-gray-200">
-          <EmptyState message="등록된 제품이 없습니다." description="새 제품을 등록하여 웹사이트에 제품을 소개하세요." action={{ label: "새 제품 등록", href: "/admin/products/new" }} />
+          <EmptyState message="등록된 제품이 없습니다." description="새 제품을 등록하여 웹사이트에 제품을 소개하세요." icon={Package} action={{ label: "새 제품 등록", href: "/admin/products/new" }} />
         </div>
       )}
     </div>

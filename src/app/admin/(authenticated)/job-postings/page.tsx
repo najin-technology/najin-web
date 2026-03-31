@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Pencil } from "lucide-react";
+import { Briefcase, Pencil } from "lucide-react";
 import { JobPostingActiveToggle } from "./job-posting-toggle";
 import { JobPostingDeleteButton } from "./job-posting-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
@@ -44,6 +44,7 @@ export default async function JobPostingsPage({
 
       <SearchFilterBar
         searchPlaceholder="공고 제목 검색..."
+        resultCount={postings?.length}
         filters={[
           {
             key: "active",
@@ -57,7 +58,7 @@ export default async function JobPostingsPage({
       />
 
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <Table>
+        <Table className="admin-card-table">
           <TableHeader>
             <TableRow>
               <TableHead>제목</TableHead>
@@ -73,20 +74,20 @@ export default async function JobPostingsPage({
               postings.map((p) => (
                 <TableRow key={p.id}>
                   <TableCell className="font-medium">{p.title_ko}</TableCell>
-                  <TableCell>{p.department || "-"}</TableCell>
-                  <TableCell>{p.employment_type || "-"}</TableCell>
-                  <TableCell>
+                  <TableCell data-label="부서">{p.department || "-"}</TableCell>
+                  <TableCell data-label="고용형태">{p.employment_type || "-"}</TableCell>
+                  <TableCell data-label="활성">
                     <JobPostingActiveToggle
                       postingId={p.id}
                       isActive={p.is_active}
                     />
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell data-label="마감일" className="text-sm text-gray-500">
                     {p.deadline
                       ? new Date(p.deadline).toLocaleDateString("ko-KR")
                       : "-"}
                   </TableCell>
-                  <TableCell>
+                  <TableCell data-label="관리">
                     <div className="flex items-center gap-1">
                       <Link href={`/admin/job-postings/${p.id}/edit`}>
                         <Button variant="ghost" size="icon-sm" aria-label="편집">
@@ -101,7 +102,7 @@ export default async function JobPostingsPage({
             ) : (
               <TableRow>
                 <TableCell colSpan={6}>
-                  <EmptyState message="채용공고가 없습니다." description="새 채용공고를 작성하여 인재를 모집하세요." action={{ label: "새 공고 작성", href: "/admin/job-postings/new" }} />
+                  <EmptyState message="채용공고가 없습니다." description="새 채용공고를 작성하여 인재를 모집하세요." icon={Briefcase} action={{ label: "새 공고 작성", href: "/admin/job-postings/new" }} />
                 </TableCell>
               </TableRow>
             )}

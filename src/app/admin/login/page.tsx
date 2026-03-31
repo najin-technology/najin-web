@@ -110,7 +110,10 @@ export default function AdminLoginPage() {
             </Button>
           </form>
         </div>
-        <p className="text-center text-[11px] text-gray-400 mt-6">
+        <p className="text-center text-[11px] text-gray-300 mt-4">
+          Enter 키로 로그인할 수 있습니다
+        </p>
+        <p className="text-center text-[11px] text-gray-400 mt-2">
           나진테크 관리자 전용 페이지입니다
         </p>
       </div>

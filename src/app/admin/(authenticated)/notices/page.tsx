@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
 import { ListPageHeader } from "@/components/admin/list-page-header";
-import { FileText } from "lucide-react";
+import { Megaphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -16,6 +16,7 @@ import { Pencil } from "lucide-react";
 import { NoticePublishToggle } from "./notice-toggle";
 import { NoticeDeleteButton } from "./notice-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
+import { HighlightText } from "@/components/admin/highlight-text";
 
 export const metadata = { title: "공지사항" };
 
@@ -24,7 +25,7 @@ export default async function NoticesPage({
 }: {
   searchParams: Promise<{ q?: string; published?: string }>;
 }) {
-  const { q, published } = await searchParams;
+  const { q: searchQuery, published } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
   let query = supabase
@@ -33,7 +34,7 @@ export default async function NoticesPage({
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
-  if (q) query = query.ilike("title_ko", `%${q}%`);
+  if (searchQuery) query = query.ilike("title_ko", `%${searchQuery}%`);
   if (published === "true") query = query.eq("is_published", true);
   if (published === "false") query = query.eq("is_published", false);
 
@@ -45,6 +46,7 @@ export default async function NoticesPage({
 
       <SearchFilterBar
         searchPlaceholder="제목 검색..."
+        resultCount={notices?.length}
         filters={[
           {
             key: "published",
@@ -58,7 +60,7 @@ export default async function NoticesPage({
       />
 
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <Table>
+        <Table className="admin-card-table">
           <TableHeader>
             <TableRow>
               <TableHead>제목</TableHead>
@@ -72,22 +74,22 @@ export default async function NoticesPage({
             {notices && notices.length > 0 ? (
               notices.map((n) => (
                 <TableRow key={n.id}>
-                  <TableCell className="font-medium">{n.title_ko}</TableCell>
-                  <TableCell>
+                  <TableCell className="font-medium"><HighlightText text={n.title_ko} query={searchQuery} /></TableCell>
+                  <TableCell data-label="공개">
                     <NoticePublishToggle
                       noticeId={n.id}
                       isPublished={n.is_published}
                     />
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell data-label="게시일" className="text-sm text-gray-500">
                     {n.published_at
                       ? new Date(n.published_at).toLocaleDateString("ko-KR")
                       : "-"}
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell data-label="작성일" className="text-sm text-gray-500">
                     {new Date(n.created_at).toLocaleDateString("ko-KR")}
                   </TableCell>
-                  <TableCell>
+                  <TableCell data-label="관리">
                     <div className="flex items-center gap-1">
                       <Link href={`/admin/notices/${n.id}/edit`}>
                         <Button variant="ghost" size="icon-sm" aria-label="편집">
@@ -105,7 +107,7 @@ export default async function NoticesPage({
                   <EmptyState
                     message="공지사항이 없습니다."
                     description="새 공지를 작성하여 웹사이트에 소식을 알려보세요."
-                    icon={FileText}
+                    icon={Megaphone}
                     action={{ label: "새 공지 작성", href: "/admin/notices/new" }}
                   />
                 </TableCell>

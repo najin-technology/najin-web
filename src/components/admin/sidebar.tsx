@@ -131,7 +131,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
         {nav}
         <div className="absolute bottom-0 left-0 right-0 px-6 py-3 border-t border-gray-100">
           <div className="flex items-center justify-between">
-            <p className="text-[10px] text-gray-400">나진테크 관리자 v3</p>
+            <p className="text-[10px] text-gray-400">나진테크 관리자 v4.0</p>
             <a href="/" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-400 hover:text-gray-600 transition-colors">
               사이트 보기 →
             </a>
