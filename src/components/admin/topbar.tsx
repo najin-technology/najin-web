@@ -37,19 +37,23 @@ export function AdminTopbar({ userEmail }: { userEmail: string }) {
 
   return (
     <header className="sticky top-0 z-30 h-14 border-b border-gray-200/80 bg-white/80 backdrop-blur-md flex items-center justify-between pl-14 pr-6 lg:px-6">
-      <div className="flex items-center gap-1.5 text-sm min-w-0">
+      <nav aria-label="현재 위치" className="flex items-center gap-1.5 text-sm min-w-0">
         {parentTitle && subPage ? (
-          <>
-            <Link href={parentPath!} className="text-gray-400 hover:text-gray-600 transition-colors truncate">
-              {parentTitle}
-            </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-gray-300 flex-shrink-0" />
-            <span className="font-medium text-brand-navy truncate">{subPage}</span>
-          </>
+          <ol className="flex items-center gap-1.5 min-w-0">
+            <li className="flex items-center gap-1.5 min-w-0">
+              <Link href={parentPath!} className="text-gray-400 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-2 rounded transition-colors truncate">
+                {parentTitle}
+              </Link>
+              <ChevronRight className="w-3.5 h-3.5 text-gray-300 flex-shrink-0" aria-hidden="true" />
+            </li>
+            <li>
+              <span className="font-medium text-brand-navy truncate" aria-current="page">{subPage}</span>
+            </li>
+          </ol>
         ) : (
-          <span className="font-medium text-brand-navy">{pageTitle}</span>
+          <span className="font-medium text-brand-navy" aria-current="page">{pageTitle}</span>
         )}
-      </div>
+      </nav>
       <div className="flex items-center gap-2 flex-shrink-0">
         <span className="text-[11px] text-gray-400 hidden sm:block max-w-[180px] truncate">
           {userEmail}

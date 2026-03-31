@@ -13,9 +13,11 @@ interface FilterOption {
 export function SearchFilterBar({
   searchPlaceholder = "검색...",
   filters = [],
+  resultCount,
 }: {
   searchPlaceholder?: string;
   filters?: FilterOption[];
+  resultCount?: number;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -99,6 +101,16 @@ export function SearchFilterBar({
           </div>
         );
       })}
+      {currentQuery && resultCount != null && (
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          검색 결과 {resultCount}건
+        </div>
+      )}
+      {currentQuery && resultCount != null && (
+        <span className="text-xs text-gray-400 tabular-nums">
+          {resultCount}건
+        </span>
+      )}
     </div>
   );
 }

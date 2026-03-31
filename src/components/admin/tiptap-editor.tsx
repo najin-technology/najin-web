@@ -81,7 +81,7 @@ export function TiptapEditor({
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden">
       {/* Toolbar */}
-      <div className="flex flex-wrap gap-0.5 p-1.5 border-b border-gray-200 bg-gray-50/80">
+      <div role="toolbar" aria-label="에디터 도구 모음" className="flex flex-wrap gap-0.5 p-1.5 border-b border-gray-200 bg-gray-50/80">
         {/* Text formatting */}
         <ToolBtn onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} title="굵게">
           <Bold className="w-4 h-4" />

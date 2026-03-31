@@ -83,7 +83,12 @@ export default async function QuoteDetailPage({
                           <Download className="w-4 h-4 text-blue-600 group-hover:text-blue-700" />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium text-gray-700 truncate">{att.fileName}</p>
+                          <p className="text-sm font-medium text-gray-700 truncate">
+                            {att.fileName}
+                            <span className="ml-1.5 text-[10px] uppercase font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
+                              {att.fileName.split(".").pop()}
+                            </span>
+                          </p>
                           {att.fileSize && (
                             <p className="text-xs text-gray-400">{(att.fileSize / 1024).toFixed(0)} KB</p>
                           )}

@@ -12,6 +12,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
+import { HighlightText } from "@/components/admin/highlight-text";
+import { Users } from "lucide-react";
 
 export const metadata = { title: "채용 관리" };
 
@@ -20,7 +22,7 @@ export default async function ApplicationsPage({
 }: {
   searchParams: Promise<{ q?: string; status?: string }>;
 }) {
-  const { q, status } = await searchParams;
+  const { q: searchQuery, status } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
   let query = supabase
@@ -29,7 +31,7 @@ export default async function ApplicationsPage({
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
-  if (q) query = query.or(`name.ilike.%${q}%,email.ilike.%${q}%`);
+  if (searchQuery) query = query.or(`name.ilike.%${searchQuery}%,email.ilike.%${searchQuery}%`);
   if (status) query = query.eq("status", status);
 
   const { data: applications } = await query;
@@ -40,6 +42,7 @@ export default async function ApplicationsPage({
 
       <SearchFilterBar
         searchPlaceholder="이름/이메일 검색..."
+        resultCount={applications?.length}
         filters={[
           {
             key: "status",
@@ -55,7 +58,7 @@ export default async function ApplicationsPage({
       />
 
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <Table>
+        <Table className="admin-card-table">
           <TableHeader>
             <TableRow>
               <TableHead>이름</TableHead>
@@ -68,21 +71,21 @@ export default async function ApplicationsPage({
           <TableBody>
             {applications && applications.length > 0 ? (
               applications.map((a) => (
-                <TableRow key={a.id}>
+                <TableRow key={a.id} className="group">
                   <TableCell>
                     <Link
                       href={`/admin/applications/${a.id}`}
-                      className="text-brand-blue hover:text-brand-blue-hover font-medium transition-colors"
+                      className="text-brand-blue hover:text-brand-blue-hover group-hover:underline font-medium transition-colors"
                     >
-                      {a.name}
+                      <HighlightText text={a.name} query={searchQuery} />
                     </Link>
                   </TableCell>
-                  <TableCell>{a.phone || "-"}</TableCell>
-                  <TableCell>{a.position || "-"}</TableCell>
-                  <TableCell>
+                  <TableCell data-label="연락처">{a.phone || "-"}</TableCell>
+                  <TableCell data-label="포지션"><HighlightText text={a.position || "-"} query={searchQuery} /></TableCell>
+                  <TableCell data-label="상태">
                     <StatusBadge status={a.status} type="application" />
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell data-label="지원일" className="text-sm text-gray-500">
                     {new Date(a.created_at).toLocaleDateString("ko-KR")}
                   </TableCell>
                 </TableRow>
@@ -90,7 +93,7 @@ export default async function ApplicationsPage({
             ) : (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <EmptyState message="지원서가 없습니다." description="구직자가 채용 지원서를 제출하면 여기에 표시됩니다." />
+                  <EmptyState message="지원서가 없습니다." description="구직자가 채용 지원서를 제출하면 여기에 표시됩니다." icon={Users} />
                 </TableCell>
               </TableRow>
             )}

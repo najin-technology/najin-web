@@ -30,10 +30,16 @@ export default async function AuthenticatedAdminLayout({
 
   return (
     <div className="min-h-screen bg-gray-50 overflow-x-hidden">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-brand-navy focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-medium focus:shadow-lg"
+      >
+        콘텐츠로 바로 가기
+      </a>
       <AdminSidebar badges={badges} />
       <div className="lg:ml-64 relative">
         <AdminTopbar userEmail={user.email || ""} />
-        <main className="p-6 lg:p-8 max-w-7xl mx-auto">{children}</main>
+        <main id="main-content" className="p-6 lg:p-8 max-w-7xl mx-auto">{children}</main>
       </div>
     </div>
   );

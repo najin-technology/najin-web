@@ -21,6 +21,7 @@ import {
   AlertCircle,
   ArrowRight,
 } from "lucide-react";
+import { StatusProgress } from "@/components/admin/status-progress";
 
 export const metadata = { title: "대시보드" };
 
@@ -124,6 +125,7 @@ export default async function AdminDashboard() {
       <div>
         <h1 className="text-xl font-bold text-brand-navy">{getGreeting()}</h1>
         <p className="text-sm text-gray-400 mt-0.5">{formatToday()}</p>
+        <p className="text-xs text-gray-400 mt-1">현재 운영 현황을 한눈에 확인하세요</p>
       </div>
 
       {/* All caught up message */}
@@ -289,6 +291,11 @@ export default async function AdminDashboard() {
             <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
+        {recentQuotes && recentQuotes.length > 0 && (
+          <div className="px-5 py-3 border-b border-gray-100">
+            <StatusProgress items={recentQuotes} />
+          </div>
+        )}
         <Table>
           <TableHeader>
             <TableRow>
@@ -349,6 +356,11 @@ export default async function AdminDashboard() {
             <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
+        {recentApps && recentApps.length > 0 && (
+          <div className="px-5 py-3 border-b border-gray-100">
+            <StatusProgress items={recentApps} />
+          </div>
+        )}
         <Table>
           <TableHeader>
             <TableRow>
