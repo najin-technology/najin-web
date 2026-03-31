@@ -1,8 +1,10 @@
 import { useTranslations, useLocale } from "next-intl";
 import { PageHeader } from "@/components/page-header";
+import { Breadcrumb } from "@/components/breadcrumb";
 
 export const metadata = {
   title: "개인정보처리방침",
+  description: "나진테크 개인정보처리방침. 개인정보 수집, 이용, 보관 및 파기에 관한 안내.",
 };
 
 export default function PrivacyPage() {
@@ -12,6 +14,7 @@ export default function PrivacyPage() {
   return (
     <>
       <PageHeader titleKey="pageTitle" namespace="privacy" />
+      <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       <section className="py-12 md:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,5 +1,6 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
+import { Breadcrumb } from "@/components/breadcrumb";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { getProductsByCategory } from "@/lib/queries";
@@ -11,9 +12,11 @@ import {
   Phone,
   type LucideIcon,
 } from "lucide-react";
+import { PortfolioGallery } from "@/components/portfolio-gallery";
 
 export const metadata = {
   title: "주요실적",
+  description: "나진테크 주요실적. 현대자동차, SK, GM Shanghai 등 20+ 거래처 납품. 프로젝트 사례 및 제품 갤러리.",
 };
 
 const categoryIcons: Record<string, LucideIcon> = {
@@ -72,6 +75,7 @@ export default async function PortfolioPage() {
   return (
     <>
       <PageHeader titleKey="pageTitle" namespace="portfolio" descriptionKey="pageDescription" />
+      <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       {/* Major Clients */}
       <section className="py-16 md:py-24">
@@ -115,6 +119,84 @@ export default async function PortfolioPage() {
         </div>
       </section>
 
+      {/* Case Studies */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            className="text-2xl md:text-3xl font-bold text-brand-navy mb-3"
+            data-animate="fade-up"
+          >
+            {t("caseStudiesTitle")}
+          </h2>
+          <p
+            className="text-brand-charcoal/70 mb-10"
+            data-animate="fade-up"
+            data-animate-delay="1"
+          >
+            {t("caseStudiesDesc")}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                titleKey: "case1Title",
+                clientKey: "case1Client",
+                descKey: "case1Desc",
+                resultKey: "case1Result",
+                image: "/images/products/db-4654fb31-0.jpg",
+                category: t("case1Category"),
+              },
+              {
+                titleKey: "case2Title",
+                clientKey: "case2Client",
+                descKey: "case2Desc",
+                resultKey: "case2Result",
+                image: "/images/products/3d-mc-part-1.jpg",
+                category: t("case2Category"),
+              },
+              {
+                titleKey: "case3Title",
+                clientKey: "case3Client",
+                descKey: "case3Desc",
+                resultKey: "case3Result",
+                image: "/images/products/db-4421a7e9-0.jpg",
+                category: t("case3Category"),
+              },
+            ].map((cs, i) => (
+              <div
+                key={i}
+                className="bg-surface-warm-50 rounded-xl overflow-hidden border border-surface-warm-200"
+                data-animate="fade-up"
+                data-animate-delay={String(i + 1)}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={cs.image}
+                    alt={t(cs.titleKey)}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-brand-copper text-white text-xs font-semibold px-2.5 py-1 rounded-md">
+                      {cs.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <p className="text-xs text-brand-copper font-semibold mb-1">{t(cs.clientKey)}</p>
+                  <h3 className="font-bold text-brand-navy mb-2">{t(cs.titleKey)}</h3>
+                  <p className="text-sm text-brand-charcoal/70 mb-3 leading-relaxed">{t(cs.descKey)}</p>
+                  <div className="bg-white rounded-lg p-3 border border-surface-warm-200">
+                    <p className="text-xs text-brand-charcoal/50 mb-0.5">{t("caseResult")}</p>
+                    <p className="text-sm font-semibold text-brand-navy">{t(cs.resultKey)}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Product Gallery — from DB */}
       <section className="py-16 md:py-24 bg-surface-warm-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,41 +217,7 @@ export default async function PortfolioPage() {
             }
           </p>
 
-          {/* Gallery Grid — varied sizes for rhythm */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            {galleryItems.map((item, i) => {
-              const isLarge = i < 2;
-              return (
-                <div
-                  key={`${item.src}-${i}`}
-                  className={`group bg-white rounded-xl overflow-hidden border border-surface-warm-200 hover-lift ${
-                    isLarge ? "md:col-span-2 md:row-span-2" : ""
-                  }`}
-                  data-animate="fade-up"
-                  data-animate-delay={String(Math.min((i % 4) + 1, 4))}
-                >
-                  <div className={`relative overflow-hidden ${isLarge ? "aspect-[4/3]" : "aspect-square"}`}>
-                    <Image
-                      src={item.src}
-                      alt={item.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes={isLarge ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent md:from-black/40 md:opacity-0 md:group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3 md:translate-y-full md:group-hover:translate-y-0 transition-transform">
-                      <span className="inline-block text-[10px] md:text-xs font-medium text-white bg-brand-copper px-1.5 py-0.5 rounded-full">
-                        {item.category}
-                      </span>
-                      <p className={`font-medium text-white mt-0.5 ${isLarge ? "text-sm md:text-base" : "text-xs md:text-sm"}`}>
-                        {item.title}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <PortfolioGallery items={galleryItems} locale={locale} />
         </div>
       </section>
 

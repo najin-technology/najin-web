@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/routing";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Clock } from "lucide-react";
 
 const processingTypeKeys = [
   "urethane",
@@ -30,7 +30,7 @@ export function QuoteForm() {
   if (state.success) {
     return (
       <div
-        className="text-center py-16 px-6 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200"
+        className="text-center py-16 px-6 rounded-2xl bg-surface-warm-50 border border-surface-warm-200"
         data-animate="scale-in"
       >
         <div className="flex justify-center mb-5">
@@ -38,11 +38,26 @@ export function QuoteForm() {
             <CheckCircle className="w-9 h-9 text-green-600" />
           </div>
         </div>
-        <h3 className="text-xl font-bold text-brand-navy mb-2">
+        <h3 className="text-2xl font-bold text-brand-navy mb-3">
           {t("successTitle")}
         </h3>
-        <p className="text-brand-charcoal mb-4">{t("successMessage")}</p>
-        <p className="text-sm text-gray-500">{t("contactInfo")}</p>
+        <p className="text-brand-charcoal mb-6 text-lg">{t("successMessage")}</p>
+
+        <div className="bg-white rounded-xl p-6 mb-6 border border-surface-warm-200 max-w-sm mx-auto">
+          <div className="flex items-center justify-center gap-2 text-brand-copper font-semibold mb-2">
+            <Clock className="w-4 h-4" />
+            <span>{t("responsePromise")}</span>
+          </div>
+          <p className="text-sm text-brand-charcoal/70">{t("nextSteps")}</p>
+        </div>
+
+        <p className="text-sm text-brand-charcoal/50 mb-6">{t("contactInfo")}</p>
+
+        <Link href="/">
+          <Button variant="outline" className="border-brand-navy/20 text-brand-navy hover:bg-brand-navy/5">
+            {tc("home")}
+          </Button>
+        </Link>
       </div>
     );
   }

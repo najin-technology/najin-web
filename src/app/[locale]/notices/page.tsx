@@ -1,11 +1,13 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
+import { Breadcrumb } from "@/components/breadcrumb";
 import { getPublishedNotices } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
 import { FileText, Calendar } from "lucide-react";
 
 export const metadata = {
   title: "공지사항",
+  description: "나진테크 공지사항. 회사 소식, 채용 안내, 주요 공지를 확인하세요.",
 };
 
 export default async function NoticesPage() {
@@ -26,6 +28,7 @@ export default async function NoticesPage() {
         namespace="notices"
         descriptionKey="pageDescription"
       />
+      <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       <section className="py-12 md:py-20 bg-surface-warm-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
