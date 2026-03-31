@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { EmptyState } from "@/components/admin/empty-state";
+import { ListPageHeader } from "@/components/admin/list-page-header";
 import {
   Table,
   TableBody,
@@ -35,12 +36,7 @@ export default async function QuotesPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <h1 className="text-lg font-bold text-brand-navy">견적 관리</h1>
-        {quotes && quotes.length > 0 && (
-          <span className="text-xs text-gray-400 tabular-nums">{quotes.length}건</span>
-        )}
-      </div>
+      <ListPageHeader title="견적 관리" count={quotes?.length} />
 
       <SearchFilterBar
         searchPlaceholder="회사명/담당자 검색..."
@@ -100,6 +96,11 @@ export default async function QuotesPage({
             )}
           </TableBody>
         </Table>
+        {quotes && quotes.length > 0 && (
+          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400">
+            총 {quotes.length}건
+          </div>
+        )}
       </div>
     </div>
   );

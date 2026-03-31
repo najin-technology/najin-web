@@ -257,3 +257,24 @@
   box-shadow: 0 0 0 2px rgba(27, 42, 74, 0.2);
   border-color: rgba(27, 42, 74, 0.4);
 }
+
+/* ===== Admin print styles ===== */
+
+@media print {
+  .lg\:ml-64 { margin-left: 0 !important; }
+  aside, header, button, [data-slot="toaster"] { display: none !important; }
+  main { padding: 0 !important; }
+  .rounded-xl { border-radius: 0 !important; }
+  .shadow-sm, .shadow-md, .shadow-lg { box-shadow: none !important; }
+}
+
+/* ===== Admin stat number animation ===== */
+
+@keyframes stat-pop {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: none; }
+}
+
+.stat-number {
+  animation: stat-pop 0.3s ease-out both;
+}

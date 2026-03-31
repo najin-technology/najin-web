@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
+import { ListPageHeader } from "@/components/admin/list-page-header";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -10,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { ProductActiveToggle } from "./product-toggle";
 import { ProductDeleteButton } from "./product-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
@@ -24,11 +25,11 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  우레탄: "bg-orange-100 text-orange-700",
-  합성수지: "bg-purple-100 text-purple-700",
-  CNC: "bg-blue-100 text-blue-700",
-  금형: "bg-green-100 text-green-700",
-  EV: "bg-teal-100 text-teal-700",
+  우레탄: "bg-orange-100 text-orange-800",
+  합성수지: "bg-purple-100 text-purple-800",
+  CNC: "bg-blue-100 text-blue-800",
+  금형: "bg-green-100 text-green-800",
+  EV: "bg-teal-100 text-teal-800",
 };
 
 export const metadata = { title: "제품 관리" };
@@ -67,20 +68,7 @@ export default async function ProductsPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold text-brand-navy">제품 관리</h1>
-          {products && products.length > 0 && (
-            <span className="text-xs text-gray-400 tabular-nums">{products.length}개</span>
-          )}
-        </div>
-        <Link href="/admin/products/new">
-          <Button className="bg-brand-navy hover:bg-brand-navy-light text-white gap-1.5 rounded-lg shadow-sm">
-            <Plus className="w-4 h-4" />
-            새 제품 등록
-          </Button>
-        </Link>
-      </div>
+      <ListPageHeader title="제품 관리" count={products?.length} createHref="/admin/products/new" createLabel="새 제품 등록" />
 
       <SearchFilterBar
         searchPlaceholder="제품명 검색..."

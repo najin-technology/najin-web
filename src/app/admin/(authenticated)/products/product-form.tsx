@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectTrigger,
@@ -16,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { AlertMessage } from "@/components/admin/alert-message";
+import { FormStatusBar } from "@/components/admin/form-status-bar";
 import { X } from "lucide-react";
 
 const CATEGORIES = [
@@ -70,17 +70,10 @@ export function ProductForm({
         <AlertMessage>{state.error}</AlertMessage>
       )}
 
-      <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4">
-        <Switch
-          checked={isActive}
-          onCheckedChange={(checked: boolean) => setIsActive(checked)}
-        />
-        <div>
-          <Label className="text-sm font-medium">{isActive ? "활성" : "비활성"}</Label>
-          <p className="text-xs text-gray-400 mt-0.5">
-            {isActive ? "웹사이트에 표시됩니다" : "관리자만 볼 수 있습니다"}
-          </p>
-        </div>
+      <FormStatusBar checked={isActive} onCheckedChange={setIsActive} />
+
+      <div>
+        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">기본 정보</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -108,6 +101,10 @@ export function ProductForm({
             defaultValue={product?.sort_order ?? 0}
           />
         </div>
+      </div>
+
+      <div className="border-t border-gray-100 pt-2">
+        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">콘텐츠</p>
       </div>
 
       <Tabs defaultValue="ko">
@@ -161,6 +158,10 @@ export function ProductForm({
           </div>
         </TabsContent>
       </Tabs>
+
+      <div className="border-t border-gray-100 pt-2">
+        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">미디어</p>
+      </div>
 
       {/* Image Management */}
       <div className="space-y-3">

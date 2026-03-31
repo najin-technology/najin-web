@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
+import { ListPageHeader } from "@/components/admin/list-page-header";
 import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { NoticePublishToggle } from "./notice-toggle";
 import { NoticeDeleteButton } from "./notice-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
@@ -40,20 +41,7 @@ export default async function NoticesPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold text-brand-navy">공지사항</h1>
-          {notices && notices.length > 0 && (
-            <span className="text-xs text-gray-400 tabular-nums">{notices.length}건</span>
-          )}
-        </div>
-        <Link href="/admin/notices/new">
-          <Button className="bg-brand-navy hover:bg-brand-navy-light text-white gap-1.5 rounded-lg shadow-sm">
-            <Plus className="w-4 h-4" />
-            새 공지 작성
-          </Button>
-        </Link>
-      </div>
+      <ListPageHeader title="공지사항" count={notices?.length} createHref="/admin/notices/new" createLabel="새 공지 작성" />
 
       <SearchFilterBar
         searchPlaceholder="제목 검색..."
@@ -125,6 +113,11 @@ export default async function NoticesPage({
             )}
           </TableBody>
         </Table>
+        {notices && notices.length > 0 && (
+          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400">
+            총 {notices.length}건
+          </div>
+        )}
       </div>
     </div>
   );

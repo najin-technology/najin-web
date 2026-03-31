@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { EmptyState } from "@/components/admin/empty-state";
+import { ListPageHeader } from "@/components/admin/list-page-header";
 import {
   Table,
   TableBody,
@@ -35,12 +36,7 @@ export default async function ApplicationsPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <h1 className="text-lg font-bold text-brand-navy">채용 관리</h1>
-        {applications && applications.length > 0 && (
-          <span className="text-xs text-gray-400 tabular-nums">{applications.length}건</span>
-        )}
-      </div>
+      <ListPageHeader title="채용 관리" count={applications?.length} />
 
       <SearchFilterBar
         searchPlaceholder="이름/이메일 검색..."
@@ -100,6 +96,11 @@ export default async function ApplicationsPage({
             )}
           </TableBody>
         </Table>
+        {applications && applications.length > 0 && (
+          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400">
+            총 {applications.length}건
+          </div>
+        )}
       </div>
     </div>
   );
