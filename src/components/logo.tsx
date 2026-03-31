@@ -67,8 +67,8 @@ export function Logo({
           나진테크
         </span>
         <span
-          className={`font-heading font-medium leading-tight tracking-widest uppercase ${isSm ? "text-[10px]" : "text-xs"}`}
-          style={{ color: variant === "dark" ? "#6B7B8D" : "rgba(255,255,255,0.6)" }}
+          className={`font-heading font-medium leading-tight tracking-widest uppercase ${isSm ? "text-[11px]" : "text-sm"}`}
+          style={{ color: variant === "dark" ? "#5A6A7D" : "rgba(255,255,255,0.7)" }}
         >
           NAJIN TECHNOLOGY
         </span>
