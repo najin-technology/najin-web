@@ -25,31 +25,31 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">
+            <h3 className="text-base font-semibold text-white/70 uppercase tracking-wider mb-4">
               {t("quickLinks")}
             </h3>
             <div className="space-y-2.5 text-sm">
               <Link
                 href="/about"
-                className="block text-gray-400 hover:text-white transition-colors"
+                className="block text-white/50 hover:text-white transition-colors"
               >
                 {tn("about")}
               </Link>
               <Link
                 href="/business"
-                className="block text-gray-400 hover:text-white transition-colors"
+                className="block text-white/50 hover:text-white transition-colors"
               >
                 {tn("business")}
               </Link>
               <Link
                 href="/quote"
-                className="block text-gray-400 hover:text-white transition-colors"
+                className="block text-white/50 hover:text-white transition-colors"
               >
                 {tc("requestQuote")}
               </Link>
               <Link
                 href="/privacy"
-                className="block text-gray-400 hover:text-white transition-colors"
+                className="block text-white/50 hover:text-white transition-colors"
               >
                 {t("privacy")}
               </Link>
@@ -58,7 +58,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">
+            <h3 className="text-base font-semibold text-white/70 uppercase tracking-wider mb-4">
               {t("contactInfo")}
             </h3>
             <div className="space-y-3 text-sm text-gray-400">
