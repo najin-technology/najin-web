@@ -1,5 +1,6 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
+import { Breadcrumb } from "@/components/breadcrumb";
 import { getHistoryItems } from "@/lib/queries";
 import Image from "next/image";
 import {
@@ -30,6 +31,7 @@ const fallbackHistory = [
 
 export const metadata = {
   title: "회사소개",
+  description: "나진테크 회사소개. 2002년 설립, ISO 9001 인증, 특허 보유. 대표이사 인사말, 연혁, 인증현황, 오시는 길.",
 };
 
 export default async function AboutPage() {
@@ -50,6 +52,7 @@ export default async function AboutPage() {
   return (
     <>
       <PageHeader titleKey="pageTitle" namespace="about" descriptionKey="pageDescription" />
+      <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       {/* CEO Greeting */}
       <section className="py-16 md:py-24 bg-surface-warm-50">
@@ -207,7 +210,7 @@ export default async function AboutPage() {
             ].map((cert, i) => (
               <div
                 key={cert.title}
-                className="flex items-start gap-4 p-6 border-l-4 border-brand-copper bg-surface-warm-50 rounded-r-lg hover-lift"
+                className="flex items-start gap-4 p-6 bg-white rounded-xl border border-surface-warm-200 shadow-sm hover-lift"
                 data-animate="fade-up"
                 data-animate-delay={String(i + 1)}
               >

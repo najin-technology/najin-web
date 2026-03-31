@@ -1,11 +1,13 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
+import { Breadcrumb } from "@/components/breadcrumb";
 import { getActiveJobPostings } from "@/lib/queries";
 import { ApplyForm } from "./apply-form";
 import { Briefcase, ChevronDown, Clock } from "lucide-react";
 
 export const metadata = {
   title: "채용정보",
+  description: "나진테크 채용정보. 경남 양산 정밀 가공 제조업 일자리. 복리후생, 채용 공고 및 지원 방법 안내.",
 };
 
 export default async function CareersPage() {
@@ -26,6 +28,7 @@ export default async function CareersPage() {
         namespace="careers"
         descriptionKey="pageDescription"
       />
+      <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       {/* Job Listings */}
       <section className="py-12 md:py-20 bg-surface-warm-50">

@@ -5,6 +5,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ScrollAnimationObserver } from "@/components/scroll-animation-observer";
+import { MobileCTA } from "@/components/mobile-cta";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -30,6 +31,7 @@ export default async function LocaleLayout({
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
+      <MobileCTA />
       <ScrollAnimationObserver />
     </NextIntlClientProvider>
   );
