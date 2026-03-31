@@ -130,8 +130,8 @@ export default function HomePage() {
             >
               {[
                 { icon: Award, label: "ISO 9001" },
-                { icon: Building2, label: "CLEAN 사업장" },
-                { icon: FileCheck, label: "특허 보유" },
+                { icon: Building2, label: t("badgeClean") },
+                { icon: FileCheck, label: t("badgePatent") },
               ].map((cert) => (
                 <div key={cert.label} className="flex items-center gap-2">
                   <cert.icon className="w-4 h-4 text-brand-copper" />

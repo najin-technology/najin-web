@@ -62,6 +62,7 @@ const fallbackGallery = [
 export default async function PortfolioPage() {
   const t = await getTranslations("portfolio");
   const tc = await getTranslations("common");
+  const tq = await getTranslations("quote");
   const locale = await getLocale();
 
   // Fetch products from DB
@@ -223,7 +224,7 @@ export default async function PortfolioPage() {
             data-animate-delay="1"
           >
             {products.length > 0
-              ? `${products.length}개 제품 · ${["우레탄", "합성수지", "CNC", "금형", "EV"].filter(cat => products.some(p => p.category === cat)).join(" · ")}`
+              ? `${products.length}${t("productCountSuffix")} · ${["urethane", "resin", "cnc", "mold", "ev"].filter(cat => products.some(p => p.category === cat)).map(cat => tq(`processingTypes.${cat}` as `processingTypes.urethane`)).join(" · ")}`
               : ""
             }
           </p>

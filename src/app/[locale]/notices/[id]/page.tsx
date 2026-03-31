@@ -16,32 +16,36 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
-  const { locale, id } = await params;
-  const notice = await getNoticeById(id);
-  if (!notice) return { title: "Not Found" };
+  try {
+    const { locale, id } = await params;
+    const notice = await getNoticeById(id);
+    if (!notice) return { title: "Not Found" };
 
-  const title = locale === "ko" ? notice.title_ko : (notice.title_en || notice.title_ko);
-  const rawContent = locale === "ko" ? notice.content_ko : (notice.content_en || notice.content_ko);
-  const description = rawContent ? stripHtml(rawContent).slice(0, 160) : "";
+    const title = locale === "ko" ? notice.title_ko : (notice.title_en || notice.title_ko);
+    const rawContent = locale === "ko" ? notice.content_ko : (notice.content_en || notice.content_ko);
+    const description = rawContent ? stripHtml(rawContent).slice(0, 160) : "";
 
-  return {
-    title,
-    description,
-    openGraph: {
+    return {
       title,
       description,
-      type: "article" as const,
-      publishedTime: notice.published_at || notice.created_at,
-    },
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/notices/${id}`,
-      languages: {
-        ko: `${BASE_URL}/ko/notices/${id}`,
-        en: `${BASE_URL}/en/notices/${id}`,
-        zh: `${BASE_URL}/zh/notices/${id}`,
+      openGraph: {
+        title,
+        description,
+        type: "article" as const,
+        publishedTime: notice.published_at || notice.created_at,
       },
-    },
-  };
+      alternates: {
+        canonical: `${BASE_URL}/${locale}/notices/${id}`,
+        languages: {
+          ko: `${BASE_URL}/ko/notices/${id}`,
+          en: `${BASE_URL}/en/notices/${id}`,
+          zh: `${BASE_URL}/zh/notices/${id}`,
+        },
+      },
+    };
+  } catch {
+    return { title: "Notice" };
+  }
 }
 
 export default async function NoticeDetailPage({
@@ -66,8 +70,15 @@ export default async function NoticeDetailPage({
 
   // Check if content contains HTML tags (from Tiptap editor)
   const isHtml = content ? /<[a-z][\s\S]*>/i.test(content) : false;
-  const sanitizedHtml =
-    isHtml && content ? DOMPurify.sanitize(content) : null;
+  let sanitizedHtml: string | null = null;
+  if (isHtml && content) {
+    try {
+      sanitizedHtml = DOMPurify.sanitize(content);
+    } catch {
+      // DOMPurify/jsdom may fail in serverless — fall back to plain text
+      sanitizedHtml = null;
+    }
+  }
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -105,7 +116,7 @@ export default async function NoticeDetailPage({
             <Calendar className="w-4 h-4" />
             <span>
               {new Date(date).toLocaleDateString(
-                locale === "ko" ? "ko-KR" : "en-US",
+                locale === "ko" ? "ko-KR" : locale === "zh" ? "zh-CN" : "en-US",
                 { year: "numeric", month: "long", day: "numeric" }
               )}
             </span>
