@@ -30,7 +30,7 @@ export default function PrivacyPage() {
       <section className="py-12 md:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-gray max-w-none text-sm leading-relaxed text-brand-charcoal space-y-6">
-            {locale === "ko" ? <PrivacyKo /> : <PrivacyEn />}
+            {locale === "ko" ? <PrivacyKo /> : locale === "zh" ? <PrivacyZh /> : <PrivacyEn />}
           </div>
         </div>
       </section>
@@ -181,6 +181,68 @@ function PrivacyEn() {
 
       <p className="mt-8 text-xs text-gray-400">
         Effective date: January 1, 2024
+      </p>
+    </>
+  );
+}
+
+function PrivacyZh() {
+  return (
+    <>
+      <p>
+        纳进科技（以下简称&quot;公司&quot;）根据《个人信息保护法》制定并公开本隐私政策，以保护信息主体的个人信息。
+      </p>
+
+      <h2 className="text-lg font-semibold text-brand-navy mt-8">
+        第一条（个人信息的处理目的）
+      </h2>
+      <p>公司为以下目的处理个人信息：</p>
+      <ul className="list-disc pl-6 space-y-1">
+        <li>报价咨询受理及处理：公司名称、负责人姓名、联系方式、邮箱、加工相关信息</li>
+        <li>招聘申请受理及处理：姓名、联系方式、邮箱、简历、自我介绍</li>
+      </ul>
+
+      <h2 className="text-lg font-semibold text-brand-navy mt-8">
+        第二条（个人信息的保留期限）
+      </h2>
+      <ul className="list-disc pl-6 space-y-1">
+        <li>报价咨询相关信息：咨询处理完成后3年</li>
+        <li>招聘申请相关信息：招聘流程完成后1年</li>
+      </ul>
+
+      <h2 className="text-lg font-semibold text-brand-navy mt-8">
+        第三条（向第三方提供个人信息）
+      </h2>
+      <p>
+        未经信息主体同意，公司不会向第三方提供个人信息。但法律有特别规定的情况除外。
+      </p>
+
+      <h2 className="text-lg font-semibold text-brand-navy mt-8">
+        第四条（信息主体的权利）
+      </h2>
+      <ul className="list-disc pl-6 space-y-1">
+        <li>要求查阅个人信息</li>
+        <li>要求更正错误</li>
+        <li>要求删除</li>
+        <li>要求停止处理</li>
+      </ul>
+
+      <h2 className="text-lg font-semibold text-brand-navy mt-8">
+        第五条（安全保障措施）
+      </h2>
+      <p>公司实施管理、技术及物理措施以确保个人信息安全。</p>
+
+      <h2 className="text-lg font-semibold text-brand-navy mt-8">
+        第六条（个人信息保护负责人）
+      </h2>
+      <ul className="list-none space-y-1">
+        <li>公司名称：纳进科技</li>
+        <li>联系电话：055-367-2596</li>
+        <li>地址：韩国庆尚南道梁山市山幕工团南14街170号</li>
+      </ul>
+
+      <p className="mt-8 text-xs text-gray-400">
+        生效日期：2024年1月1日
       </p>
     </>
   );
