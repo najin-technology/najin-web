@@ -89,7 +89,7 @@ export default function PortfolioPage() {
                     {client.name}
                   </p>
                   {client.name !== client.nameEn && (
-                    <p className="text-xs text-gray-400 mt-1">{client.nameEn}</p>
+                    <p className="text-xs text-brand-charcoal/40 mt-1">{client.nameEn}</p>
                   )}
                 </div>
               );
