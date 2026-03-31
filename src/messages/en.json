@@ -94,7 +94,9 @@
     "clientsTitle": "Major Clients",
     "clientsDesc": "NAJIN TECHNOLOGY supplies reliable parts to major domestic and international companies.",
     "galleryTitle": "Delivery Track Record",
-    "galleryPlaceholder": "Gallery is being prepared."
+    "galleryPlaceholder": "Gallery is being prepared.",
+    "ctaTitle": "Request a Quote",
+    "ctaDesc": "Send us your drawings and we'll get back to you with a quote promptly."
   },
   "quote": {
     "pageTitle": "Request a Quote",
