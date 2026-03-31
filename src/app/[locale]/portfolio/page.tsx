@@ -158,7 +158,7 @@ export default function PortfolioPage() {
             {t("ctaTitle")}
           </h2>
           <p
-            className="text-gray-300 mb-8"
+            className="text-white/70 mb-8"
             data-animate="fade-up"
             data-animate-delay="1"
           >
@@ -179,7 +179,7 @@ export default function PortfolioPage() {
             </Link>
             <a
               href="tel:055-367-2596"
-              className="flex items-center gap-2 text-gray-400 hover:text-gray-200 transition-colors text-sm mt-2"
+              className="flex items-center gap-2 text-white/40 hover:text-white/70 transition-colors text-sm mt-2"
             >
               <Phone className="w-4 h-4" />
               <span>055-367-2596</span>

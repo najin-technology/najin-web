@@ -98,7 +98,7 @@ export default async function AboutPage() {
               <h3 className="text-xl md:text-2xl font-bold mb-4">
                 {t("visionTitle")}
               </h3>
-              <p className="text-gray-300 leading-relaxed text-lg">
+              <p className="text-white/70 leading-relaxed text-lg">
                 {t("visionContent")}
               </p>
             </div>
@@ -149,7 +149,7 @@ export default async function AboutPage() {
                       {item.year}
                     </span>
                     {item.month && (
-                      <span className="text-sm text-gray-400 ml-0.5">
+                      <span className="text-sm text-brand-charcoal/50 ml-0.5">
                         .{String(item.month).padStart(2, "0")}
                       </span>
                     )}
@@ -218,8 +218,8 @@ export default async function AboutPage() {
                   <h3 className="font-semibold text-brand-navy">
                     {cert.title}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-1">{cert.desc}</p>
-                  <p className="text-xs text-gray-400 mt-1.5">{cert.year}</p>
+                  <p className="text-sm text-brand-charcoal/60 mt-1">{cert.desc}</p>
+                  <p className="text-xs text-brand-charcoal/50 mt-1.5">{cert.year}</p>
                 </div>
               </div>
             ))}
@@ -280,7 +280,7 @@ export default async function AboutPage() {
                 <Phone className="w-4 h-4 text-brand-copper" />
               </div>
               <div>
-                <span className="text-xs text-gray-400 uppercase tracking-wide">TEL</span>
+                <span className="text-xs text-brand-charcoal/50 uppercase tracking-wide">TEL</span>
                 <p className="text-brand-charcoal font-medium">055-367-2596</p>
               </div>
             </div>
@@ -289,7 +289,7 @@ export default async function AboutPage() {
                 <Printer className="w-4 h-4 text-brand-copper" />
               </div>
               <div>
-                <span className="text-xs text-gray-400 uppercase tracking-wide">FAX</span>
+                <span className="text-xs text-brand-charcoal/50 uppercase tracking-wide">FAX</span>
                 <p className="text-brand-charcoal font-medium">055-367-2597</p>
               </div>
             </div>
