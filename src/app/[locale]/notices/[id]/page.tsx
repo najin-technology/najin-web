@@ -2,7 +2,6 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getNoticeById } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
-import DOMPurify from "isomorphic-dompurify";
 import { ArrowLeft, Calendar } from "lucide-react";
 
 const BASE_URL = "https://najin-webapp.vercel.app";
@@ -73,6 +72,7 @@ export default async function NoticeDetailPage({
   let sanitizedHtml: string | null = null;
   if (isHtml && content) {
     try {
+      const DOMPurify = (await import("isomorphic-dompurify")).default;
       sanitizedHtml = DOMPurify.sanitize(content);
     } catch {
       // DOMPurify/jsdom may fail in serverless — fall back to plain text
