@@ -16,7 +16,7 @@ export default async function HistoryPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[#1B2A4A]">연혁 관리</h1>
+      <h1 className="text-lg font-bold text-[#1B2A4A]">연혁 관리</h1>
 
       <HistoryAddForm />
 

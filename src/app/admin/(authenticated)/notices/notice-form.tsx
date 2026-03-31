@@ -65,13 +65,13 @@ export function NoticeForm({
           </TabsList>
           <Button
             type="button"
-            variant="ghost"
+            variant={isPreview ? "default" : "outline"}
             size="sm"
             onClick={() => setIsPreview(!isPreview)}
-            className="gap-1.5 text-sm"
+            className={`gap-1.5 text-xs ${isPreview ? "bg-[#1B2A4A] text-white" : ""}`}
           >
-            {isPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-            {isPreview ? "편집" : "미리보기"}
+            {isPreview ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+            {isPreview ? "편집 모드" : "미리보기"}
           </Button>
         </div>
 

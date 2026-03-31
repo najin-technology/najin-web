@@ -25,10 +25,13 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-sm">
-        <div className="bg-white rounded-lg border border-gray-200 p-8 shadow-sm">
+        <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-[#1B2A4A]">나진테크</h1>
-            <p className="text-sm text-gray-500 mt-1">관리자 로그인</p>
+            <div className="w-12 h-12 rounded-xl bg-[#1B2A4A] flex items-center justify-center mx-auto mb-4">
+              <span className="text-white text-lg font-bold">N</span>
+            </div>
+            <h1 className="text-xl font-bold text-[#1B2A4A]">나진테크 관리자</h1>
+            <p className="text-xs text-gray-400 mt-1">로그인하여 대시보드에 접속하세요</p>
           </div>
 
           {/* Google Login */}
