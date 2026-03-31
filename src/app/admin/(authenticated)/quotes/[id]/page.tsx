@@ -5,9 +5,10 @@ import { QuoteStatusForm } from "./quote-status-form";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { InfoGrid } from "@/components/admin/info-grid";
+import { CopyButton } from "@/components/admin/copy-button";
 import { Download } from "lucide-react";
 
-export const metadata = { title: "견적 상세" };
+export const metadata = { title: "견적 상세", description: "견적 요청 상세 정보", robots: "noindex, nofollow" };
 
 export default async function QuoteDetailPage({
   params,
@@ -50,8 +51,8 @@ export default async function QuoteDetailPage({
             <InfoGrid items={[
               { label: "회사명", value: quote.company_name },
               { label: "담당자", value: quote.contact_name },
-              { label: "연락처", value: quote.phone },
-              { label: "이메일", value: quote.email },
+              { label: "연락처", value: quote.phone ? <span className="flex items-center gap-1">{quote.phone} <CopyButton text={quote.phone} /></span> : null },
+              { label: "이메일", value: quote.email ? <span className="flex items-center gap-1">{quote.email} <CopyButton text={quote.email} /></span> : null },
               { label: "가공종류", value: quote.processing_type },
               { label: "소재", value: quote.material },
               { label: "수량", value: quote.quantity },

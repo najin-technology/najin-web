@@ -86,7 +86,13 @@ export function JobPostingForm({
         <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">콘텐츠</p>
       </div>
 
-      <Tabs defaultValue="ko">
+      <Tabs defaultValue="ko" onValueChange={(v) => {
+        if (typeof window !== "undefined") {
+          const url = new URL(window.location.href);
+          url.searchParams.set("tab", v);
+          window.history.replaceState({}, "", url.toString());
+        }
+      }}>
         <TabsList>
           <TabsTrigger value="ko">한국어</TabsTrigger>
           <TabsTrigger value="en">English</TabsTrigger>

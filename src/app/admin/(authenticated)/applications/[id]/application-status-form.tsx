@@ -16,6 +16,7 @@ import { AlertMessage } from "@/components/admin/alert-message";
 import { Loader2 } from "lucide-react";
 
 const STATUSES = ["서류검토", "면접예정", "합격", "불합격"];
+const APP_STEPS = ["서류검토", "면접예정", "합격"];
 
 export function ApplicationStatusForm({
   applicationId,
@@ -31,6 +32,7 @@ export function ApplicationStatusForm({
     {}
   );
   const formRef = useRef<HTMLFormElement>(null);
+  const currentIdx = APP_STEPS.indexOf(currentStatus);
 
   const handleSubmit = (formData: FormData) => {
     const newStatus = formData.get("status") as string;
@@ -50,6 +52,29 @@ export function ApplicationStatusForm({
       {state.success && (
         <AlertMessage variant="success">저장되었습니다.</AlertMessage>
       )}
+
+      {/* Step indicator */}
+      <div className="flex items-center gap-1 mb-4">
+        {APP_STEPS.map((step, i) => {
+          const isActive = i <= currentIdx;
+          const isCurrent = step === currentStatus;
+          return (
+            <div key={step} className="flex items-center gap-1 flex-1">
+              <div className={`flex items-center gap-1.5 ${isCurrent ? "font-medium text-brand-navy" : isActive ? "text-green-600" : "text-gray-300"}`}>
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                  isCurrent ? "bg-brand-navy text-white" : isActive ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-400"
+                }`}>
+                  {i + 1}
+                </div>
+                <span className="text-[11px] hidden sm:inline">{step}</span>
+              </div>
+              {i < APP_STEPS.length - 1 && (
+                <div className={`flex-1 h-px ${isActive && i < currentIdx ? "bg-green-300" : "bg-gray-200"}`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
 
       <div className="space-y-2">
         <Label>상태 변경</Label>

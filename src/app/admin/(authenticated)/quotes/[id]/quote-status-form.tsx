@@ -16,6 +16,7 @@ import { AlertMessage } from "@/components/admin/alert-message";
 import { Loader2 } from "lucide-react";
 
 const STATUSES = ["접수", "검토중", "견적발송", "완료"];
+const QUOTE_STEPS = ["접수", "검토중", "견적발송", "완료"];
 
 export function QuoteStatusForm({
   quoteId,
@@ -28,6 +29,7 @@ export function QuoteStatusForm({
 }) {
   const [state, formAction, pending] = useActionState(updateQuoteStatus, {});
   const formRef = useRef<HTMLFormElement>(null);
+  const currentIdx = QUOTE_STEPS.indexOf(currentStatus);
 
   const handleSubmit = (formData: FormData) => {
     const newStatus = formData.get("status") as string;
@@ -47,6 +49,29 @@ export function QuoteStatusForm({
       {state.success && (
         <AlertMessage variant="success">저장되었습니다.</AlertMessage>
       )}
+
+      {/* Step indicator */}
+      <div className="flex items-center gap-1 mb-4">
+        {QUOTE_STEPS.map((step, i) => {
+          const isActive = i <= currentIdx;
+          const isCurrent = step === currentStatus;
+          return (
+            <div key={step} className="flex items-center gap-1 flex-1">
+              <div className={`flex items-center gap-1.5 ${isCurrent ? "font-medium text-brand-navy" : isActive ? "text-green-600" : "text-gray-300"}`}>
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                  isCurrent ? "bg-brand-navy text-white" : isActive ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-400"
+                }`}>
+                  {i + 1}
+                </div>
+                <span className="text-[11px] hidden sm:inline">{step}</span>
+              </div>
+              {i < QUOTE_STEPS.length - 1 && (
+                <div className={`flex-1 h-px ${isActive && i < currentIdx ? "bg-green-300" : "bg-gray-200"}`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
 
       <div className="space-y-2">
         <Label>상태 변경</Label>

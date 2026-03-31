@@ -1,6 +1,8 @@
 import { requireAdmin } from "@/lib/auth";
 import { AdminSidebar } from "@/components/admin/sidebar";
 import { AdminTopbar } from "@/components/admin/topbar";
+import { ScrollToTop } from "@/components/admin/scroll-to-top";
+import { SessionGuard } from "@/components/admin/session-guard";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 
 export default async function AuthenticatedAdminLayout({
@@ -37,10 +39,12 @@ export default async function AuthenticatedAdminLayout({
         콘텐츠로 바로 가기
       </a>
       <AdminSidebar badges={badges} />
-      <div className="lg:ml-64 relative">
-        <AdminTopbar userEmail={user.email || ""} />
-        <main id="main-content" className="p-6 lg:p-8 max-w-7xl mx-auto">{children}</main>
+      <div className="admin-main relative">
+        <AdminTopbar userEmail={user.email || ""} pendingCount={(pendingQuotes || 0) + (pendingApps || 0)} />
+        <main id="main-content" className="p-6 pb-20 lg:p-8 lg:pb-8 max-w-7xl mx-auto">{children}</main>
       </div>
+      <SessionGuard />
+      <ScrollToTop />
     </div>
   );
 }

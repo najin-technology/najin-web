@@ -16,7 +16,7 @@ import { JobPostingActiveToggle } from "./job-posting-toggle";
 import { JobPostingDeleteButton } from "./job-posting-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 
-export const metadata = { title: "채용공고" };
+export const metadata = { title: "채용공고", description: "채용공고 관리", robots: "noindex, nofollow" };
 
 export default async function JobPostingsPage({
   searchParams,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -13,6 +13,8 @@ import {
   Clock,
   Menu,
   X,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react";
 
 const navGroups = [
@@ -40,6 +42,20 @@ const navGroups = [
 export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("sidebar-collapsed");
+    if (saved === "true") setCollapsed(true);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("sidebar-collapsed", String(collapsed));
+    document.documentElement.style.setProperty(
+      "--sidebar-width",
+      collapsed ? "4rem" : "16rem"
+    );
+  }, [collapsed]);
 
   const isActive = (href: string) => {
     if (href === "/admin") return pathname === "/admin";
@@ -47,13 +63,16 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
   };
 
   const nav = (
-    <nav className="px-3 py-5 space-y-6">
+    <nav className={`py-5 space-y-6 ${collapsed ? "px-2" : "px-3"}`}>
       {navGroups.map((group, gi) => (
         <div key={gi}>
-          {group.label && (
+          {group.label && !collapsed && (
             <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-400/80">
               {group.label}
             </p>
+          )}
+          {group.label && collapsed && (
+            <div className="mx-auto mb-2 w-6 border-t border-gray-200" />
           )}
           <div className="space-y-0.5">
             {group.items.map((item) => {
@@ -64,23 +83,28 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
+                  title={collapsed ? item.label : undefined}
+                  className={`relative flex items-center gap-3 ${collapsed ? "justify-center px-2" : "px-3"} py-2 rounded-lg text-sm transition-all duration-150 ${
                     active
                       ? "bg-brand-navy text-white font-medium shadow-sm"
                       : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-normal"
                   }`}
                 >
-                  {active && (
+                  {active && !collapsed && (
                     <span className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r-full bg-white/70 shadow-[2px_0_8px_rgba(255,255,255,0.15)]" />
                   )}
                   <Icon className="w-[18px] h-[18px] flex-shrink-0" />
-                  <span className="flex-1">{item.label}</span>
+                  {!collapsed && <span className="flex-1 transition-opacity duration-150">{item.label}</span>}
                   {badges[item.href] && badges[item.href] > 0 && (
-                    <span className={`text-[11px] font-bold rounded-full min-w-5 h-5 flex items-center justify-center px-1.5 ${
-                      active ? "bg-white/20 text-white" : "bg-red-500 text-white"
-                    }`}>
-                      {badges[item.href]}
-                    </span>
+                    collapsed ? (
+                      <span className="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-red-500" />
+                    ) : (
+                      <span className={`text-[11px] font-bold rounded-full min-w-5 h-5 flex items-center justify-center px-1.5 ${
+                        active ? "bg-white/20 text-white" : "bg-red-500 text-white"
+                      }`}>
+                        {badges[item.href]}
+                      </span>
+                    )
                   )}
                 </Link>
               );
@@ -112,30 +136,46 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200/80 z-40 shadow-[1px_0_3px_rgba(0,0,0,0.03)] transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed top-0 left-0 h-full ${collapsed ? "w-16" : "w-64"} bg-white border-r border-gray-200/80 z-40 shadow-[1px_0_3px_rgba(0,0,0,0.03)] transition-all duration-200 lg:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="h-14 flex items-center gap-2.5 px-6 border-b border-gray-100">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-navy to-[#2D4066] flex items-center justify-center shadow-sm">
+        <div className={`h-14 flex items-center gap-2.5 ${collapsed ? "px-3 justify-center" : "px-6"} border-b border-gray-100`}>
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-navy to-[#2D4066] flex items-center justify-center shadow-sm flex-shrink-0">
             <span className="text-white text-xs font-bold">N</span>
           </div>
-          <Link
-            href="/admin"
-            className="text-sm font-bold text-brand-navy tracking-tight"
-            onClick={() => setOpen(false)}
-          >
-            나진테크 관리자
-          </Link>
+          {!collapsed && (
+            <Link
+              href="/admin"
+              className="text-sm font-bold text-brand-navy tracking-tight"
+              onClick={() => setOpen(false)}
+            >
+              나진테크 관리자
+            </Link>
+          )}
         </div>
+        {/* Collapse toggle (desktop only) */}
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="hidden lg:flex absolute -right-3 top-[42px] w-6 h-6 rounded-full bg-white border border-gray-200 shadow-sm items-center justify-center text-gray-400 hover:text-brand-navy hover:shadow-md transition-all z-50"
+          aria-label={collapsed ? "사이드바 펼치기" : "사이드바 접기"}
+        >
+          {collapsed ? <PanelLeftOpen className="w-3.5 h-3.5" /> : <PanelLeftClose className="w-3.5 h-3.5" />}
+        </button>
         {nav}
-        <div className="absolute bottom-0 left-0 right-0 px-6 py-3 border-t border-gray-100">
-          <div className="flex items-center justify-between">
-            <p className="text-[10px] text-gray-400">나진테크 관리자 v4.0</p>
-            <a href="/" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-400 hover:text-gray-600 transition-colors">
-              사이트 보기 →
+        <div className={`absolute bottom-0 left-0 right-0 ${collapsed ? "px-2" : "px-6"} py-3 border-t border-gray-100`}>
+          {collapsed ? (
+            <a href="/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors" title="사이트 보기">
+              <Home className="w-3.5 h-3.5" />
             </a>
-          </div>
+          ) : (
+            <div className="flex items-center justify-between">
+              <p className="text-[10px] text-gray-400">나진테크 관리자 v4.0</p>
+              <a href="/" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-400 hover:text-gray-600 transition-colors">
+                사이트 보기 →
+              </a>
+            </div>
+          )}
         </div>
       </aside>
     </>

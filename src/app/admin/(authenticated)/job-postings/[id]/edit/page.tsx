@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { JobPostingForm } from "../../job-posting-form";
 
-export const metadata = { title: "채용공고 수정" };
+export const metadata = { title: "공고 수정", description: "채용공고 수정", robots: "noindex, nofollow" };
 
 export default async function EditJobPostingPage({
   params,

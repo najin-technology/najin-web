@@ -1,7 +1,7 @@
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { ProductForm } from "../product-form";
 
-export const metadata = { title: "제품 등록" };
+export const metadata = { title: "새 제품 등록", description: "새 제품 등록", robots: "noindex, nofollow" };
 
 export default function NewProductPage() {
   return (

@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { NoticeForm } from "../../notice-form";
 
-export const metadata = { title: "공지사항 수정" };
+export const metadata = { title: "공지사항 수정", description: "공지사항 수정", robots: "noindex, nofollow" };
 
 export default async function EditNoticePage({
   params,

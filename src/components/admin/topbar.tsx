@@ -2,7 +2,7 @@
 
 import { logoutAction } from "@/app/admin/login/actions";
 import { Button } from "@/components/ui/button";
-import { LogOut, ChevronRight, Home } from "lucide-react";
+import { LogOut, ChevronRight, Home, Bell } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -21,7 +21,7 @@ const subPageLabels: Record<string, string> = {
   edit: "편집",
 };
 
-export function AdminTopbar({ userEmail }: { userEmail: string }) {
+export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pendingCount?: number }) {
   const pathname = usePathname();
 
   const segments = pathname.split("/").filter(Boolean);
@@ -55,6 +55,16 @@ export function AdminTopbar({ userEmail }: { userEmail: string }) {
         )}
       </nav>
       <div className="flex items-center gap-2 flex-shrink-0">
+        {pendingCount != null && pendingCount > 0 && (
+          <Link href="/admin" className="relative">
+            <Button variant="ghost" size="sm" className="text-gray-400 hover:text-brand-navy h-8 w-8 p-0" aria-label="알림">
+              <Bell className="w-4 h-4" />
+              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+                {pendingCount > 9 ? "9+" : pendingCount}
+              </span>
+            </Button>
+          </Link>
+        )}
         <span className="text-[11px] text-gray-400 hidden sm:block max-w-[180px] truncate">
           {userEmail}
         </span>

@@ -2,7 +2,7 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { HistoryAddForm } from "./history-form";
 import { HistoryTable } from "./history-table";
 
-export const metadata = { title: "연혁 관리" };
+export const metadata = { title: "연혁 관리", description: "회사 연혁 관리", robots: "noindex, nofollow" };
 
 export default async function HistoryPage() {
   const supabase = await createSupabaseServerClient();

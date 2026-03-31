@@ -18,7 +18,11 @@ import { NoticeDeleteButton } from "./notice-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 import { HighlightText } from "@/components/admin/highlight-text";
 
-export const metadata = { title: "공지사항" };
+function stripHtml(html: string) {
+  return html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
+}
+
+export const metadata = { title: "공지사항", description: "공지사항 관리", robots: "noindex, nofollow" };
 
 export default async function NoticesPage({
   searchParams,
@@ -30,7 +34,7 @@ export default async function NoticesPage({
 
   let query = supabase
     .from("notices")
-    .select("id, title_ko, is_published, published_at, created_at")
+    .select("id, title_ko, content_ko, is_published, published_at, created_at")
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
@@ -64,6 +68,7 @@ export default async function NoticesPage({
           <TableHeader>
             <TableRow>
               <TableHead>제목</TableHead>
+              <TableHead className="hidden md:table-cell">미리보기</TableHead>
               <TableHead>공개</TableHead>
               <TableHead>게시일</TableHead>
               <TableHead>작성일</TableHead>
@@ -75,6 +80,9 @@ export default async function NoticesPage({
               notices.map((n) => (
                 <TableRow key={n.id}>
                   <TableCell className="font-medium"><HighlightText text={n.title_ko} query={searchQuery} /></TableCell>
+                  <TableCell className="text-xs text-gray-400 max-w-[200px] truncate hidden md:table-cell">
+                    {stripHtml(n.content_ko || "").slice(0, 60) || "—"}
+                  </TableCell>
                   <TableCell data-label="공개">
                     <NoticePublishToggle
                       noticeId={n.id}
@@ -103,7 +111,7 @@ export default async function NoticesPage({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={5}>
+                <TableCell colSpan={6}>
                   <EmptyState
                     message="공지사항이 없습니다."
                     description="새 공지를 작성하여 웹사이트에 소식을 알려보세요."
