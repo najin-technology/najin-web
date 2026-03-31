@@ -1,11 +1,13 @@
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/page-header";
+import { Breadcrumb } from "@/components/breadcrumb";
 import { QuoteForm } from "./quote-form";
 import Image from "next/image";
 import { Phone, MapPin, Mail } from "lucide-react";
 
 export const metadata = {
   title: "견적문의",
+  description: "나진테크 견적문의. 도면 첨부 가능, 24시간 내 회신. 우레탄, 합성수지, CNC, 금형 견적 요청.",
 };
 
 export default function QuotePage() {
@@ -18,6 +20,7 @@ export default function QuotePage() {
         namespace="quote"
         descriptionKey="pageDescription"
       />
+      <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       <section className="py-12 md:py-20 bg-surface-warm-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/page-header";
+import { Breadcrumb } from "@/components/breadcrumb";
 import Image from "next/image";
 import {
   Droplets,
@@ -12,6 +13,7 @@ import {
 
 export const metadata = {
   title: "사업영역",
+  description: "나진테크 사업영역. 우레탄 성형, 합성수지 가공, CNC/MCT 정밀가공, 금형 제작, EV 부품 가공 전문.",
 };
 
 const categories: {
@@ -33,6 +35,7 @@ export default function BusinessPage() {
   return (
     <>
       <PageHeader titleKey="pageTitle" namespace="business" descriptionKey="pageDescription" />
+      <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       {/* Category Quick Nav */}
       <nav className="sticky top-16 z-40 bg-white/95 backdrop-blur border-b border-surface-warm-200">
