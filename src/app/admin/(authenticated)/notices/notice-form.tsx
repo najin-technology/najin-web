@@ -56,7 +56,7 @@ export function NoticeForm({
 
       <FormStatusBar checked={isPublished} onCheckedChange={setIsPublished} activeLabel="공개" inactiveLabel="비공개" />
 
-      <div className="border-t border-gray-200 pt-4 mt-2">
+      <div className="border-t border-gray-200 pt-5 mt-4">
         <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">콘텐츠</p>
       </div>
 

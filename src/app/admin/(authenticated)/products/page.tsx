@@ -110,7 +110,7 @@ export default async function ProductsPage({
               >
                 {CATEGORY_LABELS[cat] || cat}
               </span>
-              <span className="text-xs text-gray-400 tabular-nums">{grouped[cat]?.length || 0}개</span>
+              <span className="text-xs text-gray-500 tabular-nums">{grouped[cat]?.length || 0}개</span>
             </div>
             <Table>
               <TableHeader>
@@ -132,7 +132,7 @@ export default async function ProductsPage({
                         <span className="font-medium">{p.name_ko}</span>
                       </div>
                     </TableCell>
-                    <TableCell>{p.sort_order}</TableCell>
+                    <TableCell><span className="font-mono tabular-nums">{p.sort_order}</span></TableCell>
                     <TableCell>
                       <ProductActiveToggle
                         productId={p.id}

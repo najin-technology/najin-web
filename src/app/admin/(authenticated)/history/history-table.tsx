@@ -61,7 +61,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
                 </TableCell>
               </TableRow>
             ) : (
-              <TableRow key={item.id} className={`even:bg-gray-50/30 ${idx > 0 && items[idx - 1].year !== item.year ? "border-t-2 border-t-gray-200" : ""}`}>
+              <TableRow key={item.id} className={`even:bg-gray-50/30 ${idx > 0 && items[idx - 1].year !== item.year ? "border-t border-gray-300" : ""}`}>
                 <TableCell className="font-medium">{item.year}</TableCell>
                 <TableCell>{item.month ?? "-"}</TableCell>
                 <TableCell>{item.description_ko}</TableCell>

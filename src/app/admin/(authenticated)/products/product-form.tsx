@@ -78,7 +78,7 @@ export function ProductForm({
 
       <FormStatusBar checked={isActive} onCheckedChange={setIsActive} />
 
-      <div className="border-t border-gray-200 pt-4 mt-2">
+      <div className="border-t border-gray-200 pt-5 mt-4">
         <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">기본 정보</p>
       </div>
 
@@ -109,7 +109,7 @@ export function ProductForm({
         </div>
       </div>
 
-      <div className="border-t border-gray-200 pt-4 mt-2">
+      <div className="border-t border-gray-200 pt-5 mt-4">
         <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">콘텐츠</p>
       </div>
 
@@ -172,7 +172,7 @@ export function ProductForm({
         </TabsContent>
       </Tabs>
 
-      <div className="border-t border-gray-200 pt-4 mt-2">
+      <div className="border-t border-gray-200 pt-5 mt-4">
         <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">미디어</p>
       </div>
 
@@ -186,7 +186,7 @@ export function ProductForm({
             {existingImages.map((url) => (
               <div
                 key={url}
-                className="relative group w-24 h-24 rounded-xl border border-gray-200 overflow-hidden"
+                className="relative group w-28 h-28 rounded-xl border border-gray-200 overflow-hidden"
               >
                 <img
                   src={url}
@@ -206,7 +206,7 @@ export function ProductForm({
         )}
 
         {/* New image upload */}
-        <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-brand-navy/30 hover:bg-gray-50/50 transition-colors">
+        <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-brand-navy/30 hover:bg-gray-50/50 transition-colors">
           <Upload className="w-8 h-8 text-gray-300 mx-auto mb-2" />
           <p className="text-sm text-gray-500 mb-1">이미지를 드래그하거나 클릭하여 업로드</p>
           <p className="text-xs text-gray-400 mb-3">JPG, PNG, WebP (최대 5MB)</p>
