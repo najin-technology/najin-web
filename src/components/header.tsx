@@ -40,7 +40,7 @@ export function Header() {
               <Link
                 key={item.key}
                 href={item.href}
-                className={`nav-underline text-sm font-medium transition-colors hover:text-brand-navy ${
+                className={`nav-underline text-sm font-medium transition-colors hover:text-brand-navy py-2 ${
                   pathname === item.href
                     ? "text-brand-navy active"
                     : "text-brand-charcoal"
