@@ -66,17 +66,23 @@ export function ProductForm({
       />
 
       {state.error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
           {state.error}
         </div>
       )}
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4">
         <Switch
           checked={isActive}
           onCheckedChange={(checked: boolean) => setIsActive(checked)}
         />
-        <Label>{isActive ? "활성" : "비활성"}</Label>
+        <div>
+          <Label className="text-sm font-medium">{isActive ? "활성" : "비활성"}</Label>
+          <p className="text-xs text-gray-400 mt-0.5">
+            {isActive ? "웹사이트에 표시됩니다" : "관리자만 볼 수 있습니다"}
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -168,7 +174,7 @@ export function ProductForm({
             {existingImages.map((url) => (
               <div
                 key={url}
-                className="relative group w-24 h-24 rounded-lg border border-gray-200 overflow-hidden"
+                className="relative group w-24 h-24 rounded-xl border border-gray-200 overflow-hidden"
               >
                 <img
                   src={url}
@@ -178,9 +184,9 @@ export function ProductForm({
                 <button
                   type="button"
                   onClick={() => removeExistingImage(url)}
-                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-1 right-1 bg-red-500 text-white rounded-lg p-1 opacity-80 hover:opacity-100 transition-opacity"
                 >
-                  <X className="w-3 h-3" />
+                  <X className="w-3.5 h-3.5" />
                 </button>
               </div>
             ))}
@@ -188,29 +194,32 @@ export function ProductForm({
         )}
 
         {/* New image upload */}
-        <Input
-          name="images"
-          type="file"
-          accept="image/*"
-          multiple
-          className="max-w-sm"
-        />
-        <p className="text-xs text-gray-500">
-          여러 이미지를 선택할 수 있습니다.
-        </p>
+        <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-gray-400 transition-colors">
+          <p className="text-sm text-gray-500 mb-2">이미지를 선택하거나 드래그하여 업로드</p>
+          <Input
+            name="images"
+            type="file"
+            accept="image/*"
+            multiple
+            className="max-w-sm mx-auto"
+          />
+          <p className="text-xs text-gray-400 mt-2">
+            JPG, PNG, WebP 형식 · 여러 이미지를 선택할 수 있습니다
+          </p>
+        </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-3 pt-2">
         <Button
           type="submit"
           disabled={pending}
-          className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+          className="bg-[#1B2A4A] hover:bg-[#243456] text-white rounded-lg shadow-sm min-w-[100px]"
         >
           {pending
             ? "저장 중..."
             : mode === "create"
-              ? "등록"
-              : "수정"}
+              ? "등록하기"
+              : "수정하기"}
         </Button>
       </div>
     </form>

@@ -44,17 +44,23 @@ export function NoticeForm({
       <input type="hidden" name="content_en" value={contentEn} />
 
       {state.error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
           {state.error}
         </div>
       )}
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4">
         <Switch
           checked={isPublished}
           onCheckedChange={(checked: boolean) => setIsPublished(checked)}
         />
-        <Label>{isPublished ? "공개" : "비공개"}</Label>
+        <div>
+          <Label className="text-sm font-medium">{isPublished ? "공개" : "비공개"}</Label>
+          <p className="text-xs text-gray-400 mt-0.5">
+            {isPublished ? "웹사이트에 표시됩니다" : "관리자만 볼 수 있습니다"}
+          </p>
+        </div>
       </div>
 
       <Tabs defaultValue="ko">
@@ -135,17 +141,17 @@ export function NoticeForm({
         </TabsContent>
       </Tabs>
 
-      <div className="flex gap-2">
+      <div className="flex gap-3 pt-2">
         <Button
           type="submit"
           disabled={pending}
-          className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+          className="bg-[#1B2A4A] hover:bg-[#243456] text-white rounded-lg shadow-sm min-w-[100px]"
         >
           {pending
             ? "저장 중..."
             : mode === "create"
-              ? "등록"
-              : "수정"}
+              ? "등록하기"
+              : "수정하기"}
         </Button>
       </div>
     </form>

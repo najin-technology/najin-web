@@ -23,22 +23,22 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
       <div className="w-full max-w-sm">
-        <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+        <div className="bg-white rounded-2xl border border-gray-200/80 p-8 shadow-lg shadow-gray-200/50">
           <div className="text-center mb-8">
-            <div className="w-12 h-12 rounded-xl bg-[#1B2A4A] flex items-center justify-center mx-auto mb-4">
-              <span className="text-white text-lg font-bold">N</span>
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1B2A4A] to-[#2D4066] flex items-center justify-center mx-auto mb-4 shadow-md shadow-[#1B2A4A]/20">
+              <span className="text-white text-xl font-bold">N</span>
             </div>
             <h1 className="text-xl font-bold text-[#1B2A4A]">나진테크 관리자</h1>
-            <p className="text-xs text-gray-400 mt-1">로그인하여 대시보드에 접속하세요</p>
+            <p className="text-sm text-gray-400 mt-1.5">로그인하여 대시보드에 접속하세요</p>
           </div>
 
           {/* Google Login */}
           <Button
             type="button"
             variant="outline"
-            className="w-full mb-6"
+            className="w-full mb-6 h-11 rounded-xl border-gray-200 hover:bg-gray-50 transition-colors"
             onClick={handleGoogleLogin}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -74,7 +74,8 @@ export default function AdminLoginPage() {
           {/* Email/Password Login */}
           <form action={formAction} className="space-y-4">
             {state.error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
                 {state.error}
               </div>
             )}
@@ -104,12 +105,15 @@ export default function AdminLoginPage() {
             <Button
               type="submit"
               disabled={pending}
-              className="w-full bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+              className="w-full h-11 rounded-xl bg-[#1B2A4A] hover:bg-[#243456] text-white shadow-sm transition-all"
             >
               {pending ? "로그인 중..." : "이메일로 로그인"}
             </Button>
           </form>
         </div>
+        <p className="text-center text-[11px] text-gray-400 mt-6">
+          나진테크 관리자 전용 페이지입니다
+        </p>
       </div>
     </div>
   );

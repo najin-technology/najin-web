@@ -37,7 +37,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow>
@@ -87,7 +87,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
                         variant="ghost"
                         size="icon-sm"
                         disabled={isPending}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

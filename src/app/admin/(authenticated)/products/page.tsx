@@ -68,10 +68,15 @@ export default async function ProductsPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-bold text-[#1B2A4A]">제품 관리</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-lg font-bold text-[#1B2A4A]">제품 관리</h1>
+          {products && products.length > 0 && (
+            <span className="text-xs text-gray-400 tabular-nums">{products.length}개</span>
+          )}
+        </div>
         <Link href="/admin/products/new">
-          <Button className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white">
-            <Plus className="w-4 h-4 mr-1" />
+          <Button className="bg-[#1B2A4A] hover:bg-[#243456] text-white gap-1.5 rounded-lg shadow-sm">
+            <Plus className="w-4 h-4" />
             새 제품 등록
           </Button>
         </Link>
@@ -96,14 +101,14 @@ export default async function ProductsPage({
 
       {categories.length > 0 ? (
         categories.map((cat) => (
-          <div key={cat} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-            <div className="px-5 py-3 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
+          <div key={cat} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2.5">
               <span
-                className={`inline-block px-2.5 py-0.5 rounded-md text-xs font-semibold ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}
+                className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}
               >
                 {CATEGORY_LABELS[cat] || cat}
               </span>
-              <span className="text-xs text-gray-400">{grouped[cat]?.length || 0}개</span>
+              <span className="text-xs text-gray-400 tabular-nums">{grouped[cat]?.length || 0}개</span>
             </div>
             <Table>
               <TableHeader>

@@ -40,10 +40,15 @@ export default async function JobPostingsPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-bold text-[#1B2A4A]">채용공고</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-lg font-bold text-[#1B2A4A]">채용공고</h1>
+          {postings && postings.length > 0 && (
+            <span className="text-xs text-gray-400 tabular-nums">{postings.length}건</span>
+          )}
+        </div>
         <Link href="/admin/job-postings/new">
-          <Button className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white">
-            <Plus className="w-4 h-4 mr-1" />
+          <Button className="bg-[#1B2A4A] hover:bg-[#243456] text-white gap-1.5 rounded-lg shadow-sm">
+            <Plus className="w-4 h-4" />
             새 공고 작성
           </Button>
         </Link>
@@ -63,7 +68,7 @@ export default async function JobPostingsPage({
         ]}
       />
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
