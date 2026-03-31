@@ -35,7 +35,7 @@ export default async function QuotesPage({
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[#1B2A4A]">견적 관리</h1>
+      <h1 className="text-lg font-bold text-[#1B2A4A]">견적 관리</h1>
 
       <SearchFilterBar
         searchPlaceholder="회사명/담당자 검색..."
@@ -53,7 +53,7 @@ export default async function QuotesPage({
         ]}
       />
 
-      <div className="bg-white rounded-lg border border-gray-200">
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -71,7 +71,7 @@ export default async function QuotesPage({
                   <TableCell>
                     <Link
                       href={`/admin/quotes/${q.id}`}
-                      className="text-[#3182CE] hover:underline"
+                      className="text-[#3182CE] hover:underline font-medium"
                     >
                       {q.company_name}
                     </Link>

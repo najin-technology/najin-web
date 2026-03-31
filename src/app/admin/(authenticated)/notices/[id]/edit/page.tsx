@@ -34,10 +34,10 @@ export default async function EditNoticePage({
             목록
           </Button>
         </Link>
-        <h1 className="text-2xl font-bold text-[#1B2A4A]">공지사항 수정</h1>
+        <h1 className="text-lg font-bold text-[#1B2A4A]">공지사항 수정</h1>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-6 overflow-hidden">
         <NoticeForm mode="edit" notice={notice} />
       </div>
     </div>
