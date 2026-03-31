@@ -35,7 +35,7 @@ export default async function ApplicationsPage({
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[#1B2A4A]">채용 관리</h1>
+      <h1 className="text-lg font-bold text-[#1B2A4A]">채용 관리</h1>
 
       <SearchFilterBar
         searchPlaceholder="이름/이메일 검색..."
@@ -53,7 +53,7 @@ export default async function ApplicationsPage({
         ]}
       />
 
-      <div className="bg-white rounded-lg border border-gray-200">
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -71,7 +71,7 @@ export default async function ApplicationsPage({
                   <TableCell>
                     <Link
                       href={`/admin/applications/${a.id}`}
-                      className="text-[#3182CE] hover:underline"
+                      className="text-[#3182CE] hover:underline font-medium"
                     >
                       {a.name}
                     </Link>

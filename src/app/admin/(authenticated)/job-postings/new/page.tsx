@@ -15,10 +15,10 @@ export default function NewJobPostingPage() {
             목록
           </Button>
         </Link>
-        <h1 className="text-2xl font-bold text-[#1B2A4A]">새 채용공고 작성</h1>
+        <h1 className="text-lg font-bold text-[#1B2A4A]">새 채용공고 작성</h1>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-6 overflow-hidden">
         <JobPostingForm mode="create" />
       </div>
     </div>

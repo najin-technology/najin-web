@@ -11,10 +11,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { AlertTriangle } from "lucide-react";
 
 export function ConfirmDialog({
   title = "삭제 확인",
-  description = "정말 삭제하시겠습니까? 삭제된 항목은 복구할 수 없습니다.",
+  description = "이 항목을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
   confirmLabel = "삭제",
   onConfirm,
   children,
@@ -32,8 +33,15 @@ export function ConfirmDialog({
       <DialogTrigger render={<span />}>{children}</DialogTrigger>
       <DialogContent showCloseButton={false}>
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <AlertTriangle className="w-4 h-4 text-red-600" />
+            </div>
+            <div>
+              <DialogTitle>{title}</DialogTitle>
+              <DialogDescription className="mt-1">{description}</DialogDescription>
+            </div>
+          </div>
         </DialogHeader>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>

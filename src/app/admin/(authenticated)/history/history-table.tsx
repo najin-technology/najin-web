@@ -13,6 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Pencil, Trash2 } from "lucide-react";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
+import { toast } from "sonner";
 
 type HistoryItemData = {
   id: string;
@@ -28,15 +30,14 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = (id: string) => {
-    if (confirm("정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.")) {
-      startTransition(() => {
-        deleteHistoryItem(id);
-      });
-    }
+    startTransition(async () => {
+      await deleteHistoryItem(id);
+      toast.success("삭제되었습니다");
+    });
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200">
+    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow>
@@ -77,15 +78,20 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
                     >
                       <Pencil className="w-4 h-4" />
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon-sm"
-                      disabled={isPending}
-                      className="text-red-500 hover:text-red-700"
-                      onClick={() => handleDelete(item.id)}
+                    <ConfirmDialog
+                      title="연혁 삭제"
+                      description="이 연혁 항목을 삭제하시겠습니까?"
+                      onConfirm={() => handleDelete(item.id)}
                     >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        disabled={isPending}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </ConfirmDialog>
                   </div>
                 </TableCell>
               </TableRow>
@@ -93,11 +99,8 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
           )}
           {items.length === 0 && (
             <TableRow>
-              <TableCell
-                colSpan={6}
-                className="text-center py-12 text-gray-500"
-              >
-                등록된 연혁이 없습니다.
+              <TableCell colSpan={6}>
+                <div className="text-center py-8 text-sm text-gray-400">등록된 연혁이 없습니다</div>
               </TableCell>
             </TableRow>
           )}
