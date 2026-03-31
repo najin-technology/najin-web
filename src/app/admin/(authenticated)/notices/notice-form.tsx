@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { TiptapEditor } from "@/components/admin/tiptap-editor";
+import { Eye, EyeOff } from "lucide-react";
+import DOMPurify from "isomorphic-dompurify";
 
 type NoticeData = {
   id?: string;
@@ -32,6 +34,7 @@ export function NoticeForm({
   );
   const [contentKo, setContentKo] = useState(notice?.content_ko || "");
   const [contentEn, setContentEn] = useState(notice?.content_en || "");
+  const [isPreview, setIsPreview] = useState(false);
 
   return (
     <form action={formAction} className="space-y-6">
@@ -55,10 +58,22 @@ export function NoticeForm({
       </div>
 
       <Tabs defaultValue="ko">
-        <TabsList>
-          <TabsTrigger value="ko">한국어</TabsTrigger>
-          <TabsTrigger value="en">English</TabsTrigger>
-        </TabsList>
+        <div className="flex items-center justify-between">
+          <TabsList>
+            <TabsTrigger value="ko">한국어</TabsTrigger>
+            <TabsTrigger value="en">English</TabsTrigger>
+          </TabsList>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsPreview(!isPreview)}
+            className="gap-1.5 text-sm"
+          >
+            {isPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            {isPreview ? "편집" : "미리보기"}
+          </Button>
+        </div>
 
         <TabsContent value="ko" className="space-y-4 mt-4">
           <div className="space-y-2">
@@ -73,11 +88,20 @@ export function NoticeForm({
           </div>
           <div className="space-y-2">
             <Label>내용 (한국어)</Label>
-            <TiptapEditor
-              content={contentKo}
-              onChange={setContentKo}
-              placeholder="공지사항 내용을 입력하세요"
-            />
+            {isPreview ? (
+              <div className="border border-gray-200 rounded-lg p-6">
+                <div
+                  className="prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(contentKo) }}
+                />
+              </div>
+            ) : (
+              <TiptapEditor
+                content={contentKo}
+                onChange={setContentKo}
+                placeholder="공지사항 내용을 입력하세요"
+              />
+            )}
           </div>
         </TabsContent>
 
@@ -93,11 +117,20 @@ export function NoticeForm({
           </div>
           <div className="space-y-2">
             <Label>Content (English)</Label>
-            <TiptapEditor
-              content={contentEn}
-              onChange={setContentEn}
-              placeholder="Enter notice content"
-            />
+            {isPreview ? (
+              <div className="border border-gray-200 rounded-lg p-6">
+                <div
+                  className="prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(contentEn) }}
+                />
+              </div>
+            ) : (
+              <TiptapEditor
+                content={contentEn}
+                onChange={setContentEn}
+                placeholder="Enter notice content"
+              />
+            )}
           </div>
         </TabsContent>
       </Tabs>

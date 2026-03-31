@@ -14,10 +14,21 @@ import {
 } from "lucide-react";
 import { PortfolioGallery } from "@/components/portfolio-gallery";
 
-export const metadata = {
-  title: "주요실적",
-  description: "나진테크 주요실적. 국내외 주요 완성차사, SK, Overseas automaker 등 20+ 거래처 납품. 프로젝트 사례 및 제품 갤러리.",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return createPageMetadata({
+    locale,
+    path: "/portfolio",
+    titles: { ko: "주요실적", en: "Portfolio", zh: "主要业绩" },
+    descriptions: {
+      ko: "나진테크 주요실적. 국내외 주요 완성차사, SK, Overseas automaker 등 20+ 거래처 납품. 프로젝트 사례 및 제품 갤러리.",
+      en: "NAJIN TECHNOLOGY portfolio. Supplying to 20+ clients including Hyundai, SK, Overseas automaker. Project cases and product gallery.",
+      zh: "纳进科技主要业绩。向现代汽车、SK、海外整车厂等20+客户供货。项目案例及产品展示。",
+    },
+  });
+}
 
 const categoryIcons: Record<string, LucideIcon> = {
   automotive: Car,

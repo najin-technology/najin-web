@@ -10,23 +10,48 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 
 export const metadata = { title: "견적 관리" };
 
-export default async function QuotesPage() {
+export default async function QuotesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; status?: string }>;
+}) {
+  const { q, status } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
-  const { data: quotes } = await supabase
+  let query = supabase
     .from("quotes")
-    .select(
-      "id, company_name, contact_name, processing_type, status, created_at"
-    )
+    .select("id, company_name, contact_name, processing_type, status, created_at")
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
+
+  if (q) query = query.or(`company_name.ilike.%${q}%,contact_name.ilike.%${q}%`);
+  if (status) query = query.eq("status", status);
+
+  const { data: quotes } = await query;
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-[#1B2A4A]">견적 관리</h1>
+
+      <SearchFilterBar
+        searchPlaceholder="회사명/담당자 검색..."
+        filters={[
+          {
+            key: "status",
+            label: "전체 상태",
+            options: [
+              { value: "접수", label: "접수" },
+              { value: "검토중", label: "검토중" },
+              { value: "견적발송", label: "견적발송" },
+              { value: "완료", label: "완료" },
+            ],
+          },
+        ]}
+      />
 
       <div className="bg-white rounded-lg border border-gray-200">
         <Table>

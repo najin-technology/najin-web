@@ -29,10 +29,21 @@ const fallbackHistory = [
   { id: "h12", year: 2022, month: 2, description_ko: "확장 이전 (산막공단남14길 170)", description_en: "Expanded & Relocated to New Factory" },
 ];
 
-export const metadata = {
-  title: "회사소개",
-  description: "나진테크 회사소개. 2002년 설립, ISO 9001 인증, 특허 보유. 대표이사 인사말, 연혁, 인증현황, 오시는 길.",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return createPageMetadata({
+    locale,
+    path: "/about",
+    titles: { ko: "회사소개", en: "About Us", zh: "公司介绍" },
+    descriptions: {
+      ko: "나진테크 회사소개. 2002년 설립, ISO 9001 인증, 특허 보유. 대표이사 인사말, 연혁, 인증현황, 오시는 길.",
+      en: "About NAJIN TECHNOLOGY. Founded 2002, ISO 9001 certified, patent holder. CEO message, history, certifications, location.",
+      zh: "纳进科技公司介绍。2002年成立，ISO 9001认证，专利持有。CEO致辞、发展历程、资质认证、交通指南。",
+    },
+  });
+}
 
 export default async function AboutPage() {
   const t = await getTranslations("about");

@@ -3,6 +3,7 @@
 import { Switch } from "@/components/ui/switch";
 import { toggleNoticePublish } from "./actions";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function NoticePublishToggle({
   noticeId,
@@ -18,8 +19,9 @@ export function NoticePublishToggle({
       checked={isPublished}
       disabled={isPending}
       onCheckedChange={() => {
-        startTransition(() => {
-          toggleNoticePublish(noticeId);
+        startTransition(async () => {
+          await toggleNoticePublish(noticeId);
+          toast.success(isPublished ? "비공개로 변경되었습니다" : "공개로 변경되었습니다");
         });
       }}
     />

@@ -2,10 +2,21 @@ import { useTranslations, useLocale } from "next-intl";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 
-export const metadata = {
-  title: "개인정보처리방침",
-  description: "나진테크 개인정보처리방침. 개인정보 수집, 이용, 보관 및 파기에 관한 안내.",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return createPageMetadata({
+    locale,
+    path: "/privacy",
+    titles: { ko: "개인정보처리방침", en: "Privacy Policy", zh: "隐私政策" },
+    descriptions: {
+      ko: "나진테크 개인정보처리방침. 개인정보 수집, 이용, 보관 및 파기에 관한 안내.",
+      en: "NAJIN TECHNOLOGY privacy policy. Information on collection, use, storage and disposal of personal data.",
+      zh: "纳进科技隐私政策。关于个人信息收集、使用、保管及销毁的说明。",
+    },
+  });
+}
 
 export default function PrivacyPage() {
   const t = useTranslations("privacy");

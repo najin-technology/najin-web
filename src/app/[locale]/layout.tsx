@@ -28,6 +28,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider>
+      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang="${locale}"` }} />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

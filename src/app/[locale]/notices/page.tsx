@@ -5,10 +5,21 @@ import { getPublishedNotices } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
 import { FileText, Calendar } from "lucide-react";
 
-export const metadata = {
-  title: "공지사항",
-  description: "나진테크 공지사항. 회사 소식, 채용 안내, 주요 공지를 확인하세요.",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return createPageMetadata({
+    locale,
+    path: "/notices",
+    titles: { ko: "공지사항", en: "Notices", zh: "公告" },
+    descriptions: {
+      ko: "나진테크 공지사항. 회사 소식, 채용 안내, 주요 공지를 확인하세요.",
+      en: "NAJIN TECHNOLOGY notices. Company news, hiring updates, and important announcements.",
+      zh: "纳进科技公告。公司新闻、招聘信息及重要公告。",
+    },
+  });
+}
 
 export default async function NoticesPage() {
   const t = await getTranslations("notices");
