@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import { updateApplicationStatus } from "../actions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,8 +12,11 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { AlertMessage } from "@/components/admin/alert-message";
+import { Loader2 } from "lucide-react";
 
 const STATUSES = ["서류검토", "면접예정", "합격", "불합격"];
+const APP_STEPS = ["서류검토", "면접예정", "합격"];
 
 export function ApplicationStatusForm({
   applicationId,
@@ -28,36 +31,68 @@ export function ApplicationStatusForm({
     updateApplicationStatus,
     {}
   );
+  const formRef = useRef<HTMLFormElement>(null);
+  const currentIdx = APP_STEPS.indexOf(currentStatus);
+
+  const handleSubmit = (formData: FormData) => {
+    const newStatus = formData.get("status") as string;
+    if (newStatus !== currentStatus) {
+      if (!confirm(`상태를 "${newStatus}"(으)로 변경하시겠습니까?`)) return;
+    }
+    formAction(formData);
+  };
 
   return (
-    <form action={formAction} className="space-y-4">
+    <form action={handleSubmit} ref={formRef} className="space-y-4">
       <input type="hidden" name="id" value={applicationId} />
 
       {state.error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
-          {state.error}
-        </div>
+        <AlertMessage>{state.error}</AlertMessage>
       )}
       {state.success && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-3 py-2 rounded text-sm">
-          저장되었습니다.
-        </div>
+        <AlertMessage variant="success">저장되었습니다.</AlertMessage>
       )}
+
+      {/* Step indicator */}
+      <div className="flex items-center gap-1 mb-4 min-w-0 overflow-hidden">
+        {APP_STEPS.map((step, i) => {
+          const isActive = i <= currentIdx;
+          const isCurrent = step === currentStatus;
+          return (
+            <div key={step} className="flex items-center gap-1 flex-1">
+              <div className={`flex items-center gap-1.5 ${isCurrent ? "font-medium text-brand-navy" : isActive ? "text-green-600" : "text-gray-300"}`}>
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                  isCurrent ? "bg-brand-navy text-white" : isActive ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-400"
+                }`}>
+                  {i + 1}
+                </div>
+                <span className="text-[10px] sm:text-[11px]">{step}</span>
+              </div>
+              {i < APP_STEPS.length - 1 && (
+                <div className={`flex-1 h-px ${isActive && i < currentIdx ? "bg-emerald-300" : "bg-gray-200"}`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
 
       <div className="space-y-2">
         <Label>상태 변경</Label>
-        <Select name="status" defaultValue={currentStatus}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="상태 선택" />
-          </SelectTrigger>
-          <SelectContent>
-            {STATUSES.map((s) => (
-              <SelectItem key={s} value={s}>
-                {s}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex items-center gap-2">
+          <Select name="status" defaultValue={currentStatus}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="상태 선택" />
+            </SelectTrigger>
+            <SelectContent>
+              {STATUSES.map((s) => (
+                <SelectItem key={s} value={s}>
+                  {s}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {pending && <Loader2 className="w-4 h-4 animate-spin text-gray-400" />}
+        </div>
       </div>
 
       <div className="space-y-2">
@@ -74,9 +109,9 @@ export function ApplicationStatusForm({
       <Button
         type="submit"
         disabled={pending}
-        className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+        className="w-full bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm"
       >
-        {pending ? "저장 중..." : "저장"}
+        {pending ? "저장 중..." : "저장하기"}
       </Button>
     </form>
   );

@@ -15,6 +15,7 @@ export function ProductActiveToggle({
   const [isPending, startTransition] = useTransition();
 
   return (
+    <div className={isPending ? "opacity-50 transition-opacity" : "transition-opacity"}>
     <Switch
       checked={isActive}
       disabled={isPending}
@@ -25,5 +26,6 @@ export function ProductActiveToggle({
         });
       }}
     />
+    </div>
   );
 }

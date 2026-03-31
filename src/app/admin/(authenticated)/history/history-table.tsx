@@ -37,7 +37,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow>
@@ -50,7 +50,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {items.map((item) =>
+          {items.map((item, idx) =>
             editingId === item.id ? (
               <TableRow key={item.id}>
                 <TableCell colSpan={6} className="p-3">
@@ -61,7 +61,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
                 </TableCell>
               </TableRow>
             ) : (
-              <TableRow key={item.id}>
+              <TableRow key={item.id} className={`even:bg-gray-50/30 ${idx > 0 && items[idx - 1].year !== item.year ? "border-t border-gray-300" : ""}`}>
                 <TableCell className="font-medium">{item.year}</TableCell>
                 <TableCell>{item.month ?? "-"}</TableCell>
                 <TableCell>{item.description_ko}</TableCell>
@@ -75,6 +75,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
                       variant="ghost"
                       size="icon-sm"
                       onClick={() => setEditingId(item.id)}
+                      aria-label="편집"
                     >
                       <Pencil className="w-4 h-4" />
                     </Button>
@@ -87,7 +88,8 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
                         variant="ghost"
                         size="icon-sm"
                         disabled={isPending}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        aria-label="삭제"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

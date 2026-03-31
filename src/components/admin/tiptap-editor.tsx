@@ -48,7 +48,7 @@ export function TiptapEditor({
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm max-w-none min-h-[200px] p-4 focus:outline-none",
+          "prose prose-sm max-w-none min-h-[200px] p-4 focus:outline-none focus:ring-2 focus:ring-brand-navy/20 focus:ring-inset rounded-b-xl transition-shadow",
       },
     },
   });
@@ -79,9 +79,9 @@ export function TiptapEditor({
   );
 
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden">
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
       {/* Toolbar */}
-      <div className="flex flex-wrap gap-0.5 p-1.5 border-b border-gray-200 bg-gray-50/80">
+      <div role="toolbar" aria-label="에디터 도구 모음" className="flex flex-wrap gap-0.5 p-1.5 border-b border-gray-200 bg-gray-50/80">
         {/* Text formatting */}
         <ToolBtn onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} title="굵게">
           <Bold className="w-4 h-4" />
@@ -92,14 +92,14 @@ export function TiptapEditor({
         <ToolBtn onClick={() => editor.chain().focus().toggleStrike().run()} active={editor.isActive("strike")} title="취소선">
           <Strikethrough className="w-4 h-4" />
         </ToolBtn>
-        <div className="w-px h-5 bg-gray-300 self-center mx-0.5" />
+        <div className="w-px h-5 bg-gray-200 self-center mx-1" />
         <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} active={editor.isActive("heading", { level: 2 })} title="제목 2">
           <Heading2 className="w-4 h-4" />
         </ToolBtn>
         <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} active={editor.isActive("heading", { level: 3 })} title="제목 3">
           <Heading3 className="w-4 h-4" />
         </ToolBtn>
-        <div className="w-px h-5 bg-gray-300 self-center mx-0.5" />
+        <div className="w-px h-5 bg-gray-200 self-center mx-1" />
         <ToolBtn onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive("bulletList")} title="글머리 목록">
           <List className="w-4 h-4" />
         </ToolBtn>
@@ -109,21 +109,21 @@ export function TiptapEditor({
         <ToolBtn onClick={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive("blockquote")} title="인용">
           <Quote className="w-4 h-4" />
         </ToolBtn>
-        <div className="w-px h-5 bg-gray-300 self-center mx-0.5" />
+        <div className="w-px h-5 bg-gray-200 self-center mx-1" />
         <ToolBtn onClick={addLink} active={editor.isActive("link")} title="링크 삽입">
           <LinkIcon className="w-4 h-4" />
         </ToolBtn>
         <ToolBtn onClick={addImage} title="이미지 삽입">
           <ImageIcon className="w-4 h-4" />
         </ToolBtn>
-        <div className="w-px h-5 bg-gray-300 self-center mx-0.5" />
+        <div className="w-px h-5 bg-gray-200 self-center mx-1" />
         <ToolBtn onClick={() => editor.chain().focus().toggleCodeBlock().run()} active={editor.isActive("codeBlock")} title="코드 블록">
           <Code className="w-4 h-4" />
         </ToolBtn>
         <ToolBtn onClick={() => editor.chain().focus().setHorizontalRule().run()} title="구분선">
           <Minus className="w-4 h-4" />
         </ToolBtn>
-        <div className="w-px h-5 bg-gray-300 self-center mx-0.5" />
+        <div className="w-px h-5 bg-gray-200 self-center mx-1" />
         <ToolBtn onClick={() => editor.chain().focus().undo().run()} title="실행 취소">
           <Undo className="w-4 h-4" />
         </ToolBtn>

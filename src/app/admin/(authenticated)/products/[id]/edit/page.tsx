@@ -1,11 +1,9 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { ProductForm } from "../../product-form";
 
-export const metadata = { title: "제품 수정" };
+export const metadata = { title: "제품 수정", description: "제품 정보 수정", robots: "noindex, nofollow" };
 
 export default async function EditProductPage({
   params,
@@ -29,17 +27,9 @@ export default async function EditProductPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Link href="/admin/products">
-          <Button variant="ghost" size="sm">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            목록
-          </Button>
-        </Link>
-        <h1 className="text-lg font-bold text-[#1B2A4A]">제품 수정</h1>
-      </div>
+      <DetailPageHeader backHref="/admin/products" title="제품 수정" />
 
-      <div className="bg-white rounded-lg border border-gray-200 p-6 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 p-6 lg:p-8 overflow-hidden">
         <ProductForm mode="edit" product={product} />
       </div>
     </div>

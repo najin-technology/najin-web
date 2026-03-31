@@ -15,6 +15,7 @@ export function NoticePublishToggle({
   const [isPending, startTransition] = useTransition();
 
   return (
+    <div className={isPending ? "opacity-50 transition-opacity" : "transition-opacity"}>
     <Switch
       checked={isPublished}
       disabled={isPending}
@@ -25,5 +26,6 @@ export function NoticePublishToggle({
         });
       }}
     />
+    </div>
   );
 }

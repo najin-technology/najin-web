@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
+import { ListPageHeader } from "@/components/admin/list-page-header";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -10,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Pencil } from "lucide-react";
+import { Package, Pencil } from "lucide-react";
 import { ProductActiveToggle } from "./product-toggle";
 import { ProductDeleteButton } from "./product-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
@@ -24,14 +25,14 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  우레탄: "bg-orange-100 text-orange-700",
-  합성수지: "bg-purple-100 text-purple-700",
-  CNC: "bg-blue-100 text-blue-700",
-  금형: "bg-green-100 text-green-700",
-  EV: "bg-teal-100 text-teal-700",
+  우레탄: "bg-orange-100 text-orange-800",
+  합성수지: "bg-purple-100 text-purple-800",
+  CNC: "bg-blue-100 text-blue-800",
+  금형: "bg-green-100 text-green-800",
+  EV: "bg-teal-100 text-teal-800",
 };
 
-export const metadata = { title: "제품 관리" };
+export const metadata = { title: "제품 관리", description: "제품 목록 관리", robots: "noindex, nofollow" };
 
 export default async function ProductsPage({
   searchParams,
@@ -67,15 +68,7 @@ export default async function ProductsPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-lg font-bold text-[#1B2A4A]">제품 관리</h1>
-        <Link href="/admin/products/new">
-          <Button className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white">
-            <Plus className="w-4 h-4 mr-1" />
-            새 제품 등록
-          </Button>
-        </Link>
-      </div>
+      <ListPageHeader title="제품 관리" count={products?.length} createHref="/admin/products/new" createLabel="새 제품 등록" />
 
       <SearchFilterBar
         searchPlaceholder="제품명 검색..."
@@ -94,16 +87,30 @@ export default async function ProductsPage({
         ]}
       />
 
+      {categories.length > 1 && (
+        <div className="flex flex-wrap gap-1.5">
+          {categories.map((cat) => (
+            <a
+              key={cat}
+              href={`#category-${cat}`}
+              className="text-xs px-2.5 py-1 rounded-full border border-gray-200 text-gray-500 hover:text-brand-navy hover:border-brand-navy/30 transition-colors"
+            >
+              {CATEGORY_LABELS[cat] || cat}
+            </a>
+          ))}
+        </div>
+      )}
+
       {categories.length > 0 ? (
         categories.map((cat) => (
-          <div key={cat} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-            <div className="px-5 py-3 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
+          <div key={cat} id={`category-${cat}`} className="bg-white rounded-xl border border-gray-200 overflow-hidden scroll-mt-20">
+            <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2.5">
               <span
-                className={`inline-block px-2.5 py-0.5 rounded-md text-xs font-semibold ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}
+                className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}
               >
                 {CATEGORY_LABELS[cat] || cat}
               </span>
-              <span className="text-xs text-gray-400">{grouped[cat]?.length || 0}개</span>
+              <span className="text-xs text-gray-500 tabular-nums">{grouped[cat]?.length || 0}개</span>
             </div>
             <Table>
               <TableHeader>
@@ -116,9 +123,16 @@ export default async function ProductsPage({
               </TableHeader>
               <TableBody>
                 {grouped[cat]!.map((p) => (
-                  <TableRow key={p.id}>
-                    <TableCell className="font-medium">{p.name_ko}</TableCell>
-                    <TableCell>{p.sort_order}</TableCell>
+                  <TableRow key={p.id} className="hover:bg-gray-50/50">
+                    <TableCell>
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-md bg-gray-100 flex items-center justify-center flex-shrink-0">
+                          <Package className="w-4 h-4 text-gray-300" />
+                        </div>
+                        <span className="font-medium">{p.name_ko}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell><span className="font-mono tabular-nums">{p.sort_order}</span></TableCell>
                     <TableCell>
                       <ProductActiveToggle
                         productId={p.id}
@@ -128,7 +142,7 @@ export default async function ProductsPage({
                     <TableCell>
                       <div className="flex items-center gap-1">
                         <Link href={`/admin/products/${p.id}/edit`}>
-                          <Button variant="ghost" size="icon-sm">
+                          <Button variant="ghost" size="icon-sm" aria-label="편집">
                             <Pencil className="w-4 h-4" />
                           </Button>
                         </Link>
@@ -143,7 +157,7 @@ export default async function ProductsPage({
         ))
       ) : (
         <div className="bg-white rounded-lg border border-gray-200">
-          <EmptyState message="등록된 제품이 없습니다." />
+          <EmptyState message="등록된 제품이 없습니다." description="새 제품을 등록하여 웹사이트에 제품을 소개하세요." icon={Package} action={{ label: "새 제품 등록", href: "/admin/products/new" }} />
         </div>
       )}
     </div>
