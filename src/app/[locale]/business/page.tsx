@@ -20,7 +20,7 @@ const categories: {
   image: string;
   imageAlt: string;
 }[] = [
-  { key: "urethane", icon: Droplets, image: "/images/factory/urethane-machine.jpg", imageAlt: "우레탄 성형 장비" },
+  { key: "urethane", icon: Droplets, image: "/images/factory/workshop-2.jpg", imageAlt: "우레탄 성형 장비" },
   { key: "resin", icon: FlaskConical, image: "/images/products/pe-rod-1.jpg", imageAlt: "PE 환봉 가공" },
   { key: "cnc", icon: Cog, image: "/images/products/3d-mc-part-1.jpg", imageAlt: "3D MC 형상 가공품" },
   { key: "mold", icon: Box, image: "/images/products/3d-mc-part-2.jpg", imageAlt: "금형 가공품" },
