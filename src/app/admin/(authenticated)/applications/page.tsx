@@ -117,7 +117,7 @@ export default async function ApplicationsPage({
           </TableBody>
         </Table>
         {applications && applications.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400">
+          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums">
             총 {applications.length}건
           </div>
         )}

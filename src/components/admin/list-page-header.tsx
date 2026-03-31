@@ -18,7 +18,7 @@ export function ListPageHeader({
       <div className="flex items-center gap-3">
         <h1 className="text-lg font-bold text-brand-navy">{title}</h1>
         {count != null && count > 0 && (
-          <span className="text-xs text-gray-400 tabular-nums">
+          <span className="text-xs text-gray-500 tabular-nums bg-gray-100 px-2 py-0.5 rounded-full">
             {count}건
           </span>
         )}

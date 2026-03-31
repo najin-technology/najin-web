@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { createNotice, updateNotice } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,6 +36,12 @@ export function NoticeForm({
   const [contentKo, setContentKo] = useState(notice?.content_ko || "");
   const [contentEn, setContentEn] = useState(notice?.content_en || "");
   const [isPreview, setIsPreview] = useState(false);
+  const [tabValue, setTabValue] = useState("ko");
+
+  useEffect(() => {
+    const tab = new URLSearchParams(window.location.search).get("tab");
+    if (tab) setTabValue(tab);
+  }, []);
 
   return (
     <form action={formAction} className="space-y-6">
@@ -50,11 +56,12 @@ export function NoticeForm({
 
       <FormStatusBar checked={isPublished} onCheckedChange={setIsPublished} activeLabel="공개" inactiveLabel="비공개" />
 
-      <div className="border-t border-gray-100 pt-2">
+      <div className="border-t border-gray-200 pt-4 mt-2">
         <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">콘텐츠</p>
       </div>
 
-      <Tabs defaultValue="ko" onValueChange={(v) => {
+      <Tabs value={tabValue} onValueChange={(v) => {
+        setTabValue(v);
         if (typeof window !== "undefined") {
           const url = new URL(window.location.href);
           url.searchParams.set("tab", v);

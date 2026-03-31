@@ -265,6 +265,23 @@
   border-radius: 8px;
 }
 
+/* ===== Admin scrollbar ===== */
+
+.admin-main ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.admin-main ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-main ::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+.admin-main ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
 /* ===== Admin sidebar + main layout ===== */
 
 @media (min-width: 1024px) {
@@ -320,13 +337,24 @@
   .admin-card-table tbody tr td::before {
     content: attr(data-label);
     display: block;
-    font-size: 10px;
-    color: #9ca3af;
+    font-size: 11px;
+    color: #6b7280;
     font-weight: 500;
   }
   .admin-card-table tbody tr td:first-child::before {
     display: none;
   }
+}
+
+/* ===== Admin link utility ===== */
+
+.admin-link {
+  color: var(--color-brand-blue, #2563eb);
+  transition: color 0.15s;
+}
+.admin-link:hover {
+  color: var(--color-brand-blue-hover, #1d4ed8);
+  text-decoration: underline;
 }
 
 /* ===== Reduced motion ===== */

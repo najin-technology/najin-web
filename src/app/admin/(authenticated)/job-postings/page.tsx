@@ -109,7 +109,7 @@ export default async function JobPostingsPage({
           </TableBody>
         </Table>
         {postings && postings.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400">
+          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums">
             총 {postings.length}건
           </div>
         )}

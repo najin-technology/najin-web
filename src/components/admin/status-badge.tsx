@@ -28,6 +28,7 @@ export function StatusBadge({
     <span
       role="status"
       aria-label={`${typeLabel} 상태: ${status}`}
+      title={`현재 상태: ${status}`}
       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${style.bg} ${style.text}`}
     >
       <span className={`w-1.5 h-1.5 rounded-full ${style.dot}`} aria-hidden="true" />

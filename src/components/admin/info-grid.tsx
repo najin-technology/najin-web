@@ -22,7 +22,7 @@ export function InfoGrid({
     <dl className={`grid ${colsClass} gap-4 p-6`}>
       {items.map((item) => (
         <div key={item.label} className={item.fullWidth ? "sm:col-span-full" : ""}>
-          <dt className="text-xs text-gray-400 font-medium">{item.label}</dt>
+          <dt className="text-xs text-gray-500 font-medium">{item.label}</dt>
           <dd className="mt-1 text-sm font-medium">
             {item.value || <span className="text-gray-300 font-normal">&mdash;</span>}
           </dd>

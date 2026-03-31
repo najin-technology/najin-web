@@ -139,7 +139,7 @@ export default async function AdminDashboard() {
       {!hasUrgent && (
         <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 flex items-center gap-2.5">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          <p className="text-sm text-emerald-700">모든 견적과 지원서가 처리되었습니다</p>
+          <p className="text-sm text-emerald-800">모든 견적과 지원서가 처리되었습니다</p>
         </div>
       )}
 
@@ -265,19 +265,19 @@ export default async function AdminDashboard() {
       <div className="flex flex-wrap gap-2">
         <Link href="/admin/notices/new">
           <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 공지사항을 작성합니다">
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-4 h-4" />
             새 공지 작성
           </Button>
         </Link>
         <Link href="/admin/products/new">
           <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 제품을 등록합니다">
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-4 h-4" />
             새 제품 등록
           </Button>
         </Link>
         <Link href="/admin/job-postings/new">
           <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 채용공고를 작성합니다">
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-4 h-4" />
             새 채용공고
           </Button>
         </Link>

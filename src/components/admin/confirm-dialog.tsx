@@ -34,7 +34,7 @@ export function ConfirmDialog({
     ? "bg-red-100 text-red-600"
     : "bg-amber-100 text-amber-600";
   const buttonColors = variant === "destructive"
-    ? "bg-red-600 hover:bg-red-700 text-white"
+    ? "bg-red-500 hover:bg-red-600 text-white"
     : "bg-amber-600 hover:bg-amber-700 text-white";
 
   return (
