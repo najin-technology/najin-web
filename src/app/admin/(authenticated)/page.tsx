@@ -123,11 +123,11 @@ export default async function AdminDashboard() {
     <div className="space-y-8">
       {/* Welcome header */}
       <div>
-        <h1 className="text-xl font-bold text-brand-navy">{getGreeting()}</h1>
+        <h1 className="text-xl font-bold text-brand-navy tracking-tight">{getGreeting()}</h1>
         <p className="text-sm text-gray-400 mt-0.5">{formatToday()}</p>
         <p className="text-xs text-gray-400 mt-1">현재 운영 현황을 한눈에 확인하세요</p>
         {((pendingQuotes || 0) > 0 || (pendingApps || 0) > 0) && (
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 tabular-nums mt-1">
             {(pendingQuotes || 0) > 0 && `처리 대기 견적 ${pendingQuotes}건`}
             {(pendingQuotes || 0) > 0 && (pendingApps || 0) > 0 && " · "}
             {(pendingApps || 0) > 0 && `검토 대기 지원서 ${pendingApps}건`}
@@ -201,7 +201,7 @@ export default async function AdminDashboard() {
           <>
             <Link
               href="/admin/quotes"
-              className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+              className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
             >
               <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center mb-3">
                 <Inbox className="w-[18px] h-[18px] text-amber-600" />
@@ -213,7 +213,7 @@ export default async function AdminDashboard() {
             </Link>
             <Link
               href="/admin/applications"
-              className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+              className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
             >
               <div className="w-9 h-9 rounded-lg bg-rose-50 flex items-center justify-center mb-3">
                 <Users className="w-[18px] h-[18px] text-rose-600" />
@@ -227,7 +227,7 @@ export default async function AdminDashboard() {
         )}
         <Link
           href="/admin/products"
-          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
         >
           <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center mb-3">
             <Package className="w-[18px] h-[18px] text-blue-600" />
@@ -239,7 +239,7 @@ export default async function AdminDashboard() {
         </Link>
         <Link
           href="/admin/job-postings"
-          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
         >
           <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center mb-3">
             <Briefcase className="w-[18px] h-[18px] text-emerald-600" />
@@ -251,7 +251,7 @@ export default async function AdminDashboard() {
         </Link>
         <Link
           href="/admin/notices"
-          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
         >
           <div className="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center mb-3">
             <Bell className="w-[18px] h-[18px] text-violet-600" />

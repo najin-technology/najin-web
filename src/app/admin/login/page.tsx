@@ -26,7 +26,7 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
       <div className="w-full max-w-sm">
-        <div className="bg-white rounded-2xl border border-gray-200/80 p-8 shadow-lg shadow-gray-200/50 transition-shadow hover:shadow-xl">
+        <div className="bg-white rounded-2xl border border-gray-200/80 p-8 shadow-xl shadow-gray-200/60 transition-shadow hover:shadow-xl">
           <div className="text-center mb-8">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-navy to-brand-navy-light flex items-center justify-center mx-auto mb-4 shadow-md shadow-brand-navy/20">
               <span className="text-white text-xl font-bold">N</span>
@@ -68,7 +68,7 @@ export default function AdminLoginPage() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-xs text-gray-400 uppercase tracking-wider">또는</span>
+              <span className="bg-white px-3 text-xs text-gray-400 uppercase tracking-widest">또는</span>
             </div>
           </div>
 

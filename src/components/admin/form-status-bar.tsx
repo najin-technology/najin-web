@@ -19,7 +19,7 @@ export function FormStatusBar({
   inactiveDescription?: string;
 }) {
   return (
-    <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4">
+    <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4 focus-within:ring-2 focus-within:ring-brand-navy/10">
       <Switch
         checked={checked}
         onCheckedChange={onCheckedChange}

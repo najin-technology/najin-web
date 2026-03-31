@@ -66,10 +66,10 @@ export function ApplicationStatusForm({
                 }`}>
                   {i + 1}
                 </div>
-                <span className="text-[11px] hidden sm:inline">{step}</span>
+                <span className="text-[10px] sm:text-[11px]">{step}</span>
               </div>
               {i < APP_STEPS.length - 1 && (
-                <div className={`flex-1 h-px ${isActive && i < currentIdx ? "bg-green-300" : "bg-gray-200"}`} />
+                <div className={`flex-1 h-px ${isActive && i < currentIdx ? "bg-emerald-300" : "bg-gray-200"}`} />
               )}
             </div>
           );

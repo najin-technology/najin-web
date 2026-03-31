@@ -67,7 +67,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
       {navGroups.map((group, gi) => (
         <div key={gi}>
           {group.label && !collapsed && (
-            <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-400/80">
+            <p className="px-3 mb-2 text-[11px] font-semibold uppercase tracking-widest text-gray-400/80">
               {group.label}
             </p>
           )}
@@ -91,7 +91,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
                   }`}
                 >
                   {active && !collapsed && (
-                    <span className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r-full bg-white/70 shadow-[2px_0_8px_rgba(255,255,255,0.15)]" />
+                    <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-white/70 shadow-[2px_0_12px_rgba(255,255,255,0.25)]" />
                   )}
                   <Icon className="w-[18px] h-[18px] flex-shrink-0" />
                   {!collapsed && <span className="flex-1 transition-opacity duration-150">{item.label}</span>}
