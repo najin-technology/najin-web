@@ -44,10 +44,10 @@ export function AdminTopbar({ userEmail }: { userEmail: string }) {
               {parentTitle}
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-gray-300 flex-shrink-0" />
-            <span className="font-medium text-[#1B2A4A] truncate">{subPage}</span>
+            <span className="font-medium text-brand-navy truncate">{subPage}</span>
           </>
         ) : (
-          <span className="font-medium text-[#1B2A4A]">{pageTitle}</span>
+          <span className="font-medium text-brand-navy">{pageTitle}</span>
         )}
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">
@@ -60,6 +60,7 @@ export function AdminTopbar({ userEmail }: { userEmail: string }) {
             variant="ghost"
             size="sm"
             className="text-gray-400 hover:text-red-500 hover:bg-red-50 h-8 w-8 p-0 transition-colors"
+            aria-label="로그아웃"
           >
             <LogOut className="w-4 h-4" />
           </Button>

@@ -15,6 +15,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { AlertMessage } from "@/components/admin/alert-message";
 import { X } from "lucide-react";
 
 const CATEGORIES = [
@@ -66,10 +67,7 @@ export function ProductForm({
       />
 
       {state.error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
-          {state.error}
-        </div>
+        <AlertMessage>{state.error}</AlertMessage>
       )}
 
       <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4">
@@ -213,7 +211,7 @@ export function ProductForm({
         <Button
           type="submit"
           disabled={pending}
-          className="bg-[#1B2A4A] hover:bg-[#243456] text-white rounded-lg shadow-sm min-w-[100px]"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px]"
         >
           {pending
             ? "저장 중..."

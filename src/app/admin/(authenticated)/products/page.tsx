@@ -69,13 +69,13 @@ export default async function ProductsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold text-[#1B2A4A]">제품 관리</h1>
+          <h1 className="text-lg font-bold text-brand-navy">제품 관리</h1>
           {products && products.length > 0 && (
             <span className="text-xs text-gray-400 tabular-nums">{products.length}개</span>
           )}
         </div>
         <Link href="/admin/products/new">
-          <Button className="bg-[#1B2A4A] hover:bg-[#243456] text-white gap-1.5 rounded-lg shadow-sm">
+          <Button className="bg-brand-navy hover:bg-brand-navy-light text-white gap-1.5 rounded-lg shadow-sm">
             <Plus className="w-4 h-4" />
             새 제품 등록
           </Button>
@@ -133,7 +133,7 @@ export default async function ProductsPage({
                     <TableCell>
                       <div className="flex items-center gap-1">
                         <Link href={`/admin/products/${p.id}/edit`}>
-                          <Button variant="ghost" size="icon-sm">
+                          <Button variant="ghost" size="icon-sm" aria-label="편집">
                             <Pencil className="w-4 h-4" />
                           </Button>
                         </Link>
@@ -148,7 +148,7 @@ export default async function ProductsPage({
         ))
       ) : (
         <div className="bg-white rounded-lg border border-gray-200">
-          <EmptyState message="등록된 제품이 없습니다." />
+          <EmptyState message="등록된 제품이 없습니다." description="새 제품을 등록하여 웹사이트에 제품을 소개하세요." action={{ label: "새 제품 등록", href: "/admin/products/new" }} />
         </div>
       )}
     </div>

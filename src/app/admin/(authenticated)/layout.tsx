@@ -29,9 +29,9 @@ export default async function AuthenticatedAdminLayout({
   if (pendingApps && pendingApps > 0) badges["/admin/applications"] = pendingApps;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 overflow-x-hidden">
       <AdminSidebar badges={badges} />
-      <div className="lg:ml-64">
+      <div className="lg:ml-64 relative">
         <AdminTopbar userEmail={user.email || ""} />
         <main className="p-6 lg:p-8 max-w-7xl mx-auto">{children}</main>
       </div>

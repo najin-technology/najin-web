@@ -36,7 +36,7 @@ export default async function QuotesPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <h1 className="text-lg font-bold text-[#1B2A4A]">견적 관리</h1>
+        <h1 className="text-lg font-bold text-brand-navy">견적 관리</h1>
         {quotes && quotes.length > 0 && (
           <span className="text-xs text-gray-400 tabular-nums">{quotes.length}건</span>
         )}
@@ -76,7 +76,7 @@ export default async function QuotesPage({
                   <TableCell>
                     <Link
                       href={`/admin/quotes/${q.id}`}
-                      className="text-[#3182CE] hover:text-[#2B6CB0] font-medium transition-colors"
+                      className="text-brand-blue hover:text-brand-blue-hover font-medium transition-colors"
                     >
                       {q.company_name}
                     </Link>
@@ -94,7 +94,7 @@ export default async function QuotesPage({
             ) : (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <EmptyState message="견적 요청이 없습니다." />
+                  <EmptyState message="견적 요청이 없습니다." description="고객이 웹사이트에서 견적을 요청하면 여기에 표시됩니다." />
                 </TableCell>
               </TableRow>
             )}

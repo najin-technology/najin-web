@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { TiptapEditor } from "@/components/admin/tiptap-editor";
+import { AlertMessage } from "@/components/admin/alert-message";
 import { Eye, EyeOff } from "lucide-react";
 import DOMPurify from "isomorphic-dompurify";
 
@@ -44,10 +45,7 @@ export function NoticeForm({
       <input type="hidden" name="content_en" value={contentEn} />
 
       {state.error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
-          {state.error}
-        </div>
+        <AlertMessage>{state.error}</AlertMessage>
       )}
 
       <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4">
@@ -74,7 +72,7 @@ export function NoticeForm({
             variant={isPreview ? "default" : "outline"}
             size="sm"
             onClick={() => setIsPreview(!isPreview)}
-            className={`gap-1.5 text-xs ${isPreview ? "bg-[#1B2A4A] text-white" : ""}`}
+            className={`gap-1.5 text-xs ${isPreview ? "bg-brand-navy text-white" : ""}`}
           >
             {isPreview ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
             {isPreview ? "편집 모드" : "미리보기"}
@@ -95,7 +93,7 @@ export function NoticeForm({
           <div className="space-y-2">
             <Label>내용 (한국어)</Label>
             {isPreview ? (
-              <div className="border border-gray-200 rounded-lg p-6">
+              <div className="border border-gray-200 rounded-xl p-6 bg-gray-50/30">
                 <div
                   className="prose prose-sm max-w-none"
                   dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(contentKo) }}
@@ -124,7 +122,7 @@ export function NoticeForm({
           <div className="space-y-2">
             <Label>Content (English)</Label>
             {isPreview ? (
-              <div className="border border-gray-200 rounded-lg p-6">
+              <div className="border border-gray-200 rounded-xl p-6 bg-gray-50/30">
                 <div
                   className="prose prose-sm max-w-none"
                   dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(contentEn) }}
@@ -145,7 +143,7 @@ export function NoticeForm({
         <Button
           type="submit"
           disabled={pending}
-          className="bg-[#1B2A4A] hover:bg-[#243456] text-white rounded-lg shadow-sm min-w-[100px]"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px]"
         >
           {pending
             ? "저장 중..."

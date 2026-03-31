@@ -48,7 +48,7 @@ export function TiptapEditor({
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm max-w-none min-h-[200px] p-4 focus:outline-none focus:ring-2 focus:ring-[#1B2A4A]/20 focus:ring-inset rounded-b-xl transition-shadow",
+          "prose prose-sm max-w-none min-h-[200px] p-4 focus:outline-none focus:ring-2 focus:ring-brand-navy/20 focus:ring-inset rounded-b-xl transition-shadow",
       },
     },
   });

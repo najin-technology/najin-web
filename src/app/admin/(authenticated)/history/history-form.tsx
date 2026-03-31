@@ -5,6 +5,7 @@ import { createHistoryItem, updateHistoryItem } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { AlertMessage } from "@/components/admin/alert-message";
 
 type HistoryItemData = {
   id: string;
@@ -30,24 +31,19 @@ export function HistoryAddForm() {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-[#1B2A4A] mb-4">
+      <h2 className="text-lg font-semibold text-brand-navy mb-4">
         새 연혁 추가
       </h2>
 
       <form ref={formRef} action={formAction} className="space-y-4">
         {state.error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
-            {state.error}
-          </div>
+          <AlertMessage>{state.error}</AlertMessage>
         )}
         {state.success && (
-          <div className="bg-green-50 border border-green-200 text-green-700 px-3 py-2 rounded text-sm">
-            추가되었습니다.
-          </div>
+          <AlertMessage variant="success">추가되었습니다.</AlertMessage>
         )}
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           <div className="space-y-1">
             <Label htmlFor="new-year">연도 *</Label>
             <Input
@@ -100,7 +96,7 @@ export function HistoryAddForm() {
         <Button
           type="submit"
           disabled={pending}
-          className="bg-[#1B2A4A] hover:bg-[#243456] text-white rounded-lg shadow-sm"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm"
         >
           {pending ? "추가 중..." : "추가"}
         </Button>
@@ -175,7 +171,7 @@ export function HistoryEditForm({
         type="submit"
         disabled={pending}
         size="sm"
-        className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+        className="bg-brand-navy hover:bg-brand-charcoal text-white"
       >
         {pending ? "저장..." : "저장"}
       </Button>
