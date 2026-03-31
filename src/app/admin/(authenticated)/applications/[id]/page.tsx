@@ -31,20 +31,24 @@ export default async function ApplicationDetailPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <Link href="/admin/applications">
-          <Button variant="ghost" size="sm">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            목록
+          <Button variant="ghost" size="icon-sm" className="rounded-lg">
+            <ArrowLeft className="w-4 h-4" />
           </Button>
         </Link>
-        <h1 className="text-lg font-bold text-[#1B2A4A]">지원서 상세</h1>
+        <div>
+          <h1 className="text-lg font-bold text-[#1B2A4A]">지원서 상세</h1>
+          <p className="text-xs text-gray-400">
+            {new Date(application.created_at).toLocaleDateString("ko-KR")} 지원
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Application Details */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/50">
               <div>
                 <h2 className="text-base font-semibold text-[#1B2A4A]">
@@ -95,7 +99,7 @@ export default async function ApplicationDetailPage({
 
           {/* Resume Attachments */}
           {attachments.length > 0 && (
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
               <h2 className="text-lg font-semibold text-[#1B2A4A] mb-4">
                 첨부파일 (이력서)
               </h2>
@@ -107,7 +111,7 @@ export default async function ApplicationDetailPage({
                         href={att.signedUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-[#3182CE] hover:underline text-sm"
+                        className="flex items-center gap-2 text-[#3182CE] hover:text-[#2B6CB0] text-sm transition-colors"
                       >
                         <Download className="w-4 h-4" />
                         {att.fileName}
@@ -130,7 +134,7 @@ export default async function ApplicationDetailPage({
         </div>
 
         {/* Status Change Panel */}
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden h-fit">
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden h-fit">
           <div className="px-6 py-3.5 border-b border-gray-100 bg-gray-50/50">
             <h2 className="text-sm font-semibold text-[#1B2A4A]">상태 관리</h2>
           </div>

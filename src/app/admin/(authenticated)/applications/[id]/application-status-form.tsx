@@ -34,12 +34,14 @@ export function ApplicationStatusForm({
       <input type="hidden" name="id" value={applicationId} />
 
       {state.error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
           {state.error}
         </div>
       )}
       {state.success && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-3 py-2 rounded text-sm">
+        <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
           저장되었습니다.
         </div>
       )}
@@ -74,9 +76,9 @@ export function ApplicationStatusForm({
       <Button
         type="submit"
         disabled={pending}
-        className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+        className="w-full bg-[#1B2A4A] hover:bg-[#243456] text-white rounded-lg shadow-sm"
       >
-        {pending ? "저장 중..." : "저장"}
+        {pending ? "저장 중..." : "저장하기"}
       </Button>
     </form>
   );

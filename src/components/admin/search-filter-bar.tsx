@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useRef, useCallback } from "react";
-import { Search } from "lucide-react";
+import { Search, X, ChevronDown } from "lucide-react";
 
 interface FilterOption {
   key: string;
@@ -21,6 +21,7 @@ export function SearchFilterBar({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const updateParams = useCallback(
     (key: string, value: string) => {
@@ -42,33 +43,60 @@ export function SearchFilterBar({
     }, 300);
   };
 
+  const clearSearch = () => {
+    if (inputRef.current) inputRef.current.value = "";
+    updateParams("q", "");
+  };
+
+  const currentQuery = searchParams.get("q") || "";
+  const activeFilterCount = filters.filter((f) => searchParams.get(f.key)).length;
+
   return (
-    <div className="flex flex-wrap items-center gap-2 mb-4">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+    <div className="flex flex-wrap items-center gap-2">
+      <div className="relative flex-1 min-w-[200px] max-w-xs">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
         <input
+          ref={inputRef}
           type="text"
           placeholder={searchPlaceholder}
-          defaultValue={searchParams.get("q") || ""}
+          defaultValue={currentQuery}
           onChange={(e) => handleSearch(e.target.value)}
-          className="h-9 rounded-lg border border-gray-200 bg-white pl-9 pr-3 text-sm shadow-sm transition-colors placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1B2A4A] w-56"
+          className="h-9 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-8 text-sm transition-all placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B2A4A]/20 focus-visible:border-[#1B2A4A]/40"
         />
+        {currentQuery && (
+          <button
+            onClick={clearSearch}
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+            aria-label="검색 초기화"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
+        )}
       </div>
-      {filters.map((filter) => (
-        <select
-          key={filter.key}
-          defaultValue={searchParams.get(filter.key) || ""}
-          onChange={(e) => updateParams(filter.key, e.target.value)}
-          className="h-9 rounded-lg border border-gray-200 bg-white px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1B2A4A] appearance-none pr-8 bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%239ca3af%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.427%206.427l3.396%203.396a.25.25%200%2000.354%200l3.396-3.396A.25.25%200%2011.396%206H4.604a.25.25%200%20.177.427z%22/%3E%3C/svg%3E')] bg-[position:right_8px_center] bg-no-repeat"
-        >
-          <option value="">{filter.label}</option>
-          {filter.options.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-      ))}
+      {filters.map((filter) => {
+        const isFiltered = !!searchParams.get(filter.key);
+        return (
+          <div key={filter.key} className="relative">
+            <select
+              defaultValue={searchParams.get(filter.key) || ""}
+              onChange={(e) => updateParams(filter.key, e.target.value)}
+              className={`h-9 rounded-lg border bg-white pl-3 pr-8 text-sm transition-all appearance-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B2A4A]/20 focus-visible:border-[#1B2A4A]/40 ${
+                isFiltered
+                  ? "border-[#1B2A4A]/30 text-[#1B2A4A] font-medium"
+                  : "border-gray-200 text-gray-600"
+              }`}
+            >
+              <option value="">{filter.label}</option>
+              {filter.options.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
+          </div>
+        );
+      })}
     </div>
   );
 }

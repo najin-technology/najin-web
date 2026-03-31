@@ -17,16 +17,25 @@ export function ConfirmDialog({
   title = "삭제 확인",
   description = "이 항목을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
   confirmLabel = "삭제",
+  variant = "destructive",
   onConfirm,
   children,
 }: {
   title?: string;
   description?: string;
   confirmLabel?: string;
+  variant?: "destructive" | "warning";
   onConfirm: () => void;
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+
+  const iconColors = variant === "destructive"
+    ? "bg-red-100 text-red-600"
+    : "bg-amber-100 text-amber-600";
+  const buttonColors = variant === "destructive"
+    ? "bg-red-600 hover:bg-red-700 text-white"
+    : "bg-amber-600 hover:bg-amber-700 text-white";
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -34,21 +43,21 @@ export function ConfirmDialog({
       <DialogContent showCloseButton={false}>
         <DialogHeader>
           <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-              <AlertTriangle className="w-4 h-4 text-red-600" />
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${iconColors}`}>
+              <AlertTriangle className="w-5 h-5" />
             </div>
-            <div>
-              <DialogTitle>{title}</DialogTitle>
-              <DialogDescription className="mt-1">{description}</DialogDescription>
+            <div className="pt-0.5">
+              <DialogTitle className="text-base">{title}</DialogTitle>
+              <DialogDescription className="mt-1.5 leading-relaxed">{description}</DialogDescription>
             </div>
           </div>
         </DialogHeader>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
+        <DialogFooter className="gap-2 sm:gap-2">
+          <Button variant="outline" onClick={() => setOpen(false)} className="flex-1 sm:flex-none">
             취소
           </Button>
           <Button
-            className="bg-red-600 hover:bg-red-700 text-white"
+            className={`flex-1 sm:flex-none ${buttonColors}`}
             onClick={() => {
               onConfirm();
               setOpen(false);

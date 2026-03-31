@@ -16,7 +16,12 @@ export default async function HistoryPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-lg font-bold text-[#1B2A4A]">연혁 관리</h1>
+      <div className="flex items-center gap-3">
+        <h1 className="text-lg font-bold text-[#1B2A4A]">연혁 관리</h1>
+        {items && items.length > 0 && (
+          <span className="text-xs text-gray-400 tabular-nums">{items.length}건</span>
+        )}
+      </div>
 
       <HistoryAddForm />
 

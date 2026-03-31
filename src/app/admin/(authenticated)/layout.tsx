@@ -33,7 +33,7 @@ export default async function AuthenticatedAdminLayout({
       <AdminSidebar badges={badges} />
       <div className="lg:ml-64">
         <AdminTopbar userEmail={user.email || ""} />
-        <main className="p-6">{children}</main>
+        <main className="p-6 lg:p-8 max-w-7xl mx-auto">{children}</main>
       </div>
     </div>
   );

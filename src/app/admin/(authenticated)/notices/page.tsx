@@ -41,10 +41,15 @@ export default async function NoticesPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-bold text-[#1B2A4A]">공지사항</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-lg font-bold text-[#1B2A4A]">공지사항</h1>
+          {notices && notices.length > 0 && (
+            <span className="text-xs text-gray-400 tabular-nums">{notices.length}건</span>
+          )}
+        </div>
         <Link href="/admin/notices/new">
-          <Button className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white">
-            <Plus className="w-4 h-4 mr-1" />
+          <Button className="bg-[#1B2A4A] hover:bg-[#243456] text-white gap-1.5 rounded-lg shadow-sm">
+            <Plus className="w-4 h-4" />
             새 공지 작성
           </Button>
         </Link>
@@ -64,7 +69,7 @@ export default async function NoticesPage({
         ]}
       />
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
