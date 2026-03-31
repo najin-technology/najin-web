@@ -44,7 +44,7 @@ export default function BusinessPage() {
                 href={`#${cat.key}`}
                 className="group flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-brand-charcoal rounded-lg transition-all hover:bg-brand-copper/10 hover:text-brand-copper"
               >
-                <cat.icon className="w-4 h-4 text-gray-400 group-hover:text-brand-copper transition-colors" />
+                <cat.icon className="w-4 h-4 text-brand-charcoal/40 group-hover:text-brand-copper transition-colors" />
                 {t(`${cat.key}.title`)}
               </a>
             ))}
