@@ -54,7 +54,7 @@ export function Header() {
           {/* Actions */}
           <div className="hidden md:flex items-center gap-3">
             <Link href={pathname} locale={otherLocale}>
-              <Button variant="ghost" size="sm" className="text-xs">
+              <Button variant="ghost" size="sm" className="text-sm">
                 {tc("language")}
               </Button>
             </Link>
