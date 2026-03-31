@@ -99,8 +99,8 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
                     collapsed ? (
                       <span className="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-red-500" />
                     ) : (
-                      <span className={`text-[11px] font-bold rounded-full min-w-5 h-5 flex items-center justify-center px-1.5 ${
-                        active ? "bg-white/20 text-white" : "bg-red-500 text-white"
+                      <span className={`text-[10px] font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5 ${
+                        active ? "bg-white/20 text-white" : "bg-red-100 text-red-600"
                       }`}>
                         {badges[item.href]}
                       </span>
@@ -119,7 +119,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
     <>
       {/* Mobile toggle */}
       <button
-        className="lg:hidden fixed top-3.5 left-4 z-50 p-2 bg-white rounded-xl shadow-md border border-gray-200"
+        className="lg:hidden fixed top-3.5 left-4 z-50 p-2 bg-white rounded-xl shadow-md border border-gray-200 focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:outline-none"
         onClick={() => setOpen(!open)}
         aria-label="메뉴"
       >
@@ -157,7 +157,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
         {/* Collapse toggle (desktop only) */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden lg:flex absolute -right-3 top-[42px] w-6 h-6 rounded-full bg-white border border-gray-200 shadow-sm items-center justify-center text-gray-400 hover:text-brand-navy hover:shadow-md transition-all z-50"
+          className="hidden lg:flex absolute -right-3 top-[42px] w-6 h-6 rounded-full bg-white border border-gray-200 shadow-sm items-center justify-center text-gray-400 hover:text-brand-navy hover:shadow-md focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:outline-none transition-all z-50"
           aria-label={collapsed ? "사이드바 펼치기" : "사이드바 접기"}
         >
           {collapsed ? <PanelLeftOpen className="w-3.5 h-3.5" /> : <PanelLeftClose className="w-3.5 h-3.5" />}

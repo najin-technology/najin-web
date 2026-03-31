@@ -87,6 +87,7 @@ export default function AdminLoginPage() {
                 required
                 autoComplete="email"
                 autoFocus
+                className="focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40"
               />
             </div>
 
@@ -98,6 +99,7 @@ export default function AdminLoginPage() {
                 type="password"
                 required
                 autoComplete="current-password"
+                className="focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40"
               />
             </div>
 

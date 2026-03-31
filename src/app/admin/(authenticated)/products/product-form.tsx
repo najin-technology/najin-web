@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { createProduct, updateProduct } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,6 +51,12 @@ export function ProductForm({
   const [existingImages, setExistingImages] = useState<string[]>(
     product?.image_urls || []
   );
+  const [tabValue, setTabValue] = useState("ko");
+
+  useEffect(() => {
+    const tab = new URLSearchParams(window.location.search).get("tab");
+    if (tab) setTabValue(tab);
+  }, []);
 
   const removeExistingImage = (url: string) => {
     setExistingImages((prev) => prev.filter((u) => u !== url));
@@ -103,11 +109,12 @@ export function ProductForm({
         </div>
       </div>
 
-      <div className="border-t border-gray-100 pt-2">
+      <div className="border-t border-gray-200 pt-4 mt-2">
         <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">콘텐츠</p>
       </div>
 
-      <Tabs defaultValue="ko" onValueChange={(v) => {
+      <Tabs value={tabValue} onValueChange={(v) => {
+        setTabValue(v);
         if (typeof window !== "undefined") {
           const url = new URL(window.location.href);
           url.searchParams.set("tab", v);
@@ -165,7 +172,7 @@ export function ProductForm({
         </TabsContent>
       </Tabs>
 
-      <div className="border-t border-gray-100 pt-2">
+      <div className="border-t border-gray-200 pt-4 mt-2">
         <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">미디어</p>
       </div>
 
@@ -206,7 +213,7 @@ export function ProductForm({
           <Input
             name="images"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp"
             multiple
             className="max-w-sm mx-auto"
           />

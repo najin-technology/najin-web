@@ -42,7 +42,7 @@ export function Pagination({
           onClick={() => goTo(currentPage - 1)}
           disabled={currentPage <= 1}
           aria-label="이전 페이지"
-          className="rounded-lg"
+          className="rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="w-4 h-4" />
         </Button>
@@ -55,7 +55,7 @@ export function Pagination({
           onClick={() => goTo(currentPage + 1)}
           disabled={currentPage >= totalPages}
           aria-label="다음 페이지"
-          className="rounded-lg"
+          className="rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <ChevronRight className="w-4 h-4" />
         </Button>

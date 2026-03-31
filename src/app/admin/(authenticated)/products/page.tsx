@@ -103,7 +103,7 @@ export default async function ProductsPage({
 
       {categories.length > 0 ? (
         categories.map((cat) => (
-          <div key={cat} id={`category-${cat}`} className="bg-white rounded-xl border border-gray-200 overflow-hidden scroll-mt-6">
+          <div key={cat} id={`category-${cat}`} className="bg-white rounded-xl border border-gray-200 overflow-hidden scroll-mt-20">
             <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2.5">
               <span
                 className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}

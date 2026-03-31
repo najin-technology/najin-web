@@ -96,7 +96,7 @@ export default async function ApplicationDetailPage({
                         <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
                           <Download className="w-4 h-4 text-gray-400" />
                         </div>
-                        <p className="text-sm text-gray-400">{att.fileName} (다운로드 불가)</p>
+                        <p className="text-sm text-gray-400 min-w-0 truncate">{att.fileName} (다운로드 불가)</p>
                       </div>
                     )}
                   </div>

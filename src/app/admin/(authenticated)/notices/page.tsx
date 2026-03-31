@@ -124,7 +124,7 @@ export default async function NoticesPage({
           </TableBody>
         </Table>
         {notices && notices.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400">
+          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums">
             총 {notices.length}건
           </div>
         )}

@@ -51,7 +51,7 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
             </li>
           </ol>
         ) : (
-          <span className="font-medium text-brand-navy" aria-current="page">{pageTitle}</span>
+          <span className="font-medium text-brand-navy truncate" aria-current="page">{pageTitle}</span>
         )}
       </nav>
       <div className="flex items-center gap-2 flex-shrink-0">
@@ -65,7 +65,7 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
             </Button>
           </Link>
         )}
-        <span className="text-[11px] text-gray-400 hidden sm:block max-w-[180px] truncate">
+        <span className="text-[11px] text-gray-400 hidden sm:block max-w-[120px] truncate">
           {userEmail}
         </span>
         <div className="w-px h-4 bg-gray-200 hidden sm:block" />

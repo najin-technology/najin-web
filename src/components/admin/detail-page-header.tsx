@@ -14,7 +14,7 @@ export function DetailPageHeader({
   return (
     <div className="flex items-center gap-3">
       <Link href={backHref}>
-        <Button variant="ghost" size="icon-sm" className="rounded-lg" aria-label="뒤로 가기">
+        <Button variant="ghost" size="icon-sm" className="rounded-lg hover:bg-gray-100" aria-label="뒤로 가기">
           <ArrowLeft className="w-4 h-4" />
         </Button>
       </Link>

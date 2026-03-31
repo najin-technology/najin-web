@@ -54,7 +54,7 @@ export function ApplicationStatusForm({
       )}
 
       {/* Step indicator */}
-      <div className="flex items-center gap-1 mb-4">
+      <div className="flex items-center gap-1 mb-4 min-w-0 overflow-hidden">
         {APP_STEPS.map((step, i) => {
           const isActive = i <= currentIdx;
           const isCurrent = step === currentStatus;
