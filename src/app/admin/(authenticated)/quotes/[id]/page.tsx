@@ -70,7 +70,7 @@ export default async function QuoteDetailPage({
                   첨부파일 <span className="text-gray-400 font-normal ml-1">{attachments.length}</span>
                 </h2>
               </div>
-              <div className="p-4 space-y-2">
+              <div className="p-5 space-y-2">
                 {attachments.map((att) => (
                   <div key={att.id}>
                     {att.signedUrl ? (

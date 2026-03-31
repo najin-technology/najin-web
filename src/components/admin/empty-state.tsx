@@ -26,7 +26,7 @@ export function EmptyState({
       )}
       {action && (
         <Link href={action.href} className="inline-block mt-5">
-          <Button size="sm" className="bg-brand-navy hover:bg-brand-charcoal text-white gap-1.5">
+          <Button size="sm" className="bg-brand-navy hover:bg-brand-navy-light text-white gap-1.5">
             <Plus className="w-3.5 h-3.5" />
             {action.label}
           </Button>

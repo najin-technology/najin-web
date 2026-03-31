@@ -123,7 +123,7 @@ export default async function ProductsPage({
               </TableHeader>
               <TableBody>
                 {grouped[cat]!.map((p) => (
-                  <TableRow key={p.id}>
+                  <TableRow key={p.id} className="hover:bg-gray-50/50">
                     <TableCell>
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-md bg-gray-100 flex items-center justify-center flex-shrink-0">

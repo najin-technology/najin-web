@@ -63,6 +63,17 @@
 }
 
 :root {
+  /* ===== Admin design tokens ===== */
+  --admin-radius-sm: 0.5rem;  /* rounded-lg */
+  --admin-radius-md: 0.75rem; /* rounded-xl */
+  --admin-radius-full: 9999px;
+  --admin-gap-xs: 0.5rem;  /* gap-2 */
+  --admin-gap-sm: 0.75rem; /* gap-3 */
+  --admin-gap-md: 1rem;    /* gap-4 */
+  --admin-gap-lg: 1.5rem;  /* gap-6 */
+  --admin-transition-fast: 150ms;
+  --admin-transition-normal: 200ms;
+
   /* Semantic colors */
   --color-success: #22c55e;
   --color-warning: #f59e0b;
@@ -148,6 +159,14 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* ===== Smooth scroll (respects reduced-motion) ===== */
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 

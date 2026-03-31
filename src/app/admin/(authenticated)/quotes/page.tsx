@@ -89,7 +89,7 @@ export default async function QuotesPage({
           <TableBody>
             {quotes && quotes.length > 0 ? (
               quotes.map((q) => (
-                <TableRow key={q.id} className="group">
+                <TableRow key={q.id} className="group hover:bg-gray-50/50">
                   <TableCell>
                     <Link
                       href={`/admin/quotes/${q.id}`}

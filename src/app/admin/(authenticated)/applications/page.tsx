@@ -88,7 +88,7 @@ export default async function ApplicationsPage({
           <TableBody>
             {applications && applications.length > 0 ? (
               applications.map((a) => (
-                <TableRow key={a.id} className="group">
+                <TableRow key={a.id} className="group hover:bg-gray-50/50">
                   <TableCell>
                     <Link
                       href={`/admin/applications/${a.id}`}
