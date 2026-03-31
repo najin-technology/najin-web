@@ -78,12 +78,12 @@ export default async function NoticesPage() {
                             ? new Date(
                                 notice.published_at
                               ).toLocaleDateString(
-                                locale === "ko" ? "ko-KR" : "en-US"
+                                locale === "ko" ? "ko-KR" : locale === "zh" ? "zh-CN" : "en-US"
                               )
                             : new Date(
                                 notice.created_at
                               ).toLocaleDateString(
-                                locale === "ko" ? "ko-KR" : "en-US"
+                                locale === "ko" ? "ko-KR" : locale === "zh" ? "zh-CN" : "en-US"
                               )}
                         </span>
                       </div>

@@ -111,7 +111,7 @@ export default async function CareersPage() {
                                 <Clock className="w-3 h-3" />
                                 {t("deadlineLabel")}:{" "}
                                 {new Date(job.deadline).toLocaleDateString(
-                                  locale === "ko" ? "ko-KR" : "en-US"
+                                  locale === "ko" ? "ko-KR" : locale === "zh" ? "zh-CN" : "en-US"
                                 )}
                               </span>
                             )}

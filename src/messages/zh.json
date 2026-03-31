@@ -33,6 +33,8 @@
     "statsClients": "主要客户",
     "statsCertified": "ISO 9001认证",
     "statsPatent": "专利持有",
+    "badgeClean": "CLEAN优秀企业",
+    "badgePatent": "专利持有",
     "clientsTitle": "主要客户",
     "certTitle": "资质与专利",
     "businessTitle": "业务领域",
@@ -125,6 +127,7 @@
     "case3Result": "相比传统金属零部件减重40%",
     "galleryTitle": "供货业绩",
     "galleryPlaceholder": "供货业绩展示区正在准备中。",
+    "productCountSuffix": "个产品",
     "ctaTitle": "立即获取报价",
     "ctaDesc": "请发送图纸，我们将尽快回复报价。"
   },

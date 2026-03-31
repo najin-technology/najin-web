@@ -52,5 +52,5 @@ export default async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/(ko|en)/:path*", "/admin/:path*"],
+  matcher: ["/", "/(ko|en|zh)/:path*", "/admin/:path*"],
 };
