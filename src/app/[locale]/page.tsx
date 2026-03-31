@@ -94,7 +94,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 text-lg px-8 py-3"
+                  className="border-white/40 text-white bg-transparent hover:bg-white/10 text-lg px-8 py-3"
                 >
                   {t("aboutLink")}
                 </Button>
