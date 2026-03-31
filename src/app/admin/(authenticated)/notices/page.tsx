@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
+import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -40,7 +41,7 @@ export default async function NoticesPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[#1B2A4A]">공지사항</h1>
+        <h1 className="text-lg font-bold text-[#1B2A4A]">공지사항</h1>
         <Link href="/admin/notices/new">
           <Button className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white">
             <Plus className="w-4 h-4 mr-1" />
@@ -63,7 +64,7 @@ export default async function NoticesPage({
         ]}
       />
 
-      <div className="bg-white rounded-lg border border-gray-200">
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -108,7 +109,11 @@ export default async function NoticesPage({
             ) : (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <EmptyState message="공지사항이 없습니다." />
+                  <EmptyState
+                    message="공지사항이 없습니다."
+                    icon={FileText}
+                    action={{ label: "새 공지 작성", href: "/admin/notices/new" }}
+                  />
                 </TableCell>
               </TableRow>
             )}

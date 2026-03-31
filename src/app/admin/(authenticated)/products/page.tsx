@@ -68,7 +68,7 @@ export default async function ProductsPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[#1B2A4A]">제품 관리</h1>
+        <h1 className="text-lg font-bold text-[#1B2A4A]">제품 관리</h1>
         <Link href="/admin/products/new">
           <Button className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white">
             <Plus className="w-4 h-4 mr-1" />
@@ -96,13 +96,14 @@ export default async function ProductsPage({
 
       {categories.length > 0 ? (
         categories.map((cat) => (
-          <div key={cat} className="bg-white rounded-lg border border-gray-200">
-            <div className="p-4 border-b border-gray-100">
+          <div key={cat} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <div className="px-5 py-3 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
               <span
-                className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}
+                className={`inline-block px-2.5 py-0.5 rounded-md text-xs font-semibold ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}
               >
                 {CATEGORY_LABELS[cat] || cat}
               </span>
+              <span className="text-xs text-gray-400">{grouped[cat]?.length || 0}개</span>
             </div>
             <Table>
               <TableHeader>
