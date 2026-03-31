@@ -13,6 +13,7 @@ import {
 import { Plus, Pencil } from "lucide-react";
 import { ProductActiveToggle } from "./product-toggle";
 import { ProductDeleteButton } from "./product-delete-button";
+import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 
 const CATEGORY_LABELS: Record<string, string> = {
   우레탄: "우레탄",
@@ -32,16 +33,26 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export const metadata = { title: "제품 관리" };
 
-export default async function ProductsPage() {
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; category?: string }>;
+}) {
+  const { q, category } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
-  const { data: products } = await supabase
+  let query = supabase
     .from("products")
     .select("id, name_ko, category, sort_order, is_active, created_at")
     .is("deleted_at", null)
     .order("category")
     .order("sort_order")
     .order("created_at", { ascending: false });
+
+  if (q) query = query.ilike("name_ko", `%${q}%`);
+  if (category) query = query.eq("category", category);
+
+  const { data: products } = await query;
 
   // Group by category
   const grouped: Record<string, typeof products> = {};
@@ -65,6 +76,23 @@ export default async function ProductsPage() {
           </Button>
         </Link>
       </div>
+
+      <SearchFilterBar
+        searchPlaceholder="제품명 검색..."
+        filters={[
+          {
+            key: "category",
+            label: "전체 카테고리",
+            options: [
+              { value: "우레탄", label: "우레탄" },
+              { value: "합성수지", label: "합성수지" },
+              { value: "CNC", label: "CNC" },
+              { value: "금형", label: "금형" },
+              { value: "EV", label: "EV" },
+            ],
+          },
+        ]}
+      />
 
       {categories.length > 0 ? (
         categories.map((cat) => (

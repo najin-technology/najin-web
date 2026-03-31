@@ -13,19 +13,29 @@ import {
 import { Plus, Pencil } from "lucide-react";
 import { JobPostingActiveToggle } from "./job-posting-toggle";
 import { JobPostingDeleteButton } from "./job-posting-delete-button";
+import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 
 export const metadata = { title: "채용공고" };
 
-export default async function JobPostingsPage() {
+export default async function JobPostingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; active?: string }>;
+}) {
+  const { q, active } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
-  const { data: postings } = await supabase
+  let query = supabase
     .from("job_postings")
-    .select(
-      "id, title_ko, department, employment_type, is_active, deadline, created_at"
-    )
+    .select("id, title_ko, department, employment_type, is_active, deadline, created_at")
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
+
+  if (q) query = query.ilike("title_ko", `%${q}%`);
+  if (active === "true") query = query.eq("is_active", true);
+  if (active === "false") query = query.eq("is_active", false);
+
+  const { data: postings } = await query;
 
   return (
     <div className="space-y-6">
@@ -38,6 +48,20 @@ export default async function JobPostingsPage() {
           </Button>
         </Link>
       </div>
+
+      <SearchFilterBar
+        searchPlaceholder="공고 제목 검색..."
+        filters={[
+          {
+            key: "active",
+            label: "전체 상태",
+            options: [
+              { value: "true", label: "활성" },
+              { value: "false", label: "비활성" },
+            ],
+          },
+        ]}
+      />
 
       <div className="bg-white rounded-lg border border-gray-200">
         <Table>

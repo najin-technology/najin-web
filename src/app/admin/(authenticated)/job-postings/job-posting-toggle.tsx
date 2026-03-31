@@ -3,6 +3,7 @@
 import { Switch } from "@/components/ui/switch";
 import { toggleJobPostingActive } from "./actions";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function JobPostingActiveToggle({
   postingId,
@@ -18,8 +19,9 @@ export function JobPostingActiveToggle({
       checked={isActive}
       disabled={isPending}
       onCheckedChange={() => {
-        startTransition(() => {
-          toggleJobPostingActive(postingId);
+        startTransition(async () => {
+          await toggleJobPostingActive(postingId);
+          toast.success(isActive ? "비활성화되었습니다" : "활성화되었습니다");
         });
       }}
     />

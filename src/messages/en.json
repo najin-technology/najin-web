@@ -22,7 +22,8 @@
     "portfolio": "Portfolio",
     "quote": "Quote",
     "careers": "Careers",
-    "notices": "Notices"
+    "notices": "Notices",
+    "faq": "FAQ"
   },
   "home": {
     "heroTitle": "Precision Manufacturing Since 2002",
@@ -197,6 +198,26 @@
   "privacy": {
     "pageTitle": "Privacy Policy",
     "pageDescription": "NAJIN TECHNOLOGY Privacy Policy."
+  },
+  "faq": {
+    "pageTitle": "FAQ",
+    "pageDescription": "Frequently asked questions about NAJIN TECHNOLOGY services.",
+    "question1": "What services does NAJIN TECHNOLOGY provide?",
+    "answer1": "NAJIN TECHNOLOGY provides five core services: Urethane Molding, Synthetic Resin Processing, CNC/MCT Precision Machining, Mold Fabrication, and EV Parts Processing. With over 25 years of experience, all processes are handled in a single facility for one-stop service.",
+    "question2": "What materials can you process?",
+    "answer2": "We process urethane, PC, PE, Acetal (POM), Nylon, PTFE and other synthetic resins, as well as metals including aluminum, brass, and stainless steel. Please contact us about special material processing.",
+    "question3": "Do you hold ISO certification?",
+    "answer3": "Yes, NAJIN TECHNOLOGY holds ISO 9001 Quality Management System certification and CLEAN Workplace certification. We also hold a patent for our urethane mold base technology.",
+    "question4": "What is the typical lead time?",
+    "answer4": "Lead times vary by product type and quantity, but generally range from 2-4 weeks. Simple machined parts can be delivered within 1 week. For complex precision parts or large orders, please consult with us in advance.",
+    "question5": "Can you handle small batch orders?",
+    "answer5": "Yes, we handle everything from prototype production to mass production. We also offer prototyping services for new product development stages.",
+    "question6": "Do you work with international clients?",
+    "answer6": "Yes, we work with international clients including Overseas automaker and 해외 부품사. We provide technical communication support in English and Chinese, including overseas shipping.",
+    "question7": "What is the patented urethane mold base technology?",
+    "answer7": "This is a proprietary patented technology developed by NAJIN TECHNOLOGY that significantly improves precision and durability in urethane mold fabrication. It improves production efficiency by over 30% compared to conventional methods and dramatically reduces defect rates.",
+    "question8": "How do I request a quote?",
+    "answer8": "Simply fill out the form on our Quote Request page. Attach your drawings (DWG, STEP, PDF, etc.) and our team will respond with a detailed quote within 24 hours. You can also call us at 055-367-2596."
   },
   "footer": {
     "address": "170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea",

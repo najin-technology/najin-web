@@ -25,7 +25,7 @@ const navItems = [
   { href: "/admin/history", label: "연혁 관리", icon: Clock },
 ];
 
-export function AdminSidebar() {
+export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -51,7 +51,12 @@ export function AdminSidebar() {
             }`}
           >
             <Icon className="w-5 h-5 flex-shrink-0" />
-            {item.label}
+            <span className="flex-1">{item.label}</span>
+            {badges[item.href] && badges[item.href] > 0 && (
+              <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full min-w-5 h-5 flex items-center justify-center px-1.5">
+                {badges[item.href]}
+              </span>
+            )}
           </Link>
         );
       })}
