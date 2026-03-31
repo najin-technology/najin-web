@@ -1,7 +1,8 @@
-import { useTranslations } from "next-intl";
+import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
+import { getProductsByCategory } from "@/lib/queries";
 import Image from "next/image";
 import {
   Car,
@@ -34,25 +35,39 @@ const clients = [
   { name: "해외 부품사", nameEn: "해외 부품사", category: "overseas" },
 ];
 
-// All high-res images (660px+)
-const galleryItems = [
+// Fallback gallery items if DB is empty
+const fallbackGallery = [
   { src: "/images/products/3d-mc-part-1.jpg", title: "3D MC 형상가공품", category: "3D가공" },
   { src: "/images/products/tank-pad-1.jpg", title: "TANK PAD 우레탄", category: "우레탄" },
   { src: "/images/products/3d-mc-part-2.jpg", title: "3D MC 형상가공품", category: "3D가공" },
   { src: "/images/products/pe-rod-1.jpg", title: "PE 환봉 가공", category: "합성수지" },
   { src: "/images/products/product-2026-1.jpg", title: "최신 납품 제품", category: "CNC/MCT" },
   { src: "/images/products/pe-rod-2.jpg", title: "PE 환봉 소재", category: "합성수지" },
-  { src: "/images/products/product-2026-2.jpg", title: "정밀 가공품", category: "CNC/MCT" },
-  { src: "/images/products/product-assembly-1.jpg", title: "조립 완성품", category: "금형" },
-  { src: "/images/products/pe-rod-3.jpg", title: "PE 가공 완성품", category: "합성수지" },
-  { src: "/images/products/product-old-1.jpg", title: "우레탄 성형품", category: "우레탄" },
-  { src: "/images/products/pe-rod-4.jpg", title: "PE 가공 완성품", category: "합성수지" },
-  { src: "/images/products/product-new-1.jpg", title: "신규 가공품", category: "CNC/MCT" },
 ];
 
-export default function PortfolioPage() {
-  const t = useTranslations("portfolio");
-  const tc = useTranslations("common");
+export default async function PortfolioPage() {
+  const t = await getTranslations("portfolio");
+  const tc = await getTranslations("common");
+  const locale = await getLocale();
+
+  // Fetch products from DB
+  let products: Awaited<ReturnType<typeof getProductsByCategory>> = [];
+  try {
+    products = await getProductsByCategory();
+  } catch {
+    // fallback to empty
+  }
+
+  // Build gallery items from DB products (first image of each product)
+  const galleryItems = products.length > 0
+    ? products
+        .filter((p) => p.image_urls && p.image_urls.length > 0)
+        .map((p) => ({
+          src: p.image_urls[0],
+          title: locale === "ko" ? p.name_ko : (p.name_en || p.name_ko),
+          category: p.category,
+        }))
+    : fallbackGallery;
 
   return (
     <>
@@ -100,20 +115,29 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* Product Gallery */}
+      {/* Product Gallery — from DB */}
       <section className="py-16 md:py-24 bg-surface-warm-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
-            className="text-2xl md:text-3xl font-bold text-brand-navy mb-8"
+            className="text-2xl md:text-3xl font-bold text-brand-navy mb-2"
             data-animate="fade-up"
           >
             {t("galleryTitle")}
           </h2>
+          <p
+            className="text-brand-charcoal/60 mb-8"
+            data-animate="fade-up"
+            data-animate-delay="1"
+          >
+            {products.length > 0
+              ? `${products.length}개 제품 · ${["우레탄", "합성수지", "CNC", "금형", "EV"].filter(cat => products.some(p => p.category === cat)).join(" · ")}`
+              : ""
+            }
+          </p>
 
           {/* Gallery Grid — varied sizes for rhythm */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {galleryItems.map((item, i) => {
-              // First 2 items are large (span 2 cols), rest are normal
               const isLarge = i < 2;
               return (
                 <div
@@ -125,14 +149,25 @@ export default function PortfolioPage() {
                   data-animate-delay={String(Math.min((i % 4) + 1, 4))}
                 >
                   <div className={`relative overflow-hidden ${isLarge ? "aspect-[4/3]" : "aspect-square"}`}>
-                    <Image
-                      src={item.src}
-                      alt={item.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes={isLarge ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
-                    />
-                    {/* Always-visible gradient + label on mobile, hover on desktop */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {item.src.startsWith("http") ? (
+                      // External image (Naver blog CDN)
+                      <img
+                        src={item.src}
+                        alt={item.title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    ) : (
+                      // Local image
+                      <Image
+                        src={item.src}
+                        alt={item.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes={isLarge ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent md:from-black/40 md:opacity-0 md:group-hover:opacity-100 transition-opacity" />
                     <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3 md:translate-y-full md:group-hover:translate-y-0 transition-transform">
                       <span className="inline-block text-[10px] md:text-xs font-medium text-white bg-brand-copper px-1.5 py-0.5 rounded-full">
@@ -151,7 +186,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-20 hero-gradient text-white text-center">
+      <section className="py-12 md:py-16 hero-gradient text-white text-center">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
             className="text-2xl md:text-3xl font-bold mb-4"
