@@ -75,6 +75,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
                       variant="ghost"
                       size="icon-sm"
                       onClick={() => setEditingId(item.id)}
+                      aria-label="편집"
                     >
                       <Pencil className="w-4 h-4" />
                     </Button>
@@ -88,6 +89,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
                         size="icon-sm"
                         disabled={isPending}
                         className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        aria-label="삭제"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

@@ -42,13 +42,13 @@ export default async function NoticesPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold text-[#1B2A4A]">공지사항</h1>
+          <h1 className="text-lg font-bold text-brand-navy">공지사항</h1>
           {notices && notices.length > 0 && (
             <span className="text-xs text-gray-400 tabular-nums">{notices.length}건</span>
           )}
         </div>
         <Link href="/admin/notices/new">
-          <Button className="bg-[#1B2A4A] hover:bg-[#243456] text-white gap-1.5 rounded-lg shadow-sm">
+          <Button className="bg-brand-navy hover:bg-brand-navy-light text-white gap-1.5 rounded-lg shadow-sm">
             <Plus className="w-4 h-4" />
             새 공지 작성
           </Button>
@@ -102,7 +102,7 @@ export default async function NoticesPage({
                   <TableCell>
                     <div className="flex items-center gap-1">
                       <Link href={`/admin/notices/${n.id}/edit`}>
-                        <Button variant="ghost" size="icon-sm">
+                        <Button variant="ghost" size="icon-sm" aria-label="편집">
                           <Pencil className="w-4 h-4" />
                         </Button>
                       </Link>
@@ -116,6 +116,7 @@ export default async function NoticesPage({
                 <TableCell colSpan={5}>
                   <EmptyState
                     message="공지사항이 없습니다."
+                    description="새 공지를 작성하여 웹사이트에 소식을 알려보세요."
                     icon={FileText}
                     action={{ label: "새 공지 작성", href: "/admin/notices/new" }}
                   />

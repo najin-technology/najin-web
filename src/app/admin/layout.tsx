@@ -17,7 +17,7 @@ export default function AdminRootLayout({
   return (
     <>
       {children}
-      <Toaster position="top-right" />
+      <Toaster position="top-right" richColors closeButton />
     </>
   );
 }

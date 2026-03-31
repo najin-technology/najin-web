@@ -6,6 +6,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { AlertMessage } from "@/components/admin/alert-message";
 
 export default function AdminLoginPage() {
   const [state, formAction, pending] = useActionState(loginAction, {
@@ -27,10 +28,10 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="bg-white rounded-2xl border border-gray-200/80 p-8 shadow-lg shadow-gray-200/50">
           <div className="text-center mb-8">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1B2A4A] to-[#2D4066] flex items-center justify-center mx-auto mb-4 shadow-md shadow-[#1B2A4A]/20">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-navy to-[#2D4066] flex items-center justify-center mx-auto mb-4 shadow-md shadow-brand-navy/20">
               <span className="text-white text-xl font-bold">N</span>
             </div>
-            <h1 className="text-xl font-bold text-[#1B2A4A]">나진테크 관리자</h1>
+            <h1 className="text-xl font-bold text-brand-navy">나진테크 관리자</h1>
             <p className="text-sm text-gray-400 mt-1.5">로그인하여 대시보드에 접속하세요</p>
           </div>
 
@@ -74,10 +75,7 @@ export default function AdminLoginPage() {
           {/* Email/Password Login */}
           <form action={formAction} className="space-y-4">
             {state.error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
-                {state.error}
-              </div>
+              <AlertMessage>{state.error}</AlertMessage>
             )}
 
             <div className="space-y-2">
@@ -88,6 +86,7 @@ export default function AdminLoginPage() {
                 type="email"
                 required
                 autoComplete="email"
+                autoFocus
               />
             </div>
 
@@ -105,7 +104,7 @@ export default function AdminLoginPage() {
             <Button
               type="submit"
               disabled={pending}
-              className="w-full h-11 rounded-xl bg-[#1B2A4A] hover:bg-[#243456] text-white shadow-sm transition-all"
+              className="w-full h-11 rounded-xl bg-brand-navy hover:bg-brand-navy-light text-white shadow-sm transition-all"
             >
               {pending ? "로그인 중..." : "이메일로 로그인"}
             </Button>

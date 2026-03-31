@@ -66,7 +66,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
                   onClick={() => setOpen(false)}
                   className={`relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
                     active
-                      ? "bg-[#1B2A4A] text-white font-medium shadow-sm"
+                      ? "bg-brand-navy text-white font-medium shadow-sm"
                       : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-normal"
                   }`}
                 >
@@ -117,12 +117,12 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
         }`}
       >
         <div className="h-14 flex items-center gap-2.5 px-6 border-b border-gray-100">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#1B2A4A] to-[#2D4066] flex items-center justify-center shadow-sm">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-navy to-[#2D4066] flex items-center justify-center shadow-sm">
             <span className="text-white text-xs font-bold">N</span>
           </div>
           <Link
             href="/admin"
-            className="text-sm font-bold text-[#1B2A4A] tracking-tight"
+            className="text-sm font-bold text-brand-navy tracking-tight"
             onClick={() => setOpen(false)}
           >
             나진테크 관리자
@@ -130,7 +130,12 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
         </div>
         {nav}
         <div className="absolute bottom-0 left-0 right-0 px-6 py-3 border-t border-gray-100">
-          <p className="text-[10px] text-gray-400">나진테크 관리자 v3</p>
+          <div className="flex items-center justify-between">
+            <p className="text-[10px] text-gray-400">나진테크 관리자 v3</p>
+            <a href="/" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-400 hover:text-gray-600 transition-colors">
+              사이트 보기 →
+            </a>
+          </div>
         </div>
       </aside>
     </>

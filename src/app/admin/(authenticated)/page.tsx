@@ -112,9 +112,17 @@ export default async function AdminDashboard() {
     <div className="space-y-8">
       {/* Welcome header */}
       <div>
-        <h1 className="text-xl font-bold text-[#1B2A4A]">{getGreeting()}</h1>
+        <h1 className="text-xl font-bold text-brand-navy">{getGreeting()}</h1>
         <p className="text-sm text-gray-400 mt-0.5">{formatToday()}</p>
       </div>
+
+      {/* All caught up message */}
+      {!hasUrgent && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 flex items-center gap-2.5">
+          <span className="w-2 h-2 rounded-full bg-emerald-500" />
+          <p className="text-sm text-emerald-700">모든 견적과 지원서가 처리되었습니다</p>
+        </div>
+      )}
 
       {/* Urgent Action Banner — only when pending items exist */}
       {hasUrgent && (
@@ -178,7 +186,7 @@ export default async function AdminDashboard() {
                 <Inbox className="w-[18px] h-[18px] text-amber-600" />
               </div>
               <p className="text-xs font-medium text-gray-400 mb-0.5">미처리 견적</p>
-              <p className="text-2xl font-bold text-[#1B2A4A] tabular-nums">
+              <p className="text-2xl font-bold text-brand-navy tabular-nums">
                 {pendingQuotes || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
               </p>
             </Link>
@@ -190,7 +198,7 @@ export default async function AdminDashboard() {
                 <Users className="w-[18px] h-[18px] text-rose-600" />
               </div>
               <p className="text-xs font-medium text-gray-400 mb-0.5">미처리 지원서</p>
-              <p className="text-2xl font-bold text-[#1B2A4A] tabular-nums">
+              <p className="text-2xl font-bold text-brand-navy tabular-nums">
                 {pendingApps || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
               </p>
             </Link>
@@ -262,10 +270,10 @@ export default async function AdminDashboard() {
       {/* Recent Quotes */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-[#1B2A4A]">최근 견적 요청</h2>
+          <h2 className="text-sm font-semibold text-brand-navy">최근 견적 요청</h2>
           <Link
             href="/admin/quotes"
-            className="text-xs font-medium text-[#3182CE] hover:text-[#2B6CB0] transition-colors flex items-center gap-1"
+            className="text-xs font-medium text-brand-blue hover:text-brand-blue-hover transition-colors flex items-center gap-1"
           >
             전체 보기
             <ArrowRight className="w-3 h-3" />
@@ -288,7 +296,7 @@ export default async function AdminDashboard() {
                   <TableCell>
                     <Link
                       href={`/admin/quotes/${q.id}`}
-                      className="text-[#3182CE] hover:text-[#2B6CB0] font-medium transition-colors"
+                      className="text-brand-blue hover:text-brand-blue-hover font-medium transition-colors"
                     >
                       {q.company_name}
                     </Link>
@@ -299,14 +307,19 @@ export default async function AdminDashboard() {
                     <StatusBadge status={q.status} type="quote" />
                   </TableCell>
                   <TableCell className="text-sm text-gray-500">
-                    {relativeTime(q.created_at)}
+                    <span className="flex items-center gap-1">
+                      {relativeTime(q.created_at)}
+                      {q.status === "접수" && isStale(q.created_at) && (
+                        <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
+                      )}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <div className="text-center py-6 text-sm text-gray-400">견적 요청이 없습니다</div>
+                  <div className="text-center py-8 text-sm text-gray-400">아직 견적 요청이 없습니다</div>
                 </TableCell>
               </TableRow>
             )}
@@ -317,10 +330,10 @@ export default async function AdminDashboard() {
       {/* Recent Applications */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-[#1B2A4A]">최근 지원서</h2>
+          <h2 className="text-sm font-semibold text-brand-navy">최근 지원서</h2>
           <Link
             href="/admin/applications"
-            className="text-xs font-medium text-[#3182CE] hover:text-[#2B6CB0] transition-colors flex items-center gap-1"
+            className="text-xs font-medium text-brand-blue hover:text-brand-blue-hover transition-colors flex items-center gap-1"
           >
             전체 보기
             <ArrowRight className="w-3 h-3" />
@@ -342,7 +355,7 @@ export default async function AdminDashboard() {
                   <TableCell>
                     <Link
                       href={`/admin/applications/${a.id}`}
-                      className="text-[#3182CE] hover:text-[#2B6CB0] font-medium transition-colors"
+                      className="text-brand-blue hover:text-brand-blue-hover font-medium transition-colors"
                     >
                       {a.name}
                     </Link>
@@ -352,14 +365,19 @@ export default async function AdminDashboard() {
                     <StatusBadge status={a.status} type="application" />
                   </TableCell>
                   <TableCell className="text-sm text-gray-500">
-                    {relativeTime(a.created_at)}
+                    <span className="flex items-center gap-1">
+                      {relativeTime(a.created_at)}
+                      {a.status === "서류검토" && isStale(a.created_at) && (
+                        <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
+                      )}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
                 <TableCell colSpan={4}>
-                  <div className="text-center py-6 text-sm text-gray-400">지원서가 없습니다</div>
+                  <div className="text-center py-8 text-sm text-gray-400">아직 지원서가 없습니다</div>
                 </TableCell>
               </TableRow>
             )}

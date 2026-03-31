@@ -36,7 +36,7 @@ export default async function ApplicationsPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <h1 className="text-lg font-bold text-[#1B2A4A]">채용 관리</h1>
+        <h1 className="text-lg font-bold text-brand-navy">채용 관리</h1>
         {applications && applications.length > 0 && (
           <span className="text-xs text-gray-400 tabular-nums">{applications.length}건</span>
         )}
@@ -76,7 +76,7 @@ export default async function ApplicationsPage({
                   <TableCell>
                     <Link
                       href={`/admin/applications/${a.id}`}
-                      className="text-[#3182CE] hover:text-[#2B6CB0] font-medium transition-colors"
+                      className="text-brand-blue hover:text-brand-blue-hover font-medium transition-colors"
                     >
                       {a.name}
                     </Link>
@@ -94,7 +94,7 @@ export default async function ApplicationsPage({
             ) : (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <EmptyState message="지원서가 없습니다." />
+                  <EmptyState message="지원서가 없습니다." description="구직자가 채용 지원서를 제출하면 여기에 표시됩니다." />
                 </TableCell>
               </TableRow>
             )}

@@ -41,13 +41,13 @@ export default async function JobPostingsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold text-[#1B2A4A]">채용공고</h1>
+          <h1 className="text-lg font-bold text-brand-navy">채용공고</h1>
           {postings && postings.length > 0 && (
             <span className="text-xs text-gray-400 tabular-nums">{postings.length}건</span>
           )}
         </div>
         <Link href="/admin/job-postings/new">
-          <Button className="bg-[#1B2A4A] hover:bg-[#243456] text-white gap-1.5 rounded-lg shadow-sm">
+          <Button className="bg-brand-navy hover:bg-brand-navy-light text-white gap-1.5 rounded-lg shadow-sm">
             <Plus className="w-4 h-4" />
             새 공고 작성
           </Button>
@@ -101,7 +101,7 @@ export default async function JobPostingsPage({
                   <TableCell>
                     <div className="flex items-center gap-1">
                       <Link href={`/admin/job-postings/${p.id}/edit`}>
-                        <Button variant="ghost" size="icon-sm">
+                        <Button variant="ghost" size="icon-sm" aria-label="편집">
                           <Pencil className="w-4 h-4" />
                         </Button>
                       </Link>
@@ -113,7 +113,7 @@ export default async function JobPostingsPage({
             ) : (
               <TableRow>
                 <TableCell colSpan={6}>
-                  <EmptyState message="채용공고가 없습니다." />
+                  <EmptyState message="채용공고가 없습니다." description="새 채용공고를 작성하여 인재를 모집하세요." action={{ label: "새 공고 작성", href: "/admin/job-postings/new" }} />
                 </TableCell>
               </TableRow>
             )}

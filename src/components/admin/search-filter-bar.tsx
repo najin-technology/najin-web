@@ -57,11 +57,12 @@ export function SearchFilterBar({
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
         <input
           ref={inputRef}
-          type="text"
+          type="search"
           placeholder={searchPlaceholder}
           defaultValue={currentQuery}
           onChange={(e) => handleSearch(e.target.value)}
-          className="h-9 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-8 text-sm transition-all placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B2A4A]/20 focus-visible:border-[#1B2A4A]/40"
+          aria-label={searchPlaceholder}
+          className="h-9 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-8 text-sm transition-all placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40"
         />
         {currentQuery && (
           <button
@@ -80,9 +81,10 @@ export function SearchFilterBar({
             <select
               defaultValue={searchParams.get(filter.key) || ""}
               onChange={(e) => updateParams(filter.key, e.target.value)}
-              className={`h-9 rounded-lg border bg-white pl-3 pr-8 text-sm transition-all appearance-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B2A4A]/20 focus-visible:border-[#1B2A4A]/40 ${
+              aria-label={filter.label}
+              className={`h-9 rounded-lg border bg-white pl-3 pr-8 text-sm transition-all appearance-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40 ${
                 isFiltered
-                  ? "border-[#1B2A4A]/30 text-[#1B2A4A] font-medium"
+                  ? "border-brand-navy/30 text-brand-navy font-medium"
                   : "border-gray-200 text-gray-600"
               }`}
             >
