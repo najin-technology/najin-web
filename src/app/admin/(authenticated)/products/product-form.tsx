@@ -78,8 +78,8 @@ export function ProductForm({
 
       <FormStatusBar checked={isActive} onCheckedChange={setIsActive} />
 
-      <div>
-        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">기본 정보</p>
+      <div className="border-t border-gray-200 pt-4 mt-2">
+        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">기본 정보</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -110,7 +110,7 @@ export function ProductForm({
       </div>
 
       <div className="border-t border-gray-200 pt-4 mt-2">
-        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">콘텐츠</p>
+        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">콘텐츠</p>
       </div>
 
       <Tabs value={tabValue} onValueChange={(v) => {
@@ -173,7 +173,7 @@ export function ProductForm({
       </Tabs>
 
       <div className="border-t border-gray-200 pt-4 mt-2">
-        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">미디어</p>
+        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">미디어</p>
       </div>
 
       {/* Image Management */}

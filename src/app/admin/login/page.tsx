@@ -28,7 +28,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="bg-white rounded-2xl border border-gray-200/80 p-8 shadow-lg shadow-gray-200/50 transition-shadow hover:shadow-xl">
           <div className="text-center mb-8">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-navy to-[#2D4066] flex items-center justify-center mx-auto mb-4 shadow-md shadow-brand-navy/20">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-navy to-brand-navy-light flex items-center justify-center mx-auto mb-4 shadow-md shadow-brand-navy/20">
               <span className="text-white text-xl font-bold">N</span>
             </div>
             <h1 className="text-xl font-bold text-brand-navy">나진테크 관리자</h1>

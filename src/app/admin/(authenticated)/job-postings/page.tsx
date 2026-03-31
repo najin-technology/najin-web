@@ -72,7 +72,7 @@ export default async function JobPostingsPage({
           <TableBody>
             {postings && postings.length > 0 ? (
               postings.map((p) => (
-                <TableRow key={p.id}>
+                <TableRow key={p.id} className="hover:bg-gray-50/50">
                   <TableCell className="font-medium">{p.title_ko}</TableCell>
                   <TableCell data-label="부서">{p.department || "-"}</TableCell>
                   <TableCell data-label="고용형태">{p.employment_type || "-"}</TableCell>

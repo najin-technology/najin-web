@@ -41,7 +41,7 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
         {parentTitle && subPage ? (
           <ol className="flex items-center gap-1.5 min-w-0">
             <li className="flex items-center gap-1.5 min-w-0">
-              <Link href={parentPath!} className="text-gray-400 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-2 rounded transition-colors truncate">
+              <Link href={parentPath!} className="text-gray-400 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20 rounded transition-colors truncate">
                 {parentTitle}
               </Link>
               <ChevronRight className="w-3.5 h-3.5 text-gray-300 flex-shrink-0" aria-hidden="true" />

@@ -148,7 +148,7 @@ export default async function AdminDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Link
             href="/admin/quotes"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 p-5 text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-amber-200/40"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 p-5 text-white transition-all hover:-translate-y-0.5 hover:shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div>
@@ -164,13 +164,14 @@ export default async function AdminDashboard() {
               </div>
               <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-white/80 group-hover:translate-x-0.5 transition-all" />
             </div>
+            <span className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-white/10" />
             {(pendingQuotes || 0) > 0 && (
               <span className="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-white animate-pulse ring-2 ring-white/30" />
             )}
           </Link>
           <Link
             href="/admin/applications"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 p-5 text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-rose-200/40"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 p-5 text-white transition-all hover:-translate-y-0.5 hover:shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div>
@@ -186,6 +187,7 @@ export default async function AdminDashboard() {
               </div>
               <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-white/80 group-hover:translate-x-0.5 transition-all" />
             </div>
+            <span className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-white/10" />
             {(pendingApps || 0) > 0 && (
               <span className="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-white animate-pulse ring-2 ring-white/30" />
             )}
@@ -199,7 +201,7 @@ export default async function AdminDashboard() {
           <>
             <Link
               href="/admin/quotes"
-              className="group bg-white rounded-xl border border-gray-200 p-4 transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300"
+              className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
             >
               <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center mb-3">
                 <Inbox className="w-[18px] h-[18px] text-amber-600" />
@@ -211,7 +213,7 @@ export default async function AdminDashboard() {
             </Link>
             <Link
               href="/admin/applications"
-              className="group bg-white rounded-xl border border-gray-200 p-4 transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300"
+              className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
             >
               <div className="w-9 h-9 rounded-lg bg-rose-50 flex items-center justify-center mb-3">
                 <Users className="w-[18px] h-[18px] text-rose-600" />
@@ -225,7 +227,7 @@ export default async function AdminDashboard() {
         )}
         <Link
           href="/admin/products"
-          className="group bg-white rounded-xl border border-gray-200 p-4 transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300"
+          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
         >
           <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center mb-3">
             <Package className="w-[18px] h-[18px] text-blue-600" />
@@ -237,7 +239,7 @@ export default async function AdminDashboard() {
         </Link>
         <Link
           href="/admin/job-postings"
-          className="group bg-white rounded-xl border border-gray-200 p-4 transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300"
+          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
         >
           <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center mb-3">
             <Briefcase className="w-[18px] h-[18px] text-emerald-600" />
@@ -249,7 +251,7 @@ export default async function AdminDashboard() {
         </Link>
         <Link
           href="/admin/notices"
-          className="group bg-white rounded-xl border border-gray-200 p-4 transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300"
+          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
         >
           <div className="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center mb-3">
             <Bell className="w-[18px] h-[18px] text-violet-600" />

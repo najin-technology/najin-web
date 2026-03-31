@@ -78,7 +78,7 @@ export default async function NoticesPage({
           <TableBody>
             {notices && notices.length > 0 ? (
               notices.map((n) => (
-                <TableRow key={n.id}>
+                <TableRow key={n.id} className="hover:bg-gray-50/50">
                   <TableCell className="font-medium"><HighlightText text={n.title_ko} query={searchQuery} /></TableCell>
                   <TableCell className="text-xs text-gray-400 max-w-[200px] truncate hidden md:table-cell">
                     {stripHtml(n.content_ko || "").slice(0, 60) || "—"}
