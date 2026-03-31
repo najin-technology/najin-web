@@ -155,14 +155,14 @@ export default function PortfolioPage() {
             className="text-2xl md:text-3xl font-bold mb-4"
             data-animate="fade-up"
           >
-            {t("clientsTitle")}
+            {t("ctaTitle")}
           </h2>
           <p
             className="text-gray-300 mb-8"
             data-animate="fade-up"
             data-animate-delay="1"
           >
-            {t("clientsDesc")}
+            {t("ctaDesc")}
           </p>
           <div
             className="flex flex-col items-center gap-4"

@@ -94,7 +94,9 @@
     "clientsTitle": "주요 거래처",
     "clientsDesc": "나진테크는 국내외 주요 기업에 신뢰할 수 있는 부품을 공급하고 있습니다.",
     "galleryTitle": "납품 실적",
-    "galleryPlaceholder": "납품 실적 갤러리가 준비 중입니다."
+    "galleryPlaceholder": "납품 실적 갤러리가 준비 중입니다.",
+    "ctaTitle": "견적을 요청하세요",
+    "ctaDesc": "도면을 보내주시면 빠르게 견적을 회신드리겠습니다."
   },
   "quote": {
     "pageTitle": "견적문의",
