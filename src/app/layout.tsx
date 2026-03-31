@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Noto_Sans_KR } from "next/font/google";
+import { Geist, Noto_Sans_KR, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { AdminFab } from "@/components/admin-fab";
@@ -11,6 +11,12 @@ const geistSans = Geist({
 
 const notoSansKR = Noto_Sans_KR({
   variable: "--font-noto-sans-kr",
+  weight: ["400", "500", "700"],
+  preload: false,
+});
+
+const notoSansSC = Noto_Sans_SC({
+  variable: "--font-noto-sans-sc",
   weight: ["400", "500", "700"],
   preload: false,
 });
@@ -40,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={`${geistSans.variable} ${notoSansKR.variable} h-full antialiased`}>
+    <html className={`${geistSans.variable} ${notoSansKR.variable} ${notoSansSC.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <script
           type="application/ld+json"
@@ -58,7 +64,7 @@ export default function RootLayout({
                 telephone: "+82-55-367-2596",
                 contactType: "customer service",
                 areaServed: "KR",
-                availableLanguage: ["Korean", "English"],
+                availableLanguage: ["Korean", "English", "Chinese"],
               },
               address: {
                 "@type": "PostalAddress",
@@ -67,6 +73,24 @@ export default function RootLayout({
                 addressRegion: "경상남도",
                 addressCountry: "KR",
               },
+              knowsAbout: [
+                "Urethane Molding",
+                "CNC Precision Machining",
+                "Synthetic Resin Processing",
+                "Mold Fabrication",
+                "EV Parts Manufacturing",
+              ],
+              award: [
+                "ISO 9001 Quality Management Certification",
+                "CLEAN Workplace Certification",
+                "Urethane Mold Base Patent",
+              ],
+              numberOfEmployees: {
+                "@type": "QuantitativeValue",
+                minValue: 20,
+                maxValue: 50,
+              },
+              naics: "326199",
             }),
           }}
         />

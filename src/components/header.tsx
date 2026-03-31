@@ -6,7 +6,13 @@ import { useLocale } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navItems = [
   { href: "/about", key: "about" },
@@ -14,7 +20,14 @@ const navItems = [
   { href: "/portfolio", key: "portfolio" },
   { href: "/careers", key: "careers" },
   { href: "/notices", key: "notices" },
+  { href: "/faq", key: "faq" },
 ] as const;
+
+const localeLabels: Record<string, string> = {
+  ko: "한국어",
+  en: "English",
+  zh: "中文",
+};
 
 export function Header() {
   const t = useTranslations("nav");
@@ -23,7 +36,7 @@ export function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const otherLocale = locale === "ko" ? "en" : "ko";
+  const otherLocales = (["ko", "en", "zh"] as const).filter((l) => l !== locale);
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100 shadow-sm">
@@ -53,11 +66,21 @@ export function Header() {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-3">
-            <Link href={pathname} locale={otherLocale}>
-              <Button variant="ghost" size="sm" className="text-sm">
-                {tc("language")}
-              </Button>
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={<Button variant="ghost" size="sm" className="text-sm gap-1.5" />}
+              >
+                <Globe className="w-4 h-4" />
+                {locale.toUpperCase()}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {otherLocales.map((l) => (
+                  <DropdownMenuItem key={l} render={<Link href={pathname} locale={l} />}>
+                    {localeLabels[l]}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Link href="/quote">
               <Button
                 size="sm"
@@ -102,16 +125,18 @@ export function Header() {
               </Link>
             ))}
             <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
-              <Link href={pathname} locale={otherLocale}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-xs"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {tc("language")}
-                </Button>
-              </Link>
+              {otherLocales.map((l) => (
+                <Link key={l} href={pathname} locale={l}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {localeLabels[l]}
+                  </Button>
+                </Link>
+              ))}
               <Link href="/quote">
                 <Button
                   size="sm"

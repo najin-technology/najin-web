@@ -13,17 +13,29 @@ import {
 import { Plus, Pencil } from "lucide-react";
 import { NoticePublishToggle } from "./notice-toggle";
 import { NoticeDeleteButton } from "./notice-delete-button";
+import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 
 export const metadata = { title: "공지사항" };
 
-export default async function NoticesPage() {
+export default async function NoticesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; published?: string }>;
+}) {
+  const { q, published } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
-  const { data: notices } = await supabase
+  let query = supabase
     .from("notices")
     .select("id, title_ko, is_published, published_at, created_at")
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
+
+  if (q) query = query.ilike("title_ko", `%${q}%`);
+  if (published === "true") query = query.eq("is_published", true);
+  if (published === "false") query = query.eq("is_published", false);
+
+  const { data: notices } = await query;
 
   return (
     <div className="space-y-6">
@@ -36,6 +48,20 @@ export default async function NoticesPage() {
           </Button>
         </Link>
       </div>
+
+      <SearchFilterBar
+        searchPlaceholder="제목 검색..."
+        filters={[
+          {
+            key: "published",
+            label: "전체 상태",
+            options: [
+              { value: "true", label: "공개" },
+              { value: "false", label: "비공개" },
+            ],
+          },
+        ]}
+      />
 
       <div className="bg-white rounded-lg border border-gray-200">
         <Table>

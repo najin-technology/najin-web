@@ -5,15 +5,43 @@ import { Link } from "@/i18n/routing";
 import DOMPurify from "isomorphic-dompurify";
 import { ArrowLeft, Calendar } from "lucide-react";
 
+const BASE_URL = "https://najin-webapp.vercel.app";
+
+function stripHtml(html: string) {
+  return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
-  const { id } = await params;
+  const { locale, id } = await params;
   const notice = await getNoticeById(id);
   if (!notice) return { title: "Not Found" };
-  return { title: notice.title_ko };
+
+  const title = locale === "ko" ? notice.title_ko : (notice.title_en || notice.title_ko);
+  const rawContent = locale === "ko" ? notice.content_ko : (notice.content_en || notice.content_ko);
+  const description = rawContent ? stripHtml(rawContent).slice(0, 160) : "";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article" as const,
+      publishedTime: notice.published_at || notice.created_at,
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/notices/${id}`,
+      languages: {
+        ko: `${BASE_URL}/ko/notices/${id}`,
+        en: `${BASE_URL}/en/notices/${id}`,
+        zh: `${BASE_URL}/zh/notices/${id}`,
+      },
+    },
+  };
 }
 
 export default async function NoticeDetailPage({
@@ -41,8 +69,26 @@ export default async function NoticeDetailPage({
   const sanitizedHtml =
     isHtml && content ? DOMPurify.sanitize(content) : null;
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    datePublished: notice.published_at || notice.created_at,
+    dateModified: notice.updated_at || notice.created_at,
+    author: { "@type": "Organization", name: "NAJIN TECHNOLOGY" },
+    publisher: {
+      "@type": "Organization",
+      name: "NAJIN TECHNOLOGY",
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo/najin-logo.jpg` },
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <section className="hero-gradient hero-pattern text-white py-16 md:py-24 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <h1

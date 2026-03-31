@@ -5,10 +5,21 @@ import { getActiveJobPostings } from "@/lib/queries";
 import { ApplyForm } from "./apply-form";
 import { Briefcase, ChevronDown, Clock } from "lucide-react";
 
-export const metadata = {
-  title: "채용정보",
-  description: "나진테크 채용정보. 경남 양산 정밀 가공 제조업 일자리. 복리후생, 채용 공고 및 지원 방법 안내.",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return createPageMetadata({
+    locale,
+    path: "/careers",
+    titles: { ko: "채용정보", en: "Careers", zh: "招聘信息" },
+    descriptions: {
+      ko: "나진테크 채용정보. 경남 양산 정밀 가공 제조업 일자리. 복리후생, 채용 공고 및 지원 방법 안내.",
+      en: "Careers at NAJIN TECHNOLOGY. Manufacturing jobs in Yangsan, Gyeongnam. Benefits, openings, and application guide.",
+      zh: "纳进科技招聘信息。庆南梁山精密加工制造业岗位。福利待遇、招聘公告及申请方式。",
+    },
+  });
+}
 
 export default async function CareersPage() {
   const t = await getTranslations("careers");
