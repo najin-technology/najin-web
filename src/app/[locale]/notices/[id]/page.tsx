@@ -70,8 +70,15 @@ export default async function NoticeDetailPage({
 
   // Check if content contains HTML tags (from Tiptap editor)
   const isHtml = content ? /<[a-z][\s\S]*>/i.test(content) : false;
-  const sanitizedHtml =
-    isHtml && content ? DOMPurify.sanitize(content) : null;
+  let sanitizedHtml: string | null = null;
+  if (isHtml && content) {
+    try {
+      sanitizedHtml = DOMPurify.sanitize(content);
+    } catch {
+      // DOMPurify/jsdom may fail in serverless — fall back to plain text
+      sanitizedHtml = null;
+    }
+  }
 
   const articleJsonLd = {
     "@context": "https://schema.org",
