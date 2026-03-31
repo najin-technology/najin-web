@@ -36,7 +36,7 @@ const businessAreas: {
   icon: LucideIcon;
   image: string;
 }[] = [
-  { key: "urethane", icon: Droplets, image: "/images/factory/urethane-machine.jpg" },
+  { key: "urethane", icon: Droplets, image: "/images/factory/workshop-2.jpg" },
   { key: "resin", icon: FlaskConical, image: "/images/products/pe-rod-1.jpg" },
   { key: "cnc", icon: Cog, image: "/images/products/3d-mc-part-1.jpg" },
   { key: "mold", icon: Box, image: "/images/products/3d-mc-part-2.jpg" },
