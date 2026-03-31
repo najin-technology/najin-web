@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
+import { ListPageHeader } from "@/components/admin/list-page-header";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -10,12 +11,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Pencil } from "lucide-react";
+import { Briefcase, Pencil } from "lucide-react";
 import { JobPostingActiveToggle } from "./job-posting-toggle";
 import { JobPostingDeleteButton } from "./job-posting-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 
-export const metadata = { title: "채용공고" };
+export const metadata = { title: "채용공고", description: "채용공고 관리", robots: "noindex, nofollow" };
 
 export default async function JobPostingsPage({
   searchParams,
@@ -39,18 +40,11 @@ export default async function JobPostingsPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-lg font-bold text-[#1B2A4A]">채용공고</h1>
-        <Link href="/admin/job-postings/new">
-          <Button className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white">
-            <Plus className="w-4 h-4 mr-1" />
-            새 공고 작성
-          </Button>
-        </Link>
-      </div>
+      <ListPageHeader title="채용공고" count={postings?.length} createHref="/admin/job-postings/new" createLabel="새 공고 작성" />
 
       <SearchFilterBar
         searchPlaceholder="공고 제목 검색..."
+        resultCount={postings?.length}
         filters={[
           {
             key: "active",
@@ -63,8 +57,8 @@ export default async function JobPostingsPage({
         ]}
       />
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <Table>
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <Table className="admin-card-table">
           <TableHeader>
             <TableRow>
               <TableHead>제목</TableHead>
@@ -78,25 +72,25 @@ export default async function JobPostingsPage({
           <TableBody>
             {postings && postings.length > 0 ? (
               postings.map((p) => (
-                <TableRow key={p.id}>
+                <TableRow key={p.id} className="hover:bg-gray-50/50">
                   <TableCell className="font-medium">{p.title_ko}</TableCell>
-                  <TableCell>{p.department || "-"}</TableCell>
-                  <TableCell>{p.employment_type || "-"}</TableCell>
-                  <TableCell>
+                  <TableCell data-label="부서">{p.department || "-"}</TableCell>
+                  <TableCell data-label="고용형태">{p.employment_type || "-"}</TableCell>
+                  <TableCell data-label="활성">
                     <JobPostingActiveToggle
                       postingId={p.id}
                       isActive={p.is_active}
                     />
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell data-label="마감일" className="text-sm text-gray-500">
                     {p.deadline
                       ? new Date(p.deadline).toLocaleDateString("ko-KR")
                       : "-"}
                   </TableCell>
-                  <TableCell>
+                  <TableCell data-label="관리">
                     <div className="flex items-center gap-1">
                       <Link href={`/admin/job-postings/${p.id}/edit`}>
-                        <Button variant="ghost" size="icon-sm">
+                        <Button variant="ghost" size="icon-sm" aria-label="편집">
                           <Pencil className="w-4 h-4" />
                         </Button>
                       </Link>
@@ -108,12 +102,17 @@ export default async function JobPostingsPage({
             ) : (
               <TableRow>
                 <TableCell colSpan={6}>
-                  <EmptyState message="채용공고가 없습니다." />
+                  <EmptyState message="채용공고가 없습니다." description="새 채용공고를 작성하여 인재를 모집하세요." icon={Briefcase} action={{ label: "새 공고 작성", href: "/admin/job-postings/new" }} />
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
+        {postings && postings.length > 0 && (
+          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums">
+            총 {postings.length}건
+          </div>
+        )}
       </div>
     </div>
   );

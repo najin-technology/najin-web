@@ -63,6 +63,26 @@
 }
 
 :root {
+  /* ===== Admin design tokens ===== */
+  --admin-radius-sm: 0.5rem;  /* rounded-lg */
+  --admin-radius-md: 0.75rem; /* rounded-xl */
+  --admin-radius-full: 9999px;
+  --admin-gap-xs: 0.5rem;  /* gap-2 */
+  --admin-gap-sm: 0.75rem; /* gap-3 */
+  --admin-gap-md: 1rem;    /* gap-4 */
+  --admin-gap-lg: 1.5rem;  /* gap-6 */
+  --admin-transition-fast: 150ms;
+  --admin-transition-normal: 200ms;
+  --admin-tracking-tight: -0.01em;
+  --admin-tracking-label: 0.05em;
+
+  /* Semantic colors */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+  /* Sidebar width (toggled by JS) */
+  --sidebar-width: 16rem;
   /* Warm-tinted neutrals (hue 60 = warm amber/beige, matching brand warmth) */
   --background: oklch(0.995 0.005 60);
   --foreground: oklch(0.18 0.02 250);
@@ -144,6 +164,14 @@
   }
 }
 
+/* ===== Smooth scroll (respects reduced-motion) ===== */
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 /* ===== Scroll-triggered animations ===== */
 
 [data-animate] {
@@ -191,7 +219,7 @@
 /* ===== Hover utilities ===== */
 
 .hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .hover-lift:hover {
   transform: translateY(-2px);
@@ -247,5 +275,134 @@
   }
   .hero-gradient {
     animation: none !important;
+  }
+}
+
+/* ===== Admin focus-visible consistency ===== */
+
+.admin-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-brand-navy, #1a2b4a), 0 0 0 4px rgba(26, 43, 74, 0.15);
+  border-radius: 8px;
+}
+
+/* ===== Admin scrollbar ===== */
+
+.admin-main ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.admin-main ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-main ::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+.admin-main ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ===== Admin sidebar + main layout ===== */
+
+@media (min-width: 1024px) {
+  .admin-main {
+    margin-left: var(--sidebar-width, 16rem);
+    transition: margin-left 0.2s ease;
+  }
+}
+
+/* ===== Admin print styles ===== */
+
+@media print {
+  .admin-main { margin-left: 0 !important; }
+  aside, header, button, [data-slot="toaster"] { display: none !important; }
+  main { padding: 0 !important; }
+  .rounded-xl { border-radius: 0 !important; }
+  .shadow-sm, .shadow-md, .shadow-lg { box-shadow: none !important; }
+}
+
+/* ===== Admin stat number animation ===== */
+
+@keyframes stat-pop {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: none; }
+}
+
+.stat-number {
+  animation: stat-pop 0.3s ease-out both;
+}
+
+/* ===== Admin mobile card table ===== */
+
+@media (max-width: 639px) {
+  .admin-card-table thead {
+    display: none;
+  }
+  .admin-card-table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .admin-card-table tbody tr td {
+    padding: 2px 0;
+    border: none;
+  }
+  .admin-card-table tbody tr td:first-child {
+    grid-column: 1 / -1;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .admin-card-table tbody tr td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 500;
+  }
+  .admin-card-table tbody tr td:first-child::before {
+    display: none;
+  }
+}
+
+/* ===== Admin link utility ===== */
+
+.admin-link {
+  color: var(--color-brand-blue, #2563eb);
+  transition: color 0.15s;
+}
+.admin-link:hover {
+  color: var(--color-brand-blue-hover, #1d4ed8);
+  text-decoration: underline;
+}
+
+/* ===== Admin page entry animation ===== */
+
+@keyframes admin-fade-in {
+  from { opacity: 0.9; transform: translateY(2px); }
+  to { opacity: 1; transform: none; }
+}
+
+.admin-main > main {
+  animation: admin-fade-in 0.2s ease-out;
+}
+
+/* ===== Reduced motion ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-number {
+    animation: none;
+  }
+  .animate-pulse {
+    animation: none;
+  }
+  .admin-main > main {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }

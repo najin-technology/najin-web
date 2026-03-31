@@ -33,8 +33,9 @@ export function AdminFab() {
   return (
     <a
       href="/admin"
-      className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-[#1B2A4A] hover:bg-[#2D3748] text-white rounded-full flex items-center justify-center shadow-lg transition-colors"
-      title="관리자"
+      className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gradient-to-br from-brand-navy to-[#2D4066] hover:from-brand-navy-light hover:to-brand-navy text-white rounded-2xl flex items-center justify-center shadow-lg shadow-brand-navy/20 transition-all hover:-translate-y-0.5 hover:shadow-xl"
+      title="관리자 대시보드"
+      aria-label="관리자 대시보드로 이동"
     >
       <Shield className="w-5 h-5" />
     </a>

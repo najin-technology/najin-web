@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { EmptyState } from "@/components/admin/empty-state";
+import { ListPageHeader } from "@/components/admin/list-page-header";
 import {
   Table,
   TableBody,
@@ -11,50 +12,71 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
+import { HighlightText } from "@/components/admin/highlight-text";
+import { CsvExportButton } from "@/components/admin/csv-export";
+import { FileText } from "lucide-react";
 
-export const metadata = { title: "견적 관리" };
+export const metadata = { title: "견적 관리", description: "고객 견적 요청 관리", robots: "noindex, nofollow" };
 
 export default async function QuotesPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string; status?: string }>;
 }) {
-  const { q, status } = await searchParams;
+  const { q: searchQuery, status } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
   let query = supabase
     .from("quotes")
-    .select("id, company_name, contact_name, processing_type, status, created_at")
+    .select("id, company_name, contact_name, phone, email, processing_type, status, created_at")
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
-  if (q) query = query.or(`company_name.ilike.%${q}%,contact_name.ilike.%${q}%`);
+  if (searchQuery) query = query.or(`company_name.ilike.%${searchQuery}%,contact_name.ilike.%${searchQuery}%`);
   if (status) query = query.eq("status", status);
 
   const { data: quotes } = await query;
 
   return (
     <div className="space-y-6">
-      <h1 className="text-lg font-bold text-[#1B2A4A]">견적 관리</h1>
+      <ListPageHeader title="견적 관리" count={quotes?.length} />
 
-      <SearchFilterBar
-        searchPlaceholder="회사명/담당자 검색..."
-        filters={[
-          {
-            key: "status",
-            label: "전체 상태",
-            options: [
-              { value: "접수", label: "접수" },
-              { value: "검토중", label: "검토중" },
-              { value: "견적발송", label: "견적발송" },
-              { value: "완료", label: "완료" },
-            ],
-          },
-        ]}
-      />
+      <div className="flex items-center gap-2">
+        <div className="flex-1">
+          <SearchFilterBar
+            searchPlaceholder="회사명/담당자 검색..."
+            resultCount={quotes?.length}
+            filters={[
+              {
+                key: "status",
+                label: "전체 상태",
+                options: [
+                  { value: "접수", label: "접수" },
+                  { value: "검토중", label: "검토중" },
+                  { value: "견적발송", label: "견적발송" },
+                  { value: "완료", label: "완료" },
+                ],
+              },
+            ]}
+          />
+        </div>
+        <CsvExportButton
+          filename="quotes"
+          headers={["회사명", "담당자", "연락처", "이메일", "가공종류", "상태", "접수일"]}
+          rows={(quotes || []).map((q) => [
+            q.company_name || "",
+            q.contact_name || "",
+            q.phone || "",
+            q.email || "",
+            q.processing_type || "",
+            q.status || "",
+            new Date(q.created_at).toLocaleDateString("ko-KR"),
+          ])}
+        />
+      </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <Table>
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <Table className="admin-card-table">
           <TableHeader>
             <TableRow>
               <TableHead>회사명</TableHead>
@@ -67,21 +89,21 @@ export default async function QuotesPage({
           <TableBody>
             {quotes && quotes.length > 0 ? (
               quotes.map((q) => (
-                <TableRow key={q.id}>
+                <TableRow key={q.id} className="group hover:bg-gray-50/50">
                   <TableCell>
                     <Link
                       href={`/admin/quotes/${q.id}`}
-                      className="text-[#3182CE] hover:underline font-medium"
+                      className="text-brand-blue hover:text-brand-blue-hover group-hover:underline font-medium transition-colors"
                     >
-                      {q.company_name}
+                      <HighlightText text={q.company_name} query={searchQuery} />
                     </Link>
                   </TableCell>
-                  <TableCell>{q.contact_name}</TableCell>
-                  <TableCell>{q.processing_type}</TableCell>
-                  <TableCell>
+                  <TableCell data-label="담당자"><HighlightText text={q.contact_name} query={searchQuery} /></TableCell>
+                  <TableCell data-label="가공종류">{q.processing_type}</TableCell>
+                  <TableCell data-label="상태">
                     <StatusBadge status={q.status} type="quote" />
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell data-label="접수일" className="text-sm text-gray-500">
                     {new Date(q.created_at).toLocaleDateString("ko-KR")}
                   </TableCell>
                 </TableRow>
@@ -89,12 +111,17 @@ export default async function QuotesPage({
             ) : (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <EmptyState message="견적 요청이 없습니다." />
+                  <EmptyState message="견적 요청이 없습니다." description="고객이 웹사이트에서 견적을 요청하면 여기에 표시됩니다." icon={FileText} />
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
+        {quotes && quotes.length > 0 && (
+          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums">
+            총 {quotes.length}건
+          </div>
+        )}
       </div>
     </div>
   );

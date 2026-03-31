@@ -1,11 +1,9 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { JobPostingForm } from "../../job-posting-form";
 
-export const metadata = { title: "채용공고 수정" };
+export const metadata = { title: "공고 수정", description: "채용공고 수정", robots: "noindex, nofollow" };
 
 export default async function EditJobPostingPage({
   params,
@@ -29,17 +27,9 @@ export default async function EditJobPostingPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Link href="/admin/job-postings">
-          <Button variant="ghost" size="sm">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            목록
-          </Button>
-        </Link>
-        <h1 className="text-lg font-bold text-[#1B2A4A]">채용공고 수정</h1>
-      </div>
+      <DetailPageHeader backHref="/admin/job-postings" title="공고 수정" />
 
-      <div className="bg-white rounded-lg border border-gray-200 p-6 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 p-6 lg:p-8 overflow-hidden">
         <JobPostingForm mode="edit" posting={posting} />
       </div>
     </div>

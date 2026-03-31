@@ -1,12 +1,11 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { createProduct, updateProduct } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectTrigger,
@@ -15,7 +14,9 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { X } from "lucide-react";
+import { AlertMessage } from "@/components/admin/alert-message";
+import { FormStatusBar } from "@/components/admin/form-status-bar";
+import { Upload, X } from "lucide-react";
 
 const CATEGORIES = [
   { value: "우레탄", label: "우레탄" },
@@ -50,6 +51,12 @@ export function ProductForm({
   const [existingImages, setExistingImages] = useState<string[]>(
     product?.image_urls || []
   );
+  const [tabValue, setTabValue] = useState("ko");
+
+  useEffect(() => {
+    const tab = new URLSearchParams(window.location.search).get("tab");
+    if (tab) setTabValue(tab);
+  }, []);
 
   const removeExistingImage = (url: string) => {
     setExistingImages((prev) => prev.filter((u) => u !== url));
@@ -66,17 +73,13 @@ export function ProductForm({
       />
 
       {state.error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
-          {state.error}
-        </div>
+        <AlertMessage>{state.error}</AlertMessage>
       )}
 
-      <div className="flex items-center gap-3">
-        <Switch
-          checked={isActive}
-          onCheckedChange={(checked: boolean) => setIsActive(checked)}
-        />
-        <Label>{isActive ? "활성" : "비활성"}</Label>
+      <FormStatusBar checked={isActive} onCheckedChange={setIsActive} />
+
+      <div className="border-t border-gray-200 pt-5 mt-4">
+        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">기본 정보</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -106,7 +109,18 @@ export function ProductForm({
         </div>
       </div>
 
-      <Tabs defaultValue="ko">
+      <div className="border-t border-gray-200 pt-5 mt-4">
+        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">콘텐츠</p>
+      </div>
+
+      <Tabs value={tabValue} onValueChange={(v) => {
+        setTabValue(v);
+        if (typeof window !== "undefined") {
+          const url = new URL(window.location.href);
+          url.searchParams.set("tab", v);
+          window.history.replaceState({}, "", url.toString());
+        }
+      }}>
         <TabsList>
           <TabsTrigger value="ko">한국어</TabsTrigger>
           <TabsTrigger value="en">English</TabsTrigger>
@@ -158,6 +172,10 @@ export function ProductForm({
         </TabsContent>
       </Tabs>
 
+      <div className="border-t border-gray-200 pt-5 mt-4">
+        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">미디어</p>
+      </div>
+
       {/* Image Management */}
       <div className="space-y-3">
         <Label>제품 이미지</Label>
@@ -168,7 +186,7 @@ export function ProductForm({
             {existingImages.map((url) => (
               <div
                 key={url}
-                className="relative group w-24 h-24 rounded-lg border border-gray-200 overflow-hidden"
+                className="relative group w-28 h-28 rounded-xl border border-gray-200 overflow-hidden"
               >
                 <img
                   src={url}
@@ -178,9 +196,9 @@ export function ProductForm({
                 <button
                   type="button"
                   onClick={() => removeExistingImage(url)}
-                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-1 right-1 bg-red-500 text-white rounded-lg p-1 opacity-80 hover:opacity-100 transition-opacity"
                 >
-                  <X className="w-3 h-3" />
+                  <X className="w-3.5 h-3.5" />
                 </button>
               </div>
             ))}
@@ -188,29 +206,31 @@ export function ProductForm({
         )}
 
         {/* New image upload */}
-        <Input
-          name="images"
-          type="file"
-          accept="image/*"
-          multiple
-          className="max-w-sm"
-        />
-        <p className="text-xs text-gray-500">
-          여러 이미지를 선택할 수 있습니다.
-        </p>
+        <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-brand-navy/30 hover:bg-gray-50/50 transition-colors">
+          <Upload className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+          <p className="text-sm text-gray-500 mb-1">이미지를 드래그하거나 클릭하여 업로드</p>
+          <p className="text-xs text-gray-400 mb-3">JPG, PNG, WebP (최대 5MB)</p>
+          <Input
+            name="images"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            className="max-w-sm mx-auto"
+          />
+        </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-3 pt-2">
         <Button
           type="submit"
           disabled={pending}
-          className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px]"
         >
           {pending
             ? "저장 중..."
             : mode === "create"
-              ? "등록"
-              : "수정"}
+              ? "등록하기"
+              : "수정하기"}
         </Button>
       </div>
     </form>

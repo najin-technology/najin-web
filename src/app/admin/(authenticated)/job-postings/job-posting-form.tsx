@@ -1,13 +1,14 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { createJobPosting, updateJobPosting } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { FormStatusBar } from "@/components/admin/form-status-bar";
+import { AlertMessage } from "@/components/admin/alert-message";
 
 type JobPostingData = {
   id?: string;
@@ -35,6 +36,12 @@ export function JobPostingForm({
   const action = mode === "create" ? createJobPosting : updateJobPosting;
   const [state, formAction, pending] = useActionState(action, {});
   const [isActive, setIsActive] = useState(posting?.is_active ?? true);
+  const [tabValue, setTabValue] = useState("ko");
+
+  useEffect(() => {
+    const tab = new URLSearchParams(window.location.search).get("tab");
+    if (tab) setTabValue(tab);
+  }, []);
 
   return (
     <form action={formAction} className="space-y-6">
@@ -42,17 +49,13 @@ export function JobPostingForm({
       <input type="hidden" name="is_active" value={String(isActive)} />
 
       {state.error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
-          {state.error}
-        </div>
+        <AlertMessage>{state.error}</AlertMessage>
       )}
 
-      <div className="flex items-center gap-3">
-        <Switch
-          checked={isActive}
-          onCheckedChange={(checked: boolean) => setIsActive(checked)}
-        />
-        <Label>{isActive ? "활성" : "비활성"}</Label>
+      <FormStatusBar checked={isActive} onCheckedChange={setIsActive} />
+
+      <div className="border-t border-gray-200 pt-5 mt-4">
+        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">기본 정보</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -85,7 +88,18 @@ export function JobPostingForm({
         </div>
       </div>
 
-      <Tabs defaultValue="ko">
+      <div className="border-t border-gray-200 pt-5 mt-4">
+        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">콘텐츠</p>
+      </div>
+
+      <Tabs value={tabValue} onValueChange={(v) => {
+        setTabValue(v);
+        if (typeof window !== "undefined") {
+          const url = new URL(window.location.href);
+          url.searchParams.set("tab", v);
+          window.history.replaceState({}, "", url.toString());
+        }
+      }}>
         <TabsList>
           <TabsTrigger value="ko">한국어</TabsTrigger>
           <TabsTrigger value="en">English</TabsTrigger>
@@ -177,17 +191,17 @@ export function JobPostingForm({
         </TabsContent>
       </Tabs>
 
-      <div className="flex gap-2">
+      <div className="flex gap-3 pt-2">
         <Button
           type="submit"
           disabled={pending}
-          className="bg-[#1B2A4A] hover:bg-[#2D3748] text-white"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px]"
         >
           {pending
             ? "저장 중..."
             : mode === "create"
-              ? "등록"
-              : "수정"}
+              ? "등록하기"
+              : "수정하기"}
         </Button>
       </div>
     </form>

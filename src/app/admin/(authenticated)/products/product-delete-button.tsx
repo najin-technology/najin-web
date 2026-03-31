@@ -23,7 +23,8 @@ export function ProductDeleteButton({ productId }: { productId: string }) {
         variant="ghost"
         size="icon-sm"
         disabled={isPending}
-        className="text-red-500 hover:text-red-700"
+        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+        aria-label="삭제"
       >
         <Trash2 className="w-4 h-4" />
       </Button>
