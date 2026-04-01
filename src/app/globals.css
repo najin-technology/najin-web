@@ -226,6 +226,54 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Icon hover micro-interaction */
+.icon-hover-bounce {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.group:hover .icon-hover-bounce {
+  transform: scale(1.1) rotate(-3deg);
+}
+
+/* CTA pulse glow */
+@keyframes cta-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(184, 115, 51, 0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(184, 115, 51, 0.15); }
+}
+.cta-glow {
+  animation: cta-glow 2.5s ease-in-out infinite;
+}
+
+/* Client logo subtle scale on hover */
+.logo-hover {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.logo-hover:hover {
+  transform: scale(1.05);
+}
+
+/* ===== Infinite logo marquee ===== */
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-container {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
 .nav-underline {
   position: relative;
 }
@@ -252,7 +300,7 @@
 }
 
 .hero-gradient {
-  background: linear-gradient(135deg, #1B2A4A 0%, #2D4066 40%, #1B2A4A 100%);
+  background: linear-gradient(135deg, #1B2A4A 0%, #2D4066 35%, #3A2F28 70%, #1B2A4A 100%);
   background-size: 200% 200%;
   animation: hero-gradient-shift 8s ease infinite;
 }
@@ -273,7 +321,9 @@
     transform: none !important;
     transition: none !important;
   }
-  .hero-gradient {
+  .hero-gradient,
+  .cta-glow,
+  .marquee-track {
     animation: none !important;
   }
 }

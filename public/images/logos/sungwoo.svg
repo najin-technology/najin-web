@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="50" viewBox="0 0 220 50">
+  <!-- Major parts supplier logo - S mark + text -->
+  <g transform="translate(5, 5)">
+    <path d="M15 2 C8 2, 2 6, 2 12 C2 18, 8 20, 15 22 C22 24, 28 26, 28 32 C28 38, 22 42, 15 42 C8 42, 2 38, 2 32" fill="none" stroke="#0054A6" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="28" cy="8" r="3" fill="#E31E24"/>
+  </g>
+  <!-- SUNGWOO HITECH text -->
+  <text x="42" y="20" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#0054A6" letter-spacing="1.5">SUNGWOO HITECH</text>
+  <!-- 주요 부품사 -->
+  <text x="42" y="38" font-family="'Noto Sans KR', sans-serif" font-size="10" fill="#666" letter-spacing="1">주요 부품사</text>
+</svg>
