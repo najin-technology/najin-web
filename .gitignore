@@ -44,3 +44,5 @@ next-env.d.ts
 .context/
 .claude/
 .impeccable.md
+package-lock.json
+package-lock.json
