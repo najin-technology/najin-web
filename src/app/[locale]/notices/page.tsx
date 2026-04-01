@@ -38,6 +38,7 @@ export default async function NoticesPage() {
         titleKey="pageTitle"
         namespace="notices"
         descriptionKey="pageDescription"
+        bgImage="/images/factory/milling.jpg"
       />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 

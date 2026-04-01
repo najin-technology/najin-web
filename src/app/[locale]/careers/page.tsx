@@ -38,6 +38,7 @@ export default async function CareersPage() {
         titleKey="pageTitle"
         namespace="careers"
         descriptionKey="pageDescription"
+        bgImage="/images/factory/mct.jpg"
       />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
