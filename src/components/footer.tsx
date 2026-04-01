@@ -31,25 +31,25 @@ export function Footer() {
             <div className="space-y-2.5 text-sm">
               <Link
                 href="/about"
-                className="block text-white/50 hover:text-white transition-colors"
+                className="block text-white/60 hover:text-white transition-colors"
               >
                 {tn("about")}
               </Link>
               <Link
                 href="/business"
-                className="block text-white/50 hover:text-white transition-colors"
+                className="block text-white/60 hover:text-white transition-colors"
               >
                 {tn("business")}
               </Link>
               <Link
                 href="/quote"
-                className="block text-white/50 hover:text-white transition-colors"
+                className="block text-white/60 hover:text-white transition-colors"
               >
                 {tc("requestQuote")}
               </Link>
               <Link
                 href="/privacy"
-                className="block text-white/50 hover:text-white transition-colors"
+                className="block text-white/60 hover:text-white transition-colors"
               >
                 {t("privacy")}
               </Link>
@@ -78,7 +78,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-white/10 text-center text-xs text-gray-500">
+        <div className="mt-10 pt-6 border-t border-white/10 text-center text-xs text-gray-400">
           {t("copyright", { year: new Date().getFullYear() })}
         </div>
       </div>

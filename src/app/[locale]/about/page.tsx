@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { getHistoryItems } from "@/lib/queries";
 import Image from "next/image";
+import { ImageFade } from "@/components/image-fade";
 import {
   Award,
   Building2,
@@ -163,7 +164,7 @@ export default async function AboutPage() {
                       {item.year}
                     </span>
                     {item.month && (
-                      <span className="text-sm text-brand-charcoal/50 ml-0.5">
+                      <span className="text-sm text-brand-charcoal/60 ml-0.5">
                         .{String(item.month).padStart(2, "0")}
                       </span>
                     )}
@@ -232,8 +233,8 @@ export default async function AboutPage() {
                   <h3 className="font-semibold text-brand-navy">
                     {cert.title}
                   </h3>
-                  <p className="text-sm text-brand-charcoal/60 mt-1">{cert.desc}</p>
-                  <p className="text-xs text-brand-charcoal/50 mt-1.5">{cert.year}</p>
+                  <p className="text-sm text-brand-charcoal/70 mt-1">{cert.desc}</p>
+                  <p className="text-xs text-brand-charcoal/60 mt-1.5">{cert.year}</p>
                 </div>
               </div>
             ))}
@@ -294,7 +295,7 @@ export default async function AboutPage() {
                 <Phone className="w-4 h-4 text-brand-copper" />
               </div>
               <div>
-                <span className="text-xs text-brand-charcoal/50 uppercase tracking-wide">TEL</span>
+                <span className="text-xs text-brand-charcoal/60 uppercase tracking-wide">TEL</span>
                 <p className="text-brand-charcoal font-medium">055-367-2596</p>
               </div>
             </div>
@@ -303,7 +304,7 @@ export default async function AboutPage() {
                 <Printer className="w-4 h-4 text-brand-copper" />
               </div>
               <div>
-                <span className="text-xs text-brand-charcoal/50 uppercase tracking-wide">FAX</span>
+                <span className="text-xs text-brand-charcoal/60 uppercase tracking-wide">FAX</span>
                 <p className="text-brand-charcoal font-medium">055-367-2597</p>
               </div>
             </div>
@@ -315,12 +316,13 @@ export default async function AboutPage() {
             data-animate="fade-up"
             data-animate-delay="4"
           >
-            <Image
+            <ImageFade
               src="/images/factory/workshop-1.jpg"
               alt="나진테크 공장 내부"
               width={960}
               height={721}
               className="w-full h-auto"
+              sizes="(max-width: 768px) 100vw, 960px"
             />
           </div>
         </div>
