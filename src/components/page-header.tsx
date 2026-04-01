@@ -15,14 +15,14 @@ export function PageHeader({
     <section className="hero-gradient hero-pattern text-white py-20 md:py-28 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <h1
-          className="text-3xl md:text-4xl lg:text-5xl font-bold"
+          className="text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"
           data-animate="fade-up"
         >
           {t(titleKey)}
         </h1>
         {descriptionKey && (
           <p
-            className="text-gray-300 mt-3 text-lg max-w-2xl"
+            className="text-white/80 mt-3 text-lg max-w-2xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
             data-animate="fade-up"
             data-animate-delay="1"
           >

@@ -21,7 +21,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 import { Button } from "@/components/ui/button";
 import { StatsCounter } from "@/components/stats-counter";
+import { TypewriterText } from "@/components/typewriter-text";
 import Image from "next/image";
+import { ImageFade } from "@/components/image-fade";
 import {
   Droplets,
   FlaskConical,
@@ -43,10 +45,10 @@ const clients: { name: string; logo?: string }[] = [
   { name: "현대파워텍", logo: "/images/logos/hyundai-powertech.svg" },
   { name: "르노삼성", logo: "/images/logos/renault.svg" },
   { name: "SK", logo: "/images/logos/sk.png" },
-  { name: "한화케미칼" },
+  { name: "한화케미칼", logo: "/images/logos/hanwha.svg" },
   { name: "동희산업", logo: "/images/logos/donghee.png" },
-  { name: "화신" },
-  { name: "성우하이텍" },
+  { name: "화신", logo: "/images/logos/hwashin.svg" },
+  { name: "성우하이텍", logo: "/images/logos/sungwoo.svg" },
   { name: "GM Shanghai", logo: "/images/logos/gm.png" },
   { name: "Lear Dymos", logo: "/images/logos/lear.svg" },
 ];
@@ -73,23 +75,24 @@ export default function HomePage() {
       {/* Hero with photo background */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden">
         {/* Background photo */}
-        <Image
+        <ImageFade
           src="/images/factory/workshop-1.jpg"
           alt="나진테크 공장"
           fill
           className="object-cover"
+          sizes="100vw"
           priority
+          fast
         />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-brand-navy/80" />
+        {/* Dark overlay — slightly transparent to let factory image show through */}
+        <div className="absolute inset-0 bg-brand-navy/75" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 relative z-10">
           <div className="max-w-4xl">
             <h1
-              className="text-3xl md:text-[44px] lg:text-[52px] font-bold leading-[1.2] mb-4 text-white whitespace-pre-line"
-              data-animate="fade-up"
+              className="text-3xl md:text-[44px] lg:text-[52px] font-bold leading-[1.2] mb-4 text-white"
             >
-              {t("heroTitle")}
+              <TypewriterText text={t("heroTitle")} delayMs={50} startDelayMs={300} />
             </h1>
             <p
               className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl"
@@ -149,7 +152,7 @@ export default function HomePage() {
         />
       </section>
 
-      {/* Client Logo Wall — structured grid (tight padding for rhythm) */}
+      {/* Client Logo Marquee — infinite scroll, modern pattern */}
       <section className="py-10 md:py-14 bg-surface-warm-50 border-y border-surface-warm-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <p
@@ -158,24 +161,26 @@ export default function HomePage() {
           >
             {t("clientsTitle")}
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-px bg-surface-warm-200">
-            {clients.map((client, i) => (
+        </div>
+        {/* Marquee — full width, edge-faded */}
+        <div className="marquee-container" data-animate="fade-in" data-animate-delay="1">
+          <div className="marquee-track">
+            {/* Duplicate the list for seamless loop */}
+            {[...clients, ...clients].map((client, i) => (
               <div
-                key={client.name}
-                className="bg-white flex items-center justify-center py-6 px-4 hover:bg-surface-warm-50 transition-colors duration-300"
-                data-animate="fade-in"
-                data-animate-delay={String((i % 5) + 1)}
+                key={`${client.name}-${i}`}
+                className="flex items-center justify-center px-8 md:px-12 shrink-0"
               >
                 {client.logo ? (
                   <Image
                     src={client.logo}
                     alt={client.name}
-                    width={120}
-                    height={40}
-                    className="h-7 md:h-9 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                    width={140}
+                    height={48}
+                    className="h-8 md:h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 logo-hover"
                   />
                 ) : (
-                  <span className="text-sm md:text-base font-bold text-brand-navy/80 hover:text-brand-navy transition-colors tracking-tight text-center leading-tight">
+                  <span className="text-sm md:text-base font-bold text-brand-navy/60 hover:text-brand-navy transition-colors tracking-tight whitespace-nowrap">
                     {client.name}
                   </span>
                 )}
@@ -204,7 +209,7 @@ export default function HomePage() {
                 data-animate-delay={String(i + 1)}
               >
                 <div className="relative h-36 md:h-44 overflow-hidden">
-                  <Image
+                  <ImageFade
                     src={area.image}
                     alt={tb(`${area.key}.title`)}
                     fill
@@ -268,12 +273,12 @@ export default function HomePage() {
             ] as const).map((item, i) => (
               <div
                 key={i}
-                className="flex gap-4 p-5 bg-white rounded-xl border border-surface-warm-200 shadow-sm"
+                className="group flex gap-4 p-5 bg-white rounded-xl border border-surface-warm-200 shadow-sm hover:shadow-md transition-shadow duration-300"
                 data-animate="fade-up"
                 data-animate-delay={String(i + 1)}
               >
                 <div className="w-10 h-10 rounded-lg bg-brand-copper/10 flex items-center justify-center shrink-0">
-                  <item.icon className="w-5 h-5 text-brand-copper" />
+                  <item.icon className="w-5 h-5 text-brand-copper icon-hover-bounce" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-brand-navy mb-1">{item.title}</h3>
@@ -358,7 +363,7 @@ export default function HomePage() {
             <Link href="/quote">
               <Button
                 size="lg"
-                className="bg-brand-copper hover:bg-brand-copper-light text-white text-xl px-12 py-6 shadow-lg"
+                className="bg-brand-copper hover:bg-brand-copper-light text-white text-xl px-12 py-6 shadow-lg cta-glow"
               >
                 {tc("requestQuote")}
               </Button>

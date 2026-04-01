@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { ImageFade } from "@/components/image-fade";
 import { X } from "lucide-react";
 
 interface GalleryItem {
@@ -73,7 +74,7 @@ export function PortfolioGallery({
                   isLarge ? "aspect-[4/3]" : "aspect-square"
                 }`}
               >
-                <Image
+                <ImageFade
                   src={item.src}
                   alt={item.title}
                   fill

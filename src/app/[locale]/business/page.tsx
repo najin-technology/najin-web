@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import Image from "next/image";
+import { ImageFade } from "@/components/image-fade";
 import {
   Droplets,
   FlaskConical,
@@ -112,7 +113,7 @@ export default function BusinessPage() {
                 className={`relative aspect-[4/3] rounded-xl overflow-hidden border border-surface-warm-200 shadow-sm ${index % 2 === 1 ? "md:order-1" : ""}`}
                 data-animate={index % 2 === 1 ? "slide-right" : "slide-left"}
               >
-                <Image
+                <ImageFade
                   src={cat.image}
                   alt={cat.imageAlt}
                   fill
