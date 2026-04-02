@@ -17,7 +17,6 @@ const CATEGORY_KEYS: Record<string, string> = {
   CNC가공: "categoryCNC",
   금형: "categoryMold",
   EV부품: "categoryEV",
-  회사소식: "categoryCompany",
   제품소개: "categoryProduct",
 };
 
@@ -27,7 +26,6 @@ const CATEGORY_COLORS: Record<string, string> = {
   CNC가공: "bg-green-100 text-green-800",
   금형: "bg-purple-100 text-purple-800",
   EV부품: "bg-emerald-100 text-emerald-800",
-  회사소식: "bg-gray-100 text-gray-800",
   제품소개: "bg-rose-100 text-rose-800",
 };
 

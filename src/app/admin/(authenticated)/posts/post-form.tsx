@@ -9,8 +9,15 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { FormStatusBar } from "@/components/admin/form-status-bar";
 import { TiptapEditor } from "@/components/admin/tiptap-editor";
 import { AlertMessage } from "@/components/admin/alert-message";
-import { Eye, EyeOff } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Eye, EyeOff, Home } from "lucide-react";
 import DOMPurify from "isomorphic-dompurify";
+
+const CATEGORIES = ["우레탄", "합성수지", "CNC가공", "금형", "EV부품"];
+const CONTENT_TYPES = [
+  { value: "제작사례", label: "제작사례" },
+  { value: "제품홍보", label: "제품홍보" },
+];
 
 type PostData = {
   id?: string;
@@ -22,9 +29,11 @@ type PostData = {
   excerpt_ko: string | null;
   excerpt_en: string | null;
   category: string;
+  content_type: string | null;
   thumbnail_url: string | null;
   tags: string[] | null;
   is_published: boolean;
+  show_on_home: boolean | null;
 };
 
 export function PostForm({
@@ -39,6 +48,7 @@ export function PostForm({
   const [isPublished, setIsPublished] = useState(
     post?.is_published ?? false
   );
+  const [showOnHome, setShowOnHome] = useState(post?.show_on_home ?? true);
   const [contentKo, setContentKo] = useState(post?.content_ko || "");
   const [contentEn, setContentEn] = useState(post?.content_en || "");
   const [isPreview, setIsPreview] = useState(false);
@@ -53,6 +63,7 @@ export function PostForm({
     <form action={formAction} className="space-y-6">
       {post?.id && <input type="hidden" name="id" value={post.id} />}
       <input type="hidden" name="is_published" value={String(isPublished)} />
+      <input type="hidden" name="show_on_home" value={String(showOnHome)} />
       <input type="hidden" name="content_ko" value={contentKo} />
       <input type="hidden" name="content_en" value={contentEn} />
 
@@ -61,6 +72,14 @@ export function PostForm({
       )}
 
       <FormStatusBar checked={isPublished} onCheckedChange={setIsPublished} activeLabel="공개" inactiveLabel="비공개" />
+
+      <div className="flex items-center gap-6 px-4 py-3 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="flex items-center gap-2">
+          <Home className="w-4 h-4 text-gray-500" />
+          <span className="text-sm text-gray-600">홈 노출</span>
+          <Switch checked={showOnHome} onCheckedChange={setShowOnHome} />
+        </div>
+      </div>
 
       <div className="border-t border-gray-200 pt-5 mt-4">
         <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">기본 정보</p>
@@ -78,14 +97,33 @@ export function PostForm({
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="category">카테고리 *</Label>
-          <Input
+          <Label htmlFor="category">카테고리 (소재/공법) *</Label>
+          <select
             id="category"
             name="category"
             defaultValue={post?.category || ""}
             required
-            placeholder="우레탄, 합성수지, CNC가공, 금형, 회사소식 등"
-          />
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <option value="">선택하세요</option>
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="content_type">콘텐츠 유형 *</Label>
+          <select
+            id="content_type"
+            name="content_type"
+            defaultValue={post?.content_type || "제작사례"}
+            required
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {CONTENT_TYPES.map((ct) => (
+              <option key={ct.value} value={ct.value}>{ct.label}</option>
+            ))}
+          </select>
         </div>
         <div className="space-y-2">
           <Label htmlFor="tags">태그 (쉼표로 구분)</Label>
@@ -96,7 +134,7 @@ export function PostForm({
             placeholder="태그1, 태그2, 태그3"
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2 md:col-span-2">
           <Label htmlFor="thumbnail_url">썸네일 URL</Label>
           <Input
             id="thumbnail_url"
