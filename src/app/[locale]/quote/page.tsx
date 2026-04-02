@@ -30,6 +30,7 @@ export default function QuotePage() {
         titleKey="pageTitle"
         namespace="quote"
         descriptionKey="pageDescription"
+        bgImage="/images/factory/factory-new-1.jpg"
       />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 

@@ -56,7 +56,7 @@ export default function FAQPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      <PageHeader titleKey="pageTitle" namespace="faq" descriptionKey="pageDescription" />
+      <PageHeader titleKey="pageTitle" namespace="faq" descriptionKey="pageDescription" bgImage="/images/factory/urethane-machine.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       <section className="py-12 md:py-20 bg-surface-warm-50">

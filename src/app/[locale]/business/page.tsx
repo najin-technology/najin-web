@@ -46,7 +46,7 @@ export default function BusinessPage() {
 
   return (
     <>
-      <PageHeader titleKey="pageTitle" namespace="business" descriptionKey="pageDescription" />
+      <PageHeader titleKey="pageTitle" namespace="business" descriptionKey="pageDescription" bgImage="/images/factory/workshop-2.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       {/* Category Quick Nav */}

@@ -63,7 +63,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageHeader titleKey="pageTitle" namespace="about" descriptionKey="pageDescription" />
+      <PageHeader titleKey="pageTitle" namespace="about" descriptionKey="pageDescription" bgImage="/images/factory/factory-interior-1.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       {/* CEO Greeting */}

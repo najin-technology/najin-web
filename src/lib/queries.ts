@@ -48,6 +48,50 @@ export async function getActiveJobPostings() {
   return data;
 }
 
+export async function getPublishedPosts(category?: string) {
+  let query = supabase
+    .from("posts")
+    .select(
+      "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, thumbnail_url, image_urls, tags, original_date, published_at, created_at"
+    )
+    .eq("is_published", true)
+    .is("deleted_at", null)
+    .order("original_date", { ascending: false });
+
+  if (category) {
+    query = query.eq("category", category);
+  }
+
+  const { data, error } = await query;
+  if (error) throw error;
+  return data;
+}
+
+export async function getPostBySlug(slug: string) {
+  const { data, error } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .is("deleted_at", null)
+    .single();
+
+  if (error) return null;
+  return data;
+}
+
+export async function getPostCategories() {
+  const { data, error } = await supabase
+    .from("posts")
+    .select("category")
+    .eq("is_published", true)
+    .is("deleted_at", null);
+
+  if (error) throw error;
+  const categories = [...new Set(data?.map((d) => d.category) || [])];
+  return categories;
+}
+
 export async function getProductsByCategory() {
   const { data, error } = await supabase
     .from("products")

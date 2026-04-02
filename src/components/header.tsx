@@ -18,6 +18,7 @@ const navItems = [
   { href: "/about", key: "about" },
   { href: "/business", key: "business" },
   { href: "/portfolio", key: "portfolio" },
+  { href: "/posts", key: "posts" },
   { href: "/careers", key: "careers" },
   { href: "/notices", key: "notices" },
   { href: "/faq", key: "faq" },
