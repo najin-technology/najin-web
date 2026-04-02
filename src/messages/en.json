@@ -23,7 +23,7 @@
     "quote": "Quote",
     "careers": "Careers",
     "notices": "Notices",
-    "posts": "Blog",
+    "posts": "Portfolio",
     "faq": "FAQ"
   },
   "home": {
@@ -200,9 +200,9 @@
     "noNotices": "No notices available."
   },
   "posts": {
-    "pageTitle": "Tech Blog",
-    "pageDescription": "Product introductions, machining technology, and news from NAJIN TECHNOLOGY.",
-    "noPosts": "No posts available.",
+    "pageTitle": "Portfolio",
+    "pageDescription": "Production cases, machining technology, and delivery records from NAJIN TECHNOLOGY.",
+    "noPosts": "No portfolio items available.",
     "allCategories": "All",
     "readMore": "Read More",
     "relatedPosts": "Related Posts",

@@ -23,7 +23,7 @@
     "quote": "询价咨询",
     "careers": "招聘信息",
     "notices": "公告",
-    "posts": "技术博客",
+    "posts": "作品集",
     "faq": "常见问题"
   },
   "home": {
@@ -200,9 +200,9 @@
     "noNotices": "暂无公告。"
   },
   "posts": {
-    "pageTitle": "技术博客",
-    "pageDescription": "纳进科技的产品介绍、加工技术及现场资讯。",
-    "noPosts": "暂无文章。",
+    "pageTitle": "作品集",
+    "pageDescription": "纳进科技的制作案例、加工技术及交付实绩。",
+    "noPosts": "暂无作品。",
     "allCategories": "全部",
     "readMore": "查看详情",
     "relatedPosts": "相关文章",

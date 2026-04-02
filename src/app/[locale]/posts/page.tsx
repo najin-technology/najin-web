@@ -17,11 +17,11 @@ export async function generateMetadata({
   return createPageMetadata({
     locale,
     path: "/posts",
-    titles: { ko: "기술 블로그", en: "Tech Blog", zh: "技术博客" },
+    titles: { ko: "포트폴리오", en: "Portfolio", zh: "作品集" },
     descriptions: {
-      ko: "나진테크 기술 블로그. 제품 소개, 가공 기술, 현장 소식을 전합니다.",
-      en: "NAJIN TECHNOLOGY Tech Blog. Product introductions, machining technology, and company news.",
-      zh: "纳进科技技术博客。产品介绍、加工技术及现场资讯。",
+      ko: "나진테크 포트폴리오. 제작사례, 가공 기술, 납품 실적을 소개합니다.",
+      en: "NAJIN TECHNOLOGY Portfolio. Production cases, machining technology, and delivery records.",
+      zh: "纳进科技作品集。制作案例、加工技术及交付实绩。",
     },
   });
 }
