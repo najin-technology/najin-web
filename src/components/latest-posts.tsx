@@ -1,34 +1,26 @@
 import { getTranslations, getLocale } from "next-intl/server";
-import { getHomePortfolio } from "@/lib/queries";
+import { getHomePosts } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
 import { Calendar, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  우레탄: "bg-amber-100 text-amber-800",
-  합성수지: "bg-blue-100 text-blue-800",
-  CNC가공: "bg-green-100 text-green-800",
-  금형: "bg-purple-100 text-purple-800",
-  EV부품: "bg-emerald-100 text-emerald-800",
-  제품소개: "bg-rose-100 text-rose-800",
+  제작사례: "bg-blue-100 text-blue-800",
+  제품: "bg-amber-100 text-amber-800",
 };
 
 const CATEGORY_KEYS: Record<string, string> = {
-  우레탄: "categoryUrethane",
-  합성수지: "categoryResin",
-  CNC가공: "categoryCNC",
-  금형: "categoryMold",
-  EV부품: "categoryEV",
-  제품소개: "categoryProduct",
+  제작사례: "categoryCases",
+  제품: "categoryProducts",
 };
 
 export async function LatestPosts() {
   const t = await getTranslations("posts");
   const locale = await getLocale();
 
-  let latestPosts: Awaited<ReturnType<typeof getHomePortfolio>> = [];
+  let latestPosts: Awaited<ReturnType<typeof getHomePosts>> = [];
   try {
-    latestPosts = await getHomePortfolio();
+    latestPosts = await getHomePosts();
   } catch {
     return null;
   }

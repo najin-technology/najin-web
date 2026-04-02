@@ -25,11 +25,9 @@ export async function createPost(
   const contentKo = formData.get("content_ko") as string;
   const contentEn = formData.get("content_en") as string;
   const category = formData.get("category") as string;
-  const contentType = formData.get("content_type") as string;
   const tagsStr = formData.get("tags") as string;
   const thumbnailUrl = formData.get("thumbnail_url") as string;
   const isPublished = formData.get("is_published") === "true";
-  const showOnHome = formData.get("show_on_home") === "true";
 
   if (!slug || !titleKo || !category) {
     return { error: "슬러그, 제목(한국어), 카테고리는 필수 항목입니다." };
@@ -52,18 +50,16 @@ export async function createPost(
       content_ko: contentKo || null,
       content_en: contentEn || null,
       category,
-      content_type: contentType || "제작사례",
       tags: tags.length > 0 ? tags : null,
       thumbnail_url: thumbnailUrl || null,
       is_published: isPublished,
-      show_on_home: showOnHome,
       published_at: isPublished ? new Date().toISOString() : null,
     })
     .select("id")
     .single();
 
   if (error || !data) {
-    return { error: "포트폴리오 등록에 실패했습니다." };
+    return { error: "제작사례 등록에 실패했습니다." };
   }
 
   await logAudit({
@@ -94,11 +90,9 @@ export async function updatePost(
   const contentKo = formData.get("content_ko") as string;
   const contentEn = formData.get("content_en") as string;
   const category = formData.get("category") as string;
-  const contentType = formData.get("content_type") as string;
   const tagsStr = formData.get("tags") as string;
   const thumbnailUrl = formData.get("thumbnail_url") as string;
   const isPublished = formData.get("is_published") === "true";
-  const showOnHome = formData.get("show_on_home") === "true";
 
   if (!id || !slug || !titleKo || !category) {
     return { error: "슬러그, 제목(한국어), 카테고리는 필수 항목입니다." };
@@ -134,18 +128,16 @@ export async function updatePost(
       content_ko: contentKo || null,
       content_en: contentEn || null,
       category,
-      content_type: contentType || "제작사례",
       tags: tags.length > 0 ? tags : null,
       thumbnail_url: thumbnailUrl || null,
       is_published: isPublished,
-      show_on_home: showOnHome,
       published_at: publishedAt,
       updated_at: new Date().toISOString(),
     })
     .eq("id", id);
 
   if (error) {
-    return { error: "포트폴리오 수정에 실패했습니다." };
+    return { error: "제작사례 수정에 실패했습니다." };
   }
 
   await logAudit({

@@ -22,7 +22,7 @@ function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
 }
 
-export const metadata = { title: "공지사항", description: "공지사항 관리", robots: "noindex, nofollow" };
+export const metadata = { title: "회사소식", description: "회사소식 관리", robots: "noindex, nofollow" };
 
 export default async function NoticesPage({
   searchParams,
@@ -46,7 +46,7 @@ export default async function NoticesPage({
 
   return (
     <div className="space-y-6">
-      <ListPageHeader title="공지사항" count={notices?.length} createHref="/admin/notices/new" createLabel="새 공지 작성" />
+      <ListPageHeader title="회사소식" count={notices?.length} createHref="/admin/notices/new" createLabel="새 소식 작성" />
 
       <SearchFilterBar
         searchPlaceholder="제목 검색..."
@@ -113,10 +113,10 @@ export default async function NoticesPage({
               <TableRow>
                 <TableCell colSpan={6}>
                   <EmptyState
-                    message="공지사항이 없습니다."
-                    description="새 공지를 작성하여 웹사이트에 소식을 알려보세요."
+                    message="회사소식이 없습니다."
+                    description="새 소식을 작성하여 웹사이트에 알려보세요."
                     icon={Megaphone}
-                    action={{ label: "새 공지 작성", href: "/admin/notices/new" }}
+                    action={{ label: "새 소식 작성", href: "/admin/notices/new" }}
                   />
                 </TableCell>
               </TableRow>

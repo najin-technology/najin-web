@@ -52,7 +52,7 @@ export async function getPublishedPosts(category?: string) {
   let query = supabase
     .from("posts")
     .select(
-      "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, content_type, thumbnail_url, image_urls, tags, original_date, published_at, created_at, show_on_home"
+      "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, thumbnail_url, image_urls, tags, original_date, published_at, created_at"
     )
     .eq("is_published", true)
     .is("deleted_at", null)
@@ -67,14 +67,13 @@ export async function getPublishedPosts(category?: string) {
   return data;
 }
 
-export async function getHomePortfolio() {
+export async function getHomePosts() {
   const { data, error } = await supabase
     .from("posts")
     .select(
-      "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, content_type, thumbnail_url, image_urls, tags, original_date, published_at, created_at"
+      "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, thumbnail_url, image_urls, tags, original_date, published_at, created_at"
     )
     .eq("is_published", true)
-    .eq("show_on_home", true)
     .is("deleted_at", null)
     .order("original_date", { ascending: false })
     .limit(3);

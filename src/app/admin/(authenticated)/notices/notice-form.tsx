@@ -93,7 +93,7 @@ export function NoticeForm({
               name="title_ko"
               defaultValue={notice?.title_ko || ""}
               required
-              placeholder="공지사항 제목을 입력하세요"
+              placeholder="제목을 입력하세요"
             />
           </div>
           <div className="space-y-2">
@@ -109,7 +109,7 @@ export function NoticeForm({
               <TiptapEditor
                 content={contentKo}
                 onChange={setContentKo}
-                placeholder="공지사항 내용을 입력하세요"
+                placeholder="내용을 입력하세요"
               />
             )}
           </div>
