@@ -144,7 +144,7 @@ export function PostForm({
               name="title_ko"
               defaultValue={post?.title_ko || ""}
               required
-              placeholder="포스트 제목을 입력하세요"
+              placeholder="제목을 입력하세요"
             />
           </div>
           <div className="space-y-2">
@@ -169,7 +169,7 @@ export function PostForm({
               <TiptapEditor
                 content={contentKo}
                 onChange={setContentKo}
-                placeholder="포스트 내용을 입력하세요"
+                placeholder="내용을 입력하세요"
               />
             )}
           </div>

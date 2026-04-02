@@ -21,7 +21,7 @@ function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
 }
 
-export const metadata = { title: "기술블로그", description: "기술블로그 관리", robots: "noindex, nofollow" };
+export const metadata = { title: "포트폴리오", description: "포트폴리오 관리", robots: "noindex, nofollow" };
 
 export default async function PostsPage({
   searchParams,
@@ -46,7 +46,7 @@ export default async function PostsPage({
 
   return (
     <div className="space-y-6">
-      <ListPageHeader title="기술블로그" count={posts?.length} createHref="/admin/posts/new" createLabel="새 포스트 작성" />
+      <ListPageHeader title="포트폴리오" count={posts?.length} createHref="/admin/posts/new" createLabel="새 포트폴리오 작성" />
 
       <SearchFilterBar
         searchPlaceholder="제목 검색..."
@@ -132,10 +132,10 @@ export default async function PostsPage({
               <TableRow>
                 <TableCell colSpan={6}>
                   <EmptyState
-                    message="포스트가 없습니다."
-                    description="새 포스트를 작성하여 기술블로그를 운영해보세요."
+                    message="포트폴리오가 없습니다."
+                    description="새 포트폴리오를 추가하여 제작사례를 소개해보세요."
                     icon={BookOpen}
-                    action={{ label: "새 포스트 작성", href: "/admin/posts/new" }}
+                    action={{ label: "새 포트폴리오 작성", href: "/admin/posts/new" }}
                   />
                 </TableCell>
               </TableRow>

@@ -23,7 +23,7 @@
     "quote": "견적문의",
     "careers": "채용정보",
     "notices": "공지사항",
-    "posts": "기술블로그",
+    "posts": "포트폴리오",
     "faq": "자주 묻는 질문"
   },
   "home": {
@@ -200,9 +200,9 @@
     "noNotices": "등록된 공지사항이 없습니다."
   },
   "posts": {
-    "pageTitle": "기술 블로그",
-    "pageDescription": "나진테크의 제품 소개, 가공 기술, 현장 소식을 전합니다.",
-    "noPosts": "등록된 포스팅이 없습니다.",
+    "pageTitle": "포트폴리오",
+    "pageDescription": "나진테크의 제작사례, 가공 기술, 납품 실적을 소개합니다.",
+    "noPosts": "등록된 포트폴리오가 없습니다.",
     "allCategories": "전체",
     "readMore": "자세히 보기",
     "relatedPosts": "관련 포스팅",
