@@ -22,8 +22,8 @@
     "portfolio": "주요실적",
     "quote": "견적문의",
     "careers": "채용정보",
-    "notices": "공지사항",
-    "posts": "기술블로그",
+    "notices": "회사소식",
+    "posts": "제작사례",
     "faq": "자주 묻는 질문"
   },
   "home": {
@@ -195,25 +195,20 @@
     "successMessage": "서류 검토 후 연락드리겠습니다. 감사합니다."
   },
   "notices": {
-    "pageTitle": "공지사항",
-    "pageDescription": "나진테크의 공지사항을 확인하세요.",
-    "noNotices": "등록된 공지사항이 없습니다."
+    "pageTitle": "회사소식",
+    "pageDescription": "나진테크의 회사 소식을 확인하세요.",
+    "noNotices": "등록된 소식이 없습니다."
   },
   "posts": {
-    "pageTitle": "기술 블로그",
-    "pageDescription": "나진테크의 제품 소개, 가공 기술, 현장 소식을 전합니다.",
-    "noPosts": "등록된 포스팅이 없습니다.",
+    "pageTitle": "제작사례",
+    "pageDescription": "나진테크의 제작사례, 가공 기술, 납품 실적을 소개합니다.",
+    "noPosts": "등록된 제작사례가 없습니다.",
     "allCategories": "전체",
     "readMore": "자세히 보기",
-    "relatedPosts": "관련 포스팅",
+    "relatedPosts": "관련 제작사례",
     "sharePost": "공유하기",
-    "categoryUrethane": "우레탄",
-    "categoryResin": "합성수지",
-    "categoryCNC": "CNC가공",
-    "categoryMold": "금형",
-    "categoryEV": "EV부품",
-    "categoryCompany": "회사소식",
-    "categoryProduct": "제품소개"
+    "categoryCases": "제작사례",
+    "categoryProducts": "제품"
   },
   "privacy": {
     "pageTitle": "개인정보처리방침",

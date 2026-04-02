@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { NoticeForm } from "../../notice-form";
 
-export const metadata = { title: "공지사항 수정", description: "공지사항 수정", robots: "noindex, nofollow" };
+export const metadata = { title: "소식 수정", description: "소식 수정", robots: "noindex, nofollow" };
 
 export default async function EditNoticePage({
   params,
@@ -25,7 +25,7 @@ export default async function EditNoticePage({
 
   return (
     <div className="space-y-6">
-      <DetailPageHeader backHref="/admin/notices" title="공지사항 수정" />
+      <DetailPageHeader backHref="/admin/notices" title="소식 수정" />
 
       <div className="bg-white rounded-xl border border-gray-200 p-6 lg:p-8 overflow-hidden">
         <NoticeForm mode="edit" notice={notice} />

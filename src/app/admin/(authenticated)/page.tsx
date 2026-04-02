@@ -256,7 +256,7 @@ export default async function AdminDashboard() {
           <div className="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center mb-3">
             <Bell className="w-[18px] h-[18px] text-violet-600" />
           </div>
-          <p className="text-xs font-medium text-gray-400 mb-0.5">공개 공지</p>
+          <p className="text-xs font-medium text-gray-400 mb-0.5">공개 소식</p>
           <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
             {publishedNotices || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
           </p>
@@ -266,9 +266,9 @@ export default async function AdminDashboard() {
       {/* Quick Actions */}
       <div className="flex flex-wrap gap-2">
         <Link href="/admin/notices/new">
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 공지사항을 작성합니다">
+          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 소식을 작성합니다">
             <Plus className="w-4 h-4" />
-            새 공지 작성
+            새 소식 작성
           </Button>
         </Link>
         <Link href="/admin/products/new">

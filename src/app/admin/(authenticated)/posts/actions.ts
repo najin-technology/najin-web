@@ -59,7 +59,7 @@ export async function createPost(
     .single();
 
   if (error || !data) {
-    return { error: "포스트 작성에 실패했습니다." };
+    return { error: "제작사례 등록에 실패했습니다." };
   }
 
   await logAudit({
@@ -137,7 +137,7 @@ export async function updatePost(
     .eq("id", id);
 
   if (error) {
-    return { error: "포스트 수정에 실패했습니다." };
+    return { error: "제작사례 수정에 실패했습니다." };
   }
 
   await logAudit({

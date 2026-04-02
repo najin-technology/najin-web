@@ -10,7 +10,7 @@ const pageTitles: Record<string, string> = {
   "/admin": "대시보드",
   "/admin/quotes": "견적 관리",
   "/admin/applications": "채용 관리",
-  "/admin/notices": "공지사항",
+  "/admin/notices": "회사소식",
   "/admin/job-postings": "채용공고",
   "/admin/products": "제품 관리",
   "/admin/history": "연혁 관리",

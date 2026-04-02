@@ -12,23 +12,13 @@ function stripHtml(html: string) {
 }
 
 const CATEGORY_KEYS: Record<string, string> = {
-  우레탄: "categoryUrethane",
-  합성수지: "categoryResin",
-  CNC가공: "categoryCNC",
-  금형: "categoryMold",
-  EV부품: "categoryEV",
-  회사소식: "categoryCompany",
-  제품소개: "categoryProduct",
+  제작사례: "categoryCases",
+  제품: "categoryProducts",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  우레탄: "bg-amber-100 text-amber-800",
-  합성수지: "bg-blue-100 text-blue-800",
-  CNC가공: "bg-green-100 text-green-800",
-  금형: "bg-purple-100 text-purple-800",
-  EV부품: "bg-emerald-100 text-emerald-800",
-  회사소식: "bg-gray-100 text-gray-800",
-  제품소개: "bg-rose-100 text-rose-800",
+  제작사례: "bg-blue-100 text-blue-800",
+  제품: "bg-amber-100 text-amber-800",
 };
 
 export async function generateMetadata({
@@ -174,7 +164,7 @@ export default async function PostDetailPage({
                 className="flex items-center gap-1 hover:text-white transition-colors"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span>원본 블로그</span>
+                <span>원본 보기</span>
               </a>
             )}
           </div>

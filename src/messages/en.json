@@ -22,8 +22,8 @@
     "portfolio": "Portfolio",
     "quote": "Quote",
     "careers": "Careers",
-    "notices": "Notices",
-    "posts": "Blog",
+    "notices": "News",
+    "posts": "Projects",
     "faq": "FAQ"
   },
   "home": {
@@ -195,25 +195,20 @@
     "successMessage": "We will contact you after reviewing your application. Thank you."
   },
   "notices": {
-    "pageTitle": "Notices",
-    "pageDescription": "Latest notices from NAJIN TECHNOLOGY.",
-    "noNotices": "No notices available."
+    "pageTitle": "Company News",
+    "pageDescription": "Latest news from NAJIN TECHNOLOGY.",
+    "noNotices": "No news available."
   },
   "posts": {
-    "pageTitle": "Tech Blog",
-    "pageDescription": "Product introductions, machining technology, and news from NAJIN TECHNOLOGY.",
-    "noPosts": "No posts available.",
+    "pageTitle": "Projects",
+    "pageDescription": "Production cases, machining technology, and delivery records from NAJIN TECHNOLOGY.",
+    "noPosts": "No projects available.",
     "allCategories": "All",
     "readMore": "Read More",
-    "relatedPosts": "Related Posts",
+    "relatedPosts": "Related Projects",
     "sharePost": "Share",
-    "categoryUrethane": "Urethane",
-    "categoryResin": "Synthetic Resin",
-    "categoryCNC": "CNC Machining",
-    "categoryMold": "Mold",
-    "categoryEV": "EV Parts",
-    "categoryCompany": "Company News",
-    "categoryProduct": "Products"
+    "categoryCases": "Projects",
+    "categoryProducts": "Products"
   },
   "privacy": {
     "pageTitle": "Privacy Policy",

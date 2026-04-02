@@ -32,8 +32,8 @@ const navGroups = [
   {
     label: "콘텐츠",
     items: [
-      { href: "/admin/notices", label: "공지사항", icon: Bell },
-      { href: "/admin/posts", label: "기술블로그", icon: BookOpen },
+      { href: "/admin/notices", label: "회사소식", icon: Bell },
+      { href: "/admin/posts", label: "제작사례", icon: BookOpen },
       { href: "/admin/job-postings", label: "채용공고", icon: Briefcase },
       { href: "/admin/products", label: "제품 관리", icon: Package },
       { href: "/admin/history", label: "연혁 관리", icon: Clock },
