@@ -87,7 +87,7 @@ export default async function PortfolioPage() {
 
   return (
     <>
-      <PageHeader titleKey="pageTitle" namespace="portfolio" descriptionKey="pageDescription" />
+      <PageHeader titleKey="pageTitle" namespace="portfolio" descriptionKey="pageDescription" bgImage="/images/factory/cnc-lathe.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       {/* Major Clients */}

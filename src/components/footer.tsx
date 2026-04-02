@@ -48,6 +48,12 @@ export function Footer() {
                 {tc("requestQuote")}
               </Link>
               <Link
+                href="/posts"
+                className="block text-white/60 hover:text-white transition-colors"
+              >
+                {tn("posts")}
+              </Link>
+              <Link
                 href="/privacy"
                 className="block text-white/60 hover:text-white transition-colors"
               >

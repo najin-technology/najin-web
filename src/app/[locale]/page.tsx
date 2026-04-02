@@ -24,6 +24,7 @@ import { StatsCounter } from "@/components/stats-counter";
 import { TypewriterText } from "@/components/typewriter-text";
 import Image from "next/image";
 import { ImageFade } from "@/components/image-fade";
+import { LatestPosts } from "@/components/latest-posts";
 import {
   Droplets,
   FlaskConical,
@@ -289,6 +290,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Latest Posts */}
+      <LatestPosts />
 
       {/* Stats — generous padding for emphasis */}
       <section className="py-20 md:py-28 bg-brand-navy text-white">

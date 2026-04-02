@@ -23,6 +23,7 @@
     "quote": "Quote",
     "careers": "Careers",
     "notices": "Notices",
+    "posts": "Blog",
     "faq": "FAQ"
   },
   "home": {
@@ -197,6 +198,22 @@
     "pageTitle": "Notices",
     "pageDescription": "Latest notices from NAJIN TECHNOLOGY.",
     "noNotices": "No notices available."
+  },
+  "posts": {
+    "pageTitle": "Tech Blog",
+    "pageDescription": "Product introductions, machining technology, and news from NAJIN TECHNOLOGY.",
+    "noPosts": "No posts available.",
+    "allCategories": "All",
+    "readMore": "Read More",
+    "relatedPosts": "Related Posts",
+    "sharePost": "Share",
+    "categoryUrethane": "Urethane",
+    "categoryResin": "Synthetic Resin",
+    "categoryCNC": "CNC Machining",
+    "categoryMold": "Mold",
+    "categoryEV": "EV Parts",
+    "categoryCompany": "Company News",
+    "categoryProduct": "Products"
   },
   "privacy": {
     "pageTitle": "Privacy Policy",

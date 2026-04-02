@@ -23,6 +23,7 @@
     "quote": "询价咨询",
     "careers": "招聘信息",
     "notices": "公告",
+    "posts": "技术博客",
     "faq": "常见问题"
   },
   "home": {
@@ -197,6 +198,22 @@
     "pageTitle": "公告",
     "pageDescription": "查看纳进科技的公告信息。",
     "noNotices": "暂无公告。"
+  },
+  "posts": {
+    "pageTitle": "技术博客",
+    "pageDescription": "纳进科技的产品介绍、加工技术及现场资讯。",
+    "noPosts": "暂无文章。",
+    "allCategories": "全部",
+    "readMore": "查看详情",
+    "relatedPosts": "相关文章",
+    "sharePost": "分享",
+    "categoryUrethane": "聚氨酯",
+    "categoryResin": "合成树脂",
+    "categoryCNC": "CNC加工",
+    "categoryMold": "模具",
+    "categoryEV": "EV零部件",
+    "categoryCompany": "公司新闻",
+    "categoryProduct": "产品介绍"
   },
   "privacy": {
     "pageTitle": "隐私政策",

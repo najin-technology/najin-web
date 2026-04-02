@@ -24,7 +24,7 @@ export default function PrivacyPage() {
 
   return (
     <>
-      <PageHeader titleKey="pageTitle" namespace="privacy" />
+      <PageHeader titleKey="pageTitle" namespace="privacy" bgImage="/images/factory/workshop-1.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       <section className="py-12 md:py-16">
