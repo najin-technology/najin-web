@@ -174,7 +174,7 @@ export default async function PostDetailPage({
                 className="flex items-center gap-1 hover:text-white transition-colors"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span>원본 블로그</span>
+                <span>원본 보기</span>
               </a>
             )}
           </div>
