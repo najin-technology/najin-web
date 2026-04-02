@@ -17,33 +17,23 @@ export async function generateMetadata({
   return createPageMetadata({
     locale,
     path: "/posts",
-    titles: { ko: "기술 블로그", en: "Tech Blog", zh: "技术博客" },
+    titles: { ko: "제작사례", en: "Projects", zh: "制作案例" },
     descriptions: {
-      ko: "나진테크 기술 블로그. 제품 소개, 가공 기술, 현장 소식을 전합니다.",
-      en: "NAJIN TECHNOLOGY Tech Blog. Product introductions, machining technology, and company news.",
-      zh: "纳进科技技术博客。产品介绍、加工技术及现场资讯。",
+      ko: "나진테크 제작사례. 가공 기술, 납품 실적을 소개합니다.",
+      en: "NAJIN TECHNOLOGY Projects. Production cases, machining technology, and delivery records.",
+      zh: "纳进科技制作案例。加工技术及交付实绩。",
     },
   });
 }
 
 const CATEGORY_KEYS: Record<string, string> = {
-  우레탄: "categoryUrethane",
-  합성수지: "categoryResin",
-  CNC가공: "categoryCNC",
-  금형: "categoryMold",
-  EV부품: "categoryEV",
-  회사소식: "categoryCompany",
-  제품소개: "categoryProduct",
+  제작사례: "categoryCases",
+  제품: "categoryProducts",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  우레탄: "bg-amber-100 text-amber-800",
-  합성수지: "bg-blue-100 text-blue-800",
-  CNC가공: "bg-green-100 text-green-800",
-  금형: "bg-purple-100 text-purple-800",
-  EV부품: "bg-emerald-100 text-emerald-800",
-  회사소식: "bg-gray-100 text-gray-800",
-  제품소개: "bg-rose-100 text-rose-800",
+  제작사례: "bg-blue-100 text-blue-800",
+  제품: "bg-amber-100 text-amber-800",
 };
 
 export default async function PostsPage({

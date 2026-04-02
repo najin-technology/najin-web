@@ -22,8 +22,8 @@
     "portfolio": "主要业绩",
     "quote": "询价咨询",
     "careers": "招聘信息",
-    "notices": "公告",
-    "posts": "技术博客",
+    "notices": "公司动态",
+    "posts": "制作案例",
     "faq": "常见问题"
   },
   "home": {
@@ -195,25 +195,20 @@
     "successMessage": "资料审核后将与您联系，感谢。"
   },
   "notices": {
-    "pageTitle": "公告",
-    "pageDescription": "查看纳进科技的公告信息。",
-    "noNotices": "暂无公告。"
+    "pageTitle": "公司动态",
+    "pageDescription": "查看纳进科技的公司动态。",
+    "noNotices": "暂无动态。"
   },
   "posts": {
-    "pageTitle": "技术博客",
-    "pageDescription": "纳进科技的产品介绍、加工技术及现场资讯。",
-    "noPosts": "暂无文章。",
+    "pageTitle": "制作案例",
+    "pageDescription": "纳进科技的制作案例、加工技术及交付实绩。",
+    "noPosts": "暂无作品。",
     "allCategories": "全部",
     "readMore": "查看详情",
-    "relatedPosts": "相关文章",
+    "relatedPosts": "相关案例",
     "sharePost": "分享",
-    "categoryUrethane": "聚氨酯",
-    "categoryResin": "合成树脂",
-    "categoryCNC": "CNC加工",
-    "categoryMold": "模具",
-    "categoryEV": "EV零部件",
-    "categoryCompany": "公司新闻",
-    "categoryProduct": "产品介绍"
+    "categoryCases": "制作案例",
+    "categoryProducts": "产品"
   },
   "privacy": {
     "pageTitle": "隐私政策",

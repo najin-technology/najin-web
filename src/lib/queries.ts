@@ -67,6 +67,21 @@ export async function getPublishedPosts(category?: string) {
   return data;
 }
 
+export async function getHomePosts() {
+  const { data, error } = await supabase
+    .from("posts")
+    .select(
+      "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, thumbnail_url, image_urls, tags, original_date, published_at, created_at"
+    )
+    .eq("is_published", true)
+    .is("deleted_at", null)
+    .order("original_date", { ascending: false })
+    .limit(3);
+
+  if (error) throw error;
+  return data;
+}
+
 export async function getPostBySlug(slug: string) {
   const { data, error } = await supabase
     .from("posts")

@@ -12,6 +12,8 @@ import { AlertMessage } from "@/components/admin/alert-message";
 import { Eye, EyeOff } from "lucide-react";
 import DOMPurify from "isomorphic-dompurify";
 
+const CATEGORIES = ["제작사례", "제품"];
+
 type PostData = {
   id?: string;
   slug: string;
@@ -79,13 +81,17 @@ export function PostForm({
         </div>
         <div className="space-y-2">
           <Label htmlFor="category">카테고리 *</Label>
-          <Input
+          <select
             id="category"
             name="category"
-            defaultValue={post?.category || ""}
+            defaultValue={post?.category || "제작사례"}
             required
-            placeholder="우레탄, 합성수지, CNC가공, 금형, 회사소식 등"
-          />
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
         </div>
         <div className="space-y-2">
           <Label htmlFor="tags">태그 (쉼표로 구분)</Label>
@@ -96,7 +102,7 @@ export function PostForm({
             placeholder="태그1, 태그2, 태그3"
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2 md:col-span-2">
           <Label htmlFor="thumbnail_url">썸네일 URL</Label>
           <Input
             id="thumbnail_url"
@@ -144,7 +150,7 @@ export function PostForm({
               name="title_ko"
               defaultValue={post?.title_ko || ""}
               required
-              placeholder="포스트 제목을 입력하세요"
+              placeholder="제목을 입력하세요"
             />
           </div>
           <div className="space-y-2">
@@ -169,7 +175,7 @@ export function PostForm({
               <TiptapEditor
                 content={contentKo}
                 onChange={setContentKo}
-                placeholder="포스트 내용을 입력하세요"
+                placeholder="내용을 입력하세요"
               />
             )}
           </div>
