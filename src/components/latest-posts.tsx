@@ -1,5 +1,5 @@
 import { getTranslations, getLocale } from "next-intl/server";
-import { getPublishedPosts } from "@/lib/queries";
+import { getHomePortfolio } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
 import { Calendar, ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -10,7 +10,6 @@ const CATEGORY_COLORS: Record<string, string> = {
   CNC가공: "bg-green-100 text-green-800",
   금형: "bg-purple-100 text-purple-800",
   EV부품: "bg-emerald-100 text-emerald-800",
-  회사소식: "bg-gray-100 text-gray-800",
   제품소개: "bg-rose-100 text-rose-800",
 };
 
@@ -20,7 +19,6 @@ const CATEGORY_KEYS: Record<string, string> = {
   CNC가공: "categoryCNC",
   금형: "categoryMold",
   EV부품: "categoryEV",
-  회사소식: "categoryCompany",
   제품소개: "categoryProduct",
 };
 
@@ -28,15 +26,13 @@ export async function LatestPosts() {
   const t = await getTranslations("posts");
   const locale = await getLocale();
 
-  let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
+  let latestPosts: Awaited<ReturnType<typeof getHomePortfolio>> = [];
   try {
-    posts = await getPublishedPosts();
+    latestPosts = await getHomePortfolio();
   } catch {
     return null;
   }
 
-  // Take only the 3 most recent
-  const latestPosts = posts.slice(0, 3);
   if (latestPosts.length === 0) return null;
 
   return (
