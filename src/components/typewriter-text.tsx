@@ -4,84 +4,93 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Splits text into lines (by newline) then words, and reveals them
- * with a staggered fade-up animation — scoreboard style.
+ * Character-by-character typewriter with blinking cursor.
+ * Cursor blinks briefly after typing completes, then fades out.
+ *
+ * Fires onComplete callback when the animation finishes,
+ * so parent elements can choreograph subsequent reveals.
  *
  * Respects prefers-reduced-motion: shows everything immediately.
  */
 export function TypewriterText({
   text,
   className,
-  delayMs = 60,
-  startDelayMs = 200,
+  charDelayMs = 45,
+  startDelayMs = 400,
+  onComplete,
 }: {
   text: string;
   className?: string;
-  /** Delay between each word appearing (ms) */
-  delayMs?: number;
+  /** Delay between each character (ms) */
+  charDelayMs?: number;
   /** Delay before starting the animation (ms) */
   startDelayMs?: number;
+  /** Callback when typing animation completes */
+  onComplete?: () => void;
 }) {
-  const containerRef = useRef<HTMLElement>(null);
-  const [started, setStarted] = useState(false);
+  const [displayedCount, setDisplayedCount] = useState(0);
+  const [phase, setPhase] = useState<"waiting" | "typing" | "done">("waiting");
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mq.matches);
     if (mq.matches) {
-      setStarted(true);
+      setPrefersReducedMotion(true);
+      setDisplayedCount(text.length);
+      setPhase("done");
+      onCompleteRef.current?.();
       return;
     }
 
-    const timer = setTimeout(() => setStarted(true), startDelayMs);
-    return () => clearTimeout(timer);
-  }, [startDelayMs]);
+    // Start delay
+    const startTimer = setTimeout(() => {
+      setPhase("typing");
+    }, startDelayMs);
 
-  // Split text into lines, then each line into words
-  const lines = text.split("\n").filter(Boolean);
-  let wordIndex = 0;
+    return () => clearTimeout(startTimer);
+  }, [startDelayMs, text.length]);
+
+  useEffect(() => {
+    if (phase !== "typing") return;
+
+    if (displayedCount >= text.length) {
+      // Typing complete — keep cursor blinking briefly, then mark done
+      const doneTimer = setTimeout(() => {
+        setPhase("done");
+        onCompleteRef.current?.();
+      }, 600);
+      return () => clearTimeout(doneTimer);
+    }
+
+    const charTimer = setTimeout(() => {
+      setDisplayedCount((c) => c + 1);
+    }, charDelayMs);
+
+    return () => clearTimeout(charTimer);
+  }, [phase, displayedCount, text.length, charDelayMs]);
+
+  if (prefersReducedMotion) {
+    return <span className={className}>{text}</span>;
+  }
+
+  const showCursor = phase === "typing" || (phase === "done" && displayedCount >= text.length);
 
   return (
-    <span ref={containerRef} className={cn("inline", className)}>
-      {lines.map((line, lineIdx) => (
-        <span key={lineIdx} className="block">
-          {line.split(/(\s+)/).map((segment, segIdx) => {
-            // Preserve whitespace segments as-is
-            if (/^\s+$/.test(segment)) {
-              return <span key={segIdx}>{segment}</span>;
-            }
-
-            const currentWordIndex = wordIndex++;
-            const delay = currentWordIndex * delayMs;
-
-            if (prefersReducedMotion) {
-              return <span key={segIdx}>{segment}</span>;
-            }
-
-            return (
-              <span
-                key={segIdx}
-                className="inline-block overflow-hidden"
-              >
-                <span
-                  className={cn(
-                    "inline-block transition-all duration-400 ease-out",
-                    started
-                      ? "opacity-100 translate-y-0 blur-0"
-                      : "opacity-0 translate-y-[0.3em] blur-[2px]",
-                  )}
-                  style={{
-                    transitionDelay: started ? `${delay}ms` : "0ms",
-                  }}
-                >
-                  {segment}
-                </span>
-              </span>
-            );
-          })}
-        </span>
-      ))}
+    <span className={cn("inline", className)}>
+      <span>{text.slice(0, displayedCount)}</span>
+      <span
+        className={cn(
+          "inline-block w-[3px] h-[0.85em] ml-[2px] align-middle rounded-full bg-brand-copper",
+          phase === "typing" && displayedCount < text.length
+            ? "animate-cursor-blink"
+            : phase === "done"
+              ? "animate-cursor-fade-out"
+              : "opacity-0",
+        )}
+        aria-hidden="true"
+      />
     </span>
   );
 }

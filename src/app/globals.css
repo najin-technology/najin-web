@@ -313,6 +313,44 @@
   background-size: 40px 40px;
 }
 
+/* ===== Hero typewriter & choreography ===== */
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes cursor-fade-out {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.animate-cursor-blink {
+  animation: cursor-blink 0.7s step-end infinite;
+}
+
+.animate-cursor-fade-out {
+  animation: cursor-fade-out 0.6s ease-out forwards;
+}
+
+/* Hero reveal: elements fade-up after typewriter completes */
+@keyframes hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-reveal {
+  opacity: 0;
+  animation: hero-reveal 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
 /* ===== Accessibility ===== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -325,6 +363,16 @@
   .cta-glow,
   .marquee-track {
     animation: none !important;
+  }
+  .hero-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .animate-cursor-blink,
+  .animate-cursor-fade-out {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
 

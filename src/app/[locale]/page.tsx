@@ -71,6 +71,11 @@ export default function HomePage() {
   const tc = useTranslations("common");
   const tb = useTranslations("business");
 
+  // Hero title typing duration: ~chars * 45ms + 400ms start + 600ms cursor linger
+  // After that, subtitle/buttons/badges fade in with staggered delays
+  const heroTitleText = t("heroTitle");
+  const typingDuration = heroTitleText.length * 45 + 400 + 600; // ~2.2s
+
   return (
     <>
       {/* Hero with photo background */}
@@ -93,19 +98,17 @@ export default function HomePage() {
             <h1
               className="text-3xl md:text-[44px] lg:text-[52px] font-bold leading-[1.2] mb-4 text-white"
             >
-              <TypewriterText text={t("heroTitle")} delayMs={50} startDelayMs={300} />
+              <TypewriterText text={heroTitleText} charDelayMs={45} startDelayMs={400} />
             </h1>
             <p
-              className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl"
-              data-animate="fade-up"
-              data-animate-delay="1"
+              className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl hero-reveal"
+              style={{ animationDelay: `${typingDuration}ms` }}
             >
               {t("heroSubtitle")}
             </p>
             <div
-              className="flex flex-wrap gap-4 mb-12"
-              data-animate="fade-up"
-              data-animate-delay="2"
+              className="flex flex-wrap gap-4 mb-12 hero-reveal"
+              style={{ animationDelay: `${typingDuration + 200}ms` }}
             >
               <Link href="/quote">
                 <Button
@@ -128,9 +131,8 @@ export default function HomePage() {
 
             {/* Inline certifications */}
             <div
-              className="flex flex-wrap gap-6 items-center"
-              data-animate="fade-up"
-              data-animate-delay="3"
+              className="flex flex-wrap gap-6 items-center hero-reveal"
+              style={{ animationDelay: `${typingDuration + 400}ms` }}
             >
               {[
                 { icon: Award, label: "ISO 9001" },
