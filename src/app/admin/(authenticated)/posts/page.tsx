@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
 import { ListPageHeader } from "@/components/admin/list-page-header";
-import { BookOpen, Pencil, Home } from "lucide-react";
+import { BookOpen, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -21,19 +21,19 @@ function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
 }
 
-export const metadata = { title: "포트폴리오", description: "포트폴리오 관리", robots: "noindex, nofollow" };
+export const metadata = { title: "제작사례", description: "제작사례 관리", robots: "noindex, nofollow" };
 
 export default async function PostsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; published?: string; category?: string; content_type?: string }>;
+  searchParams: Promise<{ q?: string; published?: string; category?: string }>;
 }) {
-  const { q: searchQuery, published, category, content_type } = await searchParams;
+  const { q: searchQuery, published, category } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
   let query = supabase
     .from("posts")
-    .select("id, slug, title_ko, content_ko, excerpt_ko, category, content_type, thumbnail_url, tags, is_published, show_on_home, published_at, original_date, created_at")
+    .select("id, slug, title_ko, content_ko, excerpt_ko, category, thumbnail_url, tags, is_published, published_at, original_date, created_at")
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
@@ -41,13 +41,12 @@ export default async function PostsPage({
   if (published === "true") query = query.eq("is_published", true);
   if (published === "false") query = query.eq("is_published", false);
   if (category) query = query.eq("category", category);
-  if (content_type) query = query.eq("content_type", content_type);
 
   const { data: posts } = await query;
 
   return (
     <div className="space-y-6">
-      <ListPageHeader title="포트폴리오" count={posts?.length} createHref="/admin/posts/new" createLabel="새 포트폴리오 작성" />
+      <ListPageHeader title="제작사례" count={posts?.length} createHref="/admin/posts/new" createLabel="새 제작사례 작성" />
 
       <SearchFilterBar
         searchPlaceholder="제목 검색..."
@@ -65,19 +64,8 @@ export default async function PostsPage({
             key: "category",
             label: "전체 카테고리",
             options: [
-              { value: "우레탄", label: "우레탄" },
-              { value: "합성수지", label: "합성수지" },
-              { value: "CNC가공", label: "CNC가공" },
-              { value: "금형", label: "금형" },
-              { value: "EV부품", label: "EV부품" },
-            ],
-          },
-          {
-            key: "content_type",
-            label: "전체 유형",
-            options: [
               { value: "제작사례", label: "제작사례" },
-              { value: "제품홍보", label: "제품홍보" },
+              { value: "제품", label: "제품" },
             ],
           },
         ]}
@@ -103,19 +91,9 @@ export default async function PostsPage({
                     <HighlightText text={p.title_ko} query={searchQuery} />
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    <div className="flex flex-wrap items-center gap-1">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
-                        {p.category}
-                      </span>
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                        p.content_type === "제품홍보" ? "bg-rose-50 text-rose-700" : "bg-blue-50 text-blue-700"
-                      }`}>
-                        {p.content_type || "제작사례"}
-                      </span>
-                      {p.show_on_home && (
-                        <span title="홈 노출"><Home className="w-3.5 h-3.5 text-amber-500" /></span>
-                      )}
-                    </div>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                      {p.category}
+                    </span>
                   </TableCell>
                   <TableCell className="text-xs text-gray-400 max-w-[200px] truncate hidden lg:table-cell">
                     {p.excerpt_ko || stripHtml(p.content_ko || "").slice(0, 60) || "—"}
@@ -149,10 +127,10 @@ export default async function PostsPage({
               <TableRow>
                 <TableCell colSpan={6}>
                   <EmptyState
-                    message="포트폴리오가 없습니다."
-                    description="새 포트폴리오를 추가하여 제작사례를 소개해보세요."
+                    message="제작사례가 없습니다."
+                    description="새 제작사례를 추가하여 제작사례를 소개해보세요."
                     icon={BookOpen}
-                    action={{ label: "새 포트폴리오 작성", href: "/admin/posts/new" }}
+                    action={{ label: "새 제작사례 작성", href: "/admin/posts/new" }}
                   />
                 </TableCell>
               </TableRow>

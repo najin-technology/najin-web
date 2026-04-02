@@ -17,31 +17,23 @@ export async function generateMetadata({
   return createPageMetadata({
     locale,
     path: "/posts",
-    titles: { ko: "포트폴리오", en: "Portfolio", zh: "作品集" },
+    titles: { ko: "제작사례", en: "Projects", zh: "制作案例" },
     descriptions: {
-      ko: "나진테크 포트폴리오. 제작사례, 가공 기술, 납품 실적을 소개합니다.",
-      en: "NAJIN TECHNOLOGY Portfolio. Production cases, machining technology, and delivery records.",
-      zh: "纳进科技作品集。制作案例、加工技术及交付实绩。",
+      ko: "나진테크 제작사례. 가공 기술, 납품 실적을 소개합니다.",
+      en: "NAJIN TECHNOLOGY Projects. Production cases, machining technology, and delivery records.",
+      zh: "纳进科技制作案例。加工技术及交付实绩。",
     },
   });
 }
 
 const CATEGORY_KEYS: Record<string, string> = {
-  우레탄: "categoryUrethane",
-  합성수지: "categoryResin",
-  CNC가공: "categoryCNC",
-  금형: "categoryMold",
-  EV부품: "categoryEV",
-  제품소개: "categoryProduct",
+  제작사례: "categoryCases",
+  제품: "categoryProducts",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  우레탄: "bg-amber-100 text-amber-800",
-  합성수지: "bg-blue-100 text-blue-800",
-  CNC가공: "bg-green-100 text-green-800",
-  금형: "bg-purple-100 text-purple-800",
-  EV부품: "bg-emerald-100 text-emerald-800",
-  제품소개: "bg-rose-100 text-rose-800",
+  제작사례: "bg-blue-100 text-blue-800",
+  제품: "bg-amber-100 text-amber-800",
 };
 
 export default async function PostsPage({

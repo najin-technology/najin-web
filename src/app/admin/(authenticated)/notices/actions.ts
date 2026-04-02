@@ -43,7 +43,7 @@ export async function createNotice(
     .single();
 
   if (error || !data) {
-    return { error: "공지사항 등록에 실패했습니다." };
+    return { error: "소식 등록에 실패했습니다." };
   }
 
   await logAudit({
@@ -104,7 +104,7 @@ export async function updateNotice(
     .eq("id", id);
 
   if (error) {
-    return { error: "공지사항 수정에 실패했습니다." };
+    return { error: "소식 수정에 실패했습니다." };
   }
 
   await logAudit({

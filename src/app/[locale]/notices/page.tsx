@@ -12,11 +12,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return createPageMetadata({
     locale,
     path: "/notices",
-    titles: { ko: "공지사항", en: "Notices", zh: "公告" },
+    titles: { ko: "회사소식", en: "Company News", zh: "公司动态" },
     descriptions: {
-      ko: "나진테크 공지사항. 회사 소식, 채용 안내, 주요 공지를 확인하세요.",
-      en: "NAJIN TECHNOLOGY notices. Company news, hiring updates, and important announcements.",
-      zh: "纳进科技公告。公司新闻、招聘信息及重要公告。",
+      ko: "나진테크 회사소식. 이전, 확장, 공장 현장 등 소식을 전합니다.",
+      en: "NAJIN TECHNOLOGY company news. Relocation, expansion, and factory updates.",
+      zh: "纳进科技公司动态。搬迁、扩建及工厂资讯。",
     },
   });
 }
