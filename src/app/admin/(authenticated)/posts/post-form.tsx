@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, useEffect } from "react";
+import { useActionState, useState } from "react";
 import { createPost, updatePost } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,12 +44,10 @@ export function PostForm({
   const [contentKo, setContentKo] = useState(post?.content_ko || "");
   const [contentEn, setContentEn] = useState(post?.content_en || "");
   const [isPreview, setIsPreview] = useState(false);
-  const [tabValue, setTabValue] = useState("ko");
-
-  useEffect(() => {
-    const tab = new URLSearchParams(window.location.search).get("tab");
-    if (tab) setTabValue(tab);
-  }, []);
+  const [tabValue, setTabValue] = useState(() => {
+    if (typeof window === "undefined") return "ko";
+    return new URLSearchParams(window.location.search).get("tab") || "ko";
+  });
 
   return (
     <form action={formAction} className="space-y-6">

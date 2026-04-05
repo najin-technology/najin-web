@@ -18,12 +18,20 @@ import { FileText } from "lucide-react";
 
 export const metadata = { title: "견적 관리", description: "고객 견적 요청 관리", robots: "noindex, nofollow" };
 
+function formatElapsed(createdAt: string, status: string) {
+  const hours = Math.floor((Date.now() - new Date(createdAt).getTime()) / 3600000);
+  const isPending = status === "접수";
+  if (!isPending) return { text: new Date(createdAt).toLocaleDateString("ko-KR"), overdue: false, pending: false };
+  const text = hours < 1 ? "방금" : hours < 24 ? `${hours}시간 전` : `${Math.floor(hours / 24)}일 ${hours % 24}시간 전`;
+  return { text, overdue: hours >= 24, pending: true };
+}
+
 export default async function QuotesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; status?: string }>;
+  searchParams: Promise<{ q?: string; status?: string; type?: string }>;
 }) {
-  const { q: searchQuery, status } = await searchParams;
+  const { q: searchQuery, status, type } = await searchParams;
   const supabase = await createSupabaseServerClient();
 
   let query = supabase
@@ -34,6 +42,7 @@ export default async function QuotesPage({
 
   if (searchQuery) query = query.or(`company_name.ilike.%${searchQuery}%,contact_name.ilike.%${searchQuery}%`);
   if (status) query = query.eq("status", status);
+  if (type) query = query.eq("processing_type", type);
 
   const { data: quotes } = await query;
 
@@ -55,6 +64,18 @@ export default async function QuotesPage({
                   { value: "검토중", label: "검토중" },
                   { value: "견적발송", label: "견적발송" },
                   { value: "완료", label: "완료" },
+                ],
+              },
+              {
+                key: "type",
+                label: "전체 유형",
+                options: [
+                  { value: "콜백요청", label: "📞 콜백요청" },
+                  { value: "우레탄 성형", label: "우레탄 성형" },
+                  { value: "합성수지 가공", label: "합성수지 가공" },
+                  { value: "CNC 정밀가공", label: "CNC 정밀가공" },
+                  { value: "금형 제작", label: "금형 제작" },
+                  { value: "EV 부품", label: "EV 부품" },
                 ],
               },
             ]}
@@ -99,12 +120,27 @@ export default async function QuotesPage({
                     </Link>
                   </TableCell>
                   <TableCell data-label="담당자"><HighlightText text={q.contact_name} query={searchQuery} /></TableCell>
-                  <TableCell data-label="가공종류">{q.processing_type}</TableCell>
+                  <TableCell data-label="가공종류">
+                    {q.processing_type === "콜백요청" ? (
+                      <span className="inline-flex items-center gap-1 text-purple-700 font-medium">📞 콜백</span>
+                    ) : (
+                      q.processing_type
+                    )}
+                  </TableCell>
                   <TableCell data-label="상태">
                     <StatusBadge status={q.status} type="quote" />
                   </TableCell>
-                  <TableCell data-label="접수일" className="text-sm text-gray-500">
-                    {new Date(q.created_at).toLocaleDateString("ko-KR")}
+                  <TableCell data-label="접수일" className="text-sm">
+                    {(() => {
+                      const e = formatElapsed(q.created_at, q.status);
+                      if (!e.pending) return <span className="text-gray-500">{e.text}</span>;
+                      return (
+                        <span className={e.overdue ? "text-red-600 font-medium" : "text-amber-600"}>
+                          {e.text}
+                          {e.overdue && <span className="ml-1 text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full">초과</span>}
+                        </span>
+                      );
+                    })()}
                   </TableCell>
                 </TableRow>
               ))

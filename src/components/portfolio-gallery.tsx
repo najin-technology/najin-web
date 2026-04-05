@@ -115,6 +115,7 @@ export function PortfolioGallery({
           <button
             onClick={() => setLightbox(null)}
             className="absolute top-4 right-4 text-white/80 hover:text-white z-10"
+            aria-label="이미지 닫기"
           >
             <X className="w-8 h-8" />
           </button>

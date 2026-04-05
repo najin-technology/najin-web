@@ -13,7 +13,19 @@
     "submitSuccess": "提交成功。",
     "submitError": "提交过程中出现错误，请重试。",
     "fileSizeError": "文件大小不能超过10MB。",
-    "home": "返回首页"
+    "home": "返回首页",
+    "privacy": "隐私政策"
+  },
+  "callback": {
+    "title": "电话咨询请求",
+    "subtitle": "留下简单信息，负责人将联系您",
+    "companyName": "公司名称",
+    "phone": "联系电话",
+    "preferredTime": "希望联系时间",
+    "preferredTimePlaceholder": "例：下午2点~4点",
+    "submit": "请求咨询",
+    "successTitle": "请求已受理",
+    "successMessage": "负责人将尽快与您联系。"
   },
   "nav": {
     "home": "首页",
@@ -30,6 +42,7 @@
     "heroTitle": "25年精密加工专业企业",
     "heroSubtitle": "聚氨酯成型 · 合成树脂加工 · CNC精密加工 · 模具制作",
     "heroCta": "立即询价",
+    "heroResponsePromise": "在线询价 → 24小时内回复 | 可附图纸",
     "statsYears": "年历史",
     "statsClients": "主要客户",
     "statsCertified": "ISO 9001认证",
@@ -45,6 +58,12 @@
     "ctaSubtitle": "凭借25年经验为您提供最优解决方案",
     "ctaPersuasion": "在线询价，快速回复",
     "ctaPhone": "电话咨询: 055-367-2596",
+    "portfolioTitle": "主要供货实绩",
+    "portfolioSubtitle": "向现代汽车、SK等20+客户供应零部件",
+    "portfolioViewAll": "查看全部实绩",
+    "portfolio1": "现代汽车发动机支架聚氨酯零件",
+    "portfolio2": "SK半导体设备CNC精密加工",
+    "portfolio3": "GM上海电动车绝缘零件",
     "whyTitle": "为什么选择纳进科技",
     "whySubtitle": "25年来为大型企业供应零部件，具备经过验证的技术实力和信誉。",
     "why1Title": "专利聚氨酯模具基座技术",
@@ -159,6 +178,8 @@
     "attachment": "图纸附件",
     "attachmentHelp": "PDF, DWG, DXF, STEP, IGS, JPG, PNG（最大10MB）",
     "selectType": "请选择加工类型",
+    "optionalFieldsToggle": "添加详细信息（可选）",
+    "optionalFieldsHint": "仅填写必填项即可咨询",
     "successTitle": "询价已受理",
     "successMessage": "负责人确认后将尽快与您联系。",
     "contactInfo": "紧急咨询: TEL 055-367-2596",
@@ -168,7 +189,14 @@
     "processStep1": "提交询价申请",
     "processStep2": "负责人审核",
     "processStep3": "回复报价",
-    "processStep4": "协商及推进"
+    "processStep4": "协商及推进",
+    "faqTitle": "常见问题",
+    "faq1Q": "有最低订购量吗？",
+    "faq1A": "没有最低订购量限制。从样品1件到量产均可对应。",
+    "faq2Q": "交货期是多少？",
+    "faq2A": "根据产品规格不同，一般在报价确认后7~14天内交货。",
+    "faq3Q": "没有图纸也能报价吗？",
+    "faq3A": "可以，告知大致规格和数量即可提供概算报价。精确报价需要图纸。"
   },
   "careers": {
     "pageTitle": "招聘信息",

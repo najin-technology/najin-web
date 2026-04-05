@@ -51,7 +51,6 @@ export function SearchFilterBar({
   };
 
   const currentQuery = searchParams.get("q") || "";
-  const activeFilterCount = filters.filter((f) => searchParams.get(f.key)).length;
 
   return (
     <div className="flex flex-wrap items-center gap-3">

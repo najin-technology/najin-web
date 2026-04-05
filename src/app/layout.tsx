@@ -12,7 +12,7 @@ const geistSans = Geist({
 const notoSansKR = Noto_Sans_KR({
   variable: "--font-noto-sans-kr",
   weight: ["400", "500", "700"],
-  preload: false,
+  preload: true,
 });
 
 const notoSansSC = Noto_Sans_SC({
@@ -22,6 +22,7 @@ const notoSansSC = Noto_Sans_SC({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://najin-webapp.vercel.app"),
   title: {
     default: "나진테크 | NAJIN TECHNOLOGY",
     template: "%s | 나진테크",
@@ -38,6 +39,23 @@ export const metadata: Metadata = {
     "양산",
     "경남",
   ],
+  openGraph: {
+    type: "website",
+    siteName: "나진테크 | NAJIN TECHNOLOGY",
+    locale: "ko_KR",
+    alternateLocale: ["en_US", "zh_CN"],
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    other: {
+      ...(process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION
+        ? { "naver-site-verification": process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION }
+        : {}),
+    },
+  },
 };
 
 export default function RootLayout({

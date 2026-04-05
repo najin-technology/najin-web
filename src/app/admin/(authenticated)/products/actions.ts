@@ -191,13 +191,15 @@ export async function toggleProductActive(id: string) {
 
   const newActive = !product.is_active;
 
-  await supabase
+  const { error } = await supabase
     .from("products")
     .update({
       is_active: newActive,
       updated_at: new Date().toISOString(),
     })
     .eq("id", id);
+
+  if (error) return;
 
   await logAudit({
     action: newActive ? "activate" : "deactivate",

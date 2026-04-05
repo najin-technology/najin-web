@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, useEffect } from "react";
+import { useActionState, useState } from "react";
 import { createProduct, updateProduct } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,12 +51,10 @@ export function ProductForm({
   const [existingImages, setExistingImages] = useState<string[]>(
     product?.image_urls || []
   );
-  const [tabValue, setTabValue] = useState("ko");
-
-  useEffect(() => {
-    const tab = new URLSearchParams(window.location.search).get("tab");
-    if (tab) setTabValue(tab);
-  }, []);
+  const [tabValue, setTabValue] = useState(() => {
+    if (typeof window === "undefined") return "ko";
+    return new URLSearchParams(window.location.search).get("tab") || "ko";
+  });
 
   const removeExistingImage = (url: string) => {
     setExistingImages((prev) => prev.filter((u) => u !== url));

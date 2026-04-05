@@ -25,6 +25,7 @@ import { TypewriterText } from "@/components/typewriter-text";
 import Image from "next/image";
 import { ImageFade } from "@/components/image-fade";
 import { LatestPosts } from "@/components/latest-posts";
+import { CallbackForm } from "@/components/callback-form";
 import {
   Droplets,
   FlaskConical,
@@ -105,7 +106,7 @@ export default function HomePage() {
             <div
               className="flex flex-wrap gap-4 mb-12"
               data-animate="fade-up"
-              data-animate-delay="2"
+              data-animate-delay="1"
             >
               <Link href="/quote">
                 <Button
@@ -126,11 +127,20 @@ export default function HomePage() {
               </Link>
             </div>
 
+            {/* Response promise badge */}
+            <p
+              className="text-sm text-brand-copper font-medium mb-8"
+              data-animate="fade-up"
+              data-animate-delay="1"
+            >
+              {t("heroResponsePromise")}
+            </p>
+
             {/* Inline certifications */}
             <div
               className="flex flex-wrap gap-6 items-center"
               data-animate="fade-up"
-              data-animate-delay="3"
+              data-animate-delay="2"
             >
               {[
                 { icon: Award, label: "ISO 9001" },
@@ -291,6 +301,59 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Portfolio Preview */}
+      <section className="py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10" data-animate="fade-up">
+            <h2 className="text-2xl md:text-3xl font-bold text-brand-navy mb-3">
+              {t("portfolioTitle")}
+            </h2>
+            <p className="text-brand-charcoal/70">{t("portfolioSubtitle")}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { key: "portfolio1", image: "/images/products/pe-rod-1.jpg", logo: "/images/logos/hyundai.png" },
+              { key: "portfolio2", image: "/images/products/3d-mc-part-1.jpg", logo: "/images/logos/sk.png" },
+              { key: "portfolio3", image: "/images/products/db-4421a7e9-0.jpg", logo: "/images/logos/gm.png" },
+            ].map((item, i) => (
+              <div
+                key={item.key}
+                className="group bg-white rounded-xl border border-surface-warm-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                data-animate="fade-up"
+                data-animate-delay={String(i + 1)}
+              >
+                <div className="relative aspect-[16/10] bg-surface-warm-100 overflow-hidden">
+                  <ImageFade
+                    src={item.image}
+                    alt={t(item.key)}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
+                <div className="p-5 flex items-center gap-3">
+                  <Image
+                    src={item.logo}
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="object-contain opacity-60"
+                  />
+                  <p className="text-sm font-medium text-brand-charcoal line-clamp-1">{t(item.key)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8" data-animate="fade-up">
+            <Link href="/portfolio">
+              <Button variant="outline" className="border-brand-navy/20 text-brand-navy hover:bg-brand-navy/5">
+                {t("portfolioViewAll")} <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Latest Posts */}
       <LatestPosts />
 
@@ -309,76 +372,89 @@ export default function HomePage() {
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={24} suffix="+" />
               </div>
-              <div className="text-sm text-white/70">{t("statsYears")}</div>
+              <div className="text-sm text-white/80">{t("statsYears")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="2">
               <Users className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={20} suffix="+" />
               </div>
-              <div className="text-sm text-white/70">{t("statsClients")}</div>
+              <div className="text-sm text-white/80">{t("statsClients")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="3">
               <Award className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 ISO 9001
               </div>
-              <div className="text-sm text-white/70">{t("statsCertified")}</div>
+              <div className="text-sm text-white/80">{t("statsCertified")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="4">
               <FileCheck className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={1} suffix="+" />
               </div>
-              <div className="text-sm text-white/70">{t("statsPatent")}</div>
+              <div className="text-sm text-white/80">{t("statsPatent")}</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section — tighter to stats */}
-      <section className="py-12 md:py-16 hero-gradient text-white text-center">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2
-            className="text-2xl md:text-3xl font-bold mb-4"
-            data-animate="fade-up"
-          >
-            {t("ctaTitle")}
-          </h2>
-          <p
-            className="text-white/80 mb-4"
-            data-animate="fade-up"
-            data-animate-delay="1"
-          >
-            {t("ctaSubtitle")}
-          </p>
-          <p
-            className="text-brand-copper font-medium mb-8"
-            data-animate="fade-up"
-            data-animate-delay="1"
-          >
-            {t("ctaPersuasion")}
-          </p>
-          <div
-            className="flex flex-col items-center gap-4"
-            data-animate="fade-up"
-            data-animate-delay="2"
-          >
-            <Link href="/quote">
-              <Button
-                size="lg"
-                className="bg-brand-copper hover:bg-brand-copper-light text-white text-xl px-12 py-6 shadow-lg cta-glow"
+      <section className="py-12 md:py-16 hero-gradient text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            {/* Left: CTA text + button */}
+            <div className="text-center lg:text-left">
+              <h2
+                className="text-2xl md:text-3xl font-bold mb-4"
+                data-animate="fade-up"
               >
-                {tc("requestQuote")}
-              </Button>
-            </Link>
-            <a
-              href="tel:055-367-2596"
-              className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm mt-2"
+                {t("ctaTitle")}
+              </h2>
+              <p
+                className="text-white/80 mb-4"
+                data-animate="fade-up"
+                data-animate-delay="1"
+              >
+                {t("ctaSubtitle")}
+              </p>
+              <p
+                className="text-brand-copper font-medium mb-8"
+                data-animate="fade-up"
+                data-animate-delay="1"
+              >
+                {t("ctaPersuasion")}
+              </p>
+              <div
+                className="flex flex-col sm:flex-row items-center lg:items-start gap-4"
+                data-animate="fade-up"
+                data-animate-delay="2"
+              >
+                <Link href="/quote">
+                  <Button
+                    size="lg"
+                    className="bg-brand-copper hover:bg-brand-copper-light text-white text-xl px-12 py-6 shadow-lg cta-glow"
+                  >
+                    {tc("requestQuote")}
+                  </Button>
+                </Link>
+                <a
+                  href="tel:055-367-2596"
+                  className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm mt-2"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>{t("ctaPhone")}</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right: Callback quick form */}
+            <div
+              className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6"
+              data-animate="slide-left"
             >
-              <Phone className="w-4 h-4" />
-              <span>{t("ctaPhone")}</span>
-            </a>
+              <CallbackForm />
+            </div>
           </div>
         </div>
       </section>

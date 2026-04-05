@@ -1,28 +1,31 @@
 "use client";
 
-const messages: Record<string, { title: string; description: string; retry: string; home: string }> = {
+const messages: Record<string, { title: string; description: string; retry: string; home: string; quote: string }> = {
   ko: {
     title: "오류가 발생했습니다",
     description: "페이지를 불러오는 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.",
     retry: "다시 시도",
     home: "홈으로",
+    quote: "견적문의",
   },
   en: {
     title: "Something went wrong",
     description: "There was a problem loading this page. Please try again.",
     retry: "Try again",
     home: "Go home",
+    quote: "Request a Quote",
   },
   zh: {
     title: "出现错误",
     description: "加载页面时出现问题，请稍后重试。",
     retry: "重试",
     home: "返回首页",
+    quote: "立即询价",
   },
 };
 
 export default function Error({
-  error,
+  error: _error,
   reset,
 }: {
   error: Error & { digest?: string };
@@ -53,6 +56,12 @@ export default function Error({
           className="px-6 py-2.5 border border-surface-warm-200 text-brand-charcoal rounded-lg font-medium hover:bg-surface-warm-50 transition-colors"
         >
           {t.home}
+        </a>
+        <a
+          href={`/${locale}/quote`}
+          className="px-6 py-2.5 text-brand-blue hover:text-brand-blue-hover font-medium transition-colors"
+        >
+          {t.quote} →
         </a>
       </div>
     </div>
