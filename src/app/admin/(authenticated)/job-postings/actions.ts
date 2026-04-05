@@ -145,13 +145,15 @@ export async function toggleJobPostingActive(id: string) {
 
   const newActive = !posting.is_active;
 
-  await supabase
+  const { error } = await supabase
     .from("job_postings")
     .update({
       is_active: newActive,
       updated_at: new Date().toISOString(),
     })
     .eq("id", id);
+
+  if (error) return;
 
   await logAudit({
     action: newActive ? "activate" : "deactivate",

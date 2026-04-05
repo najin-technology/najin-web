@@ -13,6 +13,8 @@
 
   /* Brand colors */
   --color-brand-navy: #1B2A4A;
+  --color-brand-navy-dark: #2D4066;
+  --color-brand-navy-deep: #111D33;
   --color-brand-navy-light: #243456;
   --color-brand-blue: #3182CE;
   --color-brand-blue-hover: #2B6CB0;
@@ -177,7 +179,7 @@
 [data-animate] {
   opacity: 0;
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  animation: fallback-show 0s 2s forwards;
+  animation: fallback-show 0s 1s forwards;
 }
 
 @keyframes fallback-show {
@@ -228,19 +230,18 @@
 
 /* Icon hover micro-interaction */
 .icon-hover-bounce {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .group:hover .icon-hover-bounce {
-  transform: scale(1.1) rotate(-3deg);
+  transform: scale(1.05);
 }
 
-/* CTA pulse glow */
-@keyframes cta-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(184, 115, 51, 0.4); }
-  50% { box-shadow: 0 0 20px 4px rgba(184, 115, 51, 0.15); }
-}
+/* CTA hover glow */
 .cta-glow {
-  animation: cta-glow 2.5s ease-in-out infinite;
+  transition: box-shadow 0.3s ease;
+}
+.cta-glow:hover {
+  box-shadow: 0 0 20px 4px rgba(184, 115, 51, 0.2);
 }
 
 /* Client logo subtle scale on hover */
@@ -292,17 +293,10 @@
   width: 100%;
 }
 
-/* ===== Hero gradient animation ===== */
-
-@keyframes hero-gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
+/* ===== Hero gradient ===== */
 
 .hero-gradient {
-  background: linear-gradient(135deg, #1B2A4A 0%, #2D4066 35%, #3A2F28 70%, #1B2A4A 100%);
-  background-size: 200% 200%;
-  animation: hero-gradient-shift 8s ease infinite;
+  background: linear-gradient(135deg, var(--color-brand-navy) 0%, var(--color-brand-navy-dark) 40%, var(--color-brand-navy) 100%);
 }
 
 /* Industrial grid pattern overlay */

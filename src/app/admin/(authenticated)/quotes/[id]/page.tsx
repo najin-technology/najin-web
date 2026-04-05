@@ -45,7 +45,14 @@ export default async function QuoteDetailPage({
                 </h2>
                 <p className="text-xs text-gray-400 mt-1">{quote.contact_name} · {quote.processing_type || "미지정"}</p>
               </div>
-              <StatusBadge status={quote.status} type="quote" />
+              <div className="flex items-center gap-2">
+                {quote.processing_type === "콜백요청" && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+                    📞 콜백
+                  </span>
+                )}
+                <StatusBadge status={quote.status} type="quote" />
+              </div>
             </div>
 
             <InfoGrid items={[

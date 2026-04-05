@@ -11,8 +11,8 @@ export function MobileCTA() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show after scrolling past hero (roughly 60vh)
-      setVisible(window.scrollY > window.innerHeight * 0.6);
+      // Show after scrolling past initial hero area (30vh)
+      setVisible(window.scrollY > window.innerHeight * 0.3);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -21,17 +21,17 @@ export function MobileCTA() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-brand-navy/95 backdrop-blur-sm border-t border-white/10 px-4 py-2.5 flex items-center justify-between gap-3">
+    <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-brand-navy/95 backdrop-blur-sm border-t border-white/10 px-4 py-3 flex items-center justify-between gap-3">
       <a
         href="tel:055-367-2596"
-        className="flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm"
+        className="flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm min-h-[44px]"
       >
         <Phone className="w-4 h-4" />
         <span>055-367-2596</span>
       </a>
       <Link
         href="/quote"
-        className="bg-brand-copper hover:bg-brand-copper-light text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
+        className="bg-brand-copper hover:bg-brand-copper-light text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors min-h-[44px] flex items-center"
       >
         {t("requestQuote")}
       </Link>

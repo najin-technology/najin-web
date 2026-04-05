@@ -2,7 +2,6 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { getHistoryItems } from "@/lib/queries";
-import Image from "next/image";
 import { ImageFade } from "@/components/image-fade";
 import {
   Award,
