@@ -44,12 +44,10 @@ const navGroups = [
 export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("sidebar-collapsed");
-    if (saved === "true") setCollapsed(true);
-  }, []);
+  const [collapsed, setCollapsed] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("sidebar-collapsed") === "true";
+  });
 
   useEffect(() => {
     localStorage.setItem("sidebar-collapsed", String(collapsed));
@@ -101,7 +99,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
                     collapsed ? (
                       <span className="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-red-500" />
                     ) : (
-                      <span className={`text-[10px] font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5 ${
+                      <span className={`text-xs font-bold rounded-full min-w-[22px] h-5 flex items-center justify-center px-1.5 ${
                         active ? "bg-white/20 text-white" : "bg-red-100 text-red-600"
                       }`}>
                         {badges[item.href]}
@@ -143,7 +141,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
         }`}
       >
         <div className={`h-14 flex items-center gap-2.5 ${collapsed ? "px-3 justify-center" : "px-6"} border-b border-gray-100`}>
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-navy to-[#2D4066] flex items-center justify-center shadow-sm flex-shrink-0">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-navy to-brand-navy-dark flex items-center justify-center shadow-sm flex-shrink-0">
             <span className="text-white text-xs font-bold">N</span>
           </div>
           {!collapsed && (

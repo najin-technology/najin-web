@@ -25,12 +25,26 @@ export async function submitQuote(
   const file = formData.get("attachment") as File | null;
 
   // Validate required fields
-  if (!company_name || !contact_name || !phone || !processing_type) {
+  if (!company_name || !contact_name || !phone || !email || !processing_type) {
     return { success: false, error: "필수 항목을 입력해주세요." };
   }
 
   if (!privacy_agreed) {
     return { success: false, error: "개인정보 수집 동의가 필요합니다." };
+  }
+
+  // Validate file before DB insert to prevent orphaned rows
+  if (file && file.size > 0) {
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    const ALLOWED_EXTENSIONS = ["pdf", "dwg", "dxf", "step", "igs", "stp", "jpg", "jpeg", "png"];
+    const fileExt = file.name.split(".").pop()?.toLowerCase();
+
+    if (file.size > MAX_FILE_SIZE) {
+      return { success: false, error: "파일 크기는 10MB 이하만 가능합니다." };
+    }
+    if (!fileExt || !ALLOWED_EXTENSIONS.includes(fileExt)) {
+      return { success: false, error: "허용되지 않는 파일 형식입니다." };
+    }
   }
 
   // Insert quote
@@ -56,9 +70,9 @@ export async function submitQuote(
     return { success: false, error: "제출 중 오류가 발생했습니다." };
   }
 
-  // Upload file if exists
+  // Upload file if exists (already validated above)
   if (file && file.size > 0) {
-    const fileExt = file.name.split(".").pop();
+    const fileExt = file.name.split(".").pop()?.toLowerCase();
     const filePath = `${quote.id}/${Date.now()}.${fileExt}`;
 
     const { error: uploadError } = await supabase.storage

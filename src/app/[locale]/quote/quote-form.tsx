@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { submitQuote } from "./actions";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/routing";
-import { CheckCircle, Clock } from "lucide-react";
+import { CheckCircle, Clock, ChevronDown } from "lucide-react";
+import { toast } from "sonner";
+import { track } from "@vercel/analytics";
 
 const processingTypeKeys = [
   "urethane",
@@ -26,6 +28,55 @@ export function QuoteForm() {
     success: false,
     error: "",
   });
+  const [showDetails, setShowDetails] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      const saved = localStorage.getItem("najin_quote_draft");
+      if (!saved) return false;
+      return Object.keys(JSON.parse(saved)).length > 5;
+    } catch { return false; }
+  });
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const STORAGE_KEY = "najin_quote_draft";
+
+  // Restore saved draft on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved || !formRef.current) return;
+    try {
+      const data = JSON.parse(saved) as Record<string, string>;
+      for (const [name, value] of Object.entries(data)) {
+        const el = formRef.current.elements.namedItem(name);
+        if (el instanceof HTMLInputElement || el instanceof HTMLSelectElement || el instanceof HTMLTextAreaElement) {
+          el.value = value;
+        }
+      }
+    } catch { /* ignore corrupt data */ }
+  }, []);
+
+  // Save draft on input change (debounced)
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const handleFormChange = useCallback(() => {
+    clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
+      if (!formRef.current) return;
+      const fd = new FormData(formRef.current);
+      const data: Record<string, string> = {};
+      fd.forEach((v, k) => { if (typeof v === "string" && v) data[k] = v; });
+      delete data.privacy_agreed;
+      delete data.attachment;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }, 500);
+  }, []);
+
+  // Clear draft on success
+  useEffect(() => {
+    if (state.success) {
+      track("quote_submitted");
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  }, [state.success]);
 
   if (state.success) {
     return (
@@ -63,7 +114,7 @@ export function QuoteForm() {
   }
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form ref={formRef} action={formAction} onChange={handleFormChange} className="space-y-6">
       {state.error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
           {state.error}
@@ -97,8 +148,10 @@ export function QuoteForm() {
 
         {/* Email */}
         <div className="space-y-2">
-          <Label htmlFor="email">{t("email")}</Label>
-          <Input id="email" name="email" type="email" />
+          <Label htmlFor="email">
+            {t("email")} <span className="text-red-500">*</span>
+          </Label>
+          <Input id="email" name="email" type="email" required />
         </div>
       </div>
 
@@ -111,7 +164,7 @@ export function QuoteForm() {
           id="processing_type"
           name="processing_type"
           required
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="flex h-11 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           defaultValue=""
         >
           <option value="" disabled>
@@ -125,63 +178,82 @@ export function QuoteForm() {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Material */}
-        <div className="space-y-2">
-          <Label htmlFor="material">{t("material")}</Label>
-          <Input
-            id="material"
-            name="material"
-            placeholder={t("materialPlaceholder")}
-          />
+      {/* Optional fields toggle */}
+      <div className="border-t border-surface-warm-200 pt-4">
+        <button
+          type="button"
+          onClick={() => setShowDetails(!showDetails)}
+          className="flex items-center gap-2 text-sm font-medium text-brand-blue hover:text-brand-blue-hover transition-colors w-full"
+        >
+          <ChevronDown className={`w-4 h-4 transition-transform ${showDetails ? "rotate-180" : ""}`} />
+          {t("optionalFieldsToggle")}
+        </button>
+        {!showDetails && (
+          <p className="text-xs text-brand-charcoal/50 mt-1 ml-6">{t("optionalFieldsHint")}</p>
+        )}
+      </div>
+
+      {showDetails && (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Material */}
+            <div className="space-y-2">
+              <Label htmlFor="material">{t("material")}</Label>
+              <Input
+                id="material"
+                name="material"
+                placeholder={t("materialPlaceholder")}
+              />
+            </div>
+
+            {/* Quantity */}
+            <div className="space-y-2">
+              <Label htmlFor="quantity">{t("quantity")}</Label>
+              <Input
+                id="quantity"
+                name="quantity"
+                placeholder={t("quantityPlaceholder")}
+              />
+            </div>
+          </div>
+
+          {/* Deadline */}
+          <div className="space-y-2">
+            <Label htmlFor="deadline">{t("deadline")}</Label>
+            <Input id="deadline" name="deadline" type="date" />
+          </div>
+
+          {/* Description */}
+          <div className="space-y-2">
+            <Label htmlFor="description">{t("description")}</Label>
+            <Textarea
+              id="description"
+              name="description"
+              rows={5}
+              placeholder={t("descriptionPlaceholder")}
+            />
+          </div>
+
+          {/* File Upload */}
+          <div className="space-y-2">
+            <Label htmlFor="attachment">{t("attachment")}</Label>
+            <Input
+              id="attachment"
+              name="attachment"
+              type="file"
+              accept=".pdf,.dwg,.dxf,.step,.igs,.stp,.jpg,.jpeg,.png"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file && file.size > 10 * 1024 * 1024) {
+                  toast.error(tc("fileSizeError"));
+                  e.target.value = "";
+                }
+              }}
+            />
+            <p className="text-xs text-gray-600">{t("attachmentHelp")}</p>
+          </div>
         </div>
-
-        {/* Quantity */}
-        <div className="space-y-2">
-          <Label htmlFor="quantity">{t("quantity")}</Label>
-          <Input
-            id="quantity"
-            name="quantity"
-            placeholder={t("quantityPlaceholder")}
-          />
-        </div>
-      </div>
-
-      {/* Deadline */}
-      <div className="space-y-2">
-        <Label htmlFor="deadline">{t("deadline")}</Label>
-        <Input id="deadline" name="deadline" type="date" />
-      </div>
-
-      {/* Description */}
-      <div className="space-y-2">
-        <Label htmlFor="description">{t("description")}</Label>
-        <Textarea
-          id="description"
-          name="description"
-          rows={5}
-          placeholder={t("descriptionPlaceholder")}
-        />
-      </div>
-
-      {/* File Upload */}
-      <div className="space-y-2">
-        <Label htmlFor="attachment">{t("attachment")}</Label>
-        <Input
-          id="attachment"
-          name="attachment"
-          type="file"
-          accept=".pdf,.dwg,.dxf,.step,.igs,.stp,.jpg,.jpeg,.png"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file && file.size > 10 * 1024 * 1024) {
-              alert(tc("fileSizeError"));
-              e.target.value = "";
-            }
-          }}
-        />
-        <p className="text-xs text-gray-500">{t("attachmentHelp")}</p>
-      </div>
+      )}
 
       {/* Privacy Agreement */}
       <div className="flex items-start gap-2">
@@ -190,7 +262,7 @@ export function QuoteForm() {
           name="privacy_agreed"
           type="checkbox"
           required
-          className="mt-1"
+          className="mt-1 w-4 h-4 rounded border-gray-300 focus-visible:ring-2 focus-visible:ring-brand-navy/30 focus-visible:ring-offset-1"
         />
         <Label htmlFor="privacy_agreed" className="text-sm font-normal">
           {tc("privacyAgree")}{" "}

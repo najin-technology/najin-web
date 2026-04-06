@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Plus,
-  FileText,
   Package,
   Briefcase,
   Inbox,
@@ -71,6 +70,7 @@ export default async function AdminDashboard() {
 
   const [
     { count: pendingQuotes },
+    { count: pendingCallbacks },
     { count: pendingApps },
     { count: activeProducts },
     { count: activeJobs },
@@ -82,6 +82,12 @@ export default async function AdminDashboard() {
       .from("quotes")
       .select("*", { count: "exact", head: true })
       .eq("status", "접수")
+      .is("deleted_at", null),
+    supabase
+      .from("quotes")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "접수")
+      .eq("processing_type", "콜백요청")
       .is("deleted_at", null),
     supabase
       .from("applications")
@@ -129,6 +135,7 @@ export default async function AdminDashboard() {
         {((pendingQuotes || 0) > 0 || (pendingApps || 0) > 0) && (
           <p className="text-xs text-gray-500 tabular-nums mt-1">
             {(pendingQuotes || 0) > 0 && `처리 대기 견적 ${pendingQuotes}건`}
+            {(pendingCallbacks || 0) > 0 && ` (콜백 ${pendingCallbacks}건)`}
             {(pendingQuotes || 0) > 0 && (pendingApps || 0) > 0 && " · "}
             {(pendingApps || 0) > 0 && `검토 대기 지원서 ${pendingApps}건`}
           </p>

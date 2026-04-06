@@ -2,7 +2,7 @@
 
 import { logoutAction } from "@/app/admin/login/actions";
 import { Button } from "@/components/ui/button";
-import { LogOut, ChevronRight, Home, Bell } from "lucide-react";
+import { LogOut, ChevronRight, Bell } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -65,7 +65,7 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
             </Button>
           </Link>
         )}
-        <span className="text-[11px] text-gray-400 hidden sm:block max-w-[120px] truncate">
+        <span className="text-xs text-gray-500 hidden sm:block max-w-[160px] truncate">
           {userEmail}
         </span>
         <div className="w-px h-4 bg-gray-200 hidden sm:block" />
@@ -73,10 +73,11 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
           <Button
             variant="ghost"
             size="sm"
-            className="text-gray-400 hover:text-red-500 hover:bg-red-50 h-8 w-8 p-0 transition-colors"
+            className="text-gray-500 hover:text-red-500 hover:bg-red-50 h-9 px-2.5 gap-1.5 transition-colors"
             aria-label="로그아웃"
           >
             <LogOut className="w-4 h-4" />
+            <span className="text-xs hidden sm:inline">로그아웃</span>
           </Button>
         </form>
       </div>

@@ -19,6 +19,7 @@ const routePriorities: Record<string, number> = {
   "/portfolio": 0.9,
   "/quote": 0.8,
   "/faq": 0.8,
+  "/posts": 0.7,
   "/careers": 0.6,
   "/notices": 0.6,
   "/privacy": 0.3,
@@ -62,5 +63,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // skip dynamic entries on error
   }
 
-  return [...staticEntries, ...noticeEntries];
+  // Dynamic post pages
+  let postEntries: MetadataRoute.Sitemap = [];
+  try {
+    if (!supabase) throw new Error("Supabase not configured");
+    const { data: posts } = await supabase
+      .from("posts")
+      .select("slug, updated_at")
+      .eq("is_published", true)
+      .is("deleted_at", null);
+
+    if (posts) {
+      postEntries = posts.flatMap((post) =>
+        locales.map((locale) => ({
+          url: `${BASE_URL}/${locale}/posts/${post.slug}`,
+          lastModified: new Date(post.updated_at),
+          changeFrequency: "monthly" as const,
+          priority: 0.6,
+          alternates: withAlternates(`/posts/${post.slug}`),
+        }))
+      );
+    }
+  } catch {
+    // skip dynamic entries on error
+  }
+
+  return [...staticEntries, ...noticeEntries, ...postEntries];
 }

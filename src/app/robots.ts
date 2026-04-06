@@ -8,6 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "Google-Extended", allow: "/" },
       { userAgent: "anthropic-ai", allow: "/" },
       { userAgent: "CCBot", allow: "/" },
+      { userAgent: "Yeti", allow: "/" },
     ],
     sitemap: "https://najin-webapp.vercel.app/sitemap.xml",
   };

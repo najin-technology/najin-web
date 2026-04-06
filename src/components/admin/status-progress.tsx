@@ -29,7 +29,7 @@ export function StatusProgress({
 
   return (
     <div className="space-y-2">
-      <div className="flex h-2 rounded-full overflow-hidden bg-gray-100">
+      <div className="flex h-3 rounded-full overflow-hidden bg-gray-100">
         {segments.map(([status, count]) => (
           <div
             key={status}
@@ -41,7 +41,7 @@ export function StatusProgress({
       </div>
       <div className="flex flex-wrap gap-x-3 gap-y-1">
         {segments.map(([status, count]) => (
-          <span key={status} className="flex items-center gap-1 text-[11px] text-gray-500">
+          <span key={status} className="flex items-center gap-1.5 text-xs text-gray-600">
             <span className={`w-2 h-2 rounded-full ${STATUS_COLORS[status] || "bg-gray-200"}`} />
             {status} {count}
           </span>

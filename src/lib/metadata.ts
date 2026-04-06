@@ -12,14 +12,24 @@ export function createPageMetadata({
   titles: Record<string, string>;
   descriptions: Record<string, string>;
 }) {
+  const title = titles[locale] || titles.ko;
+  const description = descriptions[locale] || descriptions.ko;
+
   return {
-    title: titles[locale] || titles.ko,
-    description: descriptions[locale] || descriptions.ko,
+    title,
+    description,
     alternates: {
       canonical: `${BASE_URL}/${locale}${path}`,
       languages: Object.fromEntries(
         LOCALES.map((l) => [l, `${BASE_URL}/${l}${path}`])
       ),
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/${locale}${path}`,
+      siteName: "나진테크 | NAJIN TECHNOLOGY",
+      locale: locale === "ko" ? "ko_KR" : locale === "zh" ? "zh_CN" : "en_US",
     },
   };
 }

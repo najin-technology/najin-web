@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { submitApplication } from "./actions";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/routing";
 import { CheckCircle } from "lucide-react";
+import { track } from "@vercel/analytics";
+import { toast } from "sonner";
 
 export function ApplyForm() {
   const t = useTranslations("careers");
@@ -17,6 +19,10 @@ export function ApplyForm() {
     success: false,
     error: "",
   });
+
+  useEffect(() => {
+    if (state.success) track("application_submitted");
+  }, [state.success]);
 
   if (state.success) {
     return (
@@ -100,12 +106,12 @@ export function ApplyForm() {
           onChange={(e) => {
             const file = e.target.files?.[0];
             if (file && file.size > 10 * 1024 * 1024) {
-              alert(tc("fileSizeError"));
+              toast.error(tc("fileSizeError"));
               e.target.value = "";
             }
           }}
         />
-        <p className="text-xs text-gray-500">{t("resumeHelp")}</p>
+        <p className="text-xs text-gray-600">{t("resumeHelp")}</p>
       </div>
 
       <div className="flex items-start gap-2">
@@ -114,7 +120,7 @@ export function ApplyForm() {
           name="privacy_agreed"
           type="checkbox"
           required
-          className="mt-1"
+          className="mt-1 w-4 h-4 rounded border-gray-300 focus-visible:ring-2 focus-visible:ring-brand-navy/30 focus-visible:ring-offset-1"
         />
         <Label htmlFor="privacy_agreed" className="text-sm font-normal">
           {tc("privacyAgree")}{" "}
@@ -123,7 +129,7 @@ export function ApplyForm() {
             className="text-brand-blue hover:underline"
             target="_blank"
           >
-            [{tc("privacyAgree")}]
+            [{tc("privacy")}]
           </Link>
           <span className="text-red-500 ml-1">*</span>
         </Label>

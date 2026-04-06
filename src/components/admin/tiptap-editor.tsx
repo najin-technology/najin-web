@@ -23,6 +23,14 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+function ToolBtn({ onClick, active, title, children }: { onClick: () => void; active?: boolean; title: string; children: React.ReactNode }) {
+  return (
+    <Button type="button" variant="ghost" size="sm" onClick={onClick} title={title} aria-label={title} className={active ? "bg-gray-200" : ""}>
+      {children}
+    </Button>
+  );
+}
+
 export function TiptapEditor({
   content,
   onChange,
@@ -71,12 +79,6 @@ export function TiptapEditor({
 
   const charCount = editor.getText().length;
   const wordCount = editor.getText().trim() ? editor.getText().trim().split(/\s+/).length : 0;
-
-  const ToolBtn = ({ onClick, active, title, children }: { onClick: () => void; active?: boolean; title: string; children: React.ReactNode }) => (
-    <Button type="button" variant="ghost" size="sm" onClick={onClick} title={title} aria-label={title} className={active ? "bg-gray-200" : ""}>
-      {children}
-    </Button>
-  );
 
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden">
