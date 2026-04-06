@@ -39,15 +39,15 @@ const CATEGORY_COLORS: Record<string, string> = {
 export default async function PostsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; tag?: string }>;
 }) {
   const t = await getTranslations("posts");
   const locale = await getLocale();
-  const { category } = await searchParams;
+  const { category, tag } = await searchParams;
 
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
   try {
-    posts = await getPublishedPosts(category);
+    posts = await getPublishedPosts(category, tag);
   } catch {
     // fallback
   }
@@ -95,6 +95,19 @@ export default async function PostsPage({
               </Link>
             ))}
           </div>
+
+          {/* Active tag filter indicator */}
+          {tag && (
+            <div className="flex items-center gap-2 mb-6" data-animate="fade-up">
+              <span className="text-sm text-brand-charcoal/60">#{tag}</span>
+              <Link
+                href={category ? `/posts?category=${category}` : "/posts"}
+                className="text-xs text-red-500 hover:text-red-700 transition-colors"
+              >
+                ✕ {t("clearFilter")}
+              </Link>
+            </div>
+          )}
 
           {posts.length === 0 ? (
             <div
@@ -173,6 +186,20 @@ export default async function PostsPage({
                           )}
                         </span>
                       </div>
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {post.tags.slice(0, 3).map((tagName: string) => (
+                            <Link
+                              key={tagName}
+                              href={`/posts?tag=${tagName}`}
+                              className="text-[11px] px-2 py-0.5 rounded-full bg-surface-warm-100 text-brand-charcoal/60 hover:bg-brand-copper/10 hover:text-brand-copper transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              #{tagName}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </Link>
                 );

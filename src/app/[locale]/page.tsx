@@ -59,12 +59,13 @@ const businessAreas: {
   key: string;
   icon: LucideIcon;
   image: string;
+  tag: string;
 }[] = [
-  { key: "urethane", icon: Droplets, image: "/images/factory/workshop-2.jpg" },
-  { key: "resin", icon: FlaskConical, image: "/images/products/pe-rod-1.jpg" },
-  { key: "cnc", icon: Cog, image: "/images/products/3d-mc-part-1.jpg" },
-  { key: "mold", icon: Box, image: "/images/products/3d-mc-part-2.jpg" },
-  { key: "ev", icon: Zap, image: "/images/products/db-4421a7e9-0.jpg" },
+  { key: "urethane", icon: Droplets, image: "/images/factory/workshop-2.jpg", tag: "우레탄" },
+  { key: "resin", icon: FlaskConical, image: "/images/products/pe-rod-1.jpg", tag: "합성수지" },
+  { key: "cnc", icon: Cog, image: "/images/products/3d-mc-part-1.jpg", tag: "CNC" },
+  { key: "mold", icon: Box, image: "/images/products/3d-mc-part-2.jpg", tag: "금형" },
+  { key: "ev", icon: Zap, image: "/images/products/db-4421a7e9-0.jpg", tag: "EV" },
 ];
 
 export default function HomePage() {
@@ -214,7 +215,7 @@ export default function HomePage() {
             {businessAreas.map((area, i) => (
               <Link
                 key={area.key}
-                href="/business"
+                href={`/posts?tag=${area.tag}`}
                 className="group block bg-white rounded-xl overflow-hidden border border-surface-warm-200 hover-lift"
                 data-animate="fade-up"
                 data-animate-delay={String(i + 1)}
