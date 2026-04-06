@@ -43,15 +43,15 @@ import {
 } from "lucide-react";
 
 const clients: { name: string; logo?: string }[] = [
-  { name: "현대자동차", logo: "/images/logos/hyundai.png" },
+  { name: "현대자동차", logo: "/images/logos/hyundai.svg" },
   { name: "현대파워텍", logo: "/images/logos/hyundai-powertech.svg" },
   { name: "르노삼성", logo: "/images/logos/renault.svg" },
-  { name: "SK", logo: "/images/logos/sk.png" },
+  { name: "SK", logo: "/images/logos/sk.svg" },
   { name: "한화케미칼", logo: "/images/logos/hanwha.svg" },
-  { name: "동희산업", logo: "/images/logos/donghee.png" },
+  { name: "동희산업", logo: "/images/logos/donghee.svg" },
   { name: "화신", logo: "/images/logos/hwashin.svg" },
   { name: "성우하이텍", logo: "/images/logos/sungwoo.svg" },
-  { name: "GM Shanghai", logo: "/images/logos/gm.png" },
+  { name: "GM Shanghai", logo: "/images/logos/gm.svg" },
   { name: "Lear Dymos", logo: "/images/logos/lear.svg" },
 ];
 
@@ -312,9 +312,9 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { key: "portfolio1", image: "/images/products/pe-rod-1.jpg", logo: "/images/logos/hyundai.png" },
-              { key: "portfolio2", image: "/images/products/3d-mc-part-1.jpg", logo: "/images/logos/sk.png" },
-              { key: "portfolio3", image: "/images/products/db-4421a7e9-0.jpg", logo: "/images/logos/gm.png" },
+              { key: "portfolio1", image: "/images/products/pe-rod-1.jpg", logo: "/images/logos/hyundai.svg" },
+              { key: "portfolio2", image: "/images/products/3d-mc-part-1.jpg", logo: "/images/logos/sk.svg" },
+              { key: "portfolio3", image: "/images/products/db-4421a7e9-0.jpg", logo: "/images/logos/gm.svg" },
             ].map((item, i) => (
               <div
                 key={item.key}
