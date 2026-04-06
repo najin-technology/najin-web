@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { PageCTA } from "@/components/page-cta";
 import {
   Accordion,
   AccordionContent,
@@ -75,6 +76,7 @@ export default function FAQPage() {
           </Accordion>
         </div>
       </section>
+      <PageCTA />
     </>
   );
 }

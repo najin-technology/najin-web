@@ -14,7 +14,9 @@
     "submitError": "提交过程中出现错误，请重试。",
     "fileSizeError": "文件大小不能超过10MB。",
     "home": "返回首页",
-    "privacy": "隐私政策"
+    "privacy": "隐私政策",
+    "ctaTitle": "需要报价吗？",
+    "ctaDesc": "发送图纸，我们将尽快回复报价。"
   },
   "callback": {
     "title": "电话咨询请求",
