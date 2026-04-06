@@ -14,7 +14,9 @@
     "submitError": "제출 중 오류가 발생했습니다. 다시 시도해주세요.",
     "fileSizeError": "파일 크기는 10MB 이하만 가능합니다.",
     "home": "홈으로 돌아가기",
-    "privacy": "개인정보처리방침"
+    "privacy": "개인정보처리방침",
+    "ctaTitle": "견적이 필요하신가요?",
+    "ctaDesc": "도면을 보내주시면 최대한 빠르게 견적을 회신드리겠습니다."
   },
   "callback": {
     "title": "전화 상담 요청",
@@ -155,6 +157,9 @@
     "pageTitle": "견적문의",
     "pageDescription": "나진테크에 견적을 요청하세요.",
     "formTitle": "견적 요청서",
+    "contactPhone": "전화",
+    "contactAddress": "주소",
+    "contactEmail": "이메일",
     "companyName": "회사명",
     "contactName": "담당자명",
     "phone": "연락처",
@@ -231,6 +236,7 @@
     "pageTitle": "제작사례",
     "pageDescription": "나진테크의 제작사례, 가공 기술, 납품 실적을 소개합니다.",
     "noPosts": "등록된 제작사례가 없습니다.",
+    "clearFilter": "필터 해제",
     "allCategories": "전체",
     "readMore": "자세히 보기",
     "relatedPosts": "관련 제작사례",

@@ -14,7 +14,9 @@
     "submitError": "An error occurred. Please try again.",
     "fileSizeError": "File size must be 10MB or less.",
     "home": "Back to Home",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "ctaTitle": "Need a Quote?",
+    "ctaDesc": "Send us your drawings and we'll reply as soon as possible."
   },
   "callback": {
     "title": "Request a Callback",
@@ -155,6 +157,9 @@
     "pageTitle": "Request a Quote",
     "pageDescription": "Request a quote from NAJIN TECHNOLOGY.",
     "formTitle": "Quote Request Form",
+    "contactPhone": "Phone",
+    "contactAddress": "Address",
+    "contactEmail": "Email",
     "companyName": "Company Name",
     "contactName": "Contact Person",
     "phone": "Phone",
@@ -231,6 +236,7 @@
     "pageTitle": "Projects",
     "pageDescription": "Production cases, machining technology, and delivery records from NAJIN TECHNOLOGY.",
     "noPosts": "No projects available.",
+    "clearFilter": "Clear filter",
     "allCategories": "All",
     "readMore": "Read More",
     "relatedPosts": "Related Projects",

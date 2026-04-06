@@ -14,7 +14,9 @@
     "submitError": "提交过程中出现错误，请重试。",
     "fileSizeError": "文件大小不能超过10MB。",
     "home": "返回首页",
-    "privacy": "隐私政策"
+    "privacy": "隐私政策",
+    "ctaTitle": "需要报价吗？",
+    "ctaDesc": "发送图纸，我们将尽快回复报价。"
   },
   "callback": {
     "title": "电话咨询请求",
@@ -155,6 +157,9 @@
     "pageTitle": "询价咨询",
     "pageDescription": "向纳进科技提交询价。",
     "formTitle": "询价申请表",
+    "contactPhone": "电话",
+    "contactAddress": "地址",
+    "contactEmail": "邮箱",
     "companyName": "公司名称",
     "contactName": "联系人",
     "phone": "联系电话",
@@ -231,6 +236,7 @@
     "pageTitle": "制作案例",
     "pageDescription": "纳进科技的制作案例、加工技术及交付实绩。",
     "noPosts": "暂无作品。",
+    "clearFilter": "清除筛选",
     "allCategories": "全部",
     "readMore": "查看详情",
     "relatedPosts": "相关案例",

@@ -252,28 +252,6 @@
   transform: scale(1.05);
 }
 
-/* ===== Infinite logo marquee ===== */
-
-@keyframes marquee-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.marquee-container {
-  overflow: hidden;
-  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee-scroll 30s linear infinite;
-}
-
-.marquee-container:hover .marquee-track {
-  animation-play-state: paused;
-}
 
 .nav-underline {
   position: relative;
@@ -316,8 +294,7 @@
     transition: none !important;
   }
   .hero-gradient,
-  .cta-glow,
-  .marquee-track {
+  .cta-glow {
     animation: none !important;
   }
 }
