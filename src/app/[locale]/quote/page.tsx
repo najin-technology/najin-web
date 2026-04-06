@@ -67,7 +67,7 @@ export default function QuotePage() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-brand-charcoal">
-                        Phone
+                        {t("contactPhone")}
                       </p>
                       <p className="text-sm text-brand-charcoal/70 mt-0.5">
                         055-367-2596
@@ -86,7 +86,7 @@ export default function QuotePage() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-brand-charcoal">
-                        Address
+                        {t("contactAddress")}
                       </p>
                       <p className="text-sm text-brand-charcoal/70 mt-0.5">
                         경상남도 양산시 산막공단남14길 170
@@ -105,7 +105,7 @@ export default function QuotePage() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-brand-charcoal">
-                        Email
+                        {t("contactEmail")}
                       </p>
                       <p className="text-sm text-brand-charcoal/70 mt-0.5">
                         kinghak1@naver.com

@@ -38,15 +38,15 @@ const categoryIcons: Record<string, LucideIcon> = {
 };
 
 const clients = [
-  { name: "현대자동차", nameEn: "Hyundai Motor", category: "automotive", logo: "/images/logos/hyundai.png" },
+  { name: "현대자동차", nameEn: "Hyundai Motor", category: "automotive", logo: "/images/logos/hyundai.svg" },
   { name: "현대파워텍", nameEn: "Hyundai Powertech", category: "automotive", logo: "/images/logos/hyundai-powertech.svg" },
   { name: "르노삼성", nameEn: "Renault Samsung", category: "automotive", logo: "/images/logos/renault.svg" },
-  { name: "SK", nameEn: "SK", category: "industrial", logo: "/images/logos/sk.png" },
+  { name: "SK", nameEn: "SK", category: "industrial", logo: "/images/logos/sk.svg" },
   { name: "한화케미칼", nameEn: "Hanwha Chemical", category: "industrial", logo: "/images/logos/hanwha.svg" },
-  { name: "동희산업", nameEn: "Donghee Industrial", category: "automotive", logo: "/images/logos/donghee.png" },
+  { name: "동희산업", nameEn: "Donghee Industrial", category: "automotive", logo: "/images/logos/donghee.svg" },
   { name: "화신", nameEn: "Hwashin", category: "automotive", logo: "/images/logos/hwashin.svg" },
   { name: "성우하이텍", nameEn: "Sungwoo Hitech", category: "automotive", logo: "/images/logos/sungwoo.svg" },
-  { name: "GM Shanghai", nameEn: "GM Shanghai", category: "overseas", logo: "/images/logos/gm.png" },
+  { name: "GM Shanghai", nameEn: "GM Shanghai", category: "overseas", logo: "/images/logos/gm.svg" },
   { name: "Lear Dymos", nameEn: "Lear Dymos", category: "overseas", logo: "/images/logos/lear.svg" },
 ];
 
@@ -110,9 +110,10 @@ export default async function PortfolioPage() {
             {clients.map((client, i) => {
               const IconComponent = categoryIcons[client.category] || Factory;
               return (
-                <div
+                <Link
                   key={client.name}
-                  className="bg-white rounded-xl border border-surface-warm-200 p-6 text-center hover-lift"
+                  href={`/posts?tag=${client.name}`}
+                  className="bg-white rounded-xl border border-surface-warm-200 p-6 text-center hover-lift block cursor-pointer"
                   data-animate="fade-up"
                   data-animate-delay={String(Math.min((i % 5) + 1, 5))}
                 >
@@ -137,7 +138,7 @@ export default async function PortfolioPage() {
                   {client.name !== client.nameEn && (
                     <p className="text-xs text-brand-charcoal/60 mt-1">{client.nameEn}</p>
                   )}
-                </div>
+                </Link>
               );
             })}
           </div>

@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { PageCTA } from "@/components/page-cta";
 import { ImageFade } from "@/components/image-fade";
 import {
   Droplets,
@@ -124,6 +125,7 @@ export default function BusinessPage() {
           </div>
         </section>
       ))}
+      <PageCTA />
     </>
   );
 }

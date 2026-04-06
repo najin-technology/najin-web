@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 65" fill="none">
+  <path d="M100 5C72 5 48 17 48 32.5S72 60 100 60s52-12 52-27.5S128 5 100 5zm0 47c-22 0-40-8.7-40-19.5S78 13 100 13s40 8.7 40 19.5S122 52 100 52z" fill="#002C5F"/>
+  <path d="M78 32.5c0-7.2 9.8-13 22-13s22 5.8 22 13-9.8 13-22 13-22-5.8-22-13z" fill="none" stroke="#002C5F" stroke-width="1"/>
+  <text x="100" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="16" fill="#002C5F">HYUNDAI</text>
+</svg>
