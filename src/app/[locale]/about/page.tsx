@@ -1,6 +1,7 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { PageCTA } from "@/components/page-cta";
 import { getHistoryItems } from "@/lib/queries";
 import { ImageFade } from "@/components/image-fade";
 import {
@@ -326,6 +327,7 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+      <PageCTA />
     </>
   );
 }

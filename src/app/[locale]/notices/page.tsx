@@ -1,6 +1,7 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { PageCTA } from "@/components/page-cta";
 import { getPublishedNotices } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
 import { FileText, Calendar } from "lucide-react";
@@ -96,6 +97,7 @@ export default async function NoticesPage() {
           )}
         </div>
       </section>
+      <PageCTA />
     </>
   );
 }
