@@ -38,15 +38,15 @@ const categoryIcons: Record<string, LucideIcon> = {
 };
 
 const clients = [
-  { name: "국내외 주요 완성차사", nameEn: "Major automaker", category: "automotive", logo: "/images/logos/hyundai.png" },
+  { name: "국내외 주요 완성차사", nameEn: "Major automaker", category: "automotive", logo: "/images/logos/hyundai.svg" },
   { name: "주요 부품사", nameEn: "Major parts supplier", category: "automotive", logo: "/images/logos/hyundai-powertech.svg" },
   { name: "국내 완성차사", nameEn: "Domestic automaker", category: "automotive", logo: "/images/logos/renault.svg" },
-  { name: "SK", nameEn: "SK", category: "industrial", logo: "/images/logos/sk.png" },
+  { name: "SK", nameEn: "SK", category: "industrial", logo: "/images/logos/sk.svg" },
   { name: "한화케미칼", nameEn: "Hanwha Chemical", category: "industrial", logo: "/images/logos/hanwha.svg" },
-  { name: "주요 부품사", nameEn: "Major parts supplier", category: "automotive", logo: "/images/logos/donghee.png" },
+  { name: "주요 부품사", nameEn: "Major parts supplier", category: "automotive", logo: "/images/logos/donghee.svg" },
   { name: "주요 부품사", nameEn: "Major parts supplier", category: "automotive", logo: "/images/logos/hwashin.svg" },
   { name: "주요 부품사", nameEn: "Major parts supplier", category: "automotive", logo: "/images/logos/sungwoo.svg" },
-  { name: "Overseas automaker", nameEn: "Overseas automaker", category: "overseas", logo: "/images/logos/gm.png" },
+  { name: "Overseas automaker", nameEn: "Overseas automaker", category: "overseas", logo: "/images/logos/gm.svg" },
   { name: "해외 부품사", nameEn: "해외 부품사", category: "overseas", logo: "/images/logos/lear.svg" },
 ];
 
