@@ -48,7 +48,7 @@ export async function getActiveJobPostings() {
   return data;
 }
 
-export async function getPublishedPosts(category?: string) {
+export async function getPublishedPosts(category?: string, tag?: string) {
   let query = supabase
     .from("posts")
     .select(
@@ -60,6 +60,9 @@ export async function getPublishedPosts(category?: string) {
 
   if (category) {
     query = query.eq("category", category);
+  }
+  if (tag) {
+    query = query.contains("tags", [tag]);
   }
 
   const { data, error } = await query;

@@ -110,9 +110,10 @@ export default async function PortfolioPage() {
             {clients.map((client, i) => {
               const IconComponent = categoryIcons[client.category] || Factory;
               return (
-                <div
+                <Link
                   key={client.name}
-                  className="bg-white rounded-xl border border-surface-warm-200 p-6 text-center hover-lift"
+                  href={`/posts?tag=${client.name}`}
+                  className="bg-white rounded-xl border border-surface-warm-200 p-6 text-center hover-lift block cursor-pointer"
                   data-animate="fade-up"
                   data-animate-delay={String(Math.min((i % 5) + 1, 5))}
                 >
@@ -137,7 +138,7 @@ export default async function PortfolioPage() {
                   {client.name !== client.nameEn && (
                     <p className="text-xs text-brand-charcoal/60 mt-1">{client.nameEn}</p>
                   )}
-                </div>
+                </Link>
               );
             })}
           </div>
