@@ -164,39 +164,36 @@ export default function HomePage() {
         />
       </section>
 
-      {/* Client Logo Marquee — infinite scroll, modern pattern */}
+      {/* Client Logos — static grid, equal treatment */}
       <section className="py-10 md:py-14 bg-surface-warm-50 border-y border-surface-warm-200">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p
             className="text-center text-sm font-semibold text-brand-charcoal/60 uppercase tracking-[0.2em] mb-8"
             data-animate="fade-in"
           >
             {t("clientsTitle")}
           </p>
-        </div>
-        {/* Marquee — full width, edge-faded */}
-        <div className="marquee-container" data-animate="fade-in" data-animate-delay="1">
-          <div className="marquee-track">
-            {/* Duplicate the list for seamless loop */}
-            {[...clients, ...clients].map((client, i) => (
-              <div
-                key={`${client.name}-${i}`}
-                className="flex items-center justify-center px-8 md:px-12 shrink-0"
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-6 md:gap-8 items-center justify-items-center" data-animate="fade-up">
+            {clients.map((client) => (
+              <Link
+                key={client.name}
+                href={`/posts?tag=${client.name}`}
+                className="flex items-center justify-center h-12 w-full transition-opacity opacity-50 hover:opacity-100"
               >
                 {client.logo ? (
                   <Image
                     src={client.logo}
                     alt={client.name}
-                    width={140}
-                    height={48}
-                    className="h-8 md:h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 logo-hover"
+                    width={120}
+                    height={40}
+                    className="h-8 md:h-10 w-auto object-contain"
                   />
                 ) : (
-                  <span className="text-sm md:text-base font-bold text-brand-navy/60 hover:text-brand-navy transition-colors tracking-tight whitespace-nowrap">
+                  <span className="text-sm font-bold text-brand-navy/60 tracking-tight">
                     {client.name}
                   </span>
                 )}
-              </div>
+              </Link>
             ))}
           </div>
         </div>
