@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, useEffect } from "react";
+import { useActionState, useState } from "react";
 import { createJobPosting, updateJobPosting } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,12 +36,10 @@ export function JobPostingForm({
   const action = mode === "create" ? createJobPosting : updateJobPosting;
   const [state, formAction, pending] = useActionState(action, {});
   const [isActive, setIsActive] = useState(posting?.is_active ?? true);
-  const [tabValue, setTabValue] = useState("ko");
-
-  useEffect(() => {
-    const tab = new URLSearchParams(window.location.search).get("tab");
-    if (tab) setTabValue(tab);
-  }, []);
+  const [tabValue, setTabValue] = useState(() => {
+    if (typeof window === "undefined") return "ko";
+    return new URLSearchParams(window.location.search).get("tab") || "ko";
+  });
 
   return (
     <form action={formAction} className="space-y-6">

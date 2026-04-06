@@ -13,7 +13,19 @@
     "submitSuccess": "성공적으로 제출되었습니다.",
     "submitError": "제출 중 오류가 발생했습니다. 다시 시도해주세요.",
     "fileSizeError": "파일 크기는 10MB 이하만 가능합니다.",
-    "home": "홈으로 돌아가기"
+    "home": "홈으로 돌아가기",
+    "privacy": "개인정보처리방침"
+  },
+  "callback": {
+    "title": "전화 상담 요청",
+    "subtitle": "간단한 정보만 남겨주시면 담당자가 연락드립니다",
+    "companyName": "회사명",
+    "phone": "연락처",
+    "preferredTime": "희망 연락 시간",
+    "preferredTimePlaceholder": "예: 오후 2시~4시",
+    "submit": "상담 요청하기",
+    "successTitle": "요청이 접수되었습니다",
+    "successMessage": "담당자가 빠른 시간 내에 연락드리겠습니다."
   },
   "nav": {
     "home": "홈",
@@ -30,6 +42,7 @@
     "heroTitle": "25년 전통의 정밀 가공 전문기업",
     "heroSubtitle": "우레탄 성형 · 합성수지 가공 · CNC 정밀가공 · 금형 제작",
     "heroCta": "견적 요청하기",
+    "heroResponsePromise": "온라인 견적 → 24시간 내 회신 | 도면 첨부 가능",
     "statsYears": "년 역사",
     "statsClients": "주요 거래처",
     "statsCertified": "ISO 9001 인증",
@@ -45,6 +58,12 @@
     "ctaSubtitle": "25년의 경험으로 최적의 솔루션을 제공합니다",
     "ctaPersuasion": "온라인 견적 요청으로 빠르게 회신 드리겠습니다",
     "ctaPhone": "전화 상담: 055-367-2596",
+    "portfolioTitle": "주요 납품 실적",
+    "portfolioSubtitle": "국내외 주요 완성차사, SK 등 20+ 거래처에 부품을 납품하고 있습니다",
+    "portfolioViewAll": "전체 실적 보기",
+    "portfolio1": "국내외 주요 완성차사 엔진 마운트 우레탄 부품",
+    "portfolio2": "SK 반도체 장비 CNC 정밀 가공",
+    "portfolio3": "Overseas automaker 전기차 절연 부품",
     "whyTitle": "왜 나진테크인가",
     "whySubtitle": "25년간 대기업 부품을 납품하며 검증된 기술력과 신뢰를 갖추고 있습니다.",
     "why1Title": "특허 우레탄 금형베이스 기술",
@@ -159,6 +178,8 @@
     "attachment": "도면 첨부",
     "attachmentHelp": "PDF, DWG, DXF, STEP, IGS, JPG, PNG (최대 10MB)",
     "selectType": "가공종류를 선택하세요",
+    "optionalFieldsToggle": "상세 정보 추가 (선택사항)",
+    "optionalFieldsHint": "필수 정보만으로도 상담이 가능합니다",
     "successTitle": "견적 요청이 접수되었습니다",
     "successMessage": "담당자가 확인 후 빠른 시일 내에 연락드리겠습니다.",
     "contactInfo": "긴급 문의: TEL 055-367-2596",
@@ -168,7 +189,14 @@
     "processStep1": "견적 요청서 제출",
     "processStep2": "담당자 검토",
     "processStep3": "견적서 회신",
-    "processStep4": "상담 및 진행"
+    "processStep4": "상담 및 진행",
+    "faqTitle": "자주 묻는 질문",
+    "faq1Q": "최소 주문량이 있나요?",
+    "faq1A": "최소 주문량 제한은 없습니다. 시제품 1개부터 양산까지 모두 가능합니다.",
+    "faq2Q": "납기는 어떻게 되나요?",
+    "faq2A": "제품 사양에 따라 다르지만, 일반적으로 견적 확정 후 7~14일 내 납품합니다.",
+    "faq3Q": "도면 없이도 견적이 가능한가요?",
+    "faq3A": "네, 대략적인 사양과 수량만 알려주시면 개략 견적을 드립니다. 정밀 견적은 도면이 필요합니다."
   },
   "careers": {
     "pageTitle": "채용정보",

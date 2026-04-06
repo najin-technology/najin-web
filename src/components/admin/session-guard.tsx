@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 
 export function SessionGuard() {
-  const lastActivity = useRef(Date.now());
+  const lastActivity = useRef(0);
   const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
+    lastActivity.current = Date.now();
+
     const update = () => {
       lastActivity.current = Date.now();
       setShowWarning(false);

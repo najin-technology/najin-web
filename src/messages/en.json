@@ -13,7 +13,19 @@
     "submitSuccess": "Successfully submitted.",
     "submitError": "An error occurred. Please try again.",
     "fileSizeError": "File size must be 10MB or less.",
-    "home": "Back to Home"
+    "home": "Back to Home",
+    "privacy": "Privacy Policy"
+  },
+  "callback": {
+    "title": "Request a Callback",
+    "subtitle": "Leave your info and we'll call you back",
+    "companyName": "Company Name",
+    "phone": "Phone Number",
+    "preferredTime": "Preferred Time",
+    "preferredTimePlaceholder": "e.g., 2PM - 4PM",
+    "submit": "Request Callback",
+    "successTitle": "Request Received",
+    "successMessage": "Our team will contact you shortly."
   },
   "nav": {
     "home": "Home",
@@ -30,6 +42,7 @@
     "heroTitle": "Precision Manufacturing Since 2002",
     "heroSubtitle": "Urethane Molding · Synthetic Resin Processing · CNC Machining · Mold Fabrication",
     "heroCta": "Request a Quote",
+    "heroResponsePromise": "Online Quote → Reply within 24h | Drawings accepted",
     "statsYears": "Years of History",
     "statsClients": "Major Clients",
     "statsCertified": "ISO 9001 Certified",
@@ -45,6 +58,12 @@
     "ctaSubtitle": "25 years of experience delivering optimal solutions",
     "ctaPersuasion": "Quick response to your online quote request",
     "ctaPhone": "Call: 055-367-2596",
+    "portfolioTitle": "Key Projects",
+    "portfolioSubtitle": "Supplying parts to 20+ clients including Hyundai, SK, and more",
+    "portfolioViewAll": "View All Projects",
+    "portfolio1": "Major automaker engine mount urethane parts",
+    "portfolio2": "SK semiconductor equipment CNC precision machining",
+    "portfolio3": "Overseas automaker EV insulation components",
     "whyTitle": "Why NAJIN TECHNOLOGY",
     "whySubtitle": "25 years of proven expertise, supplying precision parts to Korea's leading manufacturers.",
     "why1Title": "Patented Urethane Mold Base Technology",
@@ -159,6 +178,8 @@
     "attachment": "Drawing Attachment",
     "attachmentHelp": "PDF, DWG, DXF, STEP, IGS, JPG, PNG (max 10MB)",
     "selectType": "Select processing type",
+    "optionalFieldsToggle": "Add Details (Optional)",
+    "optionalFieldsHint": "You can request a quote with just the required fields",
     "successTitle": "Quote request has been received",
     "successMessage": "Our team will review and contact you shortly.",
     "contactInfo": "Urgent inquiries: TEL 055-367-2596",
@@ -168,7 +189,14 @@
     "processStep1": "Submit Quote Request",
     "processStep2": "Review by Our Team",
     "processStep3": "Quote Response",
-    "processStep4": "Consultation & Proceed"
+    "processStep4": "Consultation & Proceed",
+    "faqTitle": "FAQ",
+    "faq1Q": "Is there a minimum order quantity?",
+    "faq1A": "No minimum order. We handle everything from single prototypes to mass production.",
+    "faq2Q": "What is the lead time?",
+    "faq2A": "Typically 7-14 days after quote confirmation, depending on product specifications.",
+    "faq3Q": "Can I get a quote without drawings?",
+    "faq3A": "Yes, rough specs and quantity are enough for a ballpark estimate. Detailed drawings are needed for precise quotes."
   },
   "careers": {
     "pageTitle": "Careers",

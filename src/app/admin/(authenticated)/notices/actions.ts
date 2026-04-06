@@ -133,7 +133,7 @@ export async function toggleNoticePublish(id: string) {
 
   const newPublished = !notice.is_published;
 
-  await supabase
+  const { error } = await supabase
     .from("notices")
     .update({
       is_published: newPublished,
@@ -141,6 +141,8 @@ export async function toggleNoticePublish(id: string) {
       updated_at: new Date().toISOString(),
     })
     .eq("id", id);
+
+  if (error) return;
 
   await logAudit({
     action: newPublished ? "publish" : "unpublish",

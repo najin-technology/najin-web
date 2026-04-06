@@ -22,6 +22,7 @@ export function ImageFade({
   const [loaded, setLoaded] = useState(false);
 
   const imageEl = (
+    // eslint-disable-next-line jsx-a11y/alt-text -- alt is passed through ...props
     <Image
       {...props}
       className={cn(

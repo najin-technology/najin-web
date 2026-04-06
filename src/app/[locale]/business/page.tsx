@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
-import Image from "next/image";
 import { ImageFade } from "@/components/image-fade";
 import {
   Droplets,
