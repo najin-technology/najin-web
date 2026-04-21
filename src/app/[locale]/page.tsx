@@ -8,9 +8,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     locale,
     path: "",
     titles: {
-      ko: "나진테크 | 25년 전통 정밀 가공 전문기업",
-      en: "NAJIN TECHNOLOGY | Precision Manufacturing Since 2002",
-      zh: "纳进科技 | 25年精密加工专业企业",
+      ko: "25년 전통 정밀 가공 전문기업",
+      en: "Precision Manufacturing Since 2002",
+      zh: "25年精密加工专业企业",
     },
     descriptions: {
       ko: "경남 양산 우레탄 성형, 합성수지 가공, CNC 정밀가공, 금형 제작 전문기업 나진테크. 국내외 주요 완성차사, SK, Overseas automaker 등 20+ 거래처 납품.",
@@ -187,6 +187,7 @@ export default function HomePage() {
                     width={120}
                     height={40}
                     className="h-8 md:h-10 w-auto object-contain"
+                    unoptimized
                   />
                 ) : (
                   <span className="text-sm font-bold text-brand-navy/60 tracking-tight">
@@ -336,6 +337,7 @@ export default function HomePage() {
                     width={28}
                     height={28}
                     className="object-contain opacity-60"
+                    unoptimized
                   />
                   <p className="text-sm font-medium text-brand-charcoal line-clamp-1">{t(item.key)}</p>
                 </div>
@@ -368,7 +370,7 @@ export default function HomePage() {
             <div data-animate="fade-up" data-animate-delay="1">
               <Calendar className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
-                <StatsCounter end={24} suffix="+" />
+                <StatsCounter end={25} suffix="+" />
               </div>
               <div className="text-sm text-white/80">{t("statsYears")}</div>
             </div>
@@ -437,8 +439,8 @@ export default function HomePage() {
                   </Button>
                 </Link>
                 <a
-                  href="tel:055-367-2596"
-                  className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm mt-2"
+                  href="tel:+82-55-367-2596"
+                  className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm mt-2"
                 >
                   <Phone className="w-4 h-4" />
                   <span>{t("ctaPhone")}</span>

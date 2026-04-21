@@ -206,7 +206,7 @@ export default async function AboutPage() {
               },
               {
                 icon: Building2,
-                title: `CLEAN ${locale === "ko" ? "사업장" : "Workplace"}`,
+                title: `CLEAN ${locale === "ko" ? "사업장" : locale === "zh" ? "优秀企业" : "Workplace"}`,
                 desc: t("certClean"),
                 year: "2013 ~",
               },
@@ -215,7 +215,9 @@ export default async function AboutPage() {
                 title:
                   locale === "ko"
                     ? "우레탄 금형베이스 특허"
-                    : "Urethane Mold Base Patent",
+                    : locale === "zh"
+                      ? "聚氨酯模具基座专利"
+                      : "Urethane Mold Base Patent",
                 desc: t("certPatent"),
                 year: "2016 ~",
               },

@@ -3,7 +3,7 @@
     "companyName": "NAJIN TECHNOLOGY",
     "companyNameFull": "NAJIN TECHNOLOGY",
     "requestQuote": "Request Quote",
-    "language": "KO",
+    "language": "EN",
     "backToList": "Back to list",
     "noData": "No data available.",
     "submit": "Submit",
@@ -59,7 +59,7 @@
     "ctaTitle": "Start Your Project With Us",
     "ctaSubtitle": "25 years of experience delivering optimal solutions",
     "ctaPersuasion": "Quick response to your online quote request",
-    "ctaPhone": "Call: 055-367-2596",
+    "ctaPhone": "Call: +82-55-367-2596",
     "portfolioTitle": "Key Projects",
     "portfolioSubtitle": "Supplying parts to 20+ clients including Hyundai, SK, and more",
     "portfolioViewAll": "View All Projects",
@@ -73,7 +73,7 @@
     "why2Title": "5-Process One-Stop Service",
     "why2Desc": "From urethane molding to synthetic resin, CNC machining, mold fabrication, and EV parts — all processed in a single facility. No outsourcing, faster delivery.",
     "why3Title": "20+ Major Corporate Clients",
-    "why3Desc": "Continuously supplying parts to Major automaker, SK, Overseas automaker, and 20+ domestic and international companies for over 24 years.",
+    "why3Desc": "Continuously supplying parts to Major automaker, SK, Overseas automaker, and 20+ domestic and international companies for over 25 years.",
     "why4Title": "EV Parts Specialist",
     "why4Desc": "Equipped with dedicated processing lines for battery pack components, motor parts, and other EV-specific parts. Ready for the green mobility era."
   },
@@ -122,7 +122,8 @@
       "title": "EV Parts Processing",
       "desc": "Keeping pace with the EV era, we process battery pack components, motor-related parts, and other EV-specific parts. We contribute to the eco-friendly future industry.",
       "features": "Battery Pack Parts · Motor Parts · EV Specialized · Eco-friendly Industry"
-    }
+    },
+    "viewCases": "View Related Projects"
   },
   "portfolio": {
     "pageTitle": "Portfolio",
@@ -187,7 +188,7 @@
     "optionalFieldsHint": "You can request a quote with just the required fields",
     "successTitle": "Quote request has been received",
     "successMessage": "Our team will review and contact you shortly.",
-    "contactInfo": "Urgent inquiries: TEL 055-367-2596",
+    "contactInfo": "Urgent inquiries: TEL +82-55-367-2596",
     "responsePromise": "We'll respond as soon as possible",
     "nextSteps": "Our team will review your drawings and send a detailed quotation.",
     "processTitle": "Quote Process",
@@ -207,7 +208,7 @@
     "pageTitle": "Careers",
     "pageDescription": "Join the NAJIN TECHNOLOGY team.",
     "openPositions": "Open Positions",
-    "noOpenings": "No open positions at this time. Please check back later.",
+    "noOpenings": "No open positions at this time, but we always welcome talented individuals. Please submit your resume below.",
     "department": "Department",
     "employmentType": "Employment Type",
     "deadlineLabel": "Deadline",
@@ -266,12 +267,12 @@
     "question7": "What is the patented urethane mold base technology?",
     "answer7": "This is a proprietary patented technology developed by NAJIN TECHNOLOGY that significantly improves precision and durability in urethane mold fabrication. It improves production efficiency by over 30% compared to conventional methods and dramatically reduces defect rates.",
     "question8": "How do I request a quote?",
-    "answer8": "Simply fill out the form on our Quote Request page. Attach your drawings (DWG, STEP, PDF, etc.) and our team will respond with a detailed quote as soon as possible. You can also call us at 055-367-2596."
+    "answer8": "Simply fill out the form on our Quote Request page. Attach your drawings (DWG, STEP, PDF, etc.) and our team will respond with a detailed quote as soon as possible. You can also call us at +82-55-367-2596."
   },
   "footer": {
     "address": "170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea",
-    "phone": "055-367-2596",
-    "fax": "055-367-2597",
+    "phone": "+82-55-367-2596",
+    "fax": "+82-55-367-2597",
     "privacy": "Privacy Policy",
     "copyright": "© {year} NAJIN TECHNOLOGY. All rights reserved.",
     "tagline": "Precision Manufacturing Experts Since 2002",

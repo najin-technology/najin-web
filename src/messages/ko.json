@@ -3,7 +3,7 @@
     "companyName": "나진테크",
     "companyNameFull": "나진테크 (NAJIN TECHNOLOGY)",
     "requestQuote": "견적문의",
-    "language": "EN",
+    "language": "KO",
     "backToList": "목록으로",
     "noData": "등록된 내용이 없습니다.",
     "submit": "제출하기",
@@ -73,7 +73,7 @@
     "why2Title": "5개 공정 원스톱 서비스",
     "why2Desc": "우레탄 성형부터 합성수지, CNC 가공, 금형 제작, EV 부품까지 하나의 공장에서 처리. 외주 없이 납기를 단축합니다.",
     "why3Title": "국내외 주요 완성차사 등 20+ 대기업 납품",
-    "why3Desc": "국내외 주요 완성차사, SK, Overseas automaker 등 국내외 20개 이상 기업에 24년간 꾸준히 부품을 공급하고 있습니다.",
+    "why3Desc": "국내외 주요 완성차사, SK, Overseas automaker 등 국내외 20개 이상 기업에 25년간 꾸준히 부품을 공급하고 있습니다.",
     "why4Title": "EV 부품 전문 가공",
     "why4Desc": "배터리팩 부품, 모터 부품 등 전기차 전용 부품 가공 라인을 갖추고 있습니다. 친환경 모빌리티 시대에 대응합니다."
   },
@@ -122,7 +122,8 @@
       "title": "EV 부품 가공",
       "desc": "전기차 시대에 발맞춰 배터리팩 구성 부품, 모터 관련 부품 등 EV(전기차) 전용 부품을 가공합니다. 친환경 미래 산업에 기여하고 있습니다.",
       "features": "배터리팩 부품 · 모터 부품 · 전기차 전용 · 친환경 산업"
-    }
+    },
+    "viewCases": "관련 제작사례 보기"
   },
   "portfolio": {
     "pageTitle": "주요실적",
@@ -207,7 +208,7 @@
     "pageTitle": "채용정보",
     "pageDescription": "나진테크와 함께할 인재를 찾습니다.",
     "openPositions": "채용 공고",
-    "noOpenings": "현재 채용 공고가 없습니다. 추후 공고가 등록되면 확인해주세요.",
+    "noOpenings": "현재 공개 채용 공고는 없지만, 나진테크는 우수한 인재를 상시 환영합니다. 아래 양식으로 이력서를 제출해 주세요.",
     "department": "부서",
     "employmentType": "고용형태",
     "deadlineLabel": "마감일",
