@@ -30,6 +30,15 @@ export function createPageMetadata({
       url: `${BASE_URL}/${locale}${path}`,
       siteName: "나진테크 | NAJIN TECHNOLOGY",
       locale: locale === "ko" ? "ko_KR" : locale === "zh" ? "zh_CN" : "en_US",
+      type: "website",
+      images: [
+        {
+          url: `${BASE_URL}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: "나진테크 | NAJIN TECHNOLOGY",
+        },
+      ],
     },
   };
 }
