@@ -77,7 +77,7 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
             aria-label="로그아웃"
           >
             <LogOut className="w-4 h-4" />
-            <span className="text-xs hidden sm:inline">로그아웃</span>
+            <span className="text-sm">로그아웃</span>
           </Button>
         </form>
       </div>

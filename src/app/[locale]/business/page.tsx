@@ -3,12 +3,14 @@ import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
 import { ImageFade } from "@/components/image-fade";
+import { Link } from "@/i18n/routing";
 import {
   Droplets,
   FlaskConical,
   Cog,
   Box,
   Zap,
+  ArrowRight,
   type LucideIcon,
 } from "lucide-react";
 
@@ -33,12 +35,13 @@ const categories: {
   icon: LucideIcon;
   image: string;
   imageAlt: string;
+  tag: string;
 }[] = [
-  { key: "urethane", icon: Droplets, image: "/images/factory/workshop-2.jpg", imageAlt: "우레탄 성형 장비" },
-  { key: "resin", icon: FlaskConical, image: "/images/products/pe-rod-1.jpg", imageAlt: "PE 환봉 가공" },
-  { key: "cnc", icon: Cog, image: "/images/products/3d-mc-part-1.jpg", imageAlt: "3D MC 형상 가공품" },
-  { key: "mold", icon: Box, image: "/images/products/3d-mc-part-2.jpg", imageAlt: "금형 가공품" },
-  { key: "ev", icon: Zap, image: "/images/products/pe-rod-4.jpg", imageAlt: "EV 부품 가공" },
+  { key: "urethane", icon: Droplets, image: "/images/factory/workshop-2.jpg", imageAlt: "우레탄 성형 장비", tag: "우레탄" },
+  { key: "resin", icon: FlaskConical, image: "/images/products/pe-rod-1.jpg", imageAlt: "PE 환봉 가공", tag: "합성수지" },
+  { key: "cnc", icon: Cog, image: "/images/products/3d-mc-part-1.jpg", imageAlt: "3D MC 형상 가공품", tag: "CNC" },
+  { key: "mold", icon: Box, image: "/images/products/3d-mc-part-2.jpg", imageAlt: "금형 가공품", tag: "금형" },
+  { key: "ev", icon: Zap, image: "/images/products/pe-rod-4.jpg", imageAlt: "EV 부품 가공", tag: "EV" },
 ];
 
 export default function BusinessPage() {
@@ -106,6 +109,13 @@ export default function BusinessPage() {
                       </span>
                     ))}
                 </div>
+                <Link
+                  href={`/posts?tag=${cat.tag}`}
+                  className="inline-flex items-center gap-1.5 mt-6 text-sm font-medium text-brand-copper hover:text-brand-copper-light transition-colors"
+                >
+                  {t("viewCases")}
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
 
               {/* Product image */}
