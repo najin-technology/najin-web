@@ -79,16 +79,19 @@ export async function submitQuote(
       .from("quote-attachments")
       .upload(filePath, file);
 
-    if (!uploadError) {
-      await supabase.from("attachments").insert({
-        parent_table: "quotes",
-        parent_id: quote.id,
-        file_url: filePath,
-        file_name: file.name,
-        file_size: file.size,
-        mime_type: file.type || "application/octet-stream",
-      });
+    if (uploadError) {
+      console.error("File upload error:", uploadError);
+      return { success: false, error: "파일 업로드 중 오류가 발생했습니다. 견적 요청은 접수되었으나 첨부파일 전송에 실패했습니다. 이메일로 도면을 보내주세요." };
     }
+
+    await supabase.from("attachments").insert({
+      parent_table: "quotes",
+      parent_id: quote.id,
+      file_url: filePath,
+      file_name: file.name,
+      file_size: file.size,
+      mime_type: file.type || "application/octet-stream",
+    });
   }
 
   // Send email notification (non-blocking)
