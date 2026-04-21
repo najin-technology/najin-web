@@ -29,6 +29,11 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
           },
+          {
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: *.supabase.co; font-src 'self' https://fonts.gstatic.com; connect-src 'self' *.supabase.co https://va.vercel-scripts.com; frame-src 'self' https://maps.google.com; frame-ancestors 'self'",
+          },
         ],
       },
       {
