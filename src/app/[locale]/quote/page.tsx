@@ -14,9 +14,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     path: "/quote",
     titles: { ko: "견적문의", en: "Request a Quote", zh: "询价咨询" },
     descriptions: {
-      ko: "나진테크 견적문의. 도면 첨부 가능, 24시간 내 회신. 우레탄, 합성수지, CNC, 금형 견적 요청.",
-      en: "Request a quote from NAJIN TECHNOLOGY. Attach drawings, 24-hour response. Urethane, resin, CNC, mold quotes.",
-      zh: "纳进科技询价咨询。可附图纸，24小时内回复。聚氨酯、合成树脂、CNC、模具报价。",
+      ko: "나진테크 견적문의. 도면 첨부 가능, 최대한 빠르게 회신. 우레탄, 합성수지, CNC, 금형 견적 요청.",
+      en: "Request a quote from NAJIN TECHNOLOGY. Attach drawings, prompt response. Urethane, resin, CNC, mold quotes.",
+      zh: "纳进科技询价咨询。可附图纸，尽快回复。聚氨酯、合成树脂、CNC、模具报价。",
     },
   });
 }
