@@ -243,7 +243,27 @@
     "relatedPosts": "Related Projects",
     "sharePost": "Share",
     "categoryCases": "Projects",
-    "categoryProducts": "Products"
+    "categoryProducts": "Products",
+    "countSuffix": ""
+  },
+  "clients": {
+    "breadcrumb": "Clients",
+    "registeredYear": "Vendor since {year}",
+    "deliveriesTitle": "Collaboration history",
+    "deliveriesDesc": "Verified delivery records from our company introduction.",
+    "noDeliveriesTitle": "Coming soon",
+    "noDeliveriesDesc": "We are preparing the collaboration history for {name}. For inquiries, please contact us via the quote form.",
+    "ctaQuote": "Request a Quote",
+    "ctaContact": "Contact Us",
+    "browseCatalogTitle": "What NAJIN TECHNOLOGY offers",
+    "browseCatalogDesc": "Reference catalog. Items below are not necessarily linked to the deliveries above.",
+    "viewAllPortfolio": "View all products",
+    "viewAllPosts": "View all projects",
+    "sourceLabel": "Source",
+    "monthLabel": "Month {month}",
+    "notFoundTitle": "Client not found",
+    "notFoundDesc": "We could not find the requested client page.",
+    "backToPortfolio": "Back to Portfolio"
   },
   "privacy": {
     "pageTitle": "Privacy Policy",

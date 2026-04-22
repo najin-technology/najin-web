@@ -110,6 +110,18 @@ export async function getPostCategories() {
   return categories;
 }
 
+export async function getClientDeliveries(slug: string) {
+  const { data, error } = await supabase
+    .from("client_deliveries")
+    .select("id, year, month, description_ko, description_en, source")
+    .eq("client_slug", slug)
+    .order("year", { ascending: false })
+    .order("month", { ascending: false, nullsFirst: false });
+
+  if (error) throw error;
+  return data;
+}
+
 export async function getProductsByCategory() {
   const { data, error } = await supabase
     .from("products")
