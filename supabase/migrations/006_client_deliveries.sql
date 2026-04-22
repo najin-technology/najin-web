@@ -95,9 +95,9 @@ INSERT INTO client_deliveries (client_slug, year, month, description_ko, descrip
    'Renault Samsung — LG BATTERY PACK machining',
    '회사소개 (2019)'),
 
-  -- 한화케미칼 (등록 이력만 존재)
-  ('hanwha-chemical', 2003, 6, '㈜한화종합화학 거래 등록',
-   'Hanwha General Chemical — Vendor registration',
+  -- 한화임팩트 (2003년 ㈜한화종합화학 명의로 거래 등록 → 2014 한화토탈 → 2022 한화임팩트)
+  ('hanwha-impact', 2003, 6, '㈜한화종합화학 거래 등록 (현 한화임팩트)',
+   'Vendor registration as Hanwha General Chemical (now Hanwha Impact)',
    '회사소개 (2019)'),
 
   -- 동희산업 (등록 이력만 존재)

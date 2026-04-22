@@ -45,9 +45,12 @@ export const CLIENTS: Client[] = [
     registeredYear: 2016,
   },
   {
-    slug: "hanwha-chemical",
-    name: "한화케미칼",
-    nameEn: "Hanwha Chemical",
+    // 2003년 거래 등록 당시 사명: ㈜한화종합화학.
+    // 2014년 한화토탈 합작 → 2022년 한화임팩트로 변경 (현재 명칭).
+    // slug 는 URL 안정성 위해 hanwha-impact 사용.
+    slug: "hanwha-impact",
+    name: "한화임팩트",
+    nameEn: "Hanwha Impact",
     logo: "/images/logos/hanwha.svg",
     category: "industrial",
     registeredYear: 2003,
