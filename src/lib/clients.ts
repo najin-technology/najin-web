@@ -18,7 +18,7 @@ export const CLIENTS: Client[] = [
     slug: "hyundai",
     name: "현대자동차",
     nameEn: "Hyundai Motor",
-    logo: "/images/logos/hyundai.svg",
+    logo: "/images/logos/hyundai.svg", // Wikipedia Commons (Public Domain)
     category: "automotive",
   },
   {
@@ -56,7 +56,7 @@ export const CLIENTS: Client[] = [
     slug: "donghee",
     name: "동희산업",
     nameEn: "Donghee Industrial",
-    logo: "/images/logos/donghee.svg",
+    logo: "/images/logos/donghee.png", // donghee.co.kr 공식
     category: "automotive",
     registeredYear: 2014,
   },
@@ -64,14 +64,14 @@ export const CLIENTS: Client[] = [
     slug: "hwashin",
     name: "화신",
     nameEn: "Hwashin",
-    logo: "/images/logos/hwashin.svg",
+    logo: "/images/logos/hwashin.png", // hwashin.co.kr 공식
     category: "automotive",
   },
   {
     slug: "sungwoo-hitech",
     name: "성우하이텍",
     nameEn: "Sungwoo Hitech",
-    logo: "/images/logos/sungwoo.svg",
+    logo: "/images/logos/sungwoo.png", // swhitech.com 공식
     category: "automotive",
     registeredYear: 2010,
   },
@@ -79,7 +79,7 @@ export const CLIENTS: Client[] = [
     slug: "gm-shanghai",
     name: "GM Shanghai",
     nameEn: "GM Shanghai",
-    logo: "/images/logos/gm.svg",
+    logo: "/images/logos/gm.png", // Wikipedia Commons (Public Domain)
     category: "overseas",
   },
   {
