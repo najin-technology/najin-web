@@ -95,9 +95,9 @@ INSERT INTO client_deliveries (client_slug, year, month, description_ko, descrip
    'Domestic automaker — LG BATTERY PACK machining',
    '회사소개 (2019)'),
 
-  -- 한화케미칼 (등록 이력만 존재)
-  ('hanwha-chemical', 2003, 6, '㈜주요 화학사 거래 등록',
-   'Major chemical company — Vendor registration',
+  -- 주요 화학사 (2003년 ㈜주요 화학사 명의로 거래 등록 → 2014 한화토탈 → 2022 주요 화학사)
+  ('hanwha-impact', 2003, 6, '㈜주요 화학사 거래 등록 (현 주요 화학사)',
+   'Vendor registration as Major chemical company (now Major chemical company)',
    '회사소개 (2019)'),
 
   -- 주요 부품사 (등록 이력만 존재)
