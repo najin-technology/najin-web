@@ -4,15 +4,10 @@ import { Breadcrumb } from "@/components/breadcrumb";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { getProductsByCategory } from "@/lib/queries";
+import { CLIENTS } from "@/lib/clients";
 import Image from "next/image";
 import { ImageFade } from "@/components/image-fade";
-import {
-  Car,
-  Globe,
-  Factory,
-  Phone,
-  type LucideIcon,
-} from "lucide-react";
+import { Phone } from "lucide-react";
 import { PortfolioGallery } from "@/components/portfolio-gallery";
 
 import { createPageMetadata } from "@/lib/metadata";
@@ -30,25 +25,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
   });
 }
-
-const categoryIcons: Record<string, LucideIcon> = {
-  automotive: Car,
-  overseas: Globe,
-  industrial: Factory,
-};
-
-const clients = [
-  { name: "국내외 주요 완성차사", nameEn: "Major automaker", category: "automotive", logo: "/images/logos/hyundai.svg" },
-  { name: "주요 부품사", nameEn: "Major parts supplier", category: "automotive", logo: "/images/logos/hyundai-powertech.svg" },
-  { name: "국내 완성차사", nameEn: "Domestic automaker", category: "automotive", logo: "/images/logos/renault.svg" },
-  { name: "SK", nameEn: "SK", category: "industrial", logo: "/images/logos/sk.svg" },
-  { name: "한화케미칼", nameEn: "Hanwha Chemical", category: "industrial", logo: "/images/logos/hanwha.svg" },
-  { name: "주요 부품사", nameEn: "Major parts supplier", category: "automotive", logo: "/images/logos/donghee.svg" },
-  { name: "주요 부품사", nameEn: "Major parts supplier", category: "automotive", logo: "/images/logos/hwashin.svg" },
-  { name: "주요 부품사", nameEn: "Major parts supplier", category: "automotive", logo: "/images/logos/sungwoo.svg" },
-  { name: "Overseas automaker", nameEn: "Overseas automaker", category: "overseas", logo: "/images/logos/gm.svg" },
-  { name: "해외 부품사", nameEn: "해외 부품사", category: "overseas", logo: "/images/logos/lear.svg" },
-];
 
 // Fallback gallery items if DB is empty
 const fallbackGallery = [
@@ -107,41 +83,33 @@ export default async function PortfolioPage() {
             {t("clientsDesc")}
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {clients.map((client, i) => {
-              const IconComponent = categoryIcons[client.category] || Factory;
-              return (
-                <Link
-                  key={client.name}
-                  href={`/posts?tag=${client.name}`}
-                  className="bg-white rounded-xl border border-surface-warm-200 p-6 text-center hover-lift block cursor-pointer"
-                  data-animate="fade-up"
-                  data-animate-delay={String(Math.min((i % 5) + 1, 5))}
-                >
-                  {client.logo ? (
-                    <div className="h-10 flex items-center justify-center mx-auto mb-3">
-                      <Image
-                        src={client.logo}
-                        alt={client.name}
-                        width={120}
-                        height={40}
-                        className="h-8 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100"
-                        unoptimized
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-brand-copper/10 flex items-center justify-center mx-auto mb-3">
-                      <IconComponent className="w-6 h-6 text-brand-copper" />
-                    </div>
-                  )}
-                  <p className="font-semibold text-brand-navy text-sm">
-                    {client.name}
-                  </p>
-                  {client.name !== client.nameEn && (
-                    <p className="text-xs text-brand-charcoal/60 mt-1">{client.nameEn}</p>
-                  )}
-                </Link>
-              );
-            })}
+            {CLIENTS.map((client, i) => (
+              <Link
+                key={client.slug}
+                href={`/clients/${client.slug}`}
+                className="bg-white rounded-xl border border-surface-warm-200 p-6 text-center hover-lift block cursor-pointer"
+                data-animate="fade-up"
+                data-animate-delay={String(Math.min((i % 5) + 1, 5))}
+                aria-label={client.name}
+              >
+                <div className="h-10 flex items-center justify-center mx-auto mb-3">
+                  <Image
+                    src={client.logo}
+                    alt={client.name}
+                    width={120}
+                    height={40}
+                    className="h-8 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100"
+                    unoptimized
+                  />
+                </div>
+                <p className="font-semibold text-brand-navy text-sm">
+                  {client.name}
+                </p>
+                {client.name !== client.nameEn && (
+                  <p className="text-xs text-brand-charcoal/60 mt-1">{client.nameEn}</p>
+                )}
+              </Link>
+            ))}
           </div>
         </div>
       </section>

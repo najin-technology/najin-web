@@ -47,13 +47,21 @@ export default async function PostsPage({
   const { category, tag } = await searchParams;
 
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
+  let allPosts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
   try {
     posts = await getPublishedPosts(category, tag);
+    allPosts = tag || category ? await getPublishedPosts() : posts;
   } catch {
     // fallback
   }
 
   const allCategories = Object.keys(CATEGORY_KEYS);
+  const totalCount = allPosts.length;
+  const countByCategory: Record<string, number> = {};
+  for (const p of allPosts) {
+    countByCategory[p.category] = (countByCategory[p.category] || 0) + 1;
+  }
+  const countSuffix = t("countSuffix");
 
   return (
     <>
@@ -81,20 +89,30 @@ export default async function PostsPage({
               }`}
             >
               {t("allCategories")}
+              <span className={`ml-1.5 text-xs ${!category ? "text-white/70" : "text-brand-charcoal/50"}`}>
+                {totalCount}{countSuffix}
+              </span>
             </Link>
-            {allCategories.map((cat) => (
-              <Link
-                key={cat}
-                href={`/posts?category=${cat}`}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  category === cat
-                    ? "bg-brand-navy text-white"
-                    : "bg-white text-brand-charcoal border border-surface-warm-200 hover:border-brand-copper"
-                }`}
-              >
-                {t(CATEGORY_KEYS[cat] || cat)}
-              </Link>
-            ))}
+            {allCategories.map((cat) => {
+              const count = countByCategory[cat] || 0;
+              const active = category === cat;
+              return (
+                <Link
+                  key={cat}
+                  href={`/posts?category=${cat}`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    active
+                      ? "bg-brand-navy text-white"
+                      : "bg-white text-brand-charcoal border border-surface-warm-200 hover:border-brand-copper"
+                  }`}
+                >
+                  {t(CATEGORY_KEYS[cat] || cat)}
+                  <span className={`ml-1.5 text-xs ${active ? "text-white/70" : "text-brand-charcoal/50"}`}>
+                    {count}{countSuffix}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Active tag filter indicator */}

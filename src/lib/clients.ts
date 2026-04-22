@@ -1,0 +1,96 @@
+// 거래처 메타데이터 단일 소스.
+// 출처: 회사 소개 글 (https://blog.naver.com/kinghak1/221437105999) 의 납품현황 + 거래등록 이력.
+// name 은 옛 사명 유지(사용자 결정).
+
+export type ClientCategory = "automotive" | "industrial" | "overseas";
+
+export type Client = {
+  slug: string;
+  name: string;
+  nameEn: string;
+  logo: string;
+  category: ClientCategory;
+  registeredYear?: number;
+};
+
+export const CLIENTS: Client[] = [
+  {
+    slug: "hyundai",
+    name: "국내외 주요 완성차사",
+    nameEn: "Major automaker",
+    logo: "/images/logos/hyundai.svg",
+    category: "automotive",
+  },
+  {
+    slug: "hyundai-powertech",
+    name: "주요 부품사",
+    nameEn: "Major parts supplier",
+    logo: "/images/logos/hyundai-powertech.svg",
+    category: "automotive",
+  },
+  {
+    slug: "renault-samsung",
+    name: "국내 완성차사",
+    nameEn: "Domestic automaker",
+    logo: "/images/logos/renault.svg",
+    category: "automotive",
+    registeredYear: 2014,
+  },
+  {
+    slug: "sk",
+    name: "SK",
+    nameEn: "SK",
+    logo: "/images/logos/sk.svg",
+    category: "industrial",
+    registeredYear: 2016,
+  },
+  {
+    slug: "hanwha-chemical",
+    name: "한화케미칼",
+    nameEn: "Hanwha Chemical",
+    logo: "/images/logos/hanwha.svg",
+    category: "industrial",
+    registeredYear: 2003,
+  },
+  {
+    slug: "donghee",
+    name: "주요 부품사",
+    nameEn: "Major parts supplier",
+    logo: "/images/logos/donghee.svg",
+    category: "automotive",
+    registeredYear: 2014,
+  },
+  {
+    slug: "hwashin",
+    name: "주요 부품사",
+    nameEn: "Major parts supplier",
+    logo: "/images/logos/hwashin.svg",
+    category: "automotive",
+  },
+  {
+    slug: "sungwoo-hitech",
+    name: "주요 부품사",
+    nameEn: "Major parts supplier",
+    logo: "/images/logos/sungwoo.svg",
+    category: "automotive",
+    registeredYear: 2010,
+  },
+  {
+    slug: "gm-shanghai",
+    name: "Overseas automaker",
+    nameEn: "Overseas automaker",
+    logo: "/images/logos/gm.svg",
+    category: "overseas",
+  },
+  {
+    slug: "lear-dymos",
+    name: "해외 부품사",
+    nameEn: "해외 부품사",
+    logo: "/images/logos/lear.svg",
+    category: "overseas",
+  },
+];
+
+export function getClientBySlug(slug: string): Client | undefined {
+  return CLIENTS.find((c) => c.slug === slug);
+}

@@ -42,18 +42,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-const clients: { name: string; logo?: string }[] = [
-  { name: "국내외 주요 완성차사", logo: "/images/logos/hyundai.svg" },
-  { name: "주요 부품사", logo: "/images/logos/hyundai-powertech.svg" },
-  { name: "국내 완성차사", logo: "/images/logos/renault.svg" },
-  { name: "SK", logo: "/images/logos/sk.svg" },
-  { name: "한화케미칼", logo: "/images/logos/hanwha.svg" },
-  { name: "주요 부품사", logo: "/images/logos/donghee.svg" },
-  { name: "주요 부품사", logo: "/images/logos/hwashin.svg" },
-  { name: "주요 부품사", logo: "/images/logos/sungwoo.svg" },
-  { name: "Overseas automaker", logo: "/images/logos/gm.svg" },
-  { name: "해외 부품사", logo: "/images/logos/lear.svg" },
-];
+import { CLIENTS } from "@/lib/clients";
 
 const businessAreas: {
   key: string;
@@ -174,26 +163,21 @@ export default function HomePage() {
             {t("clientsTitle")}
           </p>
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-6 md:gap-8 items-center justify-items-center" data-animate="fade-up">
-            {clients.map((client) => (
+            {CLIENTS.map((client) => (
               <Link
-                key={client.name}
-                href={`/posts?tag=${client.name}`}
+                key={client.slug}
+                href={`/clients/${client.slug}`}
                 className="flex items-center justify-center h-12 w-full transition-opacity opacity-50 hover:opacity-100"
+                aria-label={client.name}
               >
-                {client.logo ? (
-                  <Image
-                    src={client.logo}
-                    alt={client.name}
-                    width={120}
-                    height={40}
-                    className="h-8 md:h-10 w-auto object-contain"
-                    unoptimized
-                  />
-                ) : (
-                  <span className="text-sm font-bold text-brand-navy/60 tracking-tight">
-                    {client.name}
-                  </span>
-                )}
+                <Image
+                  src={client.logo}
+                  alt={client.name}
+                  width={120}
+                  height={40}
+                  className="h-8 md:h-10 w-auto object-contain"
+                  unoptimized
+                />
               </Link>
             ))}
           </div>

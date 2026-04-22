@@ -243,7 +243,27 @@
     "relatedPosts": "相关案例",
     "sharePost": "分享",
     "categoryCases": "制作案例",
-    "categoryProducts": "产品"
+    "categoryProducts": "产品",
+    "countSuffix": "件"
+  },
+  "clients": {
+    "breadcrumb": "客户",
+    "registeredYear": "{year} 年合作登记",
+    "deliveriesTitle": "合作案例",
+    "deliveriesDesc": "公司介绍中记录的已验证交付历史。",
+    "noDeliveriesTitle": "敬请期待",
+    "noDeliveriesDesc": "我们正在整理与 {name} 的合作案例,详细合作请通过报价咨询联系。",
+    "ctaQuote": "申请报价",
+    "ctaContact": "联系我们",
+    "browseCatalogTitle": "纳进科技的加工与产品",
+    "browseCatalogDesc": "参考目录,可能与上述合作案例不直接对应。",
+    "viewAllPortfolio": "查看全部产品",
+    "viewAllPosts": "查看全部案例",
+    "sourceLabel": "出处",
+    "monthLabel": "{month} 月",
+    "notFoundTitle": "未找到客户",
+    "notFoundDesc": "无法找到该客户页面。",
+    "backToPortfolio": "返回主要业绩"
   },
   "privacy": {
     "pageTitle": "隐私政策",
