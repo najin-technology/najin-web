@@ -13,9 +13,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       zh: "25年精密加工专业企业",
     },
     descriptions: {
-      ko: "경남 양산 우레탄 성형, 합성수지 가공, CNC 정밀가공, 금형 제작 전문기업 나진테크. 국내외 주요 완성차사, SK, Overseas automaker 등 20+ 거래처 납품.",
-      en: "NAJIN TECHNOLOGY - Urethane molding, synthetic resin, CNC machining, mold fabrication in Yangsan, Korea. Supplying Hyundai, SK, Overseas automaker and 20+ clients.",
-      zh: "纳进科技 — 庆南梁山聚氨酯成型、合成树脂加工、CNC精密加工、模具制作专业企业。向现代汽车、SK、海外整车厂等20+客户供货。",
+      ko: "경남 양산 우레탄 성형, 합성수지 가공, CNC 정밀가공, 금형 제작 전문기업 나진테크. 국내외 주요 완성차사, SK, Overseas automaker 등 주요 대기업 납품.",
+      en: "NAJIN TECHNOLOGY - Urethane molding, synthetic resin, CNC machining, mold fabrication in Yangsan, Korea. Supplying Hyundai, SK, Overseas automaker and other major clients.",
+      zh: "纳进科技 — 庆南梁山聚氨酯成型、合成树脂加工、CNC精密加工、模具制作专业企业。向现代汽车、SK、海外整车厂等主要大企业供货。",
     },
   });
 }
@@ -42,18 +42,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-const clients: { name: string; logo?: string }[] = [
-  { name: "국내외 주요 완성차사", logo: "/images/logos/hyundai.svg" },
-  { name: "주요 부품사", logo: "/images/logos/hyundai-powertech.svg" },
-  { name: "국내 완성차사", logo: "/images/logos/renault.svg" },
-  { name: "SK", logo: "/images/logos/sk.svg" },
-  { name: "한화케미칼", logo: "/images/logos/hanwha.svg" },
-  { name: "주요 부품사", logo: "/images/logos/donghee.svg" },
-  { name: "주요 부품사", logo: "/images/logos/hwashin.svg" },
-  { name: "주요 부품사", logo: "/images/logos/sungwoo.svg" },
-  { name: "Overseas automaker", logo: "/images/logos/gm.svg" },
-  { name: "해외 부품사", logo: "/images/logos/lear.svg" },
-];
+import { CLIENTS } from "@/lib/clients";
 
 const businessAreas: {
   key: string;
@@ -173,27 +162,22 @@ export default function HomePage() {
           >
             {t("clientsTitle")}
           </p>
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-6 md:gap-8 items-center justify-items-center" data-animate="fade-up">
-            {clients.map((client) => (
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-6 md:gap-8 items-stretch" data-animate="fade-up">
+            {CLIENTS.map((client) => (
               <Link
-                key={client.name}
-                href={`/posts?tag=${client.name}`}
-                className="flex items-center justify-center h-12 w-full transition-opacity opacity-50 hover:opacity-100"
+                key={client.slug}
+                href={`/clients/${client.slug}`}
+                className="flex items-center justify-center h-12 md:h-14 w-full px-2 transition-opacity opacity-60 hover:opacity-100"
+                aria-label={client.name}
               >
-                {client.logo ? (
-                  <Image
-                    src={client.logo}
-                    alt={client.name}
-                    width={120}
-                    height={40}
-                    className="h-8 md:h-10 w-auto object-contain"
-                    unoptimized
-                  />
-                ) : (
-                  <span className="text-sm font-bold text-brand-navy/60 tracking-tight">
-                    {client.name}
-                  </span>
-                )}
+                <Image
+                  src={client.logo}
+                  alt={client.name}
+                  width={120}
+                  height={40}
+                  className="max-h-7 md:max-h-9 w-auto max-w-[110px] md:max-w-[130px] object-contain"
+                  unoptimized
+                />
               </Link>
             ))}
           </div>
@@ -313,7 +297,7 @@ export default function HomePage() {
             {[
               { key: "portfolio1", image: "/images/products/pe-rod-1.jpg", logo: "/images/logos/hyundai.svg" },
               { key: "portfolio2", image: "/images/products/3d-mc-part-1.jpg", logo: "/images/logos/sk.svg" },
-              { key: "portfolio3", image: "/images/products/db-4421a7e9-0.jpg", logo: "/images/logos/gm.svg" },
+              { key: "portfolio3", image: "/images/products/db-4421a7e9-0.jpg", logo: "/images/logos/gm.png" },
             ].map((item, i) => (
               <div
                 key={item.key}
@@ -377,7 +361,7 @@ export default function HomePage() {
             <div data-animate="fade-up" data-animate-delay="2">
               <Users className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
-                <StatsCounter end={20} suffix="+" />
+                <StatsCounter end={10} suffix="+" />
               </div>
               <div className="text-sm text-white/80">{t("statsClients")}</div>
             </div>

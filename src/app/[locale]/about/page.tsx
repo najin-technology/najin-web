@@ -17,7 +17,7 @@ import {
 
 const fallbackHistory = [
   { id: "h1", year: 2002, month: 12, description_ko: "나진테크 설립", description_en: "NAJIN TECHNOLOGY Founded" },
-  { id: "h2", year: 2003, month: 6, description_ko: "㈜주요 화학사 등록", description_en: "Registered with Hanwha Chemical" },
+  { id: "h2", year: 2003, month: 6, description_ko: "㈜주요 화학사 등록 (현 주요 화학사)", description_en: "Registered with Major chemical company (now Major chemical company)" },
   { id: "h3", year: 2005, month: 6, description_ko: "부산 사상구 괘법동 공장 설립", description_en: "Busan Sasang Factory Established" },
   { id: "h4", year: 2010, month: 6, description_ko: "㈜주요 부품사 등록", description_en: "Registered with Sungwoo Hightech" },
   { id: "h5", year: 2013, month: 4, description_ko: "경남 양산 산막공단 자가공장 설립", description_en: "Yangsan Sanmak Factory Established" },
