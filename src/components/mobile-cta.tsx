@@ -23,7 +23,7 @@ export function MobileCTA() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-brand-navy/95 backdrop-blur-sm border-t border-white/10 px-4 py-3 flex items-center justify-between gap-3">
       <a
-        href="tel:055-367-2596"
+        href="tel:+82-55-367-2596"
         className="flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm min-h-[44px]"
       >
         <Phone className="w-4 h-4" />

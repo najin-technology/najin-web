@@ -27,7 +27,7 @@ export function PageCTA() {
           </Link>
           <a
             href={`tel:${tf("phone")}`}
-            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm"
+            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm"
           >
             <Phone className="w-4 h-4" />
             <span>{tf("phone")}</span>

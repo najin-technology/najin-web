@@ -54,6 +54,7 @@ export function CallbackForm() {
           <Input
             id="cb_company"
             name="company_name"
+            autoComplete="organization"
             required
             className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-brand-copper"
           />
@@ -66,6 +67,7 @@ export function CallbackForm() {
             id="cb_phone"
             name="phone"
             type="tel"
+            autoComplete="tel"
             required
             className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-brand-copper"
           />

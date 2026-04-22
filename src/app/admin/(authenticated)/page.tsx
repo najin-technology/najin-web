@@ -131,9 +131,9 @@ export default async function AdminDashboard() {
       <div>
         <h1 className="text-xl font-bold text-brand-navy tracking-tight">{getGreeting()}</h1>
         <p className="text-sm text-gray-400 mt-0.5">{formatToday()}</p>
-        <p className="text-xs text-gray-400 mt-1">현재 운영 현황을 한눈에 확인하세요</p>
+        <p className="text-sm text-gray-400 mt-1">현재 운영 현황을 한눈에 확인하세요</p>
         {((pendingQuotes || 0) > 0 || (pendingApps || 0) > 0) && (
-          <p className="text-xs text-gray-500 tabular-nums mt-1">
+          <p className="text-sm text-gray-500 tabular-nums mt-1">
             {(pendingQuotes || 0) > 0 && `처리 대기 견적 ${pendingQuotes}건`}
             {(pendingCallbacks || 0) > 0 && ` (콜백 ${pendingCallbacks}건)`}
             {(pendingQuotes || 0) > 0 && (pendingApps || 0) > 0 && " · "}
@@ -213,7 +213,7 @@ export default async function AdminDashboard() {
               <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center mb-3">
                 <Inbox className="w-[18px] h-[18px] text-amber-600" />
               </div>
-              <p className="text-xs font-medium text-gray-400 mb-0.5">미처리 견적</p>
+              <p className="text-sm font-medium text-gray-400 mb-0.5">미처리 견적</p>
               <p className="text-2xl font-bold text-brand-navy tabular-nums stat-number">
                 {pendingQuotes || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
               </p>
@@ -225,7 +225,7 @@ export default async function AdminDashboard() {
               <div className="w-9 h-9 rounded-lg bg-rose-50 flex items-center justify-center mb-3">
                 <Users className="w-[18px] h-[18px] text-rose-600" />
               </div>
-              <p className="text-xs font-medium text-gray-400 mb-0.5">미처리 지원서</p>
+              <p className="text-sm font-medium text-gray-400 mb-0.5">미처리 지원서</p>
               <p className="text-2xl font-bold text-brand-navy tabular-nums stat-number">
                 {pendingApps || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
               </p>
@@ -239,7 +239,7 @@ export default async function AdminDashboard() {
           <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center mb-3">
             <Package className="w-[18px] h-[18px] text-blue-600" />
           </div>
-          <p className="text-xs font-medium text-gray-400 mb-0.5">활성 제품</p>
+          <p className="text-sm font-medium text-gray-400 mb-0.5">활성 제품</p>
           <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
             {activeProducts || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
           </p>
@@ -251,7 +251,7 @@ export default async function AdminDashboard() {
           <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center mb-3">
             <Briefcase className="w-[18px] h-[18px] text-emerald-600" />
           </div>
-          <p className="text-xs font-medium text-gray-400 mb-0.5">활성 채용공고</p>
+          <p className="text-sm font-medium text-gray-400 mb-0.5">활성 채용공고</p>
           <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
             {activeJobs || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
           </p>
@@ -263,7 +263,7 @@ export default async function AdminDashboard() {
           <div className="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center mb-3">
             <Bell className="w-[18px] h-[18px] text-violet-600" />
           </div>
-          <p className="text-xs font-medium text-gray-400 mb-0.5">공개 소식</p>
+          <p className="text-sm font-medium text-gray-400 mb-0.5">공개 소식</p>
           <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
             {publishedNotices || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
           </p>
