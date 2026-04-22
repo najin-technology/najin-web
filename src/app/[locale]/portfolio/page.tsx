@@ -125,6 +125,7 @@ export default async function PortfolioPage() {
                         width={120}
                         height={40}
                         className="h-8 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100"
+                        unoptimized
                       />
                     </div>
                   ) : (
@@ -277,8 +278,8 @@ export default async function PortfolioPage() {
               </Button>
             </Link>
             <a
-              href="tel:055-367-2596"
-              className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm mt-2"
+              href="tel:+82-55-367-2596"
+              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm mt-2"
             >
               <Phone className="w-4 h-4" />
               <span>055-367-2596</span>

@@ -127,7 +127,7 @@ export function QuoteForm() {
           <Label htmlFor="company_name">
             {t("companyName")} <span className="text-red-500">*</span>
           </Label>
-          <Input id="company_name" name="company_name" required />
+          <Input id="company_name" name="company_name" autoComplete="organization" required />
         </div>
 
         {/* Contact Name */}
@@ -135,7 +135,7 @@ export function QuoteForm() {
           <Label htmlFor="contact_name">
             {t("contactName")} <span className="text-red-500">*</span>
           </Label>
-          <Input id="contact_name" name="contact_name" required />
+          <Input id="contact_name" name="contact_name" autoComplete="name" required />
         </div>
 
         {/* Phone */}
@@ -143,7 +143,7 @@ export function QuoteForm() {
           <Label htmlFor="phone">
             {t("phone")} <span className="text-red-500">*</span>
           </Label>
-          <Input id="phone" name="phone" type="tel" required />
+          <Input id="phone" name="phone" type="tel" autoComplete="tel" required />
         </div>
 
         {/* Email */}
@@ -151,7 +151,7 @@ export function QuoteForm() {
           <Label htmlFor="email">
             {t("email")} <span className="text-red-500">*</span>
           </Label>
-          <Input id="email" name="email" type="email" required />
+          <Input id="email" name="email" type="email" autoComplete="email" required />
         </div>
       </div>
 

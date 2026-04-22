@@ -56,21 +56,21 @@ export function ApplyForm() {
           <Label htmlFor="name">
             {t("name")} <span className="text-red-500">*</span>
           </Label>
-          <Input id="name" name="name" required />
+          <Input id="name" name="name" autoComplete="name" required />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="phone">
             {t("phone")} <span className="text-red-500">*</span>
           </Label>
-          <Input id="phone" name="phone" type="tel" required />
+          <Input id="phone" name="phone" type="tel" autoComplete="tel" required />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="email">{t("email")}</Label>
-          <Input id="email" name="email" type="email" />
+          <Input id="email" name="email" type="email" autoComplete="email" />
         </div>
 
         <div className="space-y-2">
