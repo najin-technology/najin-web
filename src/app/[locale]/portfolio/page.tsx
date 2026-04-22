@@ -19,9 +19,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     path: "/portfolio",
     titles: { ko: "주요실적", en: "Portfolio", zh: "主要业绩" },
     descriptions: {
-      ko: "나진테크 주요실적. 국내외 주요 완성차사, SK, Overseas automaker 등 20+ 거래처 납품. 프로젝트 사례 및 제품 갤러리.",
-      en: "NAJIN TECHNOLOGY portfolio. Supplying to 20+ clients including Hyundai, SK, Overseas automaker. Project cases and product gallery.",
-      zh: "纳进科技主要业绩。向现代汽车、SK、海外整车厂等20+客户供货。项目案例及产品展示。",
+      ko: "나진테크 주요실적. 국내외 주요 완성차사, SK, Overseas automaker 등 주요 대기업 납품. 프로젝트 사례 및 제품 갤러리.",
+      en: "NAJIN TECHNOLOGY portfolio. Supplying to major clients including Hyundai, SK, Overseas automaker. Project cases and product gallery.",
+      zh: "纳进科技主要业绩。向现代汽车、SK、海外整车厂等主要大企业供货。项目案例及产品展示。",
     },
   });
 }
@@ -98,7 +98,7 @@ export default async function PortfolioPage() {
                     alt={client.name}
                     width={120}
                     height={40}
-                    className="h-8 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100"
+                    className="max-h-8 w-auto max-w-[120px] object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100"
                     unoptimized
                   />
                 </div>
