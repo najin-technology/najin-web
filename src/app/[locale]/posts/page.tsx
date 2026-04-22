@@ -151,76 +151,77 @@ export default async function PostsPage({
                 const thumbnail = post.thumbnail_url || post.image_urls?.[0];
 
                 return (
-                  <Link
+                  <div
                     key={post.id}
-                    href={`/posts/${post.slug}`}
-                    className="group bg-white rounded-xl border border-surface-warm-200 overflow-hidden hover:shadow-lg transition-all hover-lift"
+                    className="group bg-white rounded-xl border border-surface-warm-200 overflow-hidden hover:shadow-lg transition-all hover-lift flex flex-col"
                     data-animate="fade-up"
                     data-animate-delay={String(Math.min((index % 3) + 1, 3))}
                   >
-                    {/* Thumbnail */}
-                    <div className="relative aspect-[16/10] bg-surface-warm-100 overflow-hidden">
-                      {thumbnail ? (
-                        <Image
-                          src={thumbnail}
-                          alt={title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center h-full">
-                          <ImageIcon className="w-12 h-12 text-brand-charcoal/20" />
-                        </div>
-                      )}
-                      {/* Category badge */}
-                      <span
-                        className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-medium ${
-                          CATEGORY_COLORS[post.category] || "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {t(CATEGORY_KEYS[post.category] || post.category)}
-                      </span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-5">
-                      <h3 className="font-semibold text-brand-navy mb-2 line-clamp-2 group-hover:text-brand-blue transition-colors">
-                        {title}
-                      </h3>
-                      {excerpt && (
-                        <p className="text-sm text-brand-charcoal/70 mb-3 line-clamp-2">
-                          {excerpt}
-                        </p>
-                      )}
-                      <div className="flex items-center gap-1.5 text-xs text-brand-charcoal/50">
-                        <Calendar className="w-3.5 h-3.5" />
-                        <span>
-                          {new Date(date).toLocaleDateString(
-                            locale === "ko"
-                              ? "ko-KR"
-                              : locale === "zh"
-                                ? "zh-CN"
-                                : "en-US"
-                          )}
+                    <Link href={`/posts/${post.slug}`} className="flex-1">
+                      {/* Thumbnail */}
+                      <div className="relative aspect-[16/10] bg-surface-warm-100 overflow-hidden">
+                        {thumbnail ? (
+                          <Image
+                            src={thumbnail}
+                            alt={title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center h-full">
+                            <ImageIcon className="w-12 h-12 text-brand-charcoal/20" />
+                          </div>
+                        )}
+                        {/* Category badge */}
+                        <span
+                          className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-medium ${
+                            CATEGORY_COLORS[post.category] || "bg-gray-100 text-gray-800"
+                          }`}
+                        >
+                          {t(CATEGORY_KEYS[post.category] || post.category)}
                         </span>
                       </div>
-                      {post.tags && post.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {post.tags.slice(0, 3).map((tagName: string) => (
-                            <Link
-                              key={tagName}
-                              href={`/posts?tag=${tagName}`}
-                              className="text-[11px] px-2 py-0.5 rounded-full bg-surface-warm-100 text-brand-charcoal/60 hover:bg-brand-copper/10 hover:text-brand-copper transition-colors"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              #{tagName}
-                            </Link>
-                          ))}
+
+                      {/* Content (clickable area) */}
+                      <div className="p-5 pb-3">
+                        <h3 className="font-semibold text-brand-navy mb-2 line-clamp-2 group-hover:text-brand-blue transition-colors">
+                          {title}
+                        </h3>
+                        {excerpt && (
+                          <p className="text-sm text-brand-charcoal/70 mb-3 line-clamp-2">
+                            {excerpt}
+                          </p>
+                        )}
+                        <div className="flex items-center gap-1.5 text-xs text-brand-charcoal/50">
+                          <Calendar className="w-3.5 h-3.5" />
+                          <span>
+                            {new Date(date).toLocaleDateString(
+                              locale === "ko"
+                                ? "ko-KR"
+                                : locale === "zh"
+                                  ? "zh-CN"
+                                  : "en-US"
+                            )}
+                          </span>
                         </div>
-                      )}
-                    </div>
-                  </Link>
+                      </div>
+                    </Link>
+                    {/* Tags — outside the parent Link to allow nested navigation */}
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 px-5 pb-4">
+                        {post.tags.slice(0, 3).map((tagName: string) => (
+                          <Link
+                            key={tagName}
+                            href={`/posts?tag=${tagName}`}
+                            className="text-[11px] px-2 py-0.5 rounded-full bg-surface-warm-100 text-brand-charcoal/60 hover:bg-brand-copper/10 hover:text-brand-copper transition-colors"
+                          >
+                            #{tagName}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
