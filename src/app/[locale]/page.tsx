@@ -297,7 +297,7 @@ export default function HomePage() {
             {[
               { key: "portfolio1", image: "/images/products/pe-rod-1.jpg", logo: "/images/logos/hyundai.svg" },
               { key: "portfolio2", image: "/images/products/3d-mc-part-1.jpg", logo: "/images/logos/sk.svg" },
-              { key: "portfolio3", image: "/images/products/db-4421a7e9-0.jpg", logo: "/images/logos/gm.svg" },
+              { key: "portfolio3", image: "/images/products/db-4421a7e9-0.jpg", logo: "/images/logos/gm.png" },
             ].map((item, i) => (
               <div
                 key={item.key}
