@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" fill="none">
+  <!-- S 형상 마크 -->
+  <g transform="translate(0, 8)">
+    <path d="M18 4 C8 4, 2 9, 2 16 C2 23, 9 25, 18 27 C28 29, 35 32, 35 40 C35 47, 28 50, 18 50 C8 50, 2 46, 1 40"
+          fill="none" stroke="#0054A6" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="36" cy="9" r="4" fill="#E31E24"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="52" y="32" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="22" fill="#0054A6" letter-spacing="0.5">SUNGWOO</text>
+  <text x="52" y="50" font-family="Arial, Helvetica, sans-serif" font-weight="500" font-size="13" fill="#666" letter-spacing="2.5">HITECH</text>
+</svg>

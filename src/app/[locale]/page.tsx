@@ -162,20 +162,24 @@ export default function HomePage() {
           >
             {t("clientsTitle")}
           </p>
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-6 md:gap-8 items-stretch" data-animate="fade-up">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 md:gap-4 items-stretch" data-animate="fade-up">
             {CLIENTS.map((client) => (
               <Link
                 key={client.slug}
                 href={`/clients/${client.slug}`}
-                className="flex items-center justify-center h-12 md:h-14 w-full px-2 transition-opacity opacity-60 hover:opacity-100"
+                className={`flex items-center justify-center h-16 md:h-20 w-full px-3 rounded-lg border transition-all hover:shadow-md hover:-translate-y-0.5 ${
+                  client.needsDarkBg
+                    ? "bg-brand-navy border-brand-navy"
+                    : "bg-white border-surface-warm-200"
+                }`}
                 aria-label={client.name}
               >
                 <Image
                   src={client.logo}
                   alt={client.name}
-                  width={120}
-                  height={40}
-                  className="max-h-7 md:max-h-9 w-auto max-w-[110px] md:max-w-[130px] object-contain"
+                  width={160}
+                  height={64}
+                  className="max-h-12 md:max-h-14 w-auto max-w-[140px] md:max-w-[160px] object-contain"
                   unoptimized
                 />
               </Link>
