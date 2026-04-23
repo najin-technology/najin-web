@@ -11,6 +11,11 @@ export type Client = {
   logo: string;
   category: ClientCategory;
   registeredYear?: number;
+  /**
+   * 흰색/밝은 fill 위주의 로고는 흰 배경에서 가시성 떨어짐.
+   * 이 플래그가 true 면 로고 카드를 어두운 배경(navy)으로 렌더한다.
+   */
+  needsDarkBg?: boolean;
 };
 
 export const CLIENTS: Client[] = [
@@ -35,6 +40,7 @@ export const CLIENTS: Client[] = [
     logo: "/images/logos/renault.svg",
     category: "automotive",
     registeredYear: 2014,
+    needsDarkBg: true, // 흰 다이아몬드 마크가 흰 배경에서 안 보임
   },
   {
     slug: "sk",
