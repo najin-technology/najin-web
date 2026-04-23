@@ -82,7 +82,12 @@ export default async function CustomersPage({
 
   return (
     <div className="space-y-6">
-      <ListPageHeader title="고객 관리" count={list.length} />
+      <ListPageHeader
+        title="고객 관리"
+        count={list.length}
+        createHref="/admin/customers/new"
+        createLabel="새 고객 등록"
+      />
 
       {showClientsPanel && clientRows.length > 0 && (
         <SortableClientsPanel items={clientRows} />

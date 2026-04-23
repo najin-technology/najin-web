@@ -1,20 +1,10 @@
-import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { StatusBadge } from "@/components/admin/status-badge";
 import { EmptyState } from "@/components/admin/empty-state";
 import { ListPageHeader } from "@/components/admin/list-page-header";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
-import { HighlightText } from "@/components/admin/highlight-text";
 import { CsvExportButton } from "@/components/admin/csv-export";
 import { Users } from "lucide-react";
+import { BulkApplicationsTable } from "./bulk-applications-table";
 
 export const metadata = { title: "채용 관리", description: "채용 지원서 관리", robots: "noindex, nofollow" };
 
@@ -74,54 +64,17 @@ export default async function ApplicationsPage({
         />
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <Table className="admin-card-table">
-          <TableHeader>
-            <TableRow>
-              <TableHead>이름</TableHead>
-              <TableHead>연락처</TableHead>
-              <TableHead>포지션</TableHead>
-              <TableHead>상태</TableHead>
-              <TableHead>지원일</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {applications && applications.length > 0 ? (
-              applications.map((a) => (
-                <TableRow key={a.id} className="group hover:bg-gray-50/50">
-                  <TableCell>
-                    <Link
-                      href={`/admin/applications/${a.id}`}
-                      className="text-brand-blue hover:text-brand-blue-hover group-hover:underline font-medium transition-colors"
-                    >
-                      <HighlightText text={a.name} query={searchQuery} />
-                    </Link>
-                  </TableCell>
-                  <TableCell data-label="연락처">{a.phone || "-"}</TableCell>
-                  <TableCell data-label="포지션"><HighlightText text={a.position || "-"} query={searchQuery} /></TableCell>
-                  <TableCell data-label="상태">
-                    <StatusBadge status={a.status} type="application" />
-                  </TableCell>
-                  <TableCell data-label="지원일" className="text-sm text-gray-500">
-                    {new Date(a.created_at).toLocaleDateString("ko-KR")}
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={5}>
-                  <EmptyState message="지원서가 없습니다." description="구직자가 채용 지원서를 제출하면 여기에 표시됩니다." icon={Users} />
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-        {applications && applications.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums">
-            총 {applications.length}건
-          </div>
-        )}
-      </div>
+      {applications && applications.length > 0 ? (
+        <BulkApplicationsTable applications={applications} searchQuery={searchQuery} />
+      ) : (
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <EmptyState
+            message="지원서가 없습니다."
+            description="구직자가 채용 지원서를 제출하면 여기에 표시됩니다."
+            icon={Users}
+          />
+        </div>
+      )}
     </div>
   );
 }

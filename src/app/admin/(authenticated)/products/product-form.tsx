@@ -180,23 +180,24 @@ export function ProductForm({
 
         {/* Existing images */}
         {existingImages.length > 0 && (
-          <div className="flex flex-wrap gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {existingImages.map((url) => (
               <div
                 key={url}
-                className="relative group w-28 h-28 rounded-xl border border-gray-200 overflow-hidden"
+                className="relative group aspect-square rounded-xl border border-gray-200 overflow-hidden bg-gray-50"
               >
                 <img
                   src={url}
                   alt=""
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
                 <button
                   type="button"
                   onClick={() => removeExistingImage(url)}
-                  className="absolute top-1 right-1 bg-red-500 text-white rounded-lg p-1 opacity-80 hover:opacity-100 transition-opacity"
+                  aria-label="이미지 제거"
+                  className="absolute top-2 right-2 bg-red-500 text-white rounded-lg p-1.5 shadow-md opacity-85 hover:opacity-100 transition-opacity"
                 >
-                  <X className="w-3.5 h-3.5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
             ))}

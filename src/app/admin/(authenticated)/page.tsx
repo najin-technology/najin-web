@@ -1,14 +1,5 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { StatusBadge } from "@/components/admin/status-badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import {
   Plus,
@@ -18,7 +9,6 @@ import {
   Users,
   Bell,
   ArrowRight,
-  Building2,
   TrendingUp,
   ExternalLink,
   BarChart3,
@@ -108,24 +98,24 @@ export default async function AdminDashboard() {
     <div className="space-y-6">
       {/* ───────────── Greeting ───────────── */}
       <div>
-        <h1 className="text-xl font-bold text-brand-navy tracking-tight">{getGreeting()}</h1>
-        <p className="text-xs text-gray-400 mt-0.5">{formatToday()}</p>
+        <h1 className="text-2xl font-bold text-brand-navy tracking-tight">{getGreeting()}</h1>
+        <p className="text-sm text-gray-500 mt-1">{formatToday()}</p>
       </div>
 
       {/* ───────────── Inbox: 오늘 처리할 것 ─────────────
         핵심 원칙: layout stability. pending 없어도 같은 영역 유지.
       */}
       <section className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
-          <Inbox className="w-4 h-4 text-brand-navy" />
-          <h2 className="text-sm font-semibold text-brand-navy">오늘 처리할 일</h2>
+        <div className="px-5 py-3.5 border-b border-gray-100 flex items-center gap-2">
+          <Inbox className="w-5 h-5 text-brand-navy" />
+          <h2 className="text-base font-semibold text-brand-navy">오늘 처리할 일</h2>
           {hasUrgent ? (
-            <span className="ml-auto text-xs font-medium text-red-600 tabular-nums">
+            <span className="ml-auto text-sm font-bold text-red-600 tabular-nums">
               {(pendingQuotes || 0) + (pendingApps || 0)}건 대기
             </span>
           ) : (
-            <span className="ml-auto text-xs text-emerald-600 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <span className="ml-auto text-sm text-emerald-600 flex items-center gap-1.5 font-medium">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
               모두 처리됨
             </span>
           )}
@@ -158,7 +148,7 @@ export default async function AdminDashboard() {
                     {q.processing_type === "콜백요청" ? "📞 콜백요청" : q.processing_type}
                   </div>
                 </div>
-                <span className={`text-[11px] tabular-nums flex-shrink-0 ${isStale(q.created_at) ? "text-red-500 font-medium" : "text-gray-400"}`}>
+                <span className={`text-xs tabular-nums flex-shrink-0 ${isStale(q.created_at) ? "text-red-500 font-semibold" : "text-gray-500"}`}>
                   {relativeTime(q.created_at)}
                   {isStale(q.created_at) && " · 24h+"}
                 </span>
@@ -181,7 +171,7 @@ export default async function AdminDashboard() {
                     <span className="text-xs text-gray-400 truncate">{a.position}</span>
                   </div>
                 </div>
-                <span className={`text-[11px] tabular-nums flex-shrink-0 ${isStale(a.created_at) ? "text-red-500 font-medium" : "text-gray-400"}`}>
+                <span className={`text-xs tabular-nums flex-shrink-0 ${isStale(a.created_at) ? "text-red-500 font-semibold" : "text-gray-500"}`}>
                   {relativeTime(a.created_at)}
                   {isStale(a.created_at) && " · 24h+"}
                 </span>
@@ -214,7 +204,7 @@ export default async function AdminDashboard() {
         <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-brand-navy" />
           <h2 className="text-sm font-semibold text-brand-navy">이번 주 활동</h2>
-          <span className="ml-auto text-[11px] text-gray-400">최근 7일 vs 전주</span>
+          <span className="ml-auto text-xs text-gray-500">최근 7일 vs 전주</span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-100">
           <MetricCard label="신규 고객" value={customersThisWeek || 0} delta={customerDelta} href="/admin/customers" />
@@ -279,14 +269,14 @@ function MetricCard({
   const isNegative = (delta ?? 0) < 0;
   return (
     <Link href={href} className="block px-5 py-4 hover:bg-gray-50/50 transition-colors">
-      <p className="text-[11px] text-gray-400 mb-1">{label}</p>
-      <p className="text-xl font-bold text-brand-navy tabular-nums">
+      <p className="text-xs text-gray-500 mb-1">{label}</p>
+      <p className="text-2xl font-bold text-brand-navy tabular-nums">
         {value}
-        <span className="text-xs font-normal text-gray-400 ml-0.5">{unit}</span>
+        <span className="text-sm font-normal text-gray-400 ml-1">{unit}</span>
       </p>
       {delta !== undefined && (
         <p
-          className={`text-[11px] tabular-nums mt-0.5 ${
+          className={`text-xs tabular-nums mt-1 font-medium ${
             isPositive ? "text-emerald-600" : isNegative ? "text-red-500" : "text-gray-400"
           }`}
         >
@@ -320,10 +310,10 @@ function ContentBadge({
       <div className={`w-7 h-7 rounded-md ${colors[color]} flex items-center justify-center mb-2`}>
         <Icon className="w-3.5 h-3.5" />
       </div>
-      <p className="text-[11px] text-gray-500">{label}</p>
-      <p className="text-sm font-bold text-brand-navy tabular-nums">
+      <p className="text-xs text-gray-500">{label}</p>
+      <p className="text-base font-bold text-brand-navy tabular-nums">
         {count}
-        <span className="text-[10px] font-normal text-gray-400 ml-0.5">개</span>
+        <span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
       </p>
     </Link>
   );

@@ -84,3 +84,31 @@ export async function getQuoteAttachmentUrls(quoteId: string) {
 
   return results;
 }
+
+const QUOTE_STATUSES = ["접수", "검토중", "견적발송", "완료"] as const;
+
+export async function bulkUpdateQuoteStatus(ids: string[], status: string) {
+  await requireAdmin();
+  if (!Array.isArray(ids) || ids.length === 0) return { error: "선택된 항목이 없습니다." };
+  if (!QUOTE_STATUSES.includes(status as (typeof QUOTE_STATUSES)[number])) {
+    return { error: "잘못된 상태값입니다." };
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase
+    .from("quotes")
+    .update({ status, updated_at: new Date().toISOString() })
+    .in("id", ids);
+
+  if (error) return { error: "일괄 업데이트 실패: " + error.message };
+
+  await logAudit({
+    action: "bulk_update_status",
+    targetTable: "quotes",
+    details: { count: ids.length, status },
+  });
+
+  revalidatePath("/admin/quotes");
+  revalidatePath("/admin");
+  return { success: true, count: ids.length };
+}
