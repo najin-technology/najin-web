@@ -84,3 +84,31 @@ export async function getResumeUrl(applicationId: string) {
 
   return results;
 }
+
+const APPLICATION_STATUSES = ["서류검토", "면접예정", "합격", "불합격"] as const;
+
+export async function bulkUpdateApplicationStatus(ids: string[], status: string) {
+  await requireAdmin();
+  if (!Array.isArray(ids) || ids.length === 0) return { error: "선택된 항목이 없습니다." };
+  if (!APPLICATION_STATUSES.includes(status as (typeof APPLICATION_STATUSES)[number])) {
+    return { error: "잘못된 상태값입니다." };
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase
+    .from("applications")
+    .update({ status, updated_at: new Date().toISOString() })
+    .in("id", ids);
+
+  if (error) return { error: "일괄 업데이트 실패: " + error.message };
+
+  await logAudit({
+    action: "bulk_update_status",
+    targetTable: "applications",
+    details: { count: ids.length, status },
+  });
+
+  revalidatePath("/admin/applications");
+  revalidatePath("/admin");
+  return { success: true, count: ids.length };
+}
