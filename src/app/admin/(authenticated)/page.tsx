@@ -17,29 +17,24 @@ import {
   Inbox,
   Users,
   Bell,
-  AlertCircle,
   ArrowRight,
   Building2,
   TrendingUp,
   ExternalLink,
   BarChart3,
 } from "lucide-react";
-import { StatusProgress } from "@/components/admin/status-progress";
 
 export const metadata = { title: "대시보드", description: "나진테크 관리자 대시보드", robots: "noindex, nofollow" };
 
 function relativeTime(dateStr: string) {
   const date = new Date(dateStr);
   const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  const hours = Math.floor(diff / 3600000);
-  const days = Math.floor(diff / 86400000);
-
+  const hours = Math.floor((now.getTime() - date.getTime()) / 3600000);
+  const days = Math.floor(hours / 24);
   const isToday = date.toDateString() === now.toDateString();
   const yesterday = new Date(now);
   yesterday.setDate(yesterday.getDate() - 1);
   const isYesterday = date.toDateString() === yesterday.toDateString();
-
   if (isToday) {
     if (hours < 1) return "방금";
     return `오늘 ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
@@ -50,7 +45,7 @@ function relativeTime(dateStr: string) {
 }
 
 function isStale(dateStr: string) {
-  return Date.now() - new Date(dateStr).getTime() > 86400000; // > 24h
+  return Date.now() - new Date(dateStr).getTime() > 86400000;
 }
 
 function getGreeting() {
@@ -72,7 +67,6 @@ function formatToday() {
 export default async function AdminDashboard() {
   const supabase = await createSupabaseServerClient();
 
-  // Date ranges for business metrics
   const now = new Date();
   const weekStart = new Date(now); weekStart.setDate(now.getDate() - 7); weekStart.setHours(0, 0, 0, 0);
   const prevWeekStart = new Date(weekStart); prevWeekStart.setDate(weekStart.getDate() - 7);
@@ -80,501 +74,190 @@ export default async function AdminDashboard() {
 
   const [
     { count: pendingQuotes },
-    { count: pendingCallbacks },
     { count: pendingApps },
+    { data: pendingQuoteList },
+    { data: pendingAppList },
     { count: activeProducts },
     { count: activeJobs },
     { count: publishedNotices },
-    { data: recentQuotes },
-    { data: recentApps },
     { count: totalCustomers },
     { count: customersThisWeek },
     { count: customersPrevWeek },
     { count: quotesThisWeek },
     { count: quotesPrevWeek },
-    { count: quotesToday },
-    { count: appsToday },
   ] = await Promise.all([
-    supabase
-      .from("quotes")
-      .select("*", { count: "exact", head: true })
-      .eq("status", "접수")
-      .is("deleted_at", null),
-    supabase
-      .from("quotes")
-      .select("*", { count: "exact", head: true })
-      .eq("status", "접수")
-      .eq("processing_type", "콜백요청")
-      .is("deleted_at", null),
-    supabase
-      .from("applications")
-      .select("*", { count: "exact", head: true })
-      .eq("status", "서류검토")
-      .is("deleted_at", null),
-    supabase
-      .from("products")
-      .select("*", { count: "exact", head: true })
-      .eq("is_active", true)
-      .is("deleted_at", null),
-    supabase
-      .from("job_postings")
-      .select("*", { count: "exact", head: true })
-      .eq("is_active", true)
-      .is("deleted_at", null),
-    supabase
-      .from("notices")
-      .select("*", { count: "exact", head: true })
-      .eq("is_published", true)
-      .is("deleted_at", null),
-    supabase
-      .from("quotes")
-      .select("id, company_name, contact_name, processing_type, status, created_at, customer_id")
-      .is("deleted_at", null)
-      .order("created_at", { ascending: false })
-      .limit(5),
-    supabase
-      .from("applications")
-      .select("id, name, position, status, created_at, customer_id")
-      .is("deleted_at", null)
-      .order("created_at", { ascending: false })
-      .limit(5),
-    supabase
-      .from("customers")
-      .select("*", { count: "exact", head: true })
-      .is("deleted_at", null),
-    supabase
-      .from("customers")
-      .select("*", { count: "exact", head: true })
-      .gte("created_at", weekStart.toISOString())
-      .is("deleted_at", null),
-    supabase
-      .from("customers")
-      .select("*", { count: "exact", head: true })
-      .gte("created_at", prevWeekStart.toISOString())
-      .lt("created_at", weekStart.toISOString())
-      .is("deleted_at", null),
-    supabase
-      .from("quotes")
-      .select("*", { count: "exact", head: true })
-      .gte("created_at", weekStart.toISOString())
-      .is("deleted_at", null),
-    supabase
-      .from("quotes")
-      .select("*", { count: "exact", head: true })
-      .gte("created_at", prevWeekStart.toISOString())
-      .lt("created_at", weekStart.toISOString())
-      .is("deleted_at", null),
-    supabase
-      .from("quotes")
-      .select("*", { count: "exact", head: true })
-      .gte("created_at", todayStart.toISOString())
-      .is("deleted_at", null),
-    supabase
-      .from("applications")
-      .select("*", { count: "exact", head: true })
-      .gte("created_at", todayStart.toISOString())
-      .is("deleted_at", null),
+    supabase.from("quotes").select("*", { count: "exact", head: true }).eq("status", "접수").is("deleted_at", null),
+    supabase.from("applications").select("*", { count: "exact", head: true }).eq("status", "서류검토").is("deleted_at", null),
+    supabase.from("quotes").select("id, company_name, contact_name, processing_type, status, created_at, customer_id").eq("status", "접수").is("deleted_at", null).order("created_at", { ascending: true }).limit(5),
+    supabase.from("applications").select("id, name, position, status, created_at, customer_id").eq("status", "서류검토").is("deleted_at", null).order("created_at", { ascending: true }).limit(5),
+    supabase.from("products").select("*", { count: "exact", head: true }).eq("is_active", true).is("deleted_at", null),
+    supabase.from("job_postings").select("*", { count: "exact", head: true }).eq("is_active", true).is("deleted_at", null),
+    supabase.from("notices").select("*", { count: "exact", head: true }).eq("is_published", true).is("deleted_at", null),
+    supabase.from("customers").select("*", { count: "exact", head: true }).is("deleted_at", null),
+    supabase.from("customers").select("*", { count: "exact", head: true }).gte("created_at", weekStart.toISOString()).is("deleted_at", null),
+    supabase.from("customers").select("*", { count: "exact", head: true }).gte("created_at", prevWeekStart.toISOString()).lt("created_at", weekStart.toISOString()).is("deleted_at", null),
+    supabase.from("quotes").select("*", { count: "exact", head: true }).gte("created_at", weekStart.toISOString()).is("deleted_at", null),
+    supabase.from("quotes").select("*", { count: "exact", head: true }).gte("created_at", prevWeekStart.toISOString()).lt("created_at", weekStart.toISOString()).is("deleted_at", null),
   ]);
 
+  const hasUrgent = (pendingQuotes || 0) > 0 || (pendingApps || 0) > 0;
   const customerDelta = (customersThisWeek || 0) - (customersPrevWeek || 0);
   const quoteDelta = (quotesThisWeek || 0) - (quotesPrevWeek || 0);
-  const customerDeltaPct = customersPrevWeek
-    ? Math.round((customerDelta / customersPrevWeek) * 100)
-    : null;
-  const quoteDeltaPct = quotesPrevWeek
-    ? Math.round((quoteDelta / quotesPrevWeek) * 100)
-    : null;
-
-  const hasUrgent = (pendingQuotes || 0) > 0 || (pendingApps || 0) > 0;
 
   return (
-    <div className="space-y-8">
-      {/* Welcome header */}
+    <div className="space-y-6">
+      {/* ───────────── Greeting ───────────── */}
       <div>
         <h1 className="text-xl font-bold text-brand-navy tracking-tight">{getGreeting()}</h1>
-        <p className="text-sm text-gray-400 mt-0.5">{formatToday()}</p>
-        <p className="text-sm text-gray-400 mt-1">현재 운영 현황을 한눈에 확인하세요</p>
-        {((pendingQuotes || 0) > 0 || (pendingApps || 0) > 0) && (
-          <p className="text-sm text-gray-500 tabular-nums mt-1">
-            {(pendingQuotes || 0) > 0 && `처리 대기 견적 ${pendingQuotes}건`}
-            {(pendingCallbacks || 0) > 0 && ` (콜백 ${pendingCallbacks}건)`}
-            {(pendingQuotes || 0) > 0 && (pendingApps || 0) > 0 && " · "}
-            {(pendingApps || 0) > 0 && `검토 대기 지원서 ${pendingApps}건`}
-          </p>
-        )}
+        <p className="text-xs text-gray-400 mt-0.5">{formatToday()}</p>
       </div>
 
-      {/* All caught up message */}
-      {!hasUrgent && (
-        <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 flex items-center gap-2.5">
-          <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          <p className="text-sm text-emerald-800">모든 견적과 지원서가 처리되었습니다</p>
+      {/* ───────────── Inbox: 오늘 처리할 것 ─────────────
+        핵심 원칙: layout stability. pending 없어도 같은 영역 유지.
+      */}
+      <section className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
+          <Inbox className="w-4 h-4 text-brand-navy" />
+          <h2 className="text-sm font-semibold text-brand-navy">오늘 처리할 일</h2>
+          {hasUrgent ? (
+            <span className="ml-auto text-xs font-medium text-red-600 tabular-nums">
+              {(pendingQuotes || 0) + (pendingApps || 0)}건 대기
+            </span>
+          ) : (
+            <span className="ml-auto text-xs text-emerald-600 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              모두 처리됨
+            </span>
+          )}
         </div>
-      )}
 
-      {/* Urgent Action Banner — only when pending items exist */}
-      {hasUrgent && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Link
-            href="/admin/quotes"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 p-5 text-white transition-all hover:-translate-y-0.5 hover:shadow-lg"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                    <Inbox className="w-4 h-4" />
-                  </div>
-                  <p className="text-sm font-medium text-white/80">미처리 견적</p>
+        {!hasUrgent ? (
+          <div className="px-5 py-6 text-center text-sm text-gray-400">
+            새로 들어오는 견적·지원서는 여기에 자동으로 나타납니다.
+          </div>
+        ) : (
+          <div className="divide-y divide-gray-100">
+            {(pendingQuoteList || []).map((q) => (
+              <Link
+                key={q.id}
+                href={`/admin/quotes/${q.id}`}
+                className="group flex items-center gap-3 px-5 py-3 hover:bg-gray-50/50"
+              >
+                <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center flex-shrink-0">
+                  <Inbox className="w-4 h-4 text-amber-600" />
                 </div>
-                <p className="text-3xl font-bold tabular-nums stat-number">
-                  {pendingQuotes || 0}<span className="text-base font-normal text-white/60 ml-1">건</span>
-                </p>
-              </div>
-              <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-white/80 group-hover:translate-x-0.5 transition-all" />
-            </div>
-            <span className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-white/10" />
-            {(pendingQuotes || 0) > 0 && (
-              <span className="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-white animate-pulse ring-2 ring-white/30" />
-            )}
-          </Link>
-          <Link
-            href="/admin/applications"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 p-5 text-white transition-all hover:-translate-y-0.5 hover:shadow-lg"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                    <Users className="w-4 h-4" />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-semibold text-amber-700">견적</span>
+                    <span className="text-sm font-medium text-brand-navy truncate">
+                      {q.company_name}
+                    </span>
+                    <span className="text-xs text-gray-400 truncate">{q.contact_name}</span>
                   </div>
-                  <p className="text-sm font-medium text-white/80">미처리 지원서</p>
+                  <div className="text-xs text-gray-500 mt-0.5">
+                    {q.processing_type === "콜백요청" ? "📞 콜백요청" : q.processing_type}
+                  </div>
                 </div>
-                <p className="text-3xl font-bold tabular-nums stat-number">
-                  {pendingApps || 0}<span className="text-base font-normal text-white/60 ml-1">건</span>
-                </p>
+                <span className={`text-[11px] tabular-nums flex-shrink-0 ${isStale(q.created_at) ? "text-red-500 font-medium" : "text-gray-400"}`}>
+                  {relativeTime(q.created_at)}
+                  {isStale(q.created_at) && " · 24h+"}
+                </span>
+                <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-brand-navy group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+              </Link>
+            ))}
+            {(pendingAppList || []).map((a) => (
+              <Link
+                key={a.id}
+                href={`/admin/applications/${a.id}`}
+                className="group flex items-center gap-3 px-5 py-3 hover:bg-gray-50/50"
+              >
+                <div className="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center flex-shrink-0">
+                  <Users className="w-4 h-4 text-rose-600" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-semibold text-rose-700">지원서</span>
+                    <span className="text-sm font-medium text-brand-navy truncate">{a.name}</span>
+                    <span className="text-xs text-gray-400 truncate">{a.position}</span>
+                  </div>
+                </div>
+                <span className={`text-[11px] tabular-nums flex-shrink-0 ${isStale(a.created_at) ? "text-red-500 font-medium" : "text-gray-400"}`}>
+                  {relativeTime(a.created_at)}
+                  {isStale(a.created_at) && " · 24h+"}
+                </span>
+                <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-brand-navy group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+              </Link>
+            ))}
+            {((pendingQuotes || 0) + (pendingApps || 0)) > (pendingQuoteList?.length || 0) + (pendingAppList?.length || 0) && (
+              <div className="px-5 py-2.5 bg-gray-50/50 text-xs text-gray-500 flex items-center justify-between">
+                <span>상위 {(pendingQuoteList?.length || 0) + (pendingAppList?.length || 0)}건만 표시</span>
+                <div className="flex items-center gap-3">
+                  {(pendingQuotes || 0) > (pendingQuoteList?.length || 0) && (
+                    <Link href="/admin/quotes?status=접수" className="text-brand-blue hover:underline">
+                      견적 전체 {pendingQuotes}건 →
+                    </Link>
+                  )}
+                  {(pendingApps || 0) > (pendingAppList?.length || 0) && (
+                    <Link href="/admin/applications?status=서류검토" className="text-brand-blue hover:underline">
+                      지원서 전체 {pendingApps}건 →
+                    </Link>
+                  )}
+                </div>
               </div>
-              <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-white/80 group-hover:translate-x-0.5 transition-all" />
-            </div>
-            <span className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-white/10" />
-            {(pendingApps || 0) > 0 && (
-              <span className="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-white animate-pulse ring-2 ring-white/30" />
             )}
-          </Link>
-        </div>
-      )}
-
-      {/* Overview Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        {!hasUrgent && (
-          <>
-            <Link
-              href="/admin/quotes"
-              className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
-            >
-              <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center mb-3">
-                <Inbox className="w-[18px] h-[18px] text-amber-600" />
-              </div>
-              <p className="text-sm font-medium text-gray-400 mb-0.5">미처리 견적</p>
-              <p className="text-2xl font-bold text-brand-navy tabular-nums stat-number">
-                {pendingQuotes || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
-              </p>
-            </Link>
-            <Link
-              href="/admin/applications"
-              className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
-            >
-              <div className="w-9 h-9 rounded-lg bg-rose-50 flex items-center justify-center mb-3">
-                <Users className="w-[18px] h-[18px] text-rose-600" />
-              </div>
-              <p className="text-sm font-medium text-gray-400 mb-0.5">미처리 지원서</p>
-              <p className="text-2xl font-bold text-brand-navy tabular-nums stat-number">
-                {pendingApps || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
-              </p>
-            </Link>
-          </>
+          </div>
         )}
-        <Link
-          href="/admin/products"
-          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
-        >
-          <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center mb-3">
-            <Package className="w-[18px] h-[18px] text-blue-600" />
-          </div>
-          <p className="text-sm font-medium text-gray-400 mb-0.5">활성 제품</p>
-          <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
-            {activeProducts || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
-          </p>
-        </Link>
-        <Link
-          href="/admin/job-postings"
-          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
-        >
-          <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center mb-3">
-            <Briefcase className="w-[18px] h-[18px] text-emerald-600" />
-          </div>
-          <p className="text-sm font-medium text-gray-400 mb-0.5">활성 채용공고</p>
-          <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
-            {activeJobs || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
-          </p>
-        </Link>
-        <Link
-          href="/admin/notices"
-          className="group bg-white rounded-xl border border-gray-200 hover:border-gray-300 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
-        >
-          <div className="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center mb-3">
-            <Bell className="w-[18px] h-[18px] text-violet-600" />
-          </div>
-          <p className="text-sm font-medium text-gray-400 mb-0.5">공개 소식</p>
-          <p className="text-2xl font-bold text-gray-700 tabular-nums stat-number">
-            {publishedNotices || 0}<span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
-          </p>
-        </Link>
-      </div>
+      </section>
 
-      {/* Quick Actions */}
-      <div className="flex flex-wrap gap-2">
-        <Link href="/admin/notices/new">
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 소식을 작성합니다">
-            <Plus className="w-4 h-4" />
-            새 소식 작성
-          </Button>
-        </Link>
-        <Link href="/admin/products/new">
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 제품을 등록합니다">
-            <Plus className="w-4 h-4" />
-            새 제품 등록
-          </Button>
-        </Link>
-        <Link href="/admin/job-postings/new">
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 채용공고를 작성합니다">
-            <Plus className="w-4 h-4" />
-            새 채용공고
-          </Button>
-        </Link>
-        <Link href="/admin/invites">
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 관리자 초대 링크를 만듭니다">
-            <Plus className="w-4 h-4" />
-            관리자 초대
-          </Button>
-        </Link>
-      </div>
-
-      {/* This Week Business Metrics */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-brand-navy flex items-center gap-1.5">
-            <TrendingUp className="w-4 h-4" />
-            이번 주 활동
-          </h2>
-          <span className="text-[11px] text-gray-400">최근 7일 · 전주 대비</span>
+      {/* ───────────── 이번 주 활동 (기존 그대로) ───────────── */}
+      <section className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
+          <TrendingUp className="w-4 h-4 text-brand-navy" />
+          <h2 className="text-sm font-semibold text-brand-navy">이번 주 활동</h2>
+          <span className="ml-auto text-[11px] text-gray-400">최근 7일 vs 전주</span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-100">
-          <MetricCard
-            label="신규 고객"
-            value={customersThisWeek || 0}
-            delta={customerDelta}
-            deltaPct={customerDeltaPct}
-            href="/admin/customers"
-          />
-          <MetricCard
-            label="새 견적"
-            value={quotesThisWeek || 0}
-            delta={quoteDelta}
-            deltaPct={quoteDeltaPct}
-            href="/admin/quotes"
-          />
-          <MetricCard
-            label="오늘 견적"
-            value={quotesToday || 0}
-            href="/admin/quotes"
-          />
-          <MetricCard
-            label="오늘 지원서"
-            value={appsToday || 0}
-            href="/admin/applications"
-          />
+          <MetricCard label="신규 고객" value={customersThisWeek || 0} delta={customerDelta} href="/admin/customers" />
+          <MetricCard label="새 견적" value={quotesThisWeek || 0} delta={quoteDelta} href="/admin/quotes" />
+          <MetricCard label="총 고객" value={totalCustomers || 0} href="/admin/customers" unit="명" />
+          <MetricCard label="공개 소식" value={publishedNotices || 0} href="/admin/notices" unit="개" />
         </div>
-      </div>
+      </section>
 
-      {/* Customers + Analytics shortcut row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <Link
-          href="/admin/customers"
-          className="group flex items-center gap-4 bg-white rounded-xl border border-gray-200 hover:border-brand-navy/30 p-5 transition-all hover:shadow-md"
-        >
-          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
-            <Building2 className="w-5 h-5" />
+      {/* ───────────── 콘텐츠 현황 + 빠른 액션 ───────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
+          <h2 className="text-sm font-semibold text-brand-navy flex items-center gap-2">
+            <Package className="w-4 h-4" />
+            콘텐츠 현황
+          </h2>
+          <div className="grid grid-cols-3 gap-2">
+            <ContentBadge icon={Package} label="제품" count={activeProducts || 0} href="/admin/products" color="blue" />
+            <ContentBadge icon={Briefcase} label="채용공고" count={activeJobs || 0} href="/admin/job-postings" color="emerald" />
+            <ContentBadge icon={Bell} label="회사소식" count={publishedNotices || 0} href="/admin/notices" color="violet" />
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-xs text-gray-400">총 고객 수</p>
-            <p className="text-xl font-bold text-brand-navy tabular-nums">
-              {totalCustomers || 0}
-              <span className="text-xs font-normal text-gray-400 ml-0.5">명</span>
-            </p>
-          </div>
-          <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-brand-navy transition-colors" />
-        </Link>
-        <a
-          href="https://vercel.com/presentjays-projects/najin-webapp/analytics"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex items-center gap-4 bg-white rounded-xl border border-gray-200 hover:border-brand-navy/30 p-5 transition-all hover:shadow-md"
-        >
-          <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center text-violet-600">
-            <BarChart3 className="w-5 h-5" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-xs text-gray-400">방문자 통계 (Vercel Analytics)</p>
-            <p className="text-sm font-medium text-brand-navy">
-              방문자 / Top 페이지 / 디바이스 비율 보기
-            </p>
-          </div>
-          <ExternalLink className="w-4 h-4 text-gray-300 group-hover:text-brand-navy transition-colors" />
-        </a>
-      </div>
+        </div>
 
-      {/* Recent Activity — 2-column on large screens */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-
-      {/* Recent Quotes */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-brand-navy">최근 견적 요청</h2>
-          <Link
-            href="/admin/quotes"
-            className="text-xs font-medium text-brand-blue hover:text-brand-blue-hover transition-colors flex items-center gap-1"
+        <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
+          <h2 className="text-sm font-semibold text-brand-navy">빠른 액션</h2>
+          <div className="flex flex-wrap gap-2">
+            <QuickAction href="/admin/notices/new" label="새 소식 작성" />
+            <QuickAction href="/admin/products/new" label="새 제품" />
+            <QuickAction href="/admin/job-postings/new" label="새 채용공고" />
+            <QuickAction href="/admin/invites" label="관리자 초대" />
+          </div>
+          <a
+            href="https://vercel.com/presentjays-projects/najin-webapp/analytics"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-xs text-violet-700 hover:text-violet-800 pt-2 mt-2 border-t border-gray-100"
           >
-            전체 보기
-            <ArrowRight className="w-3 h-3" />
-          </Link>
+            <BarChart3 className="w-3.5 h-3.5" />
+            방문자 통계 (Vercel Analytics)
+            <ExternalLink className="w-3 h-3" />
+          </a>
         </div>
-        {recentQuotes && recentQuotes.length > 0 && (
-          <div className="px-5 py-3 border-b border-gray-100">
-            <StatusProgress items={recentQuotes} />
-          </div>
-        )}
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>회사명</TableHead>
-              <TableHead>담당자</TableHead>
-              <TableHead>가공종류</TableHead>
-              <TableHead>상태</TableHead>
-              <TableHead>접수일</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {recentQuotes && recentQuotes.length > 0 ? (
-              recentQuotes.map((q) => (
-                <TableRow key={q.id} className={q.status === "접수" && isStale(q.created_at) ? "bg-amber-50/50" : ""}>
-                  <TableCell>
-                    <Link
-                      href={`/admin/quotes/${q.id}`}
-                      className="text-brand-blue hover:text-brand-blue-hover font-medium transition-colors"
-                    >
-                      {q.company_name}
-                    </Link>
-                    {q.customer_id && (
-                      <Link
-                        href={`/admin/customers/${q.customer_id}`}
-                        className="ml-2 text-[10px] text-gray-400 hover:text-brand-navy"
-                        title="고객 페이지"
-                      >
-                        고객
-                      </Link>
-                    )}
-                  </TableCell>
-                  <TableCell>{q.contact_name}</TableCell>
-                  <TableCell>{q.processing_type}</TableCell>
-                  <TableCell>
-                    <StatusBadge status={q.status} type="quote" />
-                  </TableCell>
-                  <TableCell className="text-sm text-gray-500">
-                    <span className="flex items-center gap-1" title={new Date(q.created_at).toLocaleString("ko-KR")}>
-                      {relativeTime(q.created_at)}
-                      {q.status === "접수" && isStale(q.created_at) && (
-                        <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
-                      )}
-                    </span>
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={5}>
-                  <div className="text-center py-8 text-sm text-gray-400">아직 견적 요청이 없습니다</div>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
       </div>
-
-      {/* Recent Applications */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-brand-navy">최근 지원서</h2>
-          <Link
-            href="/admin/applications"
-            className="text-xs font-medium text-brand-blue hover:text-brand-blue-hover transition-colors flex items-center gap-1"
-          >
-            전체 보기
-            <ArrowRight className="w-3 h-3" />
-          </Link>
-        </div>
-        {recentApps && recentApps.length > 0 && (
-          <div className="px-5 py-3 border-b border-gray-100">
-            <StatusProgress items={recentApps} />
-          </div>
-        )}
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>이름</TableHead>
-              <TableHead>포지션</TableHead>
-              <TableHead>상태</TableHead>
-              <TableHead>지원일</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {recentApps && recentApps.length > 0 ? (
-              recentApps.map((a) => (
-                <TableRow key={a.id} className={a.status === "서류검토" && isStale(a.created_at) ? "bg-amber-50/50" : ""}>
-                  <TableCell>
-                    <Link
-                      href={`/admin/applications/${a.id}`}
-                      className="text-brand-blue hover:text-brand-blue-hover font-medium transition-colors"
-                    >
-                      {a.name}
-                    </Link>
-                  </TableCell>
-                  <TableCell>{a.position}</TableCell>
-                  <TableCell>
-                    <StatusBadge status={a.status} type="application" />
-                  </TableCell>
-                  <TableCell className="text-sm text-gray-500">
-                    <span className="flex items-center gap-1" title={new Date(a.created_at).toLocaleString("ko-KR")}>
-                      {relativeTime(a.created_at)}
-                      {a.status === "서류검토" && isStale(a.created_at) && (
-                        <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
-                      )}
-                    </span>
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={4}>
-                  <div className="text-center py-8 text-sm text-gray-400">아직 지원서가 없습니다</div>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-
-      </div>{/* end 2-column grid */}
     </div>
   );
 }
@@ -583,23 +266,23 @@ function MetricCard({
   label,
   value,
   delta,
-  deltaPct,
   href,
+  unit = "건",
 }: {
   label: string;
   value: number;
   delta?: number;
-  deltaPct?: number | null;
   href: string;
+  unit?: string;
 }) {
   const isPositive = (delta ?? 0) > 0;
   const isNegative = (delta ?? 0) < 0;
   return (
     <Link href={href} className="block px-5 py-4 hover:bg-gray-50/50 transition-colors">
-      <p className="text-xs text-gray-400 mb-1">{label}</p>
-      <p className="text-xl font-bold text-brand-navy tabular-nums stat-number">
+      <p className="text-[11px] text-gray-400 mb-1">{label}</p>
+      <p className="text-xl font-bold text-brand-navy tabular-nums">
         {value}
-        <span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
+        <span className="text-xs font-normal text-gray-400 ml-0.5">{unit}</span>
       </p>
       {delta !== undefined && (
         <p
@@ -607,12 +290,52 @@ function MetricCard({
             isPositive ? "text-emerald-600" : isNegative ? "text-red-500" : "text-gray-400"
           }`}
         >
-          {isPositive ? "↑" : isNegative ? "↓" : "—"}
-          {" "}
-          {Math.abs(delta)}건
-          {deltaPct !== null && deltaPct !== undefined && ` (${deltaPct >= 0 ? "+" : ""}${deltaPct}%)`}
+          {isPositive ? "↑" : isNegative ? "↓" : "—"} {Math.abs(delta)}
         </p>
       )}
+    </Link>
+  );
+}
+
+function ContentBadge({
+  icon: Icon,
+  label,
+  count,
+  href,
+  color,
+}: {
+  icon: typeof Package;
+  label: string;
+  count: number;
+  href: string;
+  color: "blue" | "emerald" | "violet";
+}) {
+  const colors = {
+    blue: "bg-blue-50 text-blue-700",
+    emerald: "bg-emerald-50 text-emerald-700",
+    violet: "bg-violet-50 text-violet-700",
+  };
+  return (
+    <Link href={href} className="block p-3 rounded-lg border border-gray-200 hover:border-brand-navy/30 hover:bg-gray-50/50 transition-all">
+      <div className={`w-7 h-7 rounded-md ${colors[color]} flex items-center justify-center mb-2`}>
+        <Icon className="w-3.5 h-3.5" />
+      </div>
+      <p className="text-[11px] text-gray-500">{label}</p>
+      <p className="text-sm font-bold text-brand-navy tabular-nums">
+        {count}
+        <span className="text-[10px] font-normal text-gray-400 ml-0.5">개</span>
+      </p>
+    </Link>
+  );
+}
+
+function QuickAction({ href, label }: { href: string; label: string }) {
+  return (
+    <Link href={href}>
+      <Button variant="outline" size="sm" className="gap-1.5 rounded-lg text-xs">
+        <Plus className="w-3.5 h-3.5" />
+        {label}
+      </Button>
     </Link>
   );
 }
