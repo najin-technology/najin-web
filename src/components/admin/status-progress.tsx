@@ -1,26 +1,23 @@
-const STATUS_COLORS: Record<string, string> = {
-  접수: "bg-amber-400",
-  검토중: "bg-blue-400",
-  견적완료: "bg-green-400",
-  거절: "bg-gray-300",
-  서류검토: "bg-amber-400",
-  면접예정: "bg-blue-400",
-  합격: "bg-green-400",
-  불합격: "bg-gray-300",
-};
+import { getStatusStyle, type StatusType } from "@/lib/status-colors";
 
+/**
+ * Distribution bar showing relative status counts.
+ * Pass `type` so colors come from the same source as StatusBadge.
+ */
 export function StatusProgress({
   items,
+  type = "quote",
   statusKey = "status",
 }: {
-  items: { status: string }[];
+  items: Array<Record<string, unknown>>;
+  type?: StatusType;
   statusKey?: string;
 }) {
   if (!items.length) return null;
 
   const counts: Record<string, number> = {};
   for (const item of items) {
-    const s = (item as Record<string, string>)[statusKey] || "기타";
+    const s = (item[statusKey] as string) || "기타";
     counts[s] = (counts[s] || 0) + 1;
   }
 
@@ -33,7 +30,7 @@ export function StatusProgress({
         {segments.map(([status, count]) => (
           <div
             key={status}
-            className={`${STATUS_COLORS[status] || "bg-gray-200"} transition-all`}
+            className={`${getStatusStyle(type, status).dot} transition-all`}
             style={{ width: `${(count / total) * 100}%` }}
             title={`${status}: ${count}건 (${Math.round((count / total) * 100)}%)`}
           />
@@ -42,7 +39,7 @@ export function StatusProgress({
       <div className="flex flex-wrap gap-x-3 gap-y-1">
         {segments.map(([status, count]) => (
           <span key={status} className="flex items-center gap-1.5 text-xs text-gray-600">
-            <span className={`w-2 h-2 rounded-full ${STATUS_COLORS[status] || "bg-gray-200"}`} />
+            <span className={`w-2 h-2 rounded-full ${getStatusStyle(type, status).dot}`} />
             {status} {count}
           </span>
         ))}

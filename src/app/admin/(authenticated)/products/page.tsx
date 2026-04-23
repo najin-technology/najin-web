@@ -1,19 +1,8 @@
-import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
 import { ListPageHeader } from "@/components/admin/list-page-header";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Package, Pencil } from "lucide-react";
-import { ProductActiveToggle } from "./product-toggle";
-import { ProductDeleteButton } from "./product-delete-button";
+import { Package } from "lucide-react";
+import { SortableProductTable } from "./sortable-products";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -111,48 +100,9 @@ export default async function ProductsPage({
                 {CATEGORY_LABELS[cat] || cat}
               </span>
               <span className="text-xs text-gray-500 tabular-nums">{grouped[cat]?.length || 0}개</span>
+              <span className="text-xs text-gray-400 ml-auto">← 좌측 핸들을 드래그해 순서 변경</span>
             </div>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>제품명</TableHead>
-                  <TableHead>정렬순서</TableHead>
-                  <TableHead>활성</TableHead>
-                  <TableHead className="w-[100px]">관리</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {grouped[cat]!.map((p) => (
-                  <TableRow key={p.id} className="hover:bg-gray-50/50">
-                    <TableCell>
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-md bg-gray-100 flex items-center justify-center flex-shrink-0">
-                          <Package className="w-4 h-4 text-gray-300" />
-                        </div>
-                        <span className="font-medium">{p.name_ko}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell><span className="font-mono tabular-nums">{p.sort_order}</span></TableCell>
-                    <TableCell>
-                      <ProductActiveToggle
-                        productId={p.id}
-                        isActive={p.is_active}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1">
-                        <Link href={`/admin/products/${p.id}/edit`}>
-                          <Button variant="ghost" size="icon-sm" aria-label="편집">
-                            <Pencil className="w-4 h-4" />
-                          </Button>
-                        </Link>
-                        <ProductDeleteButton productId={p.id} />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <SortableProductTable items={grouped[cat]!} />
           </div>
         ))
       ) : (
