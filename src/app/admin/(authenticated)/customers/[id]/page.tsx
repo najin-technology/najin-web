@@ -4,7 +4,7 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { requireAdmin } from "@/lib/auth";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { Building2, Phone, Mail, Calendar, FileText, Users, ExternalLink, Tag } from "lucide-react";
-import { CustomerStatusForm, CustomerNotesForm } from "./client";
+import { CustomerStatusForm, CustomerNotesForm, CustomerDisplayForm } from "./client";
 
 export const metadata = { title: "고객 상세", robots: "noindex, nofollow" };
 
@@ -223,9 +223,21 @@ export default async function CustomerDetailPage({
           </div>
         </div>
 
-        {/* Right: status + notes */}
+        {/* Right: status + display + notes */}
         <div className="space-y-4">
           <CustomerStatusForm customerId={customer.id} status={customer.status} tags={customer.tags || []} />
+          <CustomerDisplayForm
+            customerId={customer.id}
+            initial={{
+              client_slug: customer.client_slug ?? null,
+              logo_url: customer.logo_url ?? null,
+              name_en: customer.name_en ?? null,
+              needs_dark_bg: !!customer.needs_dark_bg,
+              display_category: customer.display_category ?? null,
+              display_order: customer.display_order ?? 0,
+              registered_year: customer.registered_year ?? null,
+            }}
+          />
           <CustomerNotesForm customerId={customer.id} notes={customer.notes || ""} />
         </div>
       </div>

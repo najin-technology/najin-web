@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -42,7 +42,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { CLIENTS } from "@/lib/clients";
+import { getClientGrid, type ClientGridRow } from "@/lib/queries";
 
 const businessAreas: {
   key: string;
@@ -57,10 +57,19 @@ const businessAreas: {
   { key: "ev", icon: Zap, image: "/images/products/db-4421a7e9-0.jpg", tag: "EV" },
 ];
 
-export default function HomePage() {
-  const t = useTranslations("home");
-  const tc = useTranslations("common");
-  const tb = useTranslations("business");
+export default async function HomePage() {
+  const [t, tc, tb] = await Promise.all([
+    getTranslations("home"),
+    getTranslations("common"),
+    getTranslations("business"),
+  ]);
+
+  let clients: ClientGridRow[] = [];
+  try {
+    clients = await getClientGrid();
+  } catch {
+    // empty fallback — section just won't render logos
+  }
 
   return (
     <>
@@ -163,7 +172,7 @@ export default function HomePage() {
             {t("clientsTitle")}
           </p>
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 md:gap-4 items-stretch" data-animate="fade-up">
-            {CLIENTS.map((client) => (
+            {clients.map((client) => (
               <Link
                 key={client.slug}
                 href={`/clients/${client.slug}`}

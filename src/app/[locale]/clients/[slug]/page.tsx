@@ -4,13 +4,24 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { CLIENTS, getClientBySlug } from "@/lib/clients";
-import { getClientDeliveries, getPostsForClient } from "@/lib/queries";
+import { FALLBACK_CLIENT_SLUGS } from "@/lib/clients";
+import {
+  getClientDeliveries,
+  getPostsForClient,
+  getClientGrid,
+  getClientGridRowBySlug,
+} from "@/lib/queries";
 import { createPageMetadata } from "@/lib/metadata";
 import { Calendar, Phone, ArrowRight, FileText, ImageIcon } from "lucide-react";
 
 export async function generateStaticParams() {
-  return CLIENTS.map((c) => ({ slug: c.slug }));
+  try {
+    const grid = await getClientGrid();
+    if (grid.length > 0) return grid.map((c) => ({ slug: c.slug }));
+  } catch {
+    // fall through
+  }
+  return FALLBACK_CLIENT_SLUGS.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -19,21 +30,27 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const client = getClientBySlug(slug);
+  let client;
+  try {
+    client = await getClientGridRowBySlug(slug);
+  } catch {
+    client = null;
+  }
   if (!client) {
     return { title: "Not Found" };
   }
+  const en = client.nameEn || client.name;
   const titleKo = `${client.name} 협업사례`;
-  const titleEn = `${client.nameEn} — Collaboration`;
-  const titleZh = `${client.nameEn} 合作案例`;
+  const titleEn = `${en} — Collaboration`;
+  const titleZh = `${en} 合作案例`;
   return createPageMetadata({
     locale,
     path: `/clients/${slug}`,
     titles: { ko: titleKo, en: titleEn, zh: titleZh },
     descriptions: {
       ko: `${client.name}와의 검증된 납품 이력과 협업사례를 소개합니다.`,
-      en: `Verified delivery history and collaboration with ${client.nameEn}.`,
-      zh: `与 ${client.nameEn} 的合作交付记录。`,
+      en: `Verified delivery history and collaboration with ${en}.`,
+      zh: `与 ${en} 的合作交付记录。`,
     },
   });
 }
@@ -44,7 +61,12 @@ export default async function ClientPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { slug } = await params;
-  const client = getClientBySlug(slug);
+  let client;
+  try {
+    client = await getClientGridRowBySlug(slug);
+  } catch {
+    client = null;
+  }
   if (!client) notFound();
 
   const t = await getTranslations("clients");
@@ -106,7 +128,7 @@ export default async function ClientPage({
         items={[
           { label: tp("pageTitle"), href: "/portfolio" },
           { label: t("breadcrumb"), href: "/portfolio" },
-          { label: locale === "ko" ? client.name : client.nameEn },
+          { label: (locale === "ko" ? client.name : client.nameEn) || client.name },
         ]}
       />
 
@@ -138,7 +160,7 @@ export default async function ClientPage({
               </h3>
               <p className="text-sm text-brand-charcoal/70 max-w-md mx-auto mb-6">
                 {t("noDeliveriesDesc", {
-                  name: locale === "ko" ? client.name : client.nameEn,
+                  name: (locale === "ko" ? client.name : client.nameEn) || client.name,
                 })}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
