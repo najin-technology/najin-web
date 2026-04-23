@@ -92,13 +92,13 @@ export default async function PortfolioPage() {
                 data-animate-delay={String(Math.min((i % 5) + 1, 5))}
                 aria-label={client.name}
               >
-                <div className="h-10 flex items-center justify-center mx-auto mb-3">
+                <div className="h-14 flex items-center justify-center mx-auto mb-3">
                   <Image
                     src={client.logo}
                     alt={client.name}
-                    width={120}
-                    height={40}
-                    className="max-h-8 w-auto max-w-[120px] object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100"
+                    width={160}
+                    height={56}
+                    className="max-h-12 w-auto max-w-[140px] object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100"
                     unoptimized
                   />
                 </div>
