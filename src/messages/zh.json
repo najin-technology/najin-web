@@ -202,7 +202,15 @@
     "faq2Q": "交货期是多少？",
     "faq2A": "根据产品规格不同，一般在报价确认后7~14天内交货。",
     "faq3Q": "没有图纸也能报价吗？",
-    "faq3A": "可以，告知大致规格和数量即可提供概算报价。精确报价需要图纸。"
+    "faq3A": "可以，告知大致规格和数量即可提供概算报价。精确报价需要图纸。",
+    "errors": {
+      "requiredFields": "请填写所有必填项。",
+      "privacyAgreed": "请同意个人信息收集政策。",
+      "fileSize": "文件大小不能超过10MB。",
+      "fileType": "不支持的文件类型。",
+      "submitFailed": "提交时发生错误，请重试。",
+      "fileUploadFailed": "文件上传失败。报价请求已接收，但附件发送失败。请通过邮件发送图纸。"
+    }
   },
   "careers": {
     "pageTitle": "招聘信息",
@@ -226,7 +234,14 @@
     "resume": "简历附件",
     "resumeHelp": "PDF, DOC, DOCX（最大10MB）",
     "successTitle": "申请已受理",
-    "successMessage": "资料审核后将与您联系，感谢。"
+    "successMessage": "资料审核后将与您联系，感谢。",
+    "errors": {
+      "requiredFields": "请填写所有必填项。",
+      "privacyAgreed": "请同意个人信息收集政策。",
+      "fileSize": "文件大小不能超过10MB。",
+      "fileType": "不支持的文件类型。(仅限PDF、DOC、DOCX)",
+      "submitFailed": "提交时发生错误，请重试。"
+    }
   },
   "notices": {
     "pageTitle": "公司动态",

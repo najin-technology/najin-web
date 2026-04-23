@@ -88,7 +88,7 @@ export async function getHomePosts() {
 export async function getPostBySlug(slug: string) {
   const { data, error } = await supabase
     .from("posts")
-    .select("*")
+    .select("*, customer:customers(client_slug, company_name, name_en, logo_url)")
     .eq("slug", slug)
     .eq("is_published", true)
     .is("deleted_at", null)

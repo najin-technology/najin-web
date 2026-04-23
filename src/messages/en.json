@@ -202,7 +202,15 @@
     "faq2Q": "What is the lead time?",
     "faq2A": "Typically 7-14 days after quote confirmation, depending on product specifications.",
     "faq3Q": "Can I get a quote without drawings?",
-    "faq3A": "Yes, rough specs and quantity are enough for a ballpark estimate. Detailed drawings are needed for precise quotes."
+    "faq3A": "Yes, rough specs and quantity are enough for a ballpark estimate. Detailed drawings are needed for precise quotes.",
+    "errors": {
+      "requiredFields": "Please fill in all required fields.",
+      "privacyAgreed": "You must agree to the privacy policy.",
+      "fileSize": "File size must be 10MB or less.",
+      "fileType": "File type not allowed.",
+      "submitFailed": "An error occurred while submitting. Please try again.",
+      "fileUploadFailed": "File upload failed. Your quote request was received, but the attachment could not be sent. Please email your drawing."
+    }
   },
   "careers": {
     "pageTitle": "Careers",
@@ -226,7 +234,14 @@
     "resume": "Resume",
     "resumeHelp": "PDF, DOC, DOCX (max 10MB)",
     "successTitle": "Application has been received",
-    "successMessage": "We will contact you after reviewing your application. Thank you."
+    "successMessage": "We will contact you after reviewing your application. Thank you.",
+    "errors": {
+      "requiredFields": "Please fill in all required fields.",
+      "privacyAgreed": "You must agree to the privacy policy.",
+      "fileSize": "File size must be 10MB or less.",
+      "fileType": "File type not allowed. (PDF, DOC, DOCX only)",
+      "submitFailed": "An error occurred while submitting. Please try again."
+    }
   },
   "notices": {
     "pageTitle": "Company News",
