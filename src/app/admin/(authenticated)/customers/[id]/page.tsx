@@ -5,18 +5,9 @@ import { requireAdmin } from "@/lib/auth";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { Building2, Phone, Mail, Calendar, FileText, Users, ExternalLink, Tag } from "lucide-react";
 import { CustomerStatusForm, CustomerNotesForm, CustomerDisplayForm } from "./client";
+import { getStatusStyle } from "@/lib/status-colors";
 
 export const metadata = { title: "고객 상세", robots: "noindex, nofollow" };
-
-const STATUS_COLORS: Record<string, string> = {
-  "리드": "bg-gray-100 text-gray-700",
-  "검토중": "bg-blue-100 text-blue-700",
-  "견적전송": "bg-amber-100 text-amber-700",
-  "진행중": "bg-violet-100 text-violet-700",
-  "완료": "bg-emerald-100 text-emerald-700",
-  "보류": "bg-yellow-100 text-yellow-700",
-  "거절": "bg-rose-100 text-rose-700",
-};
 
 const SOURCE_LABELS: Record<string, string> = {
   quote: "견적 요청",
@@ -130,9 +121,14 @@ export default async function CustomerDetailPage({
                   {customer.display_name || customer.company_name}
                 </h2>
                 <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                  <span className={`inline-flex items-center font-medium px-2 py-0.5 rounded-full ${STATUS_COLORS[customer.status] || "bg-gray-100 text-gray-700"}`}>
-                    {customer.status}
-                  </span>
+                  {(() => {
+                    const s = getStatusStyle("customer", customer.status);
+                    return (
+                      <span className={`inline-flex items-center font-medium px-2 py-0.5 rounded-full ${s.bg} ${s.text}`}>
+                        {customer.status}
+                      </span>
+                    );
+                  })()}
                   <span>·</span>
                   <span>{SOURCE_LABELS[customer.source] || customer.source}</span>
                   {customer.client_slug && (

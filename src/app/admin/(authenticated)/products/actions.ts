@@ -233,3 +233,28 @@ export async function deleteProduct(id: string) {
 
   revalidatePath("/admin/products");
 }
+
+// Batch reorder: takes id array, assigns sort_order = (index+1)*10
+export async function reorderProducts(ids: string[]) {
+  await requireAdmin();
+  if (!Array.isArray(ids) || ids.length === 0) return { error: "reorder: empty list" };
+
+  const supabase = await createSupabaseServerClient();
+  // Update each row with a new sort_order (index-based × 10 to leave room)
+  await Promise.all(
+    ids.map((id, index) =>
+      supabase.from("products").update({ sort_order: (index + 1) * 10 }).eq("id", id)
+    )
+  );
+
+  await logAudit({
+    action: "reorder",
+    targetTable: "products",
+    details: { count: ids.length, first: ids[0] },
+  });
+
+  revalidatePath("/admin/products");
+  revalidatePath("/ko/portfolio");
+  revalidatePath("/en/portfolio");
+  return { success: true };
+}

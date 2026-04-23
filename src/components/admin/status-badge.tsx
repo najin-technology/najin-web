@@ -1,15 +1,9 @@
-const quoteStatusStyles: Record<string, { dot: string; bg: string; text: string }> = {
-  접수: { dot: "bg-gray-500", bg: "bg-gray-100", text: "text-gray-800" },
-  검토중: { dot: "bg-blue-500", bg: "bg-blue-50", text: "text-blue-700" },
-  견적발송: { dot: "bg-amber-500", bg: "bg-amber-50", text: "text-amber-700" },
-  완료: { dot: "bg-emerald-500", bg: "bg-emerald-50", text: "text-emerald-700" },
-};
+import { getStatusStyle, type StatusType } from "@/lib/status-colors";
 
-const applicationStatusStyles: Record<string, { dot: string; bg: string; text: string }> = {
-  서류검토: { dot: "bg-gray-500", bg: "bg-gray-100", text: "text-gray-800" },
-  면접예정: { dot: "bg-blue-500", bg: "bg-blue-50", text: "text-blue-700" },
-  합격: { dot: "bg-emerald-500", bg: "bg-emerald-50", text: "text-emerald-700" },
-  불합격: { dot: "bg-red-500", bg: "bg-red-50", text: "text-red-700" },
+const TYPE_LABELS: Record<StatusType, string> = {
+  quote: "견적",
+  application: "지원서",
+  customer: "고객",
 };
 
 export function StatusBadge({
@@ -17,12 +11,10 @@ export function StatusBadge({
   type,
 }: {
   status: string;
-  type: "quote" | "application";
+  type: StatusType;
 }) {
-  const styles = type === "quote" ? quoteStatusStyles : applicationStatusStyles;
-  const style = styles[status] || { dot: "bg-gray-400", bg: "bg-gray-100", text: "text-gray-600" };
-
-  const typeLabel = type === "quote" ? "견적" : "지원서";
+  const style = getStatusStyle(type, status);
+  const typeLabel = TYPE_LABELS[type];
 
   return (
     <span
