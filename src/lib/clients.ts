@@ -73,14 +73,14 @@ export const CLIENTS: Client[] = [
     slug: "hwashin",
     name: "주요 부품사",
     nameEn: "Major parts supplier",
-    logo: "/images/logos/hwashin.png", // hwashin.co.kr 공식
+    logo: "/images/logos/hwashin.svg", // 자체 wordmark (공식 sourcing 불가)
     category: "automotive",
   },
   {
     slug: "sungwoo-hitech",
     name: "주요 부품사",
     nameEn: "Major parts supplier",
-    logo: "/images/logos/sungwoo.png", // swhitech.com 공식
+    logo: "/images/logos/sungwoo.svg", // 자체 wordmark (공식 sourcing 불가)
     category: "automotive",
     registeredYear: 2010,
   },
