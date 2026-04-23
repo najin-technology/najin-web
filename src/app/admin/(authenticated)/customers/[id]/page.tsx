@@ -43,8 +43,8 @@ export default async function CustomerDetailPage({
 
   if (!customer) notFound();
 
-  // Load related quotes & applications
-  const [{ data: quotes }, { data: applications }] = await Promise.all([
+  // Load related quotes, applications, posts
+  const [{ data: quotes }, { data: applications }, { data: posts }] = await Promise.all([
     supabase
       .from("quotes")
       .select("id, processing_type, material, status, created_at")
@@ -57,10 +57,16 @@ export default async function CustomerDetailPage({
       .eq("customer_id", id)
       .is("deleted_at", null)
       .order("created_at", { ascending: false }),
+    supabase
+      .from("posts")
+      .select("id, slug, title_ko, category, original_date, published_at, is_published")
+      .eq("customer_id", id)
+      .is("deleted_at", null)
+      .order("original_date", { ascending: false, nullsFirst: false }),
   ]);
 
   type TimelineEvent = {
-    type: "quote" | "application" | "created";
+    type: "quote" | "application" | "post" | "created";
     id: string;
     label: string;
     sublabel?: string;
@@ -86,6 +92,14 @@ export default async function CustomerDetailPage({
       status: a.status,
       date: a.created_at,
       href: `/admin/applications/${a.id}`,
+    })),
+    ...(posts || []).map((p) => ({
+      type: "post" as const,
+      id: p.id,
+      label: `${p.category} — ${p.title_ko}`,
+      status: p.is_published ? "공개" : "비공개",
+      date: p.original_date || p.published_at,
+      href: `/admin/posts/${p.id}/edit`,
     })),
     {
       type: "created" as const,
@@ -175,6 +189,7 @@ export default async function CustomerDetailPage({
                     <span className={`absolute -left-[26px] top-1.5 w-3 h-3 rounded-full border-2 border-white ${
                       ev.type === "quote" ? "bg-amber-500" :
                       ev.type === "application" ? "bg-rose-500" :
+                      ev.type === "post" ? "bg-indigo-500" :
                       "bg-gray-300"
                     }`} />
                     <div className="flex items-baseline gap-2 flex-wrap">

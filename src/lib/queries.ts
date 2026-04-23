@@ -122,6 +122,29 @@ export async function getClientDeliveries(slug: string) {
   return data;
 }
 
+export async function getPostsForClient(slug: string) {
+  // 1) Look up customer by client_slug
+  const { data: customer } = await supabase
+    .from("customers")
+    .select("id")
+    .eq("client_slug", slug)
+    .is("deleted_at", null)
+    .maybeSingle();
+  if (!customer) return [];
+
+  // 2) Pull posts linked to that customer
+  const { data, error } = await supabase
+    .from("posts")
+    .select("id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, thumbnail_url, original_date, published_at")
+    .eq("customer_id", customer.id)
+    .eq("is_published", true)
+    .is("deleted_at", null)
+    .order("original_date", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+
 export async function getProductsByCategory() {
   const { data, error } = await supabase
     .from("products")

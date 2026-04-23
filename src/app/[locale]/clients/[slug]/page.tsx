@@ -5,9 +5,9 @@ import { Link } from "@/i18n/routing";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { CLIENTS, getClientBySlug } from "@/lib/clients";
-import { getClientDeliveries } from "@/lib/queries";
+import { getClientDeliveries, getPostsForClient } from "@/lib/queries";
 import { createPageMetadata } from "@/lib/metadata";
-import { Calendar, Phone, ArrowRight, FileText } from "lucide-react";
+import { Calendar, Phone, ArrowRight, FileText, ImageIcon } from "lucide-react";
 
 export async function generateStaticParams() {
   return CLIENTS.map((c) => ({ slug: c.slug }));
@@ -53,8 +53,12 @@ export default async function ClientPage({
   const locale = await getLocale();
 
   let deliveries: Awaited<ReturnType<typeof getClientDeliveries>> = [];
+  let relatedPosts: Awaited<ReturnType<typeof getPostsForClient>> = [];
   try {
-    deliveries = await getClientDeliveries(slug);
+    [deliveries, relatedPosts] = await Promise.all([
+      getClientDeliveries(slug),
+      getPostsForClient(slug),
+    ]);
   } catch {
     // empty fallback
   }
@@ -187,6 +191,77 @@ export default async function ClientPage({
           )}
         </div>
       </section>
+
+      {/* Related case-study posts (if any) */}
+      {relatedPosts.length > 0 && (
+        <section className="py-12 md:py-16 bg-white">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2
+              className="text-xl md:text-2xl font-bold text-brand-navy mb-2"
+              data-animate="fade-up"
+            >
+              관련 제작사례
+            </h2>
+            <p
+              className="text-sm text-brand-charcoal/60 mb-6"
+              data-animate="fade-up"
+              data-animate-delay="1"
+            >
+              {locale === "ko" ? client.name : client.nameEn}와의 작업 사례입니다.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {relatedPosts.map((post) => {
+                const title =
+                  locale === "ko" ? post.title_ko : post.title_en || post.title_ko;
+                const excerpt =
+                  locale === "ko" ? post.excerpt_ko : post.excerpt_en || post.excerpt_ko;
+                const date =
+                  post.original_date || post.published_at;
+                return (
+                  <Link
+                    key={post.id}
+                    href={`/posts/${post.slug}`}
+                    className="group block bg-white rounded-xl border border-surface-warm-200 overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5"
+                  >
+                    <div className="relative aspect-[16/10] bg-surface-warm-100 overflow-hidden">
+                      {post.thumbnail_url ? (
+                        <Image
+                          src={post.thumbnail_url}
+                          alt={title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full">
+                          <ImageIcon className="w-10 h-10 text-brand-charcoal/20" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-brand-navy text-sm mb-1 line-clamp-2 group-hover:text-brand-blue transition-colors">
+                        {title}
+                      </h3>
+                      {excerpt && (
+                        <p className="text-xs text-brand-charcoal/70 line-clamp-2 mb-2">
+                          {excerpt}
+                        </p>
+                      )}
+                      {date && (
+                        <p className="text-[11px] text-brand-charcoal/40 tabular-nums">
+                          {new Date(date).toLocaleDateString(
+                            locale === "ko" ? "ko-KR" : locale === "zh" ? "zh-CN" : "en-US"
+                          )}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Reference: catalog links */}
       <section className="py-12 md:py-16 bg-white">
