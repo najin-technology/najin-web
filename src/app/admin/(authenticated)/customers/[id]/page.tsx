@@ -4,19 +4,10 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { requireAdmin } from "@/lib/auth";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { Building2, Phone, Mail, Calendar, FileText, Users, ExternalLink, Tag } from "lucide-react";
-import { CustomerStatusForm, CustomerNotesForm } from "./client";
+import { CustomerStatusForm, CustomerNotesForm, CustomerDisplayForm } from "./client";
+import { getStatusStyle } from "@/lib/status-colors";
 
 export const metadata = { title: "고객 상세", robots: "noindex, nofollow" };
-
-const STATUS_COLORS: Record<string, string> = {
-  "리드": "bg-gray-100 text-gray-700",
-  "검토중": "bg-blue-100 text-blue-700",
-  "견적전송": "bg-amber-100 text-amber-700",
-  "진행중": "bg-violet-100 text-violet-700",
-  "완료": "bg-emerald-100 text-emerald-700",
-  "보류": "bg-yellow-100 text-yellow-700",
-  "거절": "bg-rose-100 text-rose-700",
-};
 
 const SOURCE_LABELS: Record<string, string> = {
   quote: "견적 요청",
@@ -43,8 +34,8 @@ export default async function CustomerDetailPage({
 
   if (!customer) notFound();
 
-  // Load related quotes & applications
-  const [{ data: quotes }, { data: applications }] = await Promise.all([
+  // Load related quotes, applications, posts
+  const [{ data: quotes }, { data: applications }, { data: posts }] = await Promise.all([
     supabase
       .from("quotes")
       .select("id, processing_type, material, status, created_at")
@@ -57,10 +48,16 @@ export default async function CustomerDetailPage({
       .eq("customer_id", id)
       .is("deleted_at", null)
       .order("created_at", { ascending: false }),
+    supabase
+      .from("posts")
+      .select("id, slug, title_ko, category, original_date, published_at, is_published")
+      .eq("customer_id", id)
+      .is("deleted_at", null)
+      .order("original_date", { ascending: false, nullsFirst: false }),
   ]);
 
   type TimelineEvent = {
-    type: "quote" | "application" | "created";
+    type: "quote" | "application" | "post" | "created";
     id: string;
     label: string;
     sublabel?: string;
@@ -86,6 +83,14 @@ export default async function CustomerDetailPage({
       status: a.status,
       date: a.created_at,
       href: `/admin/applications/${a.id}`,
+    })),
+    ...(posts || []).map((p) => ({
+      type: "post" as const,
+      id: p.id,
+      label: `${p.category} — ${p.title_ko}`,
+      status: p.is_published ? "공개" : "비공개",
+      date: p.original_date || p.published_at,
+      href: `/admin/posts/${p.id}/edit`,
     })),
     {
       type: "created" as const,
@@ -116,9 +121,14 @@ export default async function CustomerDetailPage({
                   {customer.display_name || customer.company_name}
                 </h2>
                 <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                  <span className={`inline-flex items-center font-medium px-2 py-0.5 rounded-full ${STATUS_COLORS[customer.status] || "bg-gray-100 text-gray-700"}`}>
-                    {customer.status}
-                  </span>
+                  {(() => {
+                    const s = getStatusStyle("customer", customer.status);
+                    return (
+                      <span className={`inline-flex items-center font-medium px-2 py-0.5 rounded-full ${s.bg} ${s.text}`}>
+                        {customer.status}
+                      </span>
+                    );
+                  })()}
                   <span>·</span>
                   <span>{SOURCE_LABELS[customer.source] || customer.source}</span>
                   {customer.client_slug && (
@@ -175,6 +185,7 @@ export default async function CustomerDetailPage({
                     <span className={`absolute -left-[26px] top-1.5 w-3 h-3 rounded-full border-2 border-white ${
                       ev.type === "quote" ? "bg-amber-500" :
                       ev.type === "application" ? "bg-rose-500" :
+                      ev.type === "post" ? "bg-indigo-500" :
                       "bg-gray-300"
                     }`} />
                     <div className="flex items-baseline gap-2 flex-wrap">
@@ -208,9 +219,21 @@ export default async function CustomerDetailPage({
           </div>
         </div>
 
-        {/* Right: status + notes */}
+        {/* Right: status + display + notes */}
         <div className="space-y-4">
           <CustomerStatusForm customerId={customer.id} status={customer.status} tags={customer.tags || []} />
+          <CustomerDisplayForm
+            customerId={customer.id}
+            initial={{
+              client_slug: customer.client_slug ?? null,
+              logo_url: customer.logo_url ?? null,
+              name_en: customer.name_en ?? null,
+              needs_dark_bg: !!customer.needs_dark_bg,
+              display_category: customer.display_category ?? null,
+              display_order: customer.display_order ?? 0,
+              registered_year: customer.registered_year ?? null,
+            }}
+          />
           <CustomerNotesForm customerId={customer.id} notes={customer.notes || ""} />
         </div>
       </div>

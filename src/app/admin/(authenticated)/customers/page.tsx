@@ -14,18 +14,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Building2, Phone, Mail, Tag } from "lucide-react";
+import { SortableClientsPanel } from "./sortable-clients";
+import { getStatusStyle, CUSTOMER_STATUS_STYLES } from "@/lib/status-colors";
 
 export const metadata = { title: "고객 관리", description: "고객 통합 관리", robots: "noindex, nofollow" };
-
-const STATUS_COLORS: Record<string, string> = {
-  "리드": "bg-gray-100 text-gray-700",
-  "검토중": "bg-blue-100 text-blue-700",
-  "견적전송": "bg-amber-100 text-amber-700",
-  "진행중": "bg-violet-100 text-violet-700",
-  "완료": "bg-emerald-100 text-emerald-700",
-  "보류": "bg-yellow-100 text-yellow-700",
-  "거절": "bg-rose-100 text-rose-700",
-};
 
 const SOURCE_LABELS: Record<string, string> = {
   quote: "견적",
@@ -58,9 +50,48 @@ export default async function CustomersPage({
   const { data: customers } = await query;
   const list = customers || [];
 
+  // Fetch client-type customers for the sortable grid panel (uses extra columns).
+  // Only show when NOT filtered (full list) — otherwise the filter intent is unclear.
+  const showClientsPanel = !searchQuery && !status && !source;
+  let clientRows: Array<{
+    id: string;
+    client_slug: string | null;
+    company_name: string;
+    name_en: string | null;
+    logo_url: string | null;
+    needs_dark_bg: boolean;
+    display_category: string | null;
+  }> = [];
+  if (showClientsPanel) {
+    const { data } = await supabase
+      .from("customers")
+      .select("id, client_slug, company_name, name_en, logo_url, needs_dark_bg, display_category, display_order")
+      .not("client_slug", "is", null)
+      .is("deleted_at", null)
+      .order("display_order", { ascending: true });
+    clientRows = (data || []).map((r) => ({
+      id: r.id,
+      client_slug: r.client_slug,
+      company_name: r.company_name,
+      name_en: r.name_en,
+      logo_url: r.logo_url,
+      needs_dark_bg: !!r.needs_dark_bg,
+      display_category: r.display_category,
+    }));
+  }
+
   return (
     <div className="space-y-6">
-      <ListPageHeader title="고객 관리" count={list.length} />
+      <ListPageHeader
+        title="고객 관리"
+        count={list.length}
+        createHref="/admin/customers/new"
+        createLabel="새 고객 등록"
+      />
+
+      {showClientsPanel && clientRows.length > 0 && (
+        <SortableClientsPanel items={clientRows} />
+      )}
 
       <div className="flex items-center gap-2">
         <div className="flex-1">
@@ -71,7 +102,7 @@ export default async function CustomersPage({
               {
                 key: "status",
                 label: "전체 상태",
-                options: Object.keys(STATUS_COLORS).map((s) => ({ value: s, label: s })),
+                options: Object.keys(CUSTOMER_STATUS_STYLES).map((s) => ({ value: s, label: s })),
               },
               {
                 key: "source",
@@ -163,11 +194,14 @@ export default async function CustomersPage({
                     </span>
                   </TableCell>
                   <TableCell data-label="상태">
-                    <span
-                      className={`inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_COLORS[c.status] || "bg-gray-100 text-gray-700"}`}
-                    >
-                      {c.status}
-                    </span>
+                    {(() => {
+                      const s = getStatusStyle("customer", c.status);
+                      return (
+                        <span className={`inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-full ${s.bg} ${s.text}`}>
+                          {c.status}
+                        </span>
+                      );
+                    })()}
                   </TableCell>
                   <TableCell data-label="등록일" className="text-sm text-gray-500 tabular-nums">
                     {new Date(c.created_at).toLocaleDateString("ko-KR")}

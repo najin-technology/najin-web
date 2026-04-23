@@ -128,3 +128,25 @@ export async function deleteHistoryItem(id: string) {
 
   revalidatePath("/admin/history");
 }
+
+export async function reorderHistoryItems(ids: string[]) {
+  await requireAdmin();
+  if (!Array.isArray(ids) || ids.length === 0) return { error: "reorder: empty list" };
+
+  const supabase = await createSupabaseServerClient();
+  await Promise.all(
+    ids.map((id, index) =>
+      supabase.from("history_items").update({ sort_order: (index + 1) * 10 }).eq("id", id)
+    )
+  );
+
+  await logAudit({
+    action: "reorder",
+    targetTable: "history_items",
+    details: { count: ids.length, first: ids[0] },
+  });
+
+  revalidatePath("/admin/history");
+  revalidatePath("/", "layout");
+  return { success: true };
+}

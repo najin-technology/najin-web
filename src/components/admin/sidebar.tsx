@@ -150,7 +150,7 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
         }`}
       >
         <div className={`h-14 flex items-center gap-2.5 ${collapsed ? "px-3 justify-center" : "px-6"} border-b border-gray-100`}>
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-navy to-brand-navy-dark flex items-center justify-center shadow-sm flex-shrink-0">
+          <div className="w-7 h-7 rounded-lg bg-brand-navy flex items-center justify-center shadow-sm flex-shrink-0">
             <span className="text-white text-xs font-bold">N</span>
           </div>
           {!collapsed && (

@@ -1,10 +1,17 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateCustomerStatus, updateCustomerTags, updateCustomerNotes } from "./actions";
+import {
+  updateCustomerStatus,
+  updateCustomerTags,
+  updateCustomerNotes,
+  updateCustomerDisplay,
+} from "./actions";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Save, Plus, X } from "lucide-react";
+import { Loader2, Save, Plus, X, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 
 const STATUSES = ["리드", "검토중", "견적전송", "진행중", "완료", "보류", "거절"];
@@ -172,6 +179,179 @@ export function CustomerNotesForm({
               : "변경사항 없음"}
         </p>
         <Button size="sm" onClick={save} disabled={pending || !dirty}>
+          {pending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5 mr-1" />}
+          저장
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+export function CustomerDisplayForm({
+  customerId,
+  initial,
+}: {
+  customerId: string;
+  initial: {
+    client_slug: string | null;
+    logo_url: string | null;
+    name_en: string | null;
+    needs_dark_bg: boolean;
+    display_category: string | null;
+    display_order: number;
+    registered_year: number | null;
+  };
+}) {
+  const [form, setForm] = useState(initial);
+  const [pending, startTransition] = useTransition();
+
+  const dirty = JSON.stringify(form) !== JSON.stringify(initial);
+  const isClient = !!form.client_slug;
+
+  const save = () => {
+    startTransition(async () => {
+      const res = await updateCustomerDisplay(customerId, form);
+      if (res?.error) {
+        toast.error(res.error);
+      } else {
+        toast.success("거래처 표시 정보가 저장되었습니다");
+      }
+    });
+  };
+
+  return (
+    <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-sm font-semibold text-brand-navy flex items-center gap-1.5">
+          <ImageIcon className="w-4 h-4" />
+          거래처 표시 설정
+        </h3>
+        <span
+          className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${
+            isClient
+              ? "bg-blue-50 text-blue-700 border border-blue-200"
+              : "bg-gray-50 text-gray-500 border border-gray-200"
+          }`}
+        >
+          {isClient ? "거래처 그리드 노출" : "비노출 (slug 없음)"}
+        </span>
+      </div>
+
+      <p className="text-[11px] text-gray-400 leading-relaxed">
+        client_slug 가 비어있으면 거래처 그리드에 노출되지 않습니다.
+        slug 설정 시 logo_url 도 필수입니다 (홈/포트폴리오/거래처 페이지에 표시).
+      </p>
+
+      <div className="space-y-3">
+        <div>
+          <Label className="text-xs">client_slug (URL용)</Label>
+          <Input
+            value={form.client_slug ?? ""}
+            onChange={(e) => setForm({ ...form, client_slug: e.target.value || null })}
+            placeholder="예: hyundai (영문 lower-kebab)"
+            className="text-sm mt-1"
+          />
+        </div>
+
+        <div>
+          <Label className="text-xs">logo_url</Label>
+          <Input
+            value={form.logo_url ?? ""}
+            onChange={(e) => setForm({ ...form, logo_url: e.target.value || null })}
+            placeholder="예: /images/logos/hyundai.svg"
+            className="text-sm mt-1"
+          />
+          {form.logo_url && (
+            <div className={`mt-2 rounded-md border border-gray-200 p-2 inline-flex items-center justify-center min-w-[120px] min-h-[40px] ${form.needs_dark_bg ? "bg-brand-navy" : "bg-white"}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={form.logo_url} alt="preview" className="max-h-10 max-w-[140px] object-contain" />
+            </div>
+          )}
+        </div>
+
+        <div>
+          <Label className="text-xs">영문명 (name_en)</Label>
+          <Input
+            value={form.name_en ?? ""}
+            onChange={(e) => setForm({ ...form, name_en: e.target.value || null })}
+            placeholder="예: Hyundai Motor"
+            className="text-sm mt-1"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <Label className="text-xs">카테고리</Label>
+            <select
+              value={form.display_category ?? ""}
+              onChange={(e) =>
+                setForm({ ...form, display_category: e.target.value || null })
+              }
+              className="block w-full mt-1 h-9 text-sm rounded-md border border-input px-2 bg-background"
+            >
+              <option value="">(선택 없음)</option>
+              <option value="automotive">자동차</option>
+              <option value="industrial">산업</option>
+              <option value="overseas">해외</option>
+            </select>
+          </div>
+          <div>
+            <Label className="text-xs">순서</Label>
+            <Input
+              type="number"
+              min={0}
+              step={10}
+              value={form.display_order}
+              onChange={(e) =>
+                setForm({ ...form, display_order: Number(e.target.value) || 0 })
+              }
+              className="text-sm mt-1"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <Label className="text-xs">등록 연도</Label>
+            <Input
+              type="number"
+              min={1900}
+              max={2100}
+              value={form.registered_year ?? ""}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  registered_year: e.target.value ? Number(e.target.value) : null,
+                })
+              }
+              placeholder="2014"
+              className="text-sm mt-1"
+            />
+          </div>
+          <div>
+            <Label className="text-xs">어두운 배경</Label>
+            <label className="flex items-center gap-2 mt-2 text-xs text-gray-700">
+              <input
+                type="checkbox"
+                checked={form.needs_dark_bg}
+                onChange={(e) =>
+                  setForm({ ...form, needs_dark_bg: e.target.checked })
+                }
+                className="w-4 h-4"
+              />
+              로고 카드 navy 배경
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-end pt-1">
+        <Button
+          size="sm"
+          onClick={save}
+          disabled={pending || !dirty}
+          className="bg-brand-navy hover:bg-brand-navy-light text-white"
+        >
           {pending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5 mr-1" />}
           저장
         </Button>

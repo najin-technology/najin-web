@@ -36,7 +36,7 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
   const subPage = segments.length > 2 ? subPageLabels[segments[segments.length - 1]] : null;
 
   return (
-    <header className="sticky top-0 z-30 h-14 border-b border-gray-200/80 bg-white/80 backdrop-blur-md flex items-center justify-between pl-14 pr-6 lg:px-6">
+    <header className="sticky top-0 z-30 h-14 border-b border-gray-200 bg-white flex items-center justify-between pl-14 pr-6 lg:px-6">
       <nav aria-label="현재 위치" className="flex items-center gap-1.5 text-sm min-w-0">
         {parentTitle && subPage ? (
           <ol className="flex items-center gap-1.5 min-w-0">

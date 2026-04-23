@@ -58,8 +58,23 @@ export default async function QuoteDetailPage({
             <InfoGrid items={[
               { label: "회사명", value: quote.company_name },
               { label: "담당자", value: quote.contact_name },
-              { label: "연락처", value: quote.phone ? <span className="flex items-center gap-1">{quote.phone} <CopyButton text={quote.phone} /></span> : null },
-              { label: "이메일", value: quote.email ? <span className="flex items-center gap-1">{quote.email} <CopyButton text={quote.email} /></span> : null },
+              { label: "연락처", value: quote.phone ? (
+                <span className="flex items-center gap-2">
+                  <a href={`tel:${quote.phone}`} className="text-brand-blue hover:underline">{quote.phone}</a>
+                  <CopyButton text={quote.phone} />
+                </span>
+              ) : null },
+              { label: "이메일", value: quote.email ? (
+                <span className="flex items-center gap-2">
+                  <a
+                    href={`mailto:${quote.email}?subject=${encodeURIComponent(`[나진테크] 견적 회신 — ${quote.company_name}`)}&body=${encodeURIComponent(`${quote.contact_name} 님 안녕하세요,\n\n나진테크 견적 담당자입니다.\n요청하신 견적을 아래와 같이 회신 드립니다.\n\n───\n• 가공종류: ${quote.processing_type}${quote.material ? `\n• 소재: ${quote.material}` : ""}${quote.quantity ? `\n• 수량: ${quote.quantity}` : ""}${quote.deadline ? `\n• 납기: ${new Date(quote.deadline).toLocaleDateString("ko-KR")}` : ""}\n───\n\n(견적 내용 입력)\n\n감사합니다.\n나진테크\n055-367-2596\n`)}`}
+                    className="text-brand-blue hover:underline"
+                  >
+                    {quote.email}
+                  </a>
+                  <CopyButton text={quote.email} />
+                </span>
+              ) : null },
               { label: "가공종류", value: quote.processing_type },
               { label: "소재", value: quote.material },
               { label: "수량", value: quote.quantity },
