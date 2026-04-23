@@ -3,8 +3,7 @@ import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
-import { getProductsByCategory } from "@/lib/queries";
-import { CLIENTS } from "@/lib/clients";
+import { getProductsByCategory, getClientGrid, type ClientGridRow } from "@/lib/queries";
 import Image from "next/image";
 import { ImageFade } from "@/components/image-fade";
 import { Phone } from "lucide-react";
@@ -44,8 +43,12 @@ export default async function PortfolioPage() {
 
   // Fetch products from DB
   let products: Awaited<ReturnType<typeof getProductsByCategory>> = [];
+  let clients: ClientGridRow[] = [];
   try {
-    products = await getProductsByCategory();
+    [products, clients] = await Promise.all([
+      getProductsByCategory(),
+      getClientGrid(),
+    ]);
   } catch {
     // fallback to empty
   }
@@ -83,7 +86,7 @@ export default async function PortfolioPage() {
             {t("clientsDesc")}
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {CLIENTS.map((client, i) => (
+            {clients.map((client, i) => (
               <Link
                 key={client.slug}
                 href={`/clients/${client.slug}`}
@@ -113,7 +116,7 @@ export default async function PortfolioPage() {
                 <p className="font-semibold text-brand-navy text-sm">
                   {client.name}
                 </p>
-                {client.name !== client.nameEn && (
+                {client.nameEn && client.name !== client.nameEn && (
                   <p className="text-xs text-brand-charcoal/60 mt-1">{client.nameEn}</p>
                 )}
               </Link>
