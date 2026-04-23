@@ -19,6 +19,10 @@ import {
   Bell,
   AlertCircle,
   ArrowRight,
+  Building2,
+  TrendingUp,
+  ExternalLink,
+  BarChart3,
 } from "lucide-react";
 import { StatusProgress } from "@/components/admin/status-progress";
 
@@ -68,6 +72,12 @@ function formatToday() {
 export default async function AdminDashboard() {
   const supabase = await createSupabaseServerClient();
 
+  // Date ranges for business metrics
+  const now = new Date();
+  const weekStart = new Date(now); weekStart.setDate(now.getDate() - 7); weekStart.setHours(0, 0, 0, 0);
+  const prevWeekStart = new Date(weekStart); prevWeekStart.setDate(weekStart.getDate() - 7);
+  const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
+
   const [
     { count: pendingQuotes },
     { count: pendingCallbacks },
@@ -77,6 +87,13 @@ export default async function AdminDashboard() {
     { count: publishedNotices },
     { data: recentQuotes },
     { data: recentApps },
+    { count: totalCustomers },
+    { count: customersThisWeek },
+    { count: customersPrevWeek },
+    { count: quotesThisWeek },
+    { count: quotesPrevWeek },
+    { count: quotesToday },
+    { count: appsToday },
   ] = await Promise.all([
     supabase
       .from("quotes")
@@ -111,17 +128,62 @@ export default async function AdminDashboard() {
       .is("deleted_at", null),
     supabase
       .from("quotes")
-      .select("id, company_name, contact_name, processing_type, status, created_at")
+      .select("id, company_name, contact_name, processing_type, status, created_at, customer_id")
       .is("deleted_at", null)
       .order("created_at", { ascending: false })
       .limit(5),
     supabase
       .from("applications")
-      .select("id, name, position, status, created_at")
+      .select("id, name, position, status, created_at, customer_id")
       .is("deleted_at", null)
       .order("created_at", { ascending: false })
       .limit(5),
+    supabase
+      .from("customers")
+      .select("*", { count: "exact", head: true })
+      .is("deleted_at", null),
+    supabase
+      .from("customers")
+      .select("*", { count: "exact", head: true })
+      .gte("created_at", weekStart.toISOString())
+      .is("deleted_at", null),
+    supabase
+      .from("customers")
+      .select("*", { count: "exact", head: true })
+      .gte("created_at", prevWeekStart.toISOString())
+      .lt("created_at", weekStart.toISOString())
+      .is("deleted_at", null),
+    supabase
+      .from("quotes")
+      .select("*", { count: "exact", head: true })
+      .gte("created_at", weekStart.toISOString())
+      .is("deleted_at", null),
+    supabase
+      .from("quotes")
+      .select("*", { count: "exact", head: true })
+      .gte("created_at", prevWeekStart.toISOString())
+      .lt("created_at", weekStart.toISOString())
+      .is("deleted_at", null),
+    supabase
+      .from("quotes")
+      .select("*", { count: "exact", head: true })
+      .gte("created_at", todayStart.toISOString())
+      .is("deleted_at", null),
+    supabase
+      .from("applications")
+      .select("*", { count: "exact", head: true })
+      .gte("created_at", todayStart.toISOString())
+      .is("deleted_at", null),
   ]);
+
+  const customerDelta = (customersThisWeek || 0) - (customersPrevWeek || 0);
+  const quoteDelta = (quotesThisWeek || 0) - (quotesPrevWeek || 0);
+  const customerDeltaPct = customersPrevWeek
+    ? Math.round((customerDelta / customersPrevWeek) * 100)
+    : null;
+  const quoteDeltaPct = quotesPrevWeek
+    ? Math.round((quoteDelta / quotesPrevWeek) * 100)
+    : null;
 
   const hasUrgent = (pendingQuotes || 0) > 0 || (pendingApps || 0) > 0;
 
@@ -290,6 +352,86 @@ export default async function AdminDashboard() {
             새 채용공고
           </Button>
         </Link>
+        <Link href="/admin/invites">
+          <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" title="새 관리자 초대 링크를 만듭니다">
+            <Plus className="w-4 h-4" />
+            관리자 초대
+          </Button>
+        </Link>
+      </div>
+
+      {/* This Week Business Metrics */}
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
+          <h2 className="text-sm font-semibold text-brand-navy flex items-center gap-1.5">
+            <TrendingUp className="w-4 h-4" />
+            이번 주 활동
+          </h2>
+          <span className="text-[11px] text-gray-400">최근 7일 · 전주 대비</span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-100">
+          <MetricCard
+            label="신규 고객"
+            value={customersThisWeek || 0}
+            delta={customerDelta}
+            deltaPct={customerDeltaPct}
+            href="/admin/customers"
+          />
+          <MetricCard
+            label="새 견적"
+            value={quotesThisWeek || 0}
+            delta={quoteDelta}
+            deltaPct={quoteDeltaPct}
+            href="/admin/quotes"
+          />
+          <MetricCard
+            label="오늘 견적"
+            value={quotesToday || 0}
+            href="/admin/quotes"
+          />
+          <MetricCard
+            label="오늘 지원서"
+            value={appsToday || 0}
+            href="/admin/applications"
+          />
+        </div>
+      </div>
+
+      {/* Customers + Analytics shortcut row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <Link
+          href="/admin/customers"
+          className="group flex items-center gap-4 bg-white rounded-xl border border-gray-200 hover:border-brand-navy/30 p-5 transition-all hover:shadow-md"
+        >
+          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+            <Building2 className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-400">총 고객 수</p>
+            <p className="text-xl font-bold text-brand-navy tabular-nums">
+              {totalCustomers || 0}
+              <span className="text-xs font-normal text-gray-400 ml-0.5">명</span>
+            </p>
+          </div>
+          <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-brand-navy transition-colors" />
+        </Link>
+        <a
+          href="https://vercel.com/presentjays-projects/najin-webapp/analytics"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center gap-4 bg-white rounded-xl border border-gray-200 hover:border-brand-navy/30 p-5 transition-all hover:shadow-md"
+        >
+          <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center text-violet-600">
+            <BarChart3 className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-400">방문자 통계 (Vercel Analytics)</p>
+            <p className="text-sm font-medium text-brand-navy">
+              방문자 / Top 페이지 / 디바이스 비율 보기
+            </p>
+          </div>
+          <ExternalLink className="w-4 h-4 text-gray-300 group-hover:text-brand-navy transition-colors" />
+        </a>
       </div>
 
       {/* Recent Activity — 2-column on large screens */}
@@ -333,6 +475,15 @@ export default async function AdminDashboard() {
                     >
                       {q.company_name}
                     </Link>
+                    {q.customer_id && (
+                      <Link
+                        href={`/admin/customers/${q.customer_id}`}
+                        className="ml-2 text-[10px] text-gray-400 hover:text-brand-navy"
+                        title="고객 페이지"
+                      >
+                        고객
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell>{q.contact_name}</TableCell>
                   <TableCell>{q.processing_type}</TableCell>
@@ -425,5 +576,43 @@ export default async function AdminDashboard() {
 
       </div>{/* end 2-column grid */}
     </div>
+  );
+}
+
+function MetricCard({
+  label,
+  value,
+  delta,
+  deltaPct,
+  href,
+}: {
+  label: string;
+  value: number;
+  delta?: number;
+  deltaPct?: number | null;
+  href: string;
+}) {
+  const isPositive = (delta ?? 0) > 0;
+  const isNegative = (delta ?? 0) < 0;
+  return (
+    <Link href={href} className="block px-5 py-4 hover:bg-gray-50/50 transition-colors">
+      <p className="text-xs text-gray-400 mb-1">{label}</p>
+      <p className="text-xl font-bold text-brand-navy tabular-nums stat-number">
+        {value}
+        <span className="text-xs font-normal text-gray-400 ml-0.5">건</span>
+      </p>
+      {delta !== undefined && (
+        <p
+          className={`text-[11px] tabular-nums mt-0.5 ${
+            isPositive ? "text-emerald-600" : isNegative ? "text-red-500" : "text-gray-400"
+          }`}
+        >
+          {isPositive ? "↑" : isNegative ? "↓" : "—"}
+          {" "}
+          {Math.abs(delta)}건
+          {deltaPct !== null && deltaPct !== undefined && ` (${deltaPct >= 0 ? "+" : ""}${deltaPct}%)`}
+        </p>
+      )}
+    </Link>
   );
 }
