@@ -6,6 +6,7 @@ import { sendQuoteNotification } from "@/lib/email";
 type QuoteState = {
   success: boolean;
   error: string;
+  errorKey?: string;
 };
 
 export async function submitQuote(
@@ -26,11 +27,11 @@ export async function submitQuote(
 
   // Validate required fields
   if (!company_name || !contact_name || !phone || !email || !processing_type) {
-    return { success: false, error: "필수 항목을 입력해주세요." };
+    return { success: false, error: "", errorKey: "requiredFields" };
   }
 
   if (!privacy_agreed) {
-    return { success: false, error: "개인정보 수집 동의가 필요합니다." };
+    return { success: false, error: "", errorKey: "privacyAgreed" };
   }
 
   // Validate file before DB insert to prevent orphaned rows
@@ -40,10 +41,10 @@ export async function submitQuote(
     const fileExt = file.name.split(".").pop()?.toLowerCase();
 
     if (file.size > MAX_FILE_SIZE) {
-      return { success: false, error: "파일 크기는 10MB 이하만 가능합니다." };
+      return { success: false, error: "", errorKey: "fileSize" };
     }
     if (!fileExt || !ALLOWED_EXTENSIONS.includes(fileExt)) {
-      return { success: false, error: "허용되지 않는 파일 형식입니다." };
+      return { success: false, error: "", errorKey: "fileType" };
     }
   }
 
@@ -67,7 +68,7 @@ export async function submitQuote(
 
   if (quoteError) {
     console.error("Quote insert error:", quoteError);
-    return { success: false, error: "제출 중 오류가 발생했습니다." };
+    return { success: false, error: "", errorKey: "submitFailed" };
   }
 
   // Upload file if exists (already validated above)
@@ -81,7 +82,7 @@ export async function submitQuote(
 
     if (uploadError) {
       console.error("File upload error:", uploadError);
-      return { success: false, error: "파일 업로드 중 오류가 발생했습니다. 견적 요청은 접수되었으나 첨부파일 전송에 실패했습니다. 이메일로 도면을 보내주세요." };
+      return { success: false, error: "", errorKey: "fileUploadFailed" };
     }
 
     await supabase.from("attachments").insert({

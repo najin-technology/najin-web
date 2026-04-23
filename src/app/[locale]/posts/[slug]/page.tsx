@@ -237,6 +237,40 @@ export default async function PostDetailPage({
               </div>
             )}
 
+            {/* Related customer (거래처 협업사례 역링크) */}
+            {post.customer?.client_slug && (
+              <div className="mt-8 pt-6 border-t border-surface-warm-200">
+                <Link
+                  href={`/clients/${post.customer.client_slug}`}
+                  className="inline-flex items-center gap-3 px-4 py-3 rounded-lg bg-surface-warm-50 border border-surface-warm-200 hover:border-brand-copper/30 hover:bg-white transition-colors group"
+                >
+                  {post.customer.logo_url && (
+                    <div className="w-12 h-8 flex items-center justify-center bg-white rounded border border-surface-warm-200 shrink-0">
+                      <Image
+                        src={post.customer.logo_url}
+                        alt={post.customer.company_name}
+                        width={48}
+                        height={32}
+                        className="max-h-6 w-auto object-contain"
+                        unoptimized
+                      />
+                    </div>
+                  )}
+                  <div className="min-w-0">
+                    <div className="text-xs text-brand-charcoal/60">
+                      {locale === "en" ? "Collaboration with" : locale === "zh" ? "合作企业" : "거래처"}
+                    </div>
+                    <div className="text-sm font-semibold text-brand-navy group-hover:text-brand-copper transition-colors">
+                      {locale !== "ko" && post.customer.name_en
+                        ? post.customer.name_en
+                        : post.customer.company_name}
+                    </div>
+                  </div>
+                  <ArrowLeft className="w-4 h-4 ml-auto rotate-180 text-brand-charcoal/40 group-hover:text-brand-copper transition-colors" />
+                </Link>
+              </div>
+            )}
+
             {/* Tags */}
             {post.tags && post.tags.length > 0 && (
               <div className="mt-8 pt-6 border-t border-surface-warm-200">

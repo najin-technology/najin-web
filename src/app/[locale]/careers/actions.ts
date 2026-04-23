@@ -6,6 +6,7 @@ import { sendApplicationNotification } from "@/lib/email";
 type ApplicationState = {
   success: boolean;
   error: string;
+  errorKey?: string;
 };
 
 export async function submitApplication(
@@ -21,11 +22,11 @@ export async function submitApplication(
   const file = formData.get("resume") as File | null;
 
   if (!name || !phone || !position) {
-    return { success: false, error: "필수 항목을 입력해주세요." };
+    return { success: false, error: "", errorKey: "requiredFields" };
   }
 
   if (!privacy_agreed) {
-    return { success: false, error: "개인정보 수집 동의가 필요합니다." };
+    return { success: false, error: "", errorKey: "privacyAgreed" };
   }
 
   // Validate file before DB insert to prevent orphaned rows
@@ -35,10 +36,10 @@ export async function submitApplication(
     const fileExt = file.name.split(".").pop()?.toLowerCase();
 
     if (file.size > MAX_FILE_SIZE) {
-      return { success: false, error: "파일 크기는 10MB 이하만 가능합니다." };
+      return { success: false, error: "", errorKey: "fileSize" };
     }
     if (!fileExt || !ALLOWED_EXTENSIONS.includes(fileExt)) {
-      return { success: false, error: "허용되지 않는 파일 형식입니다. (PDF, DOC, DOCX만 가능)" };
+      return { success: false, error: "", errorKey: "fileType" };
     }
   }
 
@@ -57,7 +58,7 @@ export async function submitApplication(
 
   if (insertError) {
     console.error("Application insert error:", insertError);
-    return { success: false, error: "제출 중 오류가 발생했습니다." };
+    return { success: false, error: "", errorKey: "submitFailed" };
   }
 
   // Upload resume if exists (already validated above)
@@ -71,7 +72,7 @@ export async function submitApplication(
 
     if (uploadError) {
       console.error("Resume upload error:", uploadError);
-      return { success: false, error: "이력서 업로드 중 오류가 발생했습니다. 지원서는 접수되었으나 파일 전송에 실패했습니다. 이메일로 이력서를 보내주세요." };
+      return { success: false, error: "", errorKey: "submitFailed" };
     }
 
     await supabase.from("attachments").insert({

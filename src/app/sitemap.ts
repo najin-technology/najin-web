@@ -88,5 +88,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // skip dynamic entries on error
   }
 
-  return [...staticEntries, ...noticeEntries, ...postEntries];
+  // Dynamic client pages — 거래처 landing (logo → /clients/[slug])
+  let clientEntries: MetadataRoute.Sitemap = [];
+  try {
+    if (!supabase) throw new Error("Supabase not configured");
+    const { data: clients } = await supabase
+      .from("customers")
+      .select("client_slug, updated_at")
+      .not("client_slug", "is", null)
+      .is("deleted_at", null);
+
+    if (clients) {
+      clientEntries = clients.flatMap((c) =>
+        locales.map((locale) => ({
+          url: `${BASE_URL}/${locale}/clients/${c.client_slug}`,
+          lastModified: new Date(c.updated_at),
+          changeFrequency: "monthly" as const,
+          priority: 0.7,
+          alternates: withAlternates(`/clients/${c.client_slug}`),
+        }))
+      );
+    }
+  } catch {
+    // skip dynamic entries on error
+  }
+
+  return [...staticEntries, ...noticeEntries, ...postEntries, ...clientEntries];
 }
