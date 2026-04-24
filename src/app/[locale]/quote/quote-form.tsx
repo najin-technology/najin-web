@@ -11,6 +11,7 @@ import { Link } from "@/i18n/routing";
 import { CheckCircle, Clock, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { track } from "@vercel/analytics";
+import { TurnstileWidget } from "@/components/turnstile-widget";
 
 const processingTypeKeys = [
   "urethane",
@@ -276,6 +277,8 @@ export function QuoteForm() {
           <span className="text-red-500 ml-1">*</span>
         </Label>
       </div>
+
+      <TurnstileWidget onToken={() => {}} />
 
       <Button
         type="submit"

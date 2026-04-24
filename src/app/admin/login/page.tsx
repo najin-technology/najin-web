@@ -1,17 +1,23 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { loginAction } from "./actions";
 import { createSupabaseBrowserClient } from "@/lib/supabase-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertMessage } from "@/components/admin/alert-message";
+import { TurnstileWidget } from "@/components/turnstile-widget";
 
 export default function AdminLoginPage() {
   const [state, formAction, pending] = useActionState(loginAction, {
     error: "",
   });
+  const [, setTurnstileToken] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const reason = searchParams.get("reason");
+  const idleMessage = reason === "idle" ? "세션이 만료되어 자동으로 로그아웃되었습니다. 다시 로그인해주세요." : "";
 
   const handleGoogleLogin = () => {
     const supabase = createSupabaseBrowserClient();
@@ -74,6 +80,9 @@ export default function AdminLoginPage() {
 
           {/* Email/Password Login */}
           <form action={formAction} className="space-y-4">
+            {idleMessage && !state.error && (
+              <AlertMessage>{idleMessage}</AlertMessage>
+            )}
             {state.error && (
               <AlertMessage>{state.error}</AlertMessage>
             )}
@@ -102,6 +111,8 @@ export default function AdminLoginPage() {
                 className="focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40"
               />
             </div>
+
+            <TurnstileWidget onToken={setTurnstileToken} />
 
             <Button
               type="submit"

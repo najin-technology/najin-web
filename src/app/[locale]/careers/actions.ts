@@ -1,7 +1,10 @@
 "use server";
 
+import { headers } from "next/headers";
 import { supabase } from "@/lib/supabase";
 import { sendApplicationNotification } from "@/lib/email";
+import { formLimiter, getClientIp } from "@/lib/ratelimit";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 
 type ApplicationState = {
   success: boolean;
@@ -12,6 +15,21 @@ export async function submitApplication(
   prevState: ApplicationState,
   formData: FormData
 ): Promise<ApplicationState> {
+  const h = await headers();
+  const ip = getClientIp(h);
+
+  const { success: rlOk } = await formLimiter.limit(`apply:${ip}`);
+  if (!rlOk) {
+    return { success: false, error: "제출이 너무 잦습니다. 잠시 후 다시 시도해주세요." };
+  }
+
+  const turnstileToken = formData.get("turnstileToken");
+  const tokenStr = typeof turnstileToken === "string" ? turnstileToken : null;
+  const botOk = await verifyTurnstileToken(tokenStr, ip);
+  if (!botOk) {
+    return { success: false, error: "봇 검증에 실패했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요." };
+  }
+
   const name = formData.get("name") as string;
   const phone = formData.get("phone") as string;
   const email = (formData.get("email") as string) || undefined;

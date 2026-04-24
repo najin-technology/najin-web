@@ -1,8 +1,11 @@
 "use server";
 
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { logAudit } from "@/lib/audit";
+import { loginLimiter, getClientIp } from "@/lib/ratelimit";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 
 type LoginState = {
   error: string;
@@ -17,6 +20,21 @@ export async function loginAction(
 
   if (!email || !password) {
     return { error: "이메일과 비밀번호를 입력해주세요." };
+  }
+
+  const h = await headers();
+  const ip = getClientIp(h);
+
+  const { success } = await loginLimiter.limit(ip);
+  if (!success) {
+    return { error: "로그인 시도가 너무 잦습니다. 15분 후 다시 시도해주세요." };
+  }
+
+  const turnstileToken = formData.get("turnstileToken");
+  const tokenStr = typeof turnstileToken === "string" ? turnstileToken : null;
+  const ok = await verifyTurnstileToken(tokenStr, ip);
+  if (!ok) {
+    return { error: "봇 검증에 실패했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요." };
   }
 
   const supabase = await createSupabaseServerClient();
