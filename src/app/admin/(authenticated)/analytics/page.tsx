@@ -8,6 +8,11 @@ import {
   getDeviceSplit,
   getRecentVisits,
   getConversionFunnel,
+  getHotVisitors,
+  getAiCrawlerStats,
+  getHeatmap,
+  getRegionBreakdown,
+  getFormFunnel,
   windowBounds,
   type TimeWindow,
 } from "@/lib/analytics/queries";
@@ -19,6 +24,11 @@ import { DevicePanel } from "./_components/device-panel";
 import { PopularPages } from "./_components/popular-pages";
 import { FunnelCard } from "./_components/funnel-card";
 import { RecentFeed } from "./_components/recent-feed";
+import { HotVisitors } from "./_components/hot-visitors";
+import { HeatmapGrid } from "./_components/heatmap-grid";
+import { RegionPanel } from "./_components/region-panel";
+import { AiCrawlerBadge } from "./_components/ai-crawler-badge";
+import { FormFunnel } from "./_components/form-funnel";
 
 export const metadata = {
   title: "Analytics",
@@ -61,6 +71,11 @@ export default async function AnalyticsPage({
     devices,
     recent,
     funnel,
+    hotVisitors,
+    aiCrawlers,
+    heatmap,
+    regions,
+    formFunnel,
     quoteCurRes,
     quotePrevRes,
   ] = await Promise.all([
@@ -71,6 +86,11 @@ export default async function AnalyticsPage({
     getDeviceSplit(supabase, win),
     getRecentVisits(supabase, 20),
     getConversionFunnel(supabase, win),
+    getHotVisitors(supabase, 12),
+    getAiCrawlerStats(supabase),
+    getHeatmap(supabase),
+    getRegionBreakdown(supabase, 10),
+    getFormFunnel(supabase),
     (async () => {
       const { start, end } = windowBounds(win);
       return supabase
@@ -106,7 +126,7 @@ export default async function AnalyticsPage({
   const cmp = compareLabel(win);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <header className="flex flex-wrap items-end justify-between gap-5">
         <div className="space-y-1.5">
           <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-copper">
@@ -116,65 +136,114 @@ export default async function AnalyticsPage({
             방문 분석
           </h1>
           <p className="text-sm text-gray-500">
-            {windowLabel(win)} · 사이트에 누가 어떻게 들어오는지, 견적까지 얼마나 이어지는지.
+            {windowLabel(win)} · 누가, 어디서, 어떻게 왔고 견적으로 이어졌는지.
           </p>
         </div>
         <WindowTabs active={win} />
       </header>
 
-      <HeroMetrics
-        metrics={[
-          {
-            label: "총 방문",
-            value: visitorStats.visits,
-            prev: visitorStats.prevVisits,
-            compareLabel: cmp,
-            tone: "primary",
-          },
-          {
-            label: "고유 방문자",
-            value: visitorStats.uniqueVisitors,
-            prev: visitorStats.prevUniqueVisitors,
-            compareLabel: cmp,
-          },
-          {
-            label: "견적 문의",
-            value: quotesCur,
-            prev: quotesPrev,
-            suffix: "건",
-            compareLabel: cmp,
-          },
-          {
-            label: "전환율",
-            value: conversionRate,
-            prev: prevConversionRate === 0 ? null : prevConversionRate,
-            suffix: "%",
-            format: (n) => n.toFixed(2),
-            compareLabel: cmp,
-          },
-        ]}
-      />
+      {/* Hero metrics */}
+      <section className="space-y-3">
+        <HeroMetrics
+          metrics={[
+            {
+              label: "총 방문",
+              value: visitorStats.visits,
+              prev: visitorStats.prevVisits,
+              compareLabel: cmp,
+              tone: "primary",
+            },
+            {
+              label: "고유 방문자",
+              value: visitorStats.uniqueVisitors,
+              prev: visitorStats.prevUniqueVisitors,
+              compareLabel: cmp,
+            },
+            {
+              label: "견적 문의",
+              value: quotesCur,
+              prev: quotesPrev,
+              suffix: "건",
+              compareLabel: cmp,
+            },
+            {
+              label: "전환율",
+              value: conversionRate,
+              prev: prevConversionRate === 0 ? null : prevConversionRate,
+              suffix: "%",
+              format: (n) => n.toFixed(2),
+              compareLabel: cmp,
+            },
+          ]}
+        />
+      </section>
 
-      <VisitorChart data={dailyTrend} win={win} />
+      {/* 리드 인텔리전스 (Tier 1) */}
+      <section className="space-y-4">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+          리드 인텔리전스
+        </h2>
+        <HotVisitors visitors={hotVisitors} />
+      </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        <div className="lg:col-span-2">
-          <ReferrerPanel rows={referrers} />
+      {/* 추이 + 유입 */}
+      <section className="space-y-4">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+          방문 흐름
+        </h2>
+        <VisitorChart data={dailyTrend} win={win} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div className="lg:col-span-2">
+            <ReferrerPanel rows={referrers} />
+          </div>
+          <DevicePanel split={devices} />
         </div>
-        <DevicePanel split={devices} />
-      </div>
+      </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        <div className="lg:col-span-2">
-          <PopularPages pages={popular} />
+      {/* 패턴: 요일/시간 + 지역 */}
+      <section className="space-y-4">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+          패턴
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div className="lg:col-span-2">
+            <HeatmapGrid cells={heatmap} />
+          </div>
+          <RegionPanel rows={regions} />
         </div>
-        <FunnelCard funnel={funnel} />
-      </div>
+      </section>
 
-      <RecentFeed visits={recent} />
+      {/* 콘텐츠 + 견적 퍼널 */}
+      <section className="space-y-4">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+          콘텐츠와 전환
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div className="lg:col-span-2">
+            <PopularPages pages={popular} />
+          </div>
+          <FunnelCard funnel={funnel} />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div className="lg:col-span-2">
+            <FormFunnel rows={formFunnel} />
+          </div>
+          <AiCrawlerBadge rows={aiCrawlers} />
+        </div>
+      </section>
 
-      <footer className="pt-2 flex items-center justify-between text-[11px] text-gray-400">
-        <span className="uppercase tracking-[0.1em]">자체 수집 · 익명 세션 해시 · 서울 시간 기준</span>
+      {/* 실시간 */}
+      <section className="space-y-4">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+          실시간
+        </h2>
+        <RecentFeed visits={recent} />
+      </section>
+
+      <footer className="pt-2 flex flex-wrap items-center justify-between gap-3 text-[11px] text-gray-400">
+        <span className="uppercase tracking-[0.1em]">
+          자체 수집 · 익명 세션 해시 · 서울 시간 기준
+        </span>
         <a
           href="https://vercel.com/dashboard"
           target="_blank"

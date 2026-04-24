@@ -12,6 +12,7 @@ import { CheckCircle, Clock, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { track } from "@vercel/analytics";
 import { TurnstileWidget } from "@/components/turnstile-widget";
+import { trackFormEvent } from "@/lib/analytics/track-form-event";
 
 const processingTypeKeys = [
   "urethane",
@@ -114,8 +115,27 @@ export function QuoteForm() {
     );
   }
 
+  const handleFieldFocus = useCallback((e: React.FocusEvent<HTMLFormElement>) => {
+    const target = e.target as unknown as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    if (target && "name" in target && target.name) trackFormEvent(target.name, "focus");
+  }, []);
+
+  const handleFieldBlur = useCallback((e: React.FocusEvent<HTMLFormElement>) => {
+    const target = e.target as unknown as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    if (!target || !("name" in target) || !target.name) return;
+    const val = "value" in target ? target.value : "";
+    trackFormEvent(target.name, val && val.length > 0 ? "fill" : "blur_empty");
+  }, []);
+
   return (
-    <form ref={formRef} action={formAction} onChange={handleFormChange} className="space-y-6">
+    <form
+      ref={formRef}
+      action={formAction}
+      onChange={handleFormChange}
+      onFocusCapture={handleFieldFocus}
+      onBlurCapture={handleFieldBlur}
+      className="space-y-6"
+    >
       {state.error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
           {state.error}

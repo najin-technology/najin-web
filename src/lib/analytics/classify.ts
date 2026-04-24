@@ -11,10 +11,22 @@ export type ReferrerCategory =
   | "referral"
   | "internal";
 
-export type DeviceClass = "mobile" | "tablet" | "desktop" | "bot";
+export type DeviceClass = "mobile" | "tablet" | "desktop" | "bot" | "ai-crawler";
 export type Browser = "chrome" | "safari" | "firefox" | "edge" | "samsung" | "naver" | "kakao" | "other";
 
 const BOT_PATTERNS = /bot|crawl|spider|headlesschrome|slurp|fetch|lighthouse|preview|monitoring|pingdom|uptimerobot/i;
+const AI_CRAWLER_PATTERNS: Array<[RegExp, string]> = [
+  [/GPTBot/i, "gptbot"],
+  [/ChatGPT-User/i, "chatgpt"],
+  [/ClaudeBot|Claude-Web|anthropic/i, "claude"],
+  [/PerplexityBot/i, "perplexity"],
+  [/Google-Extended/i, "google-extended"],
+  [/CCBot/i, "ccbot"],
+  [/Applebot|Siri/i, "apple"],
+  [/YouBot/i, "you"],
+  [/Bytespider/i, "bytespider"],
+  [/cohere-ai/i, "cohere"],
+];
 const SEARCH_NAVER = /naver|search\.naver\.com/i;
 const SEARCH_GOOGLE = /google\.|googleusercontent/i;
 const SEARCH_BING = /bing\.com/i;
@@ -49,10 +61,19 @@ export function categorizeReferrer(
 
 export function classifyDevice(userAgent: string): DeviceClass {
   if (!userAgent) return "desktop";
+  if (classifyAiCrawler(userAgent)) return "ai-crawler";
   if (BOT_PATTERNS.test(userAgent)) return "bot";
   if (/iPad|Tablet|PlayBook|Kindle/i.test(userAgent)) return "tablet";
   if (/iPhone|Android.+Mobile|Mobile|IEMobile|Opera Mini/i.test(userAgent)) return "mobile";
   return "desktop";
+}
+
+export function classifyAiCrawler(userAgent: string): string | null {
+  if (!userAgent) return null;
+  for (const [pattern, name] of AI_CRAWLER_PATTERNS) {
+    if (pattern.test(userAgent)) return name;
+  }
+  return null;
 }
 
 export function classifyBrowser(userAgent: string): Browser {

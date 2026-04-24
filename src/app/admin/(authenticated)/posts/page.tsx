@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { EmptyState } from "@/components/admin/empty-state";
 import { ListPageHeader } from "@/components/admin/list-page-header";
-import { BookOpen, Pencil } from "lucide-react";
+import { BookOpen, Pencil, Eye, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -16,6 +16,7 @@ import { PostPublishToggle } from "./post-toggle";
 import { PostDeleteButton } from "./post-delete-button";
 import { SearchFilterBar } from "@/components/admin/search-filter-bar";
 import { HighlightText } from "@/components/admin/highlight-text";
+import { getPostsContribution } from "@/lib/analytics/queries";
 
 function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
@@ -42,7 +43,11 @@ export default async function PostsPage({
   if (published === "false") query = query.eq("is_published", false);
   if (category) query = query.eq("category", category);
 
-  const { data: posts } = await query;
+  const [{ data: posts }, contribution] = await Promise.all([
+    query,
+    getPostsContribution(supabase),
+  ]);
+  const contribBySlug = new Map(contribution.map((c) => [c.slug, c]));
 
   return (
     <div className="space-y-6">
@@ -77,7 +82,8 @@ export default async function PostsPage({
             <TableRow>
               <TableHead>제목</TableHead>
               <TableHead className="hidden md:table-cell">카테고리</TableHead>
-              <TableHead className="hidden lg:table-cell">미리보기</TableHead>
+              <TableHead className="hidden xl:table-cell">미리보기</TableHead>
+              <TableHead className="hidden lg:table-cell w-[140px]">조회 · 견적 기여</TableHead>
               <TableHead>공개</TableHead>
               <TableHead>원본일자</TableHead>
               <TableHead className="w-[100px]">관리</TableHead>
@@ -95,8 +101,30 @@ export default async function PostsPage({
                       {p.category}
                     </span>
                   </TableCell>
-                  <TableCell className="text-xs text-gray-400 max-w-[200px] truncate hidden lg:table-cell">
+                  <TableCell className="text-xs text-gray-400 max-w-[200px] truncate hidden xl:table-cell">
                     {p.excerpt_ko || stripHtml(p.content_ko || "").slice(0, 60) || "—"}
+                  </TableCell>
+                  <TableCell className="hidden lg:table-cell" data-label="조회·기여">
+                    {(() => {
+                      const c = contribBySlug.get(p.slug);
+                      if (!c || c.sessions_viewed === 0) {
+                        return <span className="text-xs text-gray-300">—</span>;
+                      }
+                      return (
+                        <div className="flex items-center gap-3 text-xs">
+                          <span className="inline-flex items-center gap-1 text-gray-500 tabular-nums">
+                            <Eye className="w-3 h-3" />
+                            {c.sessions_viewed.toLocaleString("ko-KR")}
+                          </span>
+                          {c.quotes_from_viewers > 0 && (
+                            <span className="inline-flex items-center gap-1 text-brand-copper font-semibold tabular-nums">
+                              <TrendingUp className="w-3 h-3" />
+                              {c.quotes_from_viewers}건
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </TableCell>
                   <TableCell data-label="공개">
                     <PostPublishToggle
@@ -125,7 +153,7 @@ export default async function PostsPage({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={6}>
+                <TableCell colSpan={7}>
                   <EmptyState
                     message="제작사례가 없습니다."
                     description="새 제작사례를 추가하여 제작사례를 소개해보세요."

@@ -2,11 +2,13 @@ import { NextResponse, type NextRequest } from "next/server";
 import { supabase } from "@/lib/supabase";
 import {
   categorizeReferrer,
+  classifyAiCrawler,
   classifyBrowser,
   classifyDevice,
   isBot,
   sessionHash,
 } from "@/lib/analytics/classify";
+import { lookupAsn } from "@/lib/analytics/asn";
 
 type TrackPayload = {
   path?: string;
@@ -28,9 +30,6 @@ export async function POST(request: NextRequest) {
   }
 
   const userAgent = request.headers.get("user-agent") ?? "";
-  if (isBot(userAgent)) {
-    return NextResponse.json({ ok: true, skipped: "bot" });
-  }
 
   const forwarded = request.headers.get("x-forwarded-for");
   const ip = forwarded?.split(",")[0]?.trim() ?? request.headers.get("x-real-ip") ?? "unknown";
@@ -39,8 +38,14 @@ export async function POST(request: NextRequest) {
   const referrerRaw = typeof body.referrer === "string" ? body.referrer : null;
   const { category, host: referrerHost } = categorizeReferrer(referrerRaw, ownHost);
   const deviceClass = classifyDevice(userAgent);
-  const browser = classifyBrowser(userAgent);
+  const aiCrawler = classifyAiCrawler(userAgent);
+  const browser = aiCrawler ?? classifyBrowser(userAgent);
   const session = sessionHash(ip, userAgent);
+
+  // Generic bot (not AI crawler) — skip
+  if (deviceClass === "bot" || (isBot(userAgent) && !aiCrawler)) {
+    return NextResponse.json({ ok: true, skipped: "bot" });
+  }
 
   const country = request.headers.get("x-vercel-ip-country") ?? null;
   const city = request.headers.get("x-vercel-ip-city")
@@ -48,10 +53,17 @@ export async function POST(request: NextRequest) {
     : null;
   const locale = typeof body.locale === "string" ? body.locale.slice(0, 8) : null;
 
-  // fire-and-forget: do not block response on insert
-  supabase
-    .from("page_views")
-    .insert({
+  // fire-and-forget: ASN lookup + insert
+  (async () => {
+    let asnOrg: string | null = null;
+    let asnCompany: string | null = null;
+    if (deviceClass !== "ai-crawler") {
+      const asn = await lookupAsn(ip);
+      asnOrg = asn?.asnOrg ?? null;
+      asnCompany = asn?.asnCompany ?? null;
+    }
+
+    const { error } = await supabase.from("page_views").insert({
       path,
       session_hash: session,
       referrer_host: referrerHost,
@@ -61,10 +73,11 @@ export async function POST(request: NextRequest) {
       country,
       city,
       locale,
-    })
-    .then(({ error }) => {
-      if (error) console.warn("[analytics] insert failed", error.message);
+      asn_org: asnOrg,
+      asn_company: asnCompany,
     });
+    if (error) console.warn("[analytics] insert failed", error.message);
+  })().catch((e) => console.warn("[analytics] async failure", e));
 
   return NextResponse.json({ ok: true });
 }

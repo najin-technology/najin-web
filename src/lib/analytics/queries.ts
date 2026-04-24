@@ -226,6 +226,127 @@ export function referrerLabel(category: string): string {
   return REFERRER_LABELS[category] ?? category;
 }
 
+export type HotVisitor = {
+  session_hash: string;
+  score: number;
+  asn_company: string | null;
+  country: string | null;
+  city: string | null;
+  visit_count: number;
+  first_seen: string;
+  last_seen: string;
+  submitted: boolean;
+  sample_path: string | null;
+};
+
+export type JourneyStep = {
+  id: number;
+  path: string;
+  referrer_category: string;
+  referrer_host: string | null;
+  device_class: string;
+  browser: string | null;
+  country: string | null;
+  city: string | null;
+  asn_org: string | null;
+  asn_company: string | null;
+  locale: string | null;
+  created_at: string;
+};
+
+export type PostContribution = {
+  slug: string;
+  post_views: number;
+  sessions_viewed: number;
+  quotes_from_viewers: number;
+  conversion_pct: number;
+};
+
+export type AiCrawlerRow = { browser: string; visits: number; last_seen: string };
+export type HeatmapCell = { day_of_week: number; hour: number; visits: number };
+export type RegionRow = { country: string; city: string; visits: number; uniques: number };
+export type FormFunnelRow = { field: string; starts: number; fills: number; fill_pct: number };
+
+export async function getHotVisitors(
+  supabase: SupabaseClient,
+  limit = 15
+): Promise<HotVisitor[]> {
+  const { data } = await supabase.rpc("hot_visitors", { row_limit: limit });
+  return ((data as HotVisitor[] | null) ?? []).map((r) => ({
+    ...r,
+    score: Number(r.score),
+    visit_count: Number(r.visit_count),
+  }));
+}
+
+export async function getSessionJourney(
+  supabase: SupabaseClient,
+  hash: string
+): Promise<JourneyStep[]> {
+  const { data } = await supabase.rpc("session_journey", { target_session: hash });
+  return (data as JourneyStep[] | null) ?? [];
+}
+
+export async function getSessionScore(
+  supabase: SupabaseClient,
+  hash: string
+): Promise<number> {
+  const { data } = await supabase.rpc("lead_score_for_session", { target_session: hash });
+  return Number(data ?? 0);
+}
+
+export async function getPostsContribution(
+  supabase: SupabaseClient
+): Promise<PostContribution[]> {
+  const { data } = await supabase.rpc("posts_contribution");
+  return ((data as PostContribution[] | null) ?? []).map((r) => ({
+    ...r,
+    post_views: Number(r.post_views),
+    sessions_viewed: Number(r.sessions_viewed),
+    quotes_from_viewers: Number(r.quotes_from_viewers),
+    conversion_pct: Number(r.conversion_pct),
+  }));
+}
+
+export async function getAiCrawlerStats(supabase: SupabaseClient): Promise<AiCrawlerRow[]> {
+  const { data } = await supabase.rpc("ai_crawler_stats");
+  return ((data as AiCrawlerRow[] | null) ?? []).map((r) => ({
+    ...r,
+    visits: Number(r.visits),
+  }));
+}
+
+export async function getHeatmap(supabase: SupabaseClient): Promise<HeatmapCell[]> {
+  const { data } = await supabase.rpc("hour_day_heatmap");
+  return ((data as HeatmapCell[] | null) ?? []).map((r) => ({
+    day_of_week: Number(r.day_of_week),
+    hour: Number(r.hour),
+    visits: Number(r.visits),
+  }));
+}
+
+export async function getRegionBreakdown(
+  supabase: SupabaseClient,
+  limit = 10
+): Promise<RegionRow[]> {
+  const { data } = await supabase.rpc("region_breakdown", { row_limit: limit });
+  return ((data as RegionRow[] | null) ?? []).map((r) => ({
+    ...r,
+    visits: Number(r.visits),
+    uniques: Number(r.uniques),
+  }));
+}
+
+export async function getFormFunnel(supabase: SupabaseClient): Promise<FormFunnelRow[]> {
+  const { data } = await supabase.rpc("quote_form_funnel");
+  return ((data as FormFunnelRow[] | null) ?? []).map((r) => ({
+    ...r,
+    starts: Number(r.starts),
+    fills: Number(r.fills),
+    fill_pct: Number(r.fill_pct),
+  }));
+}
+
 export function formatRelativeKo(date: Date): string {
   const diff = Date.now() - date.getTime();
   if (diff < 60_000) return "방금";

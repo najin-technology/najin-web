@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { sendQuoteNotification } from "@/lib/email";
 import { formLimiter, getClientIp } from "@/lib/ratelimit";
 import { verifyTurnstileToken } from "@/lib/turnstile";
+import { sessionHash } from "@/lib/analytics/classify";
 
 type QuoteState = {
   success: boolean;
@@ -65,6 +66,9 @@ export async function submitQuote(
     }
   }
 
+  const userAgent = h.get("user-agent") ?? "";
+  const submitSession = sessionHash(ip, userAgent);
+
   // Insert quote
   const { data: quote, error: quoteError } = await supabase
     .from("quotes")
@@ -79,6 +83,7 @@ export async function submitQuote(
       deadline: deadline || null,
       description,
       privacy_agreed,
+      session_hash: submitSession,
     })
     .select("id")
     .single();
