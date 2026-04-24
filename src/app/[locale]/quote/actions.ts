@@ -1,7 +1,11 @@
 "use server";
 
+import { headers } from "next/headers";
 import { supabase } from "@/lib/supabase";
 import { sendQuoteNotification } from "@/lib/email";
+import { formLimiter, getClientIp } from "@/lib/ratelimit";
+import { verifyTurnstileToken } from "@/lib/turnstile";
+import { sessionHash } from "@/lib/analytics/classify";
 
 type QuoteState = {
   success: boolean;
@@ -12,6 +16,21 @@ export async function submitQuote(
   prevState: QuoteState,
   formData: FormData
 ): Promise<QuoteState> {
+  const h = await headers();
+  const ip = getClientIp(h);
+
+  const { success: rlOk } = await formLimiter.limit(`quote:${ip}`);
+  if (!rlOk) {
+    return { success: false, error: "제출이 너무 잦습니다. 잠시 후 다시 시도해주세요." };
+  }
+
+  const turnstileToken = formData.get("turnstileToken");
+  const tokenStr = typeof turnstileToken === "string" ? turnstileToken : null;
+  const botOk = await verifyTurnstileToken(tokenStr, ip);
+  if (!botOk) {
+    return { success: false, error: "봇 검증에 실패했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요." };
+  }
+
   const company_name = formData.get("company_name") as string;
   const contact_name = formData.get("contact_name") as string;
   const phone = formData.get("phone") as string;
@@ -47,6 +66,9 @@ export async function submitQuote(
     }
   }
 
+  const userAgent = h.get("user-agent") ?? "";
+  const submitSession = sessionHash(ip, userAgent);
+
   // Insert quote
   const { data: quote, error: quoteError } = await supabase
     .from("quotes")
@@ -61,6 +83,7 @@ export async function submitQuote(
       deadline: deadline || null,
       description,
       privacy_agreed,
+      session_hash: submitSession,
     })
     .select("id")
     .single();

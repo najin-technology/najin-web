@@ -1,4 +1,5 @@
-const BASE_URL = "https://najin-webapp.vercel.app";
+import { SITE_URL as BASE_URL } from "@/lib/env";
+
 const LOCALES = ["ko", "en", "zh"] as const;
 
 export function createPageMetadata({
