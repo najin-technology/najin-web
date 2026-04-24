@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 import { loginAction } from "./actions";
 import { createSupabaseBrowserClient } from "@/lib/supabase-client";
@@ -10,13 +10,17 @@ import { Label } from "@/components/ui/label";
 import { AlertMessage } from "@/components/admin/alert-message";
 import { TurnstileWidget } from "@/components/turnstile-widget";
 
+function IdleNotice() {
+  const searchParams = useSearchParams();
+  const reason = searchParams.get("reason");
+  if (reason !== "idle") return null;
+  return <AlertMessage>세션이 만료되어 자동으로 로그아웃되었습니다. 다시 로그인해주세요.</AlertMessage>;
+}
+
 export default function AdminLoginPage() {
   const [state, formAction, pending] = useActionState(loginAction, {
     error: "",
   });
-  const searchParams = useSearchParams();
-  const reason = searchParams.get("reason");
-  const idleMessage = reason === "idle" ? "세션이 만료되어 자동으로 로그아웃되었습니다. 다시 로그인해주세요." : "";
 
   const handleGoogleLogin = () => {
     const supabase = createSupabaseBrowserClient();
@@ -79,8 +83,10 @@ export default function AdminLoginPage() {
 
           {/* Email/Password Login */}
           <form action={formAction} className="space-y-4">
-            {idleMessage && !state.error && (
-              <AlertMessage>{idleMessage}</AlertMessage>
+            {!state.error && (
+              <Suspense fallback={null}>
+                <IdleNotice />
+              </Suspense>
             )}
             {state.error && (
               <AlertMessage>{state.error}</AlertMessage>
