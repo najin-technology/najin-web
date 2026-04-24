@@ -76,7 +76,7 @@ export default function RootLayout({
               name: "나진테크",
               alternateName: "NAJIN TECHNOLOGY",
               url: SITE_URL,
-              logo: `${SITE_URL}/images/logo/najin-logo.jpg`,
+              logo: `${SITE_URL}/images/logo/najin-logo.png`,
               foundingDate: "2002-12",
               contactPoint: {
                 "@type": "ContactPoint",

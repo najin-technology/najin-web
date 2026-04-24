@@ -106,7 +106,7 @@ export default async function PostDetailPage({
       name: "NAJIN TECHNOLOGY",
       logo: {
         "@type": "ImageObject",
-        url: `${BASE_URL}/images/logo/najin-logo.jpg`,
+        url: `${BASE_URL}/images/logo/najin-logo.png`,
       },
     },
     image: post.thumbnail_url || images[0],

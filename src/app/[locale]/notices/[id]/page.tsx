@@ -89,7 +89,7 @@ export default async function NoticeDetailPage({
     publisher: {
       "@type": "Organization",
       name: "NAJIN TECHNOLOGY",
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo/najin-logo.jpg` },
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo/najin-logo.png` },
     },
   };
 
