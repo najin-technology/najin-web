@@ -6,12 +6,12 @@ let warnedOnce = false;
 
 function getRedis(): Redis | null {
   if (redis) return redis;
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
   if (!url || !token) {
     if (!warnedOnce && process.env.NODE_ENV === "production") {
       console.warn(
-        "[ratelimit] UPSTASH_REDIS_REST_URL/TOKEN missing — rate limiting DISABLED in production. Connect Upstash Redis via Vercel Marketplace."
+        "[ratelimit] Upstash Redis env missing (UPSTASH_REDIS_REST_URL/TOKEN or KV_REST_API_URL/TOKEN) — rate limiting DISABLED."
       );
       warnedOnce = true;
     }
