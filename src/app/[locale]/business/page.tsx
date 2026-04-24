@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import { createPageMetadata } from "@/lib/metadata";
+import { SITE_URL } from "@/lib/env";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -44,11 +45,67 @@ const categories: {
   { key: "ev", icon: Zap, image: "/images/products/pe-rod-4.jpg", imageAlt: "EV 부품 가공", tag: "EV" },
 ];
 
+const SERVICE_CATALOG = [
+  {
+    name: "우레탄 성형",
+    alt: "Urethane Molding",
+    description: "산업용 우레탄 성형, 몰드 베이스, 롤러 및 산업 부품 제작.",
+    fragment: "urethane",
+  },
+  {
+    name: "합성수지 가공",
+    alt: "Synthetic Resin Processing",
+    description: "PE, PP, POM 등 엔지니어링 플라스틱 환봉/판재 정밀 가공.",
+    fragment: "resin",
+  },
+  {
+    name: "CNC 정밀가공",
+    alt: "CNC Precision Machining",
+    description: "MCT/CNC 3D 형상 가공, EV 부품 시제품 및 양산 가공.",
+    fragment: "cnc",
+  },
+  {
+    name: "금형 제작",
+    alt: "Mold Fabrication",
+    description: "우레탄 몰드 베이스 특허 기반 맞춤 금형 설계·제작.",
+    fragment: "mold",
+  },
+  {
+    name: "EV 부품 가공",
+    alt: "EV Parts Manufacturing",
+    description: "전기차 배터리/모터 관련 합성수지·CNC 정밀 부품 공급.",
+    fragment: "ev",
+  },
+];
+
 export default function BusinessPage() {
   const t = useTranslations("business");
 
+  const serviceGraph = {
+    "@context": "https://schema.org",
+    "@graph": SERVICE_CATALOG.map((s) => ({
+      "@type": "Service",
+      name: s.name,
+      alternateName: s.alt,
+      description: s.description,
+      serviceType: s.alt,
+      areaServed: { "@type": "Country", name: "South Korea" },
+      url: `${SITE_URL}/business#${s.fragment}`,
+      provider: {
+        "@type": "Organization",
+        name: "나진테크",
+        alternateName: "NAJIN TECHNOLOGY",
+        url: SITE_URL,
+      },
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceGraph) }}
+      />
       <PageHeader titleKey="pageTitle" namespace="business" descriptionKey="pageDescription" bgImage="/images/factory/workshop-2.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
