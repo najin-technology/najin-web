@@ -6,6 +6,7 @@ import { logAudit } from "@/lib/audit";
 const NAVER_TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
 const NAVER_PROFILE_URL = "https://openapi.naver.com/v1/nid/me";
 const STATE_COOKIE = "naver_oauth_state";
+const INVITE_COOKIE = "naver_oauth_invite";
 
 type NaverTokenResponse = { access_token?: string };
 type NaverProfileResponse = {
@@ -22,6 +23,7 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get("code");
   const state = searchParams.get("state");
   const cookieState = request.cookies.get(STATE_COOKIE)?.value;
+  const inviteToken = request.cookies.get(INVITE_COOKIE)?.value ?? null;
 
   if (!code || !state || state !== cookieState) {
     return redirectError(request, "naver_state_mismatch");
@@ -66,26 +68,87 @@ export async function GET(request: NextRequest) {
   });
   if (listError) return redirectError(request, "admin_lookup_failed");
 
-  // 1) naver_id로 매칭 (이미 연결된 계정 → 신뢰)
+  // 1) naver_id 매칭 (기존 연결된 admin)
   let match = usersList.users.find(
     (u) => u.app_metadata?.naver_id === naverId && u.app_metadata?.role === "admin"
   );
-  let firstTime = false;
+  let firstTimeLink = false;
+  let invitedSignup = false;
 
-  // 2) fallback: 이메일 매칭 (최초 네이버 로그인 → 자동 연결)
+  // 2) 이메일 매칭 (최초 네이버 로그인한 기존 admin → 자동 연결)
   if (!match) {
     match = usersList.users.find(
       (u) => u.email?.toLowerCase() === email && u.app_metadata?.role === "admin"
     );
-    firstTime = Boolean(match);
+    if (match) firstTimeLink = true;
+  }
+
+  // 3) 초대 토큰 기반 신규 admin 회원가입 (Naver signup via invite)
+  if (!match && inviteToken) {
+    const { data: invite } = await admin
+      .from("admin_invites")
+      .select("token, used_at, revoked_at, expires_at")
+      .eq("token", inviteToken)
+      .maybeSingle();
+
+    if (!invite) return redirectError(request, "invite_not_found");
+    if (invite.used_at) return redirectError(request, "invite_used");
+    if (invite.revoked_at) return redirectError(request, "invite_revoked");
+    if (new Date(invite.expires_at) <= new Date()) {
+      return redirectError(request, "invite_expired");
+    }
+
+    // 이메일이 이미 등록된 사용자면 role만 승격. 아니면 신규 생성.
+    const existingByEmail = usersList.users.find(
+      (u) => u.email?.toLowerCase() === email
+    );
+
+    if (existingByEmail) {
+      const { data: updated, error: upErr } = await admin.auth.admin.updateUserById(
+        existingByEmail.id,
+        {
+          app_metadata: {
+            ...existingByEmail.app_metadata,
+            role: "admin",
+            naver_id: naverId,
+            naver_email: email,
+          },
+        }
+      );
+      if (upErr || !updated.user) return redirectError(request, "user_upgrade_failed");
+      match = updated.user;
+    } else {
+      const { data: created, error: createErr } = await admin.auth.admin.createUser({
+        email,
+        email_confirm: true,
+        app_metadata: {
+          role: "admin",
+          naver_id: naverId,
+          naver_email: email,
+        },
+      });
+      if (createErr || !created.user) return redirectError(request, "user_create_failed");
+      match = created.user;
+    }
+
+    await admin
+      .from("admin_invites")
+      .update({
+        used_at: new Date().toISOString(),
+        used_by_user_id: match.id,
+        used_by_email: email,
+      })
+      .eq("token", inviteToken);
+
+    invitedSignup = true;
   }
 
   if (!match) {
     return redirectError(request, "naver_not_admin");
   }
 
-  // 최초 매칭이면 naver_id를 app_metadata에 저장 (다음부터 id 기반 매칭)
-  if (firstTime) {
+  // 최초 이메일 매칭이면 naver_id를 app_metadata에 저장
+  if (firstTimeLink) {
     await admin.auth.admin.updateUserById(match.id, {
       app_metadata: {
         ...match.app_metadata,
@@ -105,12 +168,18 @@ export async function GET(request: NextRequest) {
   }
 
   await logAudit({
-    action: "login",
+    action: invitedSignup ? "signup" : "login",
     targetTable: "auth",
-    details: { email: match.email, provider: "naver", first_time_link: firstTime },
+    details: {
+      email: match.email,
+      provider: "naver",
+      first_time_link: firstTimeLink,
+      via_invite: invitedSignup,
+    },
   });
 
   const res = NextResponse.redirect(linkData.properties.action_link);
   res.cookies.delete(STATE_COOKIE);
+  res.cookies.delete(INVITE_COOKIE);
   return res;
 }
