@@ -5,6 +5,9 @@ import { createSupabaseProxyClient } from "./lib/supabase-proxy";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
+const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+const ACTIVITY_COOKIE = "najin_last_activity";
+
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -37,6 +40,28 @@ export default async function proxy(request: NextRequest) {
     if (!user || user.app_metadata?.role !== "admin") {
       return NextResponse.redirect(new URL("/admin/login", request.url));
     }
+
+    // Idle timeout: 30분 이상 활동 없으면 로그인 페이지로 튕김
+    const lastActivity = request.cookies.get(ACTIVITY_COOKIE)?.value;
+    const now = Date.now();
+    if (lastActivity) {
+      const elapsed = now - Number(lastActivity);
+      if (Number.isFinite(elapsed) && elapsed > IDLE_TIMEOUT_MS) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/admin/login";
+        url.searchParams.set("reason", "idle");
+        const redirect = NextResponse.redirect(url);
+        redirect.cookies.delete(ACTIVITY_COOKIE);
+        return redirect;
+      }
+    }
+    response.cookies.set(ACTIVITY_COOKIE, String(now), {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/admin",
+      maxAge: Math.floor(IDLE_TIMEOUT_MS / 1000),
+    });
 
     return response;
   }
