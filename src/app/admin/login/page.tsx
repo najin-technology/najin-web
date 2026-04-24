@@ -42,6 +42,10 @@ export default function AdminLoginPage() {
     });
   };
 
+  const handleNaverLogin = () => {
+    window.location.href = "/api/admin/auth/naver/start";
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
       <div className="w-full max-w-sm">
@@ -86,7 +90,7 @@ export default function AdminLoginPage() {
           <Button
             type="button"
             variant="outline"
-            className="w-full mb-6 h-11 rounded-xl border-transparent bg-[#FEE500] hover:bg-[#FADA0A] text-[#191919] transition-colors"
+            className="w-full mb-2.5 h-11 rounded-xl border-transparent bg-[#FEE500] hover:bg-[#FADA0A] text-[#191919] transition-colors"
             onClick={handleKakaoLogin}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none">
@@ -96,6 +100,19 @@ export default function AdminLoginPage() {
               />
             </svg>
             카카오로 로그인
+          </Button>
+
+          {/* Naver Login */}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full mb-6 h-11 rounded-xl border-transparent bg-[#03C75A] hover:bg-[#02B551] text-white transition-colors"
+            onClick={handleNaverLogin}
+          >
+            <svg className="w-5 h-5 mr-2" viewBox="0 0 20 20" fill="none">
+              <path d="M13.5 10.6L6.4 0H0v20h6.5V9.4L13.6 20H20V0h-6.5v10.6z" fill="currentColor" />
+            </svg>
+            네이버로 로그인
           </Button>
 
           <div className="relative mb-6">
