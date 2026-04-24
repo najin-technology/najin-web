@@ -3,8 +3,7 @@ import { notFound } from "next/navigation";
 import { getNoticeById } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
 import { ArrowLeft, Calendar } from "lucide-react";
-
-const BASE_URL = "https://najin-webapp.vercel.app";
+import { SITE_URL as BASE_URL } from "@/lib/env";
 
 function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();

@@ -3,8 +3,7 @@
 import { Link } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 import { ChevronRight, Home } from "lucide-react";
-
-const BASE_URL = "https://najin-webapp.vercel.app";
+import { SITE_URL as BASE_URL } from "@/lib/env";
 
 interface BreadcrumbItem {
   label: string;

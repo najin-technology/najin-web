@@ -3,6 +3,7 @@ import { Geist, Noto_Sans_KR, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { AdminFab } from "@/components/admin-fab";
+import { SITE_URL } from "@/lib/env";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +23,7 @@ const notoSansSC = Noto_Sans_SC({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://najin-webapp.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "나진테크 | NAJIN TECHNOLOGY",
     template: "%s | 나진테크",
@@ -74,8 +75,8 @@ export default function RootLayout({
               "@type": "Organization",
               name: "나진테크",
               alternateName: "NAJIN TECHNOLOGY",
-              url: "https://najin-webapp.vercel.app",
-              logo: "https://najin-webapp.vercel.app/images/logo/najin-logo.jpg",
+              url: SITE_URL,
+              logo: `${SITE_URL}/images/logo/najin-logo.jpg`,
               foundingDate: "2002-12",
               contactPoint: {
                 "@type": "ContactPoint",
@@ -119,7 +120,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               name: "나진테크",
-              image: "https://najin-webapp.vercel.app/images/factory/workshop-1.jpg",
+              url: SITE_URL,
+              image: `${SITE_URL}/images/factory/workshop-1.jpg`,
               telephone: "+82-55-367-2596",
               faxNumber: "+82-55-367-2597",
               email: "kinghak1@naver.com",
