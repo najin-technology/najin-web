@@ -1,0 +1,44 @@
+import { NextResponse, type NextRequest } from "next/server";
+import { randomBytes } from "node:crypto";
+import { SITE_URL } from "@/lib/env";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
+
+const NAVER_AUTH_URL = "https://nid.naver.com/oauth2.0/authorize";
+const STATE_COOKIE = "naver_link_state";
+
+export async function GET(request: NextRequest) {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user || user.app_metadata?.role !== "admin") {
+    return NextResponse.redirect(new URL("/admin/login", request.url));
+  }
+
+  const clientId = process.env.NAVER_CLIENT_ID?.trim();
+  if (!clientId) {
+    return NextResponse.redirect(
+      new URL("/admin/settings?error=naver_not_configured", request.url)
+    );
+  }
+
+  const state = randomBytes(24).toString("hex");
+  const redirectUri = `${SITE_URL}/api/admin/auth/naver/link/callback`;
+
+  const authUrl = new URL(NAVER_AUTH_URL);
+  authUrl.searchParams.set("response_type", "code");
+  authUrl.searchParams.set("client_id", clientId);
+  authUrl.searchParams.set("redirect_uri", redirectUri);
+  authUrl.searchParams.set("state", state);
+
+  const res = NextResponse.redirect(authUrl.toString());
+  res.cookies.set(STATE_COOKIE, state, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/api/admin/auth/naver",
+    maxAge: 600,
+  });
+  return res;
+}

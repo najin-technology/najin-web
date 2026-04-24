@@ -19,6 +19,7 @@ import {
   Building2,
   ShieldPlus,
   BarChart3,
+  Settings,
 } from "lucide-react";
 
 const navGroups = [
@@ -53,6 +54,7 @@ const navGroups = [
     label: "시스템",
     items: [
       { href: "/admin/invites", label: "관리자 초대", icon: ShieldPlus },
+      { href: "/admin/settings", label: "설정", icon: Settings },
     ],
   },
 ];
