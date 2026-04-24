@@ -14,7 +14,7 @@ export function NaverAnalytics() {
         {`
           if(!window.wcs_add) window.wcs_add = {};
           window.wcs_add["wa"] = "${id}";
-          if(window.wcs) { window.wcs.inflow("najin-tech.com"); window.wcs_do(); }
+          if(window.wcs) { window.wcs.inflow(window.location.hostname); window.wcs_do(); }
         `}
       </Script>
     </>

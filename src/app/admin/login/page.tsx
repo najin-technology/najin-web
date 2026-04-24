@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 import { loginAction } from "./actions";
 import { createSupabaseBrowserClient } from "@/lib/supabase-client";
@@ -14,7 +14,6 @@ export default function AdminLoginPage() {
   const [state, formAction, pending] = useActionState(loginAction, {
     error: "",
   });
-  const [, setTurnstileToken] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const reason = searchParams.get("reason");
   const idleMessage = reason === "idle" ? "세션이 만료되어 자동으로 로그아웃되었습니다. 다시 로그인해주세요." : "";
@@ -112,7 +111,7 @@ export default function AdminLoginPage() {
               />
             </div>
 
-            <TurnstileWidget onToken={setTurnstileToken} />
+            <TurnstileWidget onToken={() => {}} />
 
             <Button
               type="submit"

@@ -41,7 +41,10 @@ export default async function proxy(request: NextRequest) {
       return NextResponse.redirect(new URL("/admin/login", request.url));
     }
 
-    // Idle timeout: 30분 이상 활동 없으면 로그인 페이지로 튕김
+    // Idle timeout: 30분 이상 활동 없으면 로그인 페이지로 튕김.
+    // 쿠키는 비서명 timestamp — "무인 단말 자동 로그아웃" UX 목적.
+    // 악의적 admin이 쿠키를 수정해 timeout 회피 가능하나, Supabase 세션
+    // 자체 8h 만료(supabase-proxy.ts)가 상한선이므로 심각한 위협 아님.
     const lastActivity = request.cookies.get(ACTIVITY_COOKIE)?.value;
     const now = Date.now();
     if (lastActivity) {
