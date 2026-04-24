@@ -4,8 +4,6 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { AdminFab } from "@/components/admin-fab";
 import { SITE_URL } from "@/lib/env";
-import { GA4 } from "@/components/analytics/ga4";
-import { NaverAnalytics } from "@/components/analytics/naver-analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -150,8 +148,6 @@ export default function RootLayout({
         />
         {children}
         <Analytics />
-        <GA4 />
-        <NaverAnalytics />
         <AdminFab />
       </body>
     </html>

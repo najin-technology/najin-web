@@ -63,24 +63,26 @@
 5. 사진 업로드 (공장 외관, 작업장 내부, 대표 제품)
 6. 심사 완료(수 영업일) → "나진테크" 검색 시 지도 결과 노출
 
-## 7. Google Analytics 4
+## 7. 자체 방문 분석 (Analytics) — 별도 작업 없음 ✅
 
-1. https://analytics.google.com → 관리 → 속성 생성
-2. 속성 이름: "나진테크", 시간대: 대한민국, 통화: KRW
-3. 데이터 스트림 → 웹 → `https://www.najin-tech.com`
-4. 측정 ID (`G-XXXXXXXXXX`) 복사
-5. Vercel env:
-   - `NEXT_PUBLIC_GA4_MEASUREMENT_ID` = `G-XXXXXXXXXX`
-6. 재배포 → GA4 Realtime 리포트에서 접속 확인
+`/admin/analytics`에서 바로 확인:
+- 오늘/7일/30일 방문자 수, 고유 방문자, 견적 문의 수, 전환율
+- 일별 방문 추이 차트
+- 유입 소스 (네이버 / 구글 / 다음 / 직접 / 소셜)
+- 기기 분포 (모바일 / 태블릿 / 데스크탑)
+- 인기 페이지 TOP 10
+- 견적 퍼널 (방문 → 견적 페이지 → 제출)
+- 실시간 방문 피드 (최근 20건)
 
-## 8. Naver Analytics
+데이터 수집:
+- 모든 공개 페이지가 client-side beacon으로 `/api/analytics/track`에 POST
+- admin 페이지는 제외
+- IP는 저장하지 않고 SHA-256(ip + user-agent + 날짜) 해시만 저장 (개인정보 최소화, 세션 단위 추적만 가능)
+- bot (crawler, headless) 자동 제외
+- country/city는 Vercel geo 헤더 사용 (정확, 무료)
 
-1. https://analytics.naver.com → 사이트 등록
-2. 도메인: `www.najin-tech.com`
-3. 사이트 ID 발급
-4. Vercel env:
-   - `NEXT_PUBLIC_NAVER_ANALYTICS_ID` = <사이트 ID>
-5. 재배포 → Naver Analytics 실시간 방문자 확인
+Vercel Analytics(@vercel/analytics)는 그대로 유지 — Core Web Vitals 성능 모니터링.
+GA4/Naver Analytics는 admin 대시보드 왔다갔다 부담 때문에 제외. 검색 유입 키워드가 필요하면 Google Search Console/네이버 서치어드바이저에서 확인.
 
 ## 9. Kakao OAuth (admin 한국 로그인 옵션, 선택)
 
