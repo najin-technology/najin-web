@@ -1,12 +1,21 @@
 "use client";
 
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 import { loginAction } from "./actions";
 import { createSupabaseBrowserClient } from "@/lib/supabase-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertMessage } from "@/components/admin/alert-message";
+import { TurnstileWidget } from "@/components/turnstile-widget";
+
+function IdleNotice() {
+  const searchParams = useSearchParams();
+  const reason = searchParams.get("reason");
+  if (reason !== "idle") return null;
+  return <AlertMessage>세션이 만료되어 자동으로 로그아웃되었습니다. 다시 로그인해주세요.</AlertMessage>;
+}
 
 export default function AdminLoginPage() {
   const [state, formAction, pending] = useActionState(loginAction, {
@@ -17,6 +26,16 @@ export default function AdminLoginPage() {
     const supabase = createSupabaseBrowserClient();
     supabase.auth.signInWithOAuth({
       provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/admin/auth/callback`,
+      },
+    });
+  };
+
+  const handleKakaoLogin = () => {
+    const supabase = createSupabaseBrowserClient();
+    supabase.auth.signInWithOAuth({
+      provider: "kakao",
       options: {
         redirectTo: `${window.location.origin}/admin/auth/callback`,
       },
@@ -39,7 +58,7 @@ export default function AdminLoginPage() {
           <Button
             type="button"
             variant="outline"
-            className="w-full mb-6 h-11 rounded-xl border-gray-200 hover:bg-gray-50 transition-colors"
+            className="w-full mb-2.5 h-11 rounded-xl border-gray-200 hover:bg-gray-50 transition-colors"
             onClick={handleGoogleLogin}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -63,6 +82,22 @@ export default function AdminLoginPage() {
             Google로 로그인
           </Button>
 
+          {/* Kakao Login */}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full mb-6 h-11 rounded-xl border-transparent bg-[#FEE500] hover:bg-[#FADA0A] text-[#191919] transition-colors"
+            onClick={handleKakaoLogin}
+          >
+            <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 3C6.48 3 2 6.48 2 10.8c0 2.7 1.78 5.08 4.47 6.46l-.94 3.44c-.08.3.24.54.5.37l4.14-2.74c.6.08 1.21.12 1.83.12 5.52 0 10-3.48 10-7.8S17.52 3 12 3z"
+                fill="#191919"
+              />
+            </svg>
+            카카오로 로그인
+          </Button>
+
           <div className="relative mb-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-200" />
@@ -74,6 +109,11 @@ export default function AdminLoginPage() {
 
           {/* Email/Password Login */}
           <form action={formAction} className="space-y-4">
+            {!state.error && (
+              <Suspense fallback={null}>
+                <IdleNotice />
+              </Suspense>
+            )}
             {state.error && (
               <AlertMessage>{state.error}</AlertMessage>
             )}
@@ -102,6 +142,8 @@ export default function AdminLoginPage() {
                 className="focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40"
               />
             </div>
+
+            <TurnstileWidget onToken={() => {}} />
 
             <Button
               type="submit"

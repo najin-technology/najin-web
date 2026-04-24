@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer";
 import { ScrollAnimationObserver } from "@/components/scroll-animation-observer";
 import { MobileCTA } from "@/components/mobile-cta";
 import { Toaster } from "@/components/ui/sonner";
+import { PageTracker } from "@/components/analytics/page-tracker";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -41,6 +42,7 @@ export default async function LocaleLayout({
       <Footer />
       <MobileCTA />
       <ScrollAnimationObserver />
+      <PageTracker locale={locale} />
       <Toaster position="top-center" richColors />
     </NextIntlClientProvider>
   );

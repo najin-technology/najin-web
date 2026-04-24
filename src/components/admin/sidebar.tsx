@@ -18,6 +18,7 @@ import {
   PanelLeftOpen,
   Building2,
   ShieldPlus,
+  BarChart3,
 } from "lucide-react";
 
 const navGroups = [
@@ -40,6 +41,12 @@ const navGroups = [
       { href: "/admin/job-postings", label: "채용공고", icon: Briefcase },
       { href: "/admin/products", label: "제품 관리", icon: Package },
       { href: "/admin/history", label: "연혁 관리", icon: Clock },
+    ],
+  },
+  {
+    label: "분석",
+    items: [
+      { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
     ],
   },
   {

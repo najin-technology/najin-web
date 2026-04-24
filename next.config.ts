@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: *.supabase.co; font-src 'self' https://fonts.gstatic.com; connect-src 'self' *.supabase.co https://va.vercel-scripts.com; frame-src 'self' https://maps.google.com; frame-ancestors 'self'",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: *.supabase.co; font-src 'self' https://fonts.gstatic.com; connect-src 'self' *.supabase.co https://va.vercel-scripts.com https://challenges.cloudflare.com; frame-src 'self' https://maps.google.com https://challenges.cloudflare.com; frame-ancestors 'self'",
           },
         ],
       },
@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: *.supabase.co; font-src 'self'; frame-ancestors 'none'",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: *.supabase.co; font-src 'self'; connect-src 'self' *.supabase.co https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com; frame-ancestors 'none'",
           },
         ],
       },

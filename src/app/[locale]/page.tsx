@@ -8,14 +8,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     locale,
     path: "",
     titles: {
-      ko: "25년 전통 정밀 가공 전문기업",
-      en: "Precision Manufacturing Since 2002",
-      zh: "25年精密加工专业企业",
+      ko: "나진테크 — 25년 전통 정밀 가공 전문기업",
+      en: "NAJIN TECHNOLOGY — Precision Manufacturing Since 2002",
+      zh: "纳进科技 — 25年精密加工专业企业",
     },
     descriptions: {
-      ko: "경남 양산 우레탄 성형, 합성수지 가공, CNC 정밀가공, 금형 제작 전문기업 나진테크. 국내외 주요 완성차사, SK, Overseas automaker 등 주요 대기업 납품.",
-      en: "NAJIN TECHNOLOGY - Urethane molding, synthetic resin, CNC machining, mold fabrication in Yangsan, Korea. Supplying Hyundai, SK, Overseas automaker and other major clients.",
-      zh: "纳进科技 — 庆南梁山聚氨酯成型、合成树脂加工、CNC精密加工、模具制作专业企业。向现代汽车、SK、海外整车厂等主要大企业供货。",
+      ko: "나진테크 공식 홈페이지. 경남 양산 우레탄 성형, 합성수지 가공, CNC 정밀가공, 금형 제작 전문기업. 국내외 주요 완성차사, SK, Overseas automaker 등 주요 대기업 납품.",
+      en: "NAJIN TECHNOLOGY official site. Urethane molding, synthetic resin, CNC machining, mold fabrication in Yangsan, Korea. Supplying Hyundai, SK, Overseas automaker and other major clients.",
+      zh: "纳进科技官方网站。庆南梁山聚氨酯成型、合成树脂加工、CNC精密加工、模具制作专业企业。向现代汽车、SK、海外整车厂等主要大企业供货。",
     },
   });
 }

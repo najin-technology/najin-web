@@ -11,6 +11,7 @@ import { Link } from "@/i18n/routing";
 import { CheckCircle } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { toast } from "sonner";
+import { TurnstileWidget } from "@/components/turnstile-widget";
 
 export function ApplyForm() {
   const t = useTranslations("careers");
@@ -134,6 +135,8 @@ export function ApplyForm() {
           <span className="text-red-500 ml-1">*</span>
         </Label>
       </div>
+
+      <TurnstileWidget onToken={() => {}} />
 
       <Button
         type="submit"

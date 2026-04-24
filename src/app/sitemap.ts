@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { supabase } from "@/lib/supabase";
+import { SITE_URL as BASE_URL } from "@/lib/env";
 
-const BASE_URL = "https://najin-webapp.vercel.app";
 const locales = ["ko", "en", "zh"];
 
 function withAlternates(route: string) {
