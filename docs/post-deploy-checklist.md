@@ -26,10 +26,11 @@
 6. Production + Preview 두 환경 모두에 세팅
 7. Dev 환경에서는 없어도 됨(dev는 검증 통과로 fallback)
 
-## 3. `NEXT_PUBLIC_SITE_URL` 주입
+## 3. `NEXT_PUBLIC_SITE_URL` 주입 ✅ (이미 설정됨)
 
-- `NEXT_PUBLIC_SITE_URL` = `https://www.najin-tech.com`
-- Production 환경에만 세팅. Preview는 Vercel이 자동으로 `VERCEL_PROJECT_PRODUCTION_URL`을 넣어주므로 생략 가능.
+- `NEXT_PUBLIC_SITE_URL` = `https://www.najin-tech.com` — Production 환경에 이미 주입 완료
+- Preview/Development는 `env.ts` fallback 로직이 `VERCEL_PROJECT_PRODUCTION_URL` 또는 `https://www.najin-tech.com`을 사용
+- 확인: `vercel env ls` → `NEXT_PUBLIC_SITE_URL | Encrypted | Production`
 
 ## 4. Google Search Console 등록
 
@@ -80,6 +81,40 @@
 4. Vercel env:
    - `NEXT_PUBLIC_NAVER_ANALYTICS_ID` = <사이트 ID>
 5. 재배포 → Naver Analytics 실시간 방문자 확인
+
+## 9. Kakao OAuth (admin 한국 로그인 옵션, 선택)
+
+로그인 페이지에 **카카오로 로그인** 버튼이 추가되어 있음. 활성화하려면:
+
+1. https://developers.kakao.com → 내 애플리케이션 → 애플리케이션 추가
+2. 앱 이름: "나진테크 관리자" (또는 자유)
+3. 플랫폼 → Web 플랫폼 등록 → 사이트 도메인: `https://www.najin-tech.com`
+4. 제품 설정 → 카카오 로그인 → 활성화 ON
+5. Redirect URI 등록:
+   - `https://<your-supabase-project>.supabase.co/auth/v1/callback`
+   - Supabase URL은 `NEXT_PUBLIC_SUPABASE_URL`에서 확인
+6. 동의 항목 → 이메일(선택동의) 활성
+7. 보안 → Client Secret 코드 생성 (활성 상태)
+8. Supabase Dashboard → Authentication → Providers → Kakao → Enable
+   - REST API Key (앱 키 탭) → Client ID 필드
+   - Client Secret 코드 → Client Secret 필드
+9. Save → 끝. 로그인 페이지 "카카오로 로그인" 버튼 동작
+
+**주의**: Kakao는 signup 시 Supabase user에 `role: admin`이 자동 부여되지 않음. 첫 Kakao 로그인 후:
+- `/admin/invites`에서 그 이메일로 초대 발송 → 수락
+- 또는 Supabase SQL Editor에서 수동으로 `UPDATE auth.users SET raw_app_meta_data = jsonb_set(raw_app_meta_data, '{role}', '"admin"') WHERE email = '...'`
+
+## 10. Naver SSO — Supabase 미지원 (참고)
+
+**Naver 아이디로 로그인 API는 무료입니다** (https://developers.naver.com, 25,000 req/day quota).
+하지만 Supabase는 Naver를 기본 제공자로 지원하지 **않습니다** (Google, Kakao, GitHub 등은 지원).
+
+Naver SSO를 admin에 붙이려면 옵션:
+- (A) **권장하지 않음**: 커스텀 Next.js API route로 직접 OAuth 2.0 플로우 구현 + Supabase admin API로 user 생성/링크. 개발 2-3시간, 유지보수 비용.
+- (B) **권장**: Kakao OAuth 사용 (위 9번). Supabase 네이티브, 10분 세팅. Admin 로그인 수요가 높은 한국 시장에서 Kakao 사용률이 Naver와 비슷하거나 높음.
+- (C) 그냥 Google + 이메일/비번 유지. 이미 동작 중.
+
+현재 PR은 옵션 B를 반영(카카오 버튼 추가). Naver 커스텀 통합이 꼭 필요하면 별도 작업 티켓으로.
 
 ---
 

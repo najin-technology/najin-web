@@ -32,6 +32,16 @@ export default function AdminLoginPage() {
     });
   };
 
+  const handleKakaoLogin = () => {
+    const supabase = createSupabaseBrowserClient();
+    supabase.auth.signInWithOAuth({
+      provider: "kakao",
+      options: {
+        redirectTo: `${window.location.origin}/admin/auth/callback`,
+      },
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
       <div className="w-full max-w-sm">
@@ -48,7 +58,7 @@ export default function AdminLoginPage() {
           <Button
             type="button"
             variant="outline"
-            className="w-full mb-6 h-11 rounded-xl border-gray-200 hover:bg-gray-50 transition-colors"
+            className="w-full mb-2.5 h-11 rounded-xl border-gray-200 hover:bg-gray-50 transition-colors"
             onClick={handleGoogleLogin}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -70,6 +80,22 @@ export default function AdminLoginPage() {
               />
             </svg>
             Google로 로그인
+          </Button>
+
+          {/* Kakao Login */}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full mb-6 h-11 rounded-xl border-transparent bg-[#FEE500] hover:bg-[#FADA0A] text-[#191919] transition-colors"
+            onClick={handleKakaoLogin}
+          >
+            <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 3C6.48 3 2 6.48 2 10.8c0 2.7 1.78 5.08 4.47 6.46l-.94 3.44c-.08.3.24.54.5.37l4.14-2.74c.6.08 1.21.12 1.83.12 5.52 0 10-3.48 10-7.8S17.52 3 12 3z"
+                fill="#191919"
+              />
+            </svg>
+            카카오로 로그인
           </Button>
 
           <div className="relative mb-6">
