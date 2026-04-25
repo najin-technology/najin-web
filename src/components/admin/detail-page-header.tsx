@@ -8,7 +8,7 @@ export function DetailPageHeader({
   subtitle,
 }: {
   backHref: string;
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
 }) {
   return (

@@ -1,0 +1,26 @@
+/* 인쇄 시 admin layout(사이드바, 토픽바)과 컨트롤 배너 숨기기 */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-page,
+  .print-page * {
+    visibility: visible;
+  }
+  .print-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 1.5rem;
+    box-shadow: none !important;
+  }
+  .screen-only {
+    display: none !important;
+  }
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm;
+  }
+}

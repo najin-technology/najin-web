@@ -80,6 +80,18 @@ export function QuoteForm() {
     }
   }, [state.success]);
 
+  const handleFieldFocus = useCallback((e: React.FocusEvent<HTMLFormElement>) => {
+    const target = e.target as unknown as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    if (target && "name" in target && target.name) trackFormEvent(target.name, "focus");
+  }, []);
+
+  const handleFieldBlur = useCallback((e: React.FocusEvent<HTMLFormElement>) => {
+    const target = e.target as unknown as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    if (!target || !("name" in target) || !target.name) return;
+    const val = "value" in target ? target.value : "";
+    trackFormEvent(target.name, val && val.length > 0 ? "fill" : "blur_empty");
+  }, []);
+
   if (state.success) {
     return (
       <div
@@ -114,18 +126,6 @@ export function QuoteForm() {
       </div>
     );
   }
-
-  const handleFieldFocus = useCallback((e: React.FocusEvent<HTMLFormElement>) => {
-    const target = e.target as unknown as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-    if (target && "name" in target && target.name) trackFormEvent(target.name, "focus");
-  }, []);
-
-  const handleFieldBlur = useCallback((e: React.FocusEvent<HTMLFormElement>) => {
-    const target = e.target as unknown as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-    if (!target || !("name" in target) || !target.name) return;
-    const val = "value" in target ? target.value : "";
-    trackFormEvent(target.name, val && val.length > 0 ? "fill" : "blur_empty");
-  }, []);
 
   return (
     <form
