@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { StatusBadge } from "@/components/admin/status-badge";
+import { Button } from "@/components/ui/button";
 import { WorkOrderForm } from "./work-order-form";
 import { WorkOrderStatusForm } from "./status-form";
 import { AttachmentsSection } from "./attachments-section";
@@ -10,7 +11,8 @@ import {
   getWorkOrderAttachments,
   getWorkOrderStatusHistory,
 } from "../actions";
-import { ExternalLink, History } from "lucide-react";
+import { ExternalLink, History, Printer } from "lucide-react";
+import { dDayLabel } from "@/lib/format-date";
 
 export const metadata = { title: "발주 상세", robots: "noindex, nofollow" };
 
@@ -46,18 +48,44 @@ export default async function WorkOrderDetailPage({
     getWorkOrderStatusHistory(id),
   ]);
 
+  const closed = order.status === "완료" || order.status === "출하";
+  const dd = dDayLabel(order.deadline);
+
   return (
     <div className="space-y-6">
-      <DetailPageHeader
-        backHref="/admin/work-orders"
-        title={
-          <span className="flex items-center gap-3">
-            <span className="font-mono text-sm text-brand-copper">{order.order_number}</span>
-            <span>{order.product_name}</span>
-          </span>
-        }
-        subtitle={`${order.customer_name} · ${new Date(order.created_at).toLocaleDateString("ko-KR")} 작성`}
-      />
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <DetailPageHeader
+          backHref="/admin/work-orders"
+          title={
+            <span className="flex items-center gap-3">
+              <span className="font-mono text-sm text-brand-copper">{order.order_number}</span>
+              <span>{order.product_name}</span>
+              {!closed && order.deadline && dd.label && (
+                <span
+                  className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold tabular-nums ${
+                    dd.tone === "overdue"
+                      ? "bg-rose-100 text-rose-700"
+                      : dd.tone === "urgent"
+                        ? "bg-amber-100 text-amber-700"
+                        : dd.tone === "soon"
+                          ? "bg-blue-100 text-blue-700"
+                          : "bg-gray-100 text-gray-500"
+                  }`}
+                >
+                  {dd.label}
+                </span>
+              )}
+            </span>
+          }
+          subtitle={`${order.customer_name} · ${new Date(order.created_at).toLocaleDateString("ko-KR")} 작성`}
+        />
+        <Link href={`/admin/work-orders/${order.id}/print`}>
+          <Button variant="outline" className="gap-1.5">
+            <Printer className="w-4 h-4" />
+            작업지시서 인쇄
+          </Button>
+        </Link>
+      </div>
 
       {order.quote_id && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-2.5 flex items-center justify-between">

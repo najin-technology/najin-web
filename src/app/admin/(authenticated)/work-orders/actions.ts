@@ -86,6 +86,30 @@ export async function createWorkOrder(
     details: { order_number: numRow, customer_name, product_name },
   });
 
+  // 견적에서 변환된 발주는 원본 견적 상태도 자동 진전 (이중 작업 제거)
+  const quoteId = asString(formData, "quote_id");
+  if (quoteId) {
+    const { data: q } = await supabase
+      .from("quotes")
+      .select("status")
+      .eq("id", quoteId)
+      .maybeSingle();
+    if (q && (q.status === "접수" || q.status === "검토중")) {
+      await supabase
+        .from("quotes")
+        .update({ status: "견적발송", updated_at: new Date().toISOString() })
+        .eq("id", quoteId);
+      await logAudit({
+        action: "update_status",
+        targetTable: "quotes",
+        targetId: quoteId,
+        details: { from: q.status, to: "견적발송", reason: "발주 생성 자동 동기화" },
+      });
+      revalidatePath(`/admin/quotes/${quoteId}`);
+      revalidatePath("/admin/quotes");
+    }
+  }
+
   revalidatePath("/admin/work-orders");
   redirect(`/admin/work-orders/${created.id}`);
 }

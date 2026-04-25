@@ -11,6 +11,7 @@ import { EmptyState } from "@/components/admin/empty-state";
 import { HighlightText } from "@/components/admin/highlight-text";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { ClipboardList } from "lucide-react";
+import { dDayLabel } from "@/lib/format-date";
 
 type Order = {
   id: string;
@@ -41,10 +42,30 @@ function priorityBadge(priority: string) {
   );
 }
 
-function isOverdue(deadline: string | null, status: string): boolean {
-  if (!deadline) return false;
-  if (status === "완료" || status === "출하") return false;
-  return new Date(deadline) < new Date();
+function dDayBadge(deadline: string | null, status: string) {
+  if (!deadline) return <span className="text-gray-300">—</span>;
+  const closed = status === "완료" || status === "출하";
+  const dd = dDayLabel(deadline);
+  const dateStr = new Date(deadline).toLocaleDateString("ko-KR");
+  if (closed) {
+    return <span className="text-xs tabular-nums text-gray-400">{dateStr}</span>;
+  }
+  const toneCls =
+    dd.tone === "overdue"
+      ? "bg-rose-50 text-rose-700 font-semibold"
+      : dd.tone === "urgent"
+        ? "bg-amber-50 text-amber-700 font-semibold"
+        : dd.tone === "soon"
+          ? "bg-blue-50 text-blue-700"
+          : "bg-gray-50 text-gray-500";
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] tabular-nums ${toneCls}`}>
+        {dd.label}
+      </span>
+      <span className="text-xs tabular-nums text-gray-500">{dateStr}</span>
+    </span>
+  );
 }
 
 export function ListView({
@@ -102,17 +123,7 @@ export function ListView({
                   {priorityBadge(o.priority)}
                 </TableCell>
                 <TableCell data-label="마감일" className="text-sm">
-                  {o.deadline ? (
-                    <span
-                      className={`tabular-nums ${
-                        isOverdue(o.deadline, o.status) ? "text-rose-600 font-semibold" : "text-gray-600"
-                      }`}
-                    >
-                      {new Date(o.deadline).toLocaleDateString("ko-KR")}
-                    </span>
-                  ) : (
-                    <span className="text-gray-300">—</span>
-                  )}
+                  {dDayBadge(o.deadline, o.status)}
                 </TableCell>
                 <TableCell className="hidden xl:table-cell text-sm text-gray-500" data-label="담당자">
                   {o.assignee || "—"}

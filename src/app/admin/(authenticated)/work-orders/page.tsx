@@ -5,6 +5,7 @@ import { ListView } from "./_components/list-view";
 import { BoardView } from "./_components/board-view";
 import { ViewTabs } from "./_components/view-tabs";
 import { WORK_ORDER_STATUSES } from "@/lib/status-colors";
+import { escapePostgrestFilter } from "@/lib/format-date";
 
 export const metadata = {
   title: "발주 관리",
@@ -32,9 +33,12 @@ export default async function WorkOrdersPage({
     .order("created_at", { ascending: false });
 
   if (q) {
-    query = query.or(
-      `order_number.ilike.%${q}%,customer_name.ilike.%${q}%,product_name.ilike.%${q}%`
-    );
+    const safe = escapePostgrestFilter(q);
+    if (safe) {
+      query = query.or(
+        `order_number.ilike.%${safe}%,customer_name.ilike.%${safe}%,product_name.ilike.%${safe}%`
+      );
+    }
   }
   if (status) query = query.eq("status", status);
   if (type) query = query.eq("processing_type", type);
