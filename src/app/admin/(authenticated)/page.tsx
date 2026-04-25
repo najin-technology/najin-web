@@ -75,6 +75,7 @@ export default async function AdminDashboard() {
     { count: customersPrevWeek },
     { count: quotesThisWeek },
     { count: quotesPrevWeek },
+    { count: inProgressWorkOrders },
   ] = await Promise.all([
     supabase.from("quotes").select("*", { count: "exact", head: true }).eq("status", "접수").is("deleted_at", null),
     supabase.from("applications").select("*", { count: "exact", head: true }).eq("status", "서류검토").is("deleted_at", null),
@@ -88,6 +89,7 @@ export default async function AdminDashboard() {
     supabase.from("customers").select("*", { count: "exact", head: true }).gte("created_at", prevWeekStart.toISOString()).lt("created_at", weekStart.toISOString()).is("deleted_at", null),
     supabase.from("quotes").select("*", { count: "exact", head: true }).gte("created_at", weekStart.toISOString()).is("deleted_at", null),
     supabase.from("quotes").select("*", { count: "exact", head: true }).gte("created_at", prevWeekStart.toISOString()).lt("created_at", weekStart.toISOString()).is("deleted_at", null),
+    supabase.from("work_orders").select("*", { count: "exact", head: true }).not("status", "in", "(\"출하\",\"완료\")").is("deleted_at", null),
   ]);
 
   const hasUrgent = (pendingQuotes || 0) > 0 || (pendingApps || 0) > 0;
@@ -209,8 +211,8 @@ export default async function AdminDashboard() {
         <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-100">
           <MetricCard label="신규 고객" value={customersThisWeek || 0} delta={customerDelta} href="/admin/customers" />
           <MetricCard label="새 견적" value={quotesThisWeek || 0} delta={quoteDelta} href="/admin/quotes" />
+          <MetricCard label="진행 중 발주" value={inProgressWorkOrders || 0} href="/admin/work-orders" />
           <MetricCard label="총 고객" value={totalCustomers || 0} href="/admin/customers" unit="명" />
-          <MetricCard label="공개 소식" value={publishedNotices || 0} href="/admin/notices" unit="개" />
         </div>
       </section>
 

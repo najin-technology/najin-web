@@ -20,6 +20,7 @@ import {
   ShieldPlus,
   BarChart3,
   Settings,
+  ClipboardList,
 } from "lucide-react";
 
 const navGroups = [
@@ -31,6 +32,7 @@ const navGroups = [
     items: [
       { href: "/admin/customers", label: "고객 관리", icon: Building2 },
       { href: "/admin/quotes", label: "견적 관리", icon: FileText },
+      { href: "/admin/work-orders", label: "발주 관리", icon: ClipboardList },
       { href: "/admin/applications", label: "채용 관리", icon: Users },
     ],
   },

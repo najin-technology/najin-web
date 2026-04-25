@@ -40,10 +40,30 @@ export const CUSTOMER_STATUS_STYLES: Record<string, StatusStyle> = {
   "거절":       { bg: "bg-rose-100",    text: "text-rose-700",     dot: "bg-rose-500" },
 };
 
+export const WORK_ORDER_STATUS_STYLES: Record<string, StatusStyle> = {
+  "접수":       { bg: "bg-gray-100",    text: "text-gray-700",     dot: "bg-gray-400" },
+  "도면확정":   { bg: "bg-blue-50",     text: "text-blue-700",     dot: "bg-blue-500" },
+  "가공중":     { bg: "bg-amber-50",    text: "text-amber-700",    dot: "bg-amber-500" },
+  "검수":       { bg: "bg-violet-50",   text: "text-violet-700",   dot: "bg-violet-500" },
+  "출하":       { bg: "bg-cyan-50",     text: "text-cyan-700",     dot: "bg-cyan-500" },
+  "완료":       { bg: "bg-emerald-50",  text: "text-emerald-700",  dot: "bg-emerald-500" },
+};
+
+export const WORK_ORDER_PRIORITY_STYLES: Record<string, StatusStyle> = {
+  "낮음":       { bg: "bg-gray-50",     text: "text-gray-500",     dot: "bg-gray-300" },
+  "보통":       { bg: "bg-blue-50",     text: "text-blue-600",     dot: "bg-blue-400" },
+  "높음":       { bg: "bg-rose-50",     text: "text-rose-700",     dot: "bg-rose-500" },
+};
+
+export const WORK_ORDER_STATUSES = ["접수", "도면확정", "가공중", "검수", "출하", "완료"] as const;
+export type WorkOrderStatus = (typeof WORK_ORDER_STATUSES)[number];
+
 const TYPE_MAP = {
   quote: QUOTE_STATUS_STYLES,
   application: APPLICATION_STATUS_STYLES,
   customer: CUSTOMER_STATUS_STYLES,
+  work_order: WORK_ORDER_STATUS_STYLES,
+  work_order_priority: WORK_ORDER_PRIORITY_STYLES,
 } as const;
 
 export type StatusType = keyof typeof TYPE_MAP;
