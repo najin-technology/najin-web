@@ -4,6 +4,8 @@ const TYPE_LABELS: Record<StatusType, string> = {
   quote: "견적",
   application: "지원서",
   customer: "고객",
+  work_order: "발주",
+  work_order_priority: "우선순위",
 };
 
 export function StatusBadge({

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { getQuoteAttachmentUrls } from "../actions";
@@ -6,7 +7,8 @@ import { StatusBadge } from "@/components/admin/status-badge";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { InfoGrid } from "@/components/admin/info-grid";
 import { CopyButton } from "@/components/admin/copy-button";
-import { Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Download, ClipboardList, ExternalLink } from "lucide-react";
 
 export const metadata = { title: "견적 상세", description: "견적 요청 상세 정보", robots: "noindex, nofollow" };
 
@@ -29,6 +31,14 @@ export default async function QuoteDetailPage({
   if (!quote) notFound();
 
   const attachments = await getQuoteAttachmentUrls(id);
+
+  // 이 견적에 연결된 발주가 있는지
+  const { data: existingWorkOrder } = await supabase
+    .from("work_orders")
+    .select("id, order_number, status")
+    .eq("quote_id", id)
+    .is("deleted_at", null)
+    .maybeSingle();
 
   return (
     <div className="space-y-6">
@@ -132,17 +142,57 @@ export default async function QuoteDetailPage({
           )}
         </div>
 
-        {/* Status Change Panel */}
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden h-fit">
-          <div className="px-6 py-3.5 border-b border-gray-100">
-            <h2 className="text-sm font-semibold text-brand-navy">상태 관리</h2>
+        {/* Side panel */}
+        <div className="space-y-6">
+          {/* 발주 연결 카드 */}
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div className="px-6 py-3.5 border-b border-gray-100">
+              <h2 className="text-sm font-semibold text-brand-navy flex items-center gap-2">
+                <ClipboardList className="w-4 h-4 text-brand-copper" />
+                발주
+              </h2>
+            </div>
+            <div className="p-6">
+              {existingWorkOrder ? (
+                <Link href={`/admin/work-orders/${existingWorkOrder.id}`} className="block group">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-xs text-brand-copper">
+                      {existingWorkOrder.order_number}
+                    </span>
+                    <StatusBadge type="work_order" status={existingWorkOrder.status} />
+                  </div>
+                  <p className="text-xs text-gray-500 group-hover:text-brand-navy inline-flex items-center gap-1">
+                    발주 상세 열기
+                    <ExternalLink className="w-3 h-3" />
+                  </p>
+                </Link>
+              ) : (
+                <div className="space-y-3">
+                  <p className="text-xs text-gray-500">
+                    이 견적을 발주로 변환하면 상태 추적과 도면 관리가 가능합니다.
+                  </p>
+                  <Link href={`/admin/work-orders/new?from=${quote.id}`} className="block">
+                    <Button className="w-full bg-brand-copper hover:bg-brand-copper-light text-white gap-1.5">
+                      <ClipboardList className="w-4 h-4" />
+                      이 견적으로 발주 생성
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="p-6">
-          <QuoteStatusForm
-            quoteId={quote.id}
-            currentStatus={quote.status}
-            currentMemo={quote.admin_memo}
-          />
+
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden h-fit">
+            <div className="px-6 py-3.5 border-b border-gray-100">
+              <h2 className="text-sm font-semibold text-brand-navy">상태 관리</h2>
+            </div>
+            <div className="p-6">
+              <QuoteStatusForm
+                quoteId={quote.id}
+                currentStatus={quote.status}
+                currentMemo={quote.admin_memo}
+              />
+            </div>
           </div>
         </div>
       </div>
