@@ -123,18 +123,29 @@ export async function updateWorkOrder(
   const id = asString(formData, "id");
   if (!id) return { error: "id가 필요합니다." };
 
+  const customer_name = asString(formData, "customer_name");
+  const product_name = asString(formData, "product_name");
+  if (!customer_name || !product_name) {
+    return { error: "고객사와 제품명은 필수입니다." };
+  }
+
+  const priority = asString(formData, "priority") ?? "보통";
+  if (!PRIORITIES.includes(priority as (typeof PRIORITIES)[number])) {
+    return { error: "잘못된 우선순위입니다." };
+  }
+
   const supabase = await createSupabaseServerClient();
 
   const updates: Record<string, unknown> = {
-    customer_name: asString(formData, "customer_name"),
+    customer_name,
+    product_name,
+    priority,
     contact_name: asString(formData, "contact_name"),
     phone: asString(formData, "phone"),
-    product_name: asString(formData, "product_name"),
     processing_type: asString(formData, "processing_type"),
     material: asString(formData, "material"),
     quantity: asString(formData, "quantity"),
     deadline: asString(formData, "deadline"),
-    priority: asString(formData, "priority"),
     description: asString(formData, "description"),
     internal_memo: asString(formData, "internal_memo"),
     assignee: asString(formData, "assignee"),
