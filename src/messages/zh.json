@@ -202,7 +202,11 @@
     "faq2Q": "交货期是多少？",
     "faq2A": "根据产品规格不同，一般在报价确认后7~14天内交货。",
     "faq3Q": "没有图纸也能报价吗？",
-    "faq3A": "可以，告知大致规格和数量即可提供概算报价。精确报价需要图纸。"
+    "faq3A": "可以，告知大致规格和数量即可提供概算报价。精确报价需要图纸。",
+    "companyNamePlaceholder": "例：纳进科技",
+    "contactNamePlaceholder": "例：张三",
+    "phonePlaceholder": "例：+82 10-1234-5678",
+    "emailPlaceholder": "例：name@company.com"
   },
   "careers": {
     "pageTitle": "招聘信息",
@@ -220,13 +224,16 @@
     "phone": "联系电话",
     "email": "电子邮箱",
     "position": "应聘职位",
-    "positionPlaceholder": "例: CNC操作员、销售",
+    "positionPlaceholder": "例：CNC加工、销售",
     "coverLetter": "自我介绍",
-    "coverLetterPlaceholder": "请简要介绍自己及应聘动机。",
+    "coverLetterPlaceholder": "请自由介绍您的背景和应聘动机",
     "resume": "简历附件",
     "resumeHelp": "PDF, DOC, DOCX（最大10MB）",
     "successTitle": "申请已受理",
-    "successMessage": "资料审核后将与您联系，感谢。"
+    "successMessage": "资料审核后将与您联系，感谢。",
+    "namePlaceholder": "例：张三",
+    "phonePlaceholder": "例：+82 10-1234-5678",
+    "emailPlaceholder": "例：name@email.com"
   },
   "notices": {
     "pageTitle": "公司动态",
