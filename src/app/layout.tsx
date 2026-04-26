@@ -65,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={`${geistSans.variable} ${notoSansKR.variable} ${notoSansSC.variable} h-full antialiased`}>
+    <html lang="ko" className={`${geistSans.variable} ${notoSansKR.variable} ${notoSansSC.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <script
           type="application/ld+json"
