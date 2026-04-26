@@ -91,6 +91,19 @@ export default async function NoticeDetailPage({
       name: "NAJIN TECHNOLOGY",
       logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo/najin-logo.png` },
     },
+    image: `${BASE_URL}/images/logo/najin-logo.png`,
+  };
+
+  const homeName = locale === "ko" ? "홈" : locale === "zh" ? "首页" : "Home";
+  const noticesName = locale === "ko" ? "회사소식" : locale === "zh" ? "公司动态" : "Company News";
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: homeName, item: `${BASE_URL}/${locale}` },
+      { "@type": "ListItem", position: 2, name: noticesName, item: `${BASE_URL}/${locale}/notices` },
+      { "@type": "ListItem", position: 3, name: title, item: `${BASE_URL}/${locale}/notices/${id}` },
+    ],
   };
 
   return (
@@ -98,6 +111,10 @@ export default async function NoticeDetailPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <section className="hero-gradient hero-pattern text-white py-16 md:py-24 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
