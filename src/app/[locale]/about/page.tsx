@@ -39,9 +39,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     path: "/about",
     titles: { ko: "회사소개", en: "About Us", zh: "公司介绍" },
     descriptions: {
-      ko: "나진테크 회사소개. 2002년 설립, ISO 9001 인증, 특허 보유. 대표이사 인사말, 연혁, 인증현황, 오시는 길.",
-      en: "About NAJIN TECHNOLOGY. Founded 2002, ISO 9001 certified, patent holder. CEO message, history, certifications, location.",
-      zh: "纳进科技公司介绍。2002年成立，ISO 9001认证，专利持有。CEO致辞、发展历程、资质认证、交通指南。",
+      ko: "나진테크 회사소개. 2002년 설립된 경남 양산 정밀 가공 제조업체. ISO 9001 인증, 우레탄 금형받침대 특허 보유. 국내외 주요 완성차사, SK, Overseas automaker 등 대기업 납품 25년 노하우. 대표이사 인사말, 연혁, 인증현황, 오시는 길.",
+      en: "About NAJIN TECHNOLOGY — precision manufacturer in Yangsan, South Korea since 2002. ISO 9001 certified, urethane mold base patent holder. 25 years supplying Hyundai, SK, Overseas automaker and other major industrial clients. CEO message, history, certifications, location.",
+      zh: "纳进科技公司介绍。2002年成立的庆南梁山精密加工制造企业。ISO 9001认证，聚氨酯模具支撑专利持有。25年向现代汽车、SK、海外整车厂等大企业供货经验。CEO致辞、发展历程、资质认证、交通指南。",
     },
   });
 }
