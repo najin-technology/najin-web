@@ -78,7 +78,21 @@ export default async function proxy(request: NextRequest) {
   }
 
   // All other routes: i18n middleware
-  return intlMiddleware(request);
+  const response = intlMiddleware(request);
+
+  // QA Round 23 P2 fix: 공개 페이지 CDN cache 활성화
+  // - next-intl middleware가 set-cookie(NEXT_LOCALE)하면 Vercel Edge가 자동으로
+  //   cache-control: private 강제 → fluid compute 매 요청 호출됨.
+  // - localePrefix: "always" 설정이라 path(/ko, /en, /zh)로 locale 결정 가능 →
+  //   NEXT_LOCALE cookie 불필요. 제거해서 cache 가능 응답으로 변환.
+  // - s-maxage=300 (5분 CDN cache) + stale-while-revalidate=3600 (1시간 SWR).
+  //   admin이 새 post 추가 시 revalidatePath 호출되어 즉시 무효화.
+  response.cookies.delete("NEXT_LOCALE");
+  response.headers.set(
+    "cache-control",
+    "public, s-maxage=300, stale-while-revalidate=3600"
+  );
+  return response;
 }
 
 export const config = {
