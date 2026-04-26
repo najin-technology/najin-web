@@ -58,7 +58,7 @@ function hashIp(ip: string): string {
 }
 
 async function fetchFromIpInfo(ip: string): Promise<AsnLookup | null> {
-  const token = process.env.IPINFO_TOKEN;
+  const token = process.env.IPINFO_TOKEN?.trim();
   const url = token ? `${IPINFO_URL}/${ip}/json?token=${token}` : `${IPINFO_URL}/${ip}/json`;
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(3000) });

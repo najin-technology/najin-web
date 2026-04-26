@@ -50,10 +50,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() || undefined,
     other: {
-      ...(process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION
-        ? { "naver-site-verification": process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION }
+      ...(process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION?.trim()
+        ? { "naver-site-verification": process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION.trim() }
         : {}),
     },
   },
@@ -65,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={`${geistSans.variable} ${notoSansKR.variable} ${notoSansSC.variable} h-full antialiased`}>
+    <html lang="ko" className={`${geistSans.variable} ${notoSansKR.variable} ${notoSansSC.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <script
           type="application/ld+json"
