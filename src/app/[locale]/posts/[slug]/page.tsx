@@ -109,7 +109,19 @@ export default async function PostDetailPage({
         url: `${BASE_URL}/images/logo/najin-logo.png`,
       },
     },
-    image: post.thumbnail_url || images[0],
+    image: post.thumbnail_url || images[0] || `${BASE_URL}/images/logo/najin-logo.png`,
+  };
+
+  const homeName = locale === "ko" ? "홈" : locale === "zh" ? "首页" : "Home";
+  const postsName = locale === "ko" ? "제작사례" : locale === "zh" ? "制作案例" : "Projects";
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: homeName, item: `${BASE_URL}/${locale}` },
+      { "@type": "ListItem", position: 2, name: postsName, item: `${BASE_URL}/${locale}/posts` },
+      { "@type": "ListItem", position: 3, name: title, item: `${BASE_URL}/${locale}/posts/${slug}` },
+    ],
   };
 
   return (
@@ -117,6 +129,10 @@ export default async function PostDetailPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* Hero with thumbnail */}

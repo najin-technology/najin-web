@@ -11,9 +11,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     path: "/privacy",
     titles: { ko: "개인정보처리방침", en: "Privacy Policy", zh: "隐私政策" },
     descriptions: {
-      ko: "나진테크 개인정보처리방침. 개인정보 수집, 이용, 보관 및 파기에 관한 안내.",
-      en: "NAJIN TECHNOLOGY privacy policy. Information on collection, use, storage and disposal of personal data.",
-      zh: "纳进科技隐私政策。关于个人信息收集、使用、保管及销毁的说明。",
+      ko: "나진테크 개인정보처리방침. 견적·채용·문의 시 수집되는 개인정보의 항목, 이용 목적, 보유 기간, 제3자 제공, 처리 위탁, 파기 절차 등 모든 개인정보 처리 사항을 투명하게 안내합니다.",
+      en: "NAJIN TECHNOLOGY privacy policy. Transparent guide to personal data collected via quote, recruitment, and inquiry forms — categories, purposes, retention period, third-party sharing, processing delegation, and disposal procedures.",
+      zh: "纳进科技隐私政策。透明告知报价、招聘、咨询表单收集的个人信息项目、使用目的、保留期限、第三方共享、处理委托及销毁程序等所有处理事项。",
     },
   });
 }

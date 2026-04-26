@@ -14,9 +14,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     path: "/careers",
     titles: { ko: "채용정보", en: "Careers", zh: "招聘信息" },
     descriptions: {
-      ko: "나진테크 채용정보. 경남 양산 정밀 가공 제조업 일자리. 복리후생, 채용 공고 및 지원 방법 안내.",
-      en: "Careers at NAJIN TECHNOLOGY. Manufacturing jobs in Yangsan, Gyeongnam. Benefits, openings, and application guide.",
-      zh: "纳进科技招聘信息。庆南梁山精密加工制造业岗位。福利待遇、招聘公告及申请方式。",
+      ko: "나진테크 채용. 경남 양산 정밀 가공 제조업 일자리 — CNC 가공, 우레탄 성형, 영업, 사무직 채용 공고. 복리후생, 근무 환경, 지원 방법 안내. 안정된 25년 기업에서 함께 성장할 동료를 찾습니다.",
+      en: "Careers at NAJIN TECHNOLOGY — precision manufacturing jobs in Yangsan, Gyeongnam Province. CNC machining, urethane molding, sales, and office positions. Benefits, work environment, and how to apply. Join a stable 25-year manufacturing leader.",
+      zh: "纳进科技招聘——庆南梁山精密加工制造业岗位。CNC加工、聚氨酯成型、销售、办公职位招聘公告。福利待遇、工作环境、应聘方式介绍。在25年稳定企业寻找共同成长的同事。",
     },
   });
 }

@@ -15,9 +15,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     path: "/notices",
     titles: { ko: "회사소식", en: "Company News", zh: "公司动态" },
     descriptions: {
-      ko: "나진테크 회사소식. 이전, 확장, 공장 현장 등 소식을 전합니다.",
-      en: "NAJIN TECHNOLOGY company news. Relocation, expansion, and factory updates.",
-      zh: "纳进科技公司动态。搬迁、扩建及工厂资讯。",
+      ko: "나진테크 회사 소식. 최신 공지, 공장 이전·확장, ISO 인증 취득, 신제품·기술 도입, 산업박람회·전시 참여 등 경남 양산 정밀가공 전문기업 25년 나진테크의 최근 동향과 주요 업데이트.",
+      en: "NAJIN TECHNOLOGY company news. Latest announcements, factory relocation and expansion, ISO certifications, new products and technologies, trade show participation — recent updates from a 25-year precision manufacturing leader in Yangsan, South Korea.",
+      zh: "纳进科技公司动态。最新公告、工厂搬迁与扩建、ISO认证取得、新产品与新技术导入、产业博览会参展等——庆南梁山25年精密加工专业企业纳进科技的近期动向。",
     },
   });
 }

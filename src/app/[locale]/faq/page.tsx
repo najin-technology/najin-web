@@ -25,9 +25,9 @@ export async function generateMetadata({
       zh: "常见问题",
     },
     descriptions: {
-      ko: "나진테크 서비스에 대한 자주 묻는 질문. 가공 서비스, 소재, 인증, 납기, 견적 등.",
-      en: "Frequently asked questions about NAJIN TECHNOLOGY services. Processing, materials, certifications, lead time, quotes.",
-      zh: "关于纳进科技服务的常见问题。加工服务、材料、资质认证、交期、报价等。",
+      ko: "나진테크 서비스 자주 묻는 질문 8선. 우레탄 성형, CNC 정밀가공, 합성수지 가공 가능 소재 종류, 최소 주문량, 평균 납기, 견적 요청 절차, ISO 9001 품질 인증 현황까지 핵심 답변 정리.",
+      en: "8 frequently asked questions about NAJIN TECHNOLOGY. Materials we machine, urethane and CNC processing capabilities, minimum order quantity, average lead time, how to request a quote, and ISO 9001 quality certification status.",
+      zh: "关于纳进科技服务的8个常见问题。聚氨酯成型、CNC精密加工、合成树脂加工的可加工材料、最低订单量、平均交期、报价申请流程及ISO 9001质量认证现状等核心解答。",
     },
   });
 }
