@@ -206,7 +206,15 @@
     "companyNamePlaceholder": "例：纳进科技",
     "contactNamePlaceholder": "例：张三",
     "phonePlaceholder": "例：+82 10-1234-5678",
-    "emailPlaceholder": "例：name@company.com"
+    "emailPlaceholder": "例：name@company.com",
+    "errors": {
+      "requiredFields": "请填写所有必填项。",
+      "privacyAgreed": "请同意个人信息收集政策。",
+      "fileSize": "文件大小不能超过10MB。",
+      "fileType": "不支持的文件类型。",
+      "submitFailed": "提交时发生错误，请重试。",
+      "fileUploadFailed": "文件上传失败。报价请求已接收，但附件发送失败。请通过邮件发送图纸。"
+    }
   },
   "careers": {
     "pageTitle": "招聘信息",
@@ -233,7 +241,15 @@
     "successMessage": "资料审核后将与您联系，感谢。",
     "namePlaceholder": "例：张三",
     "phonePlaceholder": "例：+82 10-1234-5678",
-    "emailPlaceholder": "例：name@email.com"
+    "emailPlaceholder": "例：name@email.com",
+    "errors": {
+      "requiredFields": "请填写所有必填项。",
+      "privacyAgreed": "请同意个人信息收集政策。",
+      "fileSize": "文件大小不能超过10MB。",
+      "fileType": "不支持的文件类型。(仅限PDF、DOC、DOCX)",
+      "submitFailed": "提交时发生错误，请重试。",
+      "fileUploadFailed": "文件上传失败。申请已接收，但简历发送失败。请通过邮件发送简历。"
+    }
   },
   "notices": {
     "pageTitle": "公司动态",
