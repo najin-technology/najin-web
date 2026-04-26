@@ -206,7 +206,15 @@
     "companyNamePlaceholder": "예: 나진테크",
     "contactNamePlaceholder": "예: 홍길동",
     "phonePlaceholder": "예: 010-1234-5678",
-    "emailPlaceholder": "예: name@company.com"
+    "emailPlaceholder": "예: name@company.com",
+    "errors": {
+      "requiredFields": "필수 항목을 입력해주세요.",
+      "privacyAgreed": "개인정보 수집 동의가 필요합니다.",
+      "fileSize": "파일 크기는 10MB 이하만 가능합니다.",
+      "fileType": "허용되지 않는 파일 형식입니다.",
+      "submitFailed": "제출 중 오류가 발생했습니다.",
+      "fileUploadFailed": "파일 업로드 중 오류가 발생했습니다. 견적 요청은 접수되었으나 첨부파일 전송에 실패했습니다. 이메일로 도면을 보내주세요."
+    }
   },
   "careers": {
     "pageTitle": "채용정보",
@@ -233,7 +241,15 @@
     "successMessage": "서류 검토 후 연락드리겠습니다. 감사합니다.",
     "namePlaceholder": "예: 홍길동",
     "phonePlaceholder": "예: 010-1234-5678",
-    "emailPlaceholder": "예: name@email.com"
+    "emailPlaceholder": "예: name@email.com",
+    "errors": {
+      "requiredFields": "필수 항목을 입력해주세요.",
+      "privacyAgreed": "개인정보 수집 동의가 필요합니다.",
+      "fileSize": "파일 크기는 10MB 이하만 가능합니다.",
+      "fileType": "허용되지 않는 파일 형식입니다. (PDF, DOC, DOCX만 가능)",
+      "submitFailed": "제출 중 오류가 발생했습니다.",
+      "fileUploadFailed": "파일 업로드 중 오류가 발생했습니다. 지원서는 접수되었으나 파일 전송에 실패했습니다. 이메일로 이력서를 보내주세요."
+    }
   },
   "notices": {
     "pageTitle": "회사소식",
