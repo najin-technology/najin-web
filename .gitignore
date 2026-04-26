@@ -46,3 +46,5 @@ next-env.d.ts
 .impeccable.md
 package-lock.json
 package-lock.json
+qa-round*.png
+.playwright-mcp/
