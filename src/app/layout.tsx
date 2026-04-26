@@ -49,6 +49,13 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  alternates: {
+    types: {
+      "application/rss+xml": [
+        { url: `${SITE_URL}/feed.xml`, title: "나진테크 RSS" },
+      ],
+    },
+  },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() || undefined,
     other: {
