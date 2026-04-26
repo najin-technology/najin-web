@@ -88,5 +88,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // skip dynamic entries on error
   }
 
-  return [...staticEntries, ...noticeEntries, ...postEntries];
+  // Dynamic client pages (/clients/[slug])
+  let clientEntries: MetadataRoute.Sitemap = [];
+  try {
+    if (!supabase) throw new Error("Supabase not configured");
+    const { data: clients } = await supabase
+      .from("customers")
+      .select("client_slug, updated_at")
+      .not("client_slug", "is", null)
+      .is("deleted_at", null);
+
+    if (clients) {
+      clientEntries = clients
+        .filter((c) => c.client_slug)
+        .flatMap((client) =>
+          locales.map((locale) => ({
+            url: `${BASE_URL}/${locale}/clients/${client.client_slug}`,
+            lastModified: client.updated_at ? new Date(client.updated_at as string) : new Date(),
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+            alternates: withAlternates(`/clients/${client.client_slug}`),
+          }))
+        );
+    }
+  } catch {
+    // skip dynamic entries on error
+  }
+
+  return [...staticEntries, ...noticeEntries, ...postEntries, ...clientEntries];
 }
