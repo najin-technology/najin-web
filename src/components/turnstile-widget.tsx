@@ -9,7 +9,9 @@ type Props = {
 };
 
 export function TurnstileWidget({ onToken, name = "turnstileToken" }: Props) {
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  // env 주입 시 trailing newline 들어가면 Turnstile API가 "Invalid input" 거부.
+  // 방어적 trim — 한 줄로 봇 검증 실패 방지.
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim();
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (!siteKey) return null;
