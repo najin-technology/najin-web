@@ -16,7 +16,8 @@
     "home": "返回首页",
     "privacy": "隐私政策",
     "ctaTitle": "需要报价吗？",
-    "ctaDesc": "发送图纸，我们将尽快回复报价。"
+    "ctaDesc": "发送图纸，我们将尽快回复报价。",
+    "collaborationWith": "合作企业"
   },
   "callback": {
     "title": "电话咨询请求",
