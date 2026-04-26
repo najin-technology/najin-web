@@ -206,7 +206,15 @@
     "companyNamePlaceholder": "e.g. NAJIN TECHNOLOGY",
     "contactNamePlaceholder": "e.g. John Smith",
     "phonePlaceholder": "e.g. +82 10-1234-5678",
-    "emailPlaceholder": "e.g. name@company.com"
+    "emailPlaceholder": "e.g. name@company.com",
+    "errors": {
+      "requiredFields": "Please fill in all required fields.",
+      "privacyAgreed": "You must agree to the privacy policy.",
+      "fileSize": "File size must be 10MB or less.",
+      "fileType": "File type not allowed.",
+      "submitFailed": "An error occurred while submitting. Please try again.",
+      "fileUploadFailed": "File upload failed. Your quote request was received, but the attachment could not be sent. Please email your drawing."
+    }
   },
   "careers": {
     "pageTitle": "Careers",
@@ -233,7 +241,15 @@
     "successMessage": "We will contact you after reviewing your application. Thank you.",
     "namePlaceholder": "e.g. John Smith",
     "phonePlaceholder": "e.g. +82 10-1234-5678",
-    "emailPlaceholder": "e.g. name@email.com"
+    "emailPlaceholder": "e.g. name@email.com",
+    "errors": {
+      "requiredFields": "Please fill in all required fields.",
+      "privacyAgreed": "You must agree to the privacy policy.",
+      "fileSize": "File size must be 10MB or less.",
+      "fileType": "File type not allowed. (PDF, DOC, DOCX only)",
+      "submitFailed": "An error occurred while submitting. Please try again.",
+      "fileUploadFailed": "File upload failed. Your application was received, but the resume could not be sent. Please email your resume."
+    }
   },
   "notices": {
     "pageTitle": "Company News",
