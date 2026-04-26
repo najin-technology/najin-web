@@ -202,7 +202,11 @@
     "faq2Q": "What is the lead time?",
     "faq2A": "Typically 7-14 days after quote confirmation, depending on product specifications.",
     "faq3Q": "Can I get a quote without drawings?",
-    "faq3A": "Yes, rough specs and quantity are enough for a ballpark estimate. Detailed drawings are needed for precise quotes."
+    "faq3A": "Yes, rough specs and quantity are enough for a ballpark estimate. Detailed drawings are needed for precise quotes.",
+    "companyNamePlaceholder": "e.g. NAJIN TECHNOLOGY",
+    "contactNamePlaceholder": "e.g. John Smith",
+    "phonePlaceholder": "e.g. +82 10-1234-5678",
+    "emailPlaceholder": "e.g. name@company.com"
   },
   "careers": {
     "pageTitle": "Careers",
@@ -220,13 +224,16 @@
     "phone": "Phone",
     "email": "Email",
     "position": "Position",
-    "positionPlaceholder": "e.g., CNC Operator, Sales",
+    "positionPlaceholder": "e.g. CNC machining, Sales",
     "coverLetter": "Cover Letter",
-    "coverLetterPlaceholder": "Please write a brief introduction and motivation.",
+    "coverLetterPlaceholder": "Tell us about yourself and why you are interested",
     "resume": "Resume",
     "resumeHelp": "PDF, DOC, DOCX (max 10MB)",
     "successTitle": "Application has been received",
-    "successMessage": "We will contact you after reviewing your application. Thank you."
+    "successMessage": "We will contact you after reviewing your application. Thank you.",
+    "namePlaceholder": "e.g. John Smith",
+    "phonePlaceholder": "e.g. +82 10-1234-5678",
+    "emailPlaceholder": "e.g. name@email.com"
   },
   "notices": {
     "pageTitle": "Company News",

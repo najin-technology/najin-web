@@ -202,7 +202,11 @@
     "faq2Q": "납기는 어떻게 되나요?",
     "faq2A": "제품 사양에 따라 다르지만, 일반적으로 견적 확정 후 7~14일 내 납품합니다.",
     "faq3Q": "도면 없이도 견적이 가능한가요?",
-    "faq3A": "네, 대략적인 사양과 수량만 알려주시면 개략 견적을 드립니다. 정밀 견적은 도면이 필요합니다."
+    "faq3A": "네, 대략적인 사양과 수량만 알려주시면 개략 견적을 드립니다. 정밀 견적은 도면이 필요합니다.",
+    "companyNamePlaceholder": "예: 나진테크",
+    "contactNamePlaceholder": "예: 홍길동",
+    "phonePlaceholder": "예: 010-1234-5678",
+    "emailPlaceholder": "예: name@company.com"
   },
   "careers": {
     "pageTitle": "채용정보",
@@ -222,11 +226,14 @@
     "position": "지원 포지션",
     "positionPlaceholder": "예: CNC 가공직, 영업직",
     "coverLetter": "자기소개",
-    "coverLetterPlaceholder": "간단한 자기소개와 지원 동기를 작성해주세요.",
+    "coverLetterPlaceholder": "지원 동기와 자기소개를 자유롭게 작성해주세요",
     "resume": "이력서 첨부",
     "resumeHelp": "PDF, DOC, DOCX (최대 10MB)",
     "successTitle": "지원서가 접수되었습니다",
-    "successMessage": "서류 검토 후 연락드리겠습니다. 감사합니다."
+    "successMessage": "서류 검토 후 연락드리겠습니다. 감사합니다.",
+    "namePlaceholder": "예: 홍길동",
+    "phonePlaceholder": "예: 010-1234-5678",
+    "emailPlaceholder": "예: name@email.com"
   },
   "notices": {
     "pageTitle": "회사소식",
