@@ -24,7 +24,7 @@ export function RecentFeed({ visits }: { visits: RecentVisit[] }) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-copper opacity-70" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-copper" />
           </span>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
             실시간 방문 · 최근 {visits.length}건
           </p>
         </div>
@@ -44,22 +44,22 @@ export function RecentFeed({ visits }: { visits: RecentVisit[] }) {
                 key={v.id}
                 className="py-3 first:pt-0 last:pb-0 grid grid-cols-[3.5rem_1fr_auto_auto_auto] sm:grid-cols-[4rem_1.6fr_auto_auto_auto] gap-3 items-center"
               >
-                <span className="text-xs tabular-nums text-gray-400 truncate">{rel}</span>
+                <span className="text-[13px] tabular-nums text-gray-500 truncate font-medium">{rel}</span>
                 <div className="min-w-0 flex items-baseline gap-2">
-                  <span className="text-sm font-medium text-brand-charcoal truncate font-mono">
+                  <span className="text-sm font-semibold text-brand-charcoal truncate font-mono">
                     {displayPath}
                   </span>
                   {v.locale && v.locale !== "ko" && (
-                    <span className="text-[9px] font-semibold uppercase tracking-widest text-gray-400 bg-surface-warm-100 px-1.5 py-0.5 rounded flex-shrink-0">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-surface-warm-100 px-1.5 py-0.5 rounded flex-shrink-0">
                       {v.locale}
                     </span>
                   )}
                 </div>
-                <span className="text-xs text-gray-500 hidden sm:inline">
+                <span className="text-[13px] text-gray-600 hidden sm:inline font-medium">
                   {referrerLabel(v.referrer_category)}
                 </span>
-                <span className="text-gray-400">{deviceIcon(v.device_class)}</span>
-                <span className="text-xs text-gray-400 hidden sm:inline truncate max-w-[8rem]">{loc}</span>
+                <span className="text-gray-500">{deviceIcon(v.device_class)}</span>
+                <span className="text-[13px] text-gray-500 hidden sm:inline truncate max-w-[8rem]">{loc}</span>
               </li>
             );
           })}
