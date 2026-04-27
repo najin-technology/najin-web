@@ -32,8 +32,8 @@ export function PopularPages({ pages }: { pages: PopularPage[] }) {
   return (
     <div className="bg-white border border-gray-200/80 rounded-2xl p-6 h-full">
       <div className="flex items-center gap-2 mb-5">
-        <div className="w-1 h-1 rounded-full bg-brand-copper" />
-        <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+        <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
           인기 페이지 TOP {pages.length || 10}
         </p>
       </div>
@@ -47,15 +47,15 @@ export function PopularPages({ pages }: { pages: PopularPage[] }) {
             const barWidth = (p.count / max) * 100;
             return (
               <li key={p.path} className="py-3 first:pt-0 last:pb-0 flex items-center gap-4">
-                <span className="text-[11px] font-mono tabular-nums text-gray-300 w-6 flex-shrink-0">
+                <span className="text-xs font-mono font-semibold tabular-nums text-gray-400 w-6 flex-shrink-0">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-brand-charcoal truncate">
+                  <p className="text-sm font-semibold text-brand-charcoal truncate">
                     {pretty.label}
                   </p>
-                  <p className="text-[11px] text-gray-400 truncate font-mono">
-                    {pretty.locale && <span className="mr-1 text-gray-300">{pretty.locale.toUpperCase()}</span>}
+                  <p className="text-xs text-gray-500 truncate font-mono">
+                    {pretty.locale && <span className="mr-1 text-gray-400 font-semibold">{pretty.locale.toUpperCase()}</span>}
                     {p.path}
                   </p>
                 </div>
