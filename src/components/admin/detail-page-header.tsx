@@ -19,8 +19,8 @@ export function DetailPageHeader({
         </Button>
       </Link>
       <div>
-        <h1 className="text-lg font-bold text-brand-navy">{title}</h1>
-        {subtitle && <p className="text-xs text-gray-400">{subtitle}</p>}
+        <h1 className="text-2xl font-bold text-brand-navy tracking-tight">{title}</h1>
+        {subtitle && <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>}
       </div>
     </div>
   );
