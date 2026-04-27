@@ -205,7 +205,7 @@ export default async function AdminDashboard() {
       <section className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-brand-navy" />
-          <h2 className="text-sm font-semibold text-brand-navy">이번 주 활동</h2>
+          <h2 className="text-base font-semibold text-brand-navy">이번 주 활동</h2>
           <span className="ml-auto text-xs text-gray-500">최근 7일 vs 전주</span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-100">
@@ -219,7 +219,7 @@ export default async function AdminDashboard() {
       {/* ───────────── 콘텐츠 현황 + 빠른 액션 ───────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
-          <h2 className="text-sm font-semibold text-brand-navy flex items-center gap-2">
+          <h2 className="text-base font-semibold text-brand-navy flex items-center gap-2">
             <Package className="w-4 h-4" />
             콘텐츠 현황
           </h2>
@@ -231,7 +231,7 @@ export default async function AdminDashboard() {
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
-          <h2 className="text-sm font-semibold text-brand-navy">빠른 액션</h2>
+          <h2 className="text-base font-semibold text-brand-navy">빠른 액션</h2>
           <div className="flex flex-wrap gap-2">
             <QuickAction href="/admin/notices/new" label="새 소식 작성" />
             <QuickAction href="/admin/products/new" label="새 제품" />
