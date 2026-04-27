@@ -17,14 +17,14 @@ function formatNumber(n: number): string {
 function Delta({ value, prev, compareLabel }: { value: number; prev: number | null; compareLabel: string }) {
   if (prev == null) {
     return (
-      <div className="flex items-center gap-1.5 text-xs">
+      <div className="flex items-center gap-1.5 text-[13px]">
         <span className="text-gray-400">{compareLabel}</span>
       </div>
     );
   }
   if (prev === 0 && value === 0) {
     return (
-      <div className="flex items-center gap-1.5 text-xs text-gray-400">
+      <div className="flex items-center gap-1.5 text-[13px] text-gray-500">
         <Minus className="w-3 h-3" />
         <span>변화 없음</span>
       </div>
@@ -32,7 +32,7 @@ function Delta({ value, prev, compareLabel }: { value: number; prev: number | nu
   }
   if (prev === 0) {
     return (
-      <div className="flex items-center gap-1.5 text-xs">
+      <div className="flex items-center gap-1.5 text-[13px]">
         <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
         <span className="font-medium text-emerald-600">신규</span>
       </div>
@@ -42,7 +42,7 @@ function Delta({ value, prev, compareLabel }: { value: number; prev: number | nu
   const pct = Math.round((diff / prev) * 1000) / 10;
   if (pct === 0) {
     return (
-      <div className="flex items-center gap-1.5 text-xs text-gray-400">
+      <div className="flex items-center gap-1.5 text-[13px] text-gray-500">
         <Minus className="w-3 h-3" />
         <span>{compareLabel}</span>
       </div>
@@ -72,8 +72,8 @@ export function HeroMetrics({ metrics }: { metrics: Metric[] }) {
           } ${m.tone === "primary" ? "lg:row-start-1" : ""}`}
         >
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-1 h-1 rounded-full bg-brand-copper" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+            <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
               {m.label}
             </p>
           </div>
