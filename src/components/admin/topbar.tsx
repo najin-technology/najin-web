@@ -9,11 +9,17 @@ import Link from "next/link";
 const pageTitles: Record<string, string> = {
   "/admin": "대시보드",
   "/admin/quotes": "견적 관리",
+  "/admin/work-orders": "발주 관리",
+  "/admin/customers": "고객 관리",
   "/admin/applications": "채용 관리",
   "/admin/notices": "회사소식",
+  "/admin/posts": "제작사례",
   "/admin/job-postings": "채용공고",
   "/admin/products": "제품 관리",
   "/admin/history": "연혁 관리",
+  "/admin/analytics": "방문자 통계",
+  "/admin/invites": "관리자 초대",
+  "/admin/settings": "설정",
 };
 
 const subPageLabels: Record<string, string> = {
