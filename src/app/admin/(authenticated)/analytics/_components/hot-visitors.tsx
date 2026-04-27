@@ -56,7 +56,7 @@ export function HotVisitors({ visitors }: { visitors: HotVisitor[] }) {
                     <span className={`text-xl font-bold tabular-nums tracking-tight ${tone.text} leading-none`}>
                       {v.score}
                     </span>
-                    <span className="text-[9px] font-semibold uppercase tracking-widest text-gray-400 mt-1">
+                    <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mt-1">
                       점수
                     </span>
                   </div>
@@ -72,20 +72,20 @@ export function HotVisitors({ visitors }: { visitors: HotVisitor[] }) {
                         <span className="text-sm font-medium text-gray-500">익명 방문자</span>
                       )}
                       {v.submitted && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                          <CheckCircle2 className="w-3 h-3" />
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                          <CheckCircle2 className="w-3.5 h-3.5" />
                           견적 제출
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-gray-500 mb-1 font-mono truncate">
+                    <p className="text-[13px] text-gray-600 mb-1 font-mono truncate">
                       최근: {stripLocale(v.sample_path)}
                     </p>
-                    <div className="flex items-center gap-3 text-[11px] text-gray-400">
-                      <span className="tabular-nums">{v.visit_count}회 방문</span>
-                      <span>·</span>
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <span className="tabular-nums font-medium">{v.visit_count}회 방문</span>
+                      <span className="text-gray-300">·</span>
                       <span className="truncate">{loc}</span>
-                      <span>·</span>
+                      <span className="text-gray-300">·</span>
                       <span>{formatRelativeKo(new Date(v.last_seen))}</span>
                     </div>
                   </div>
