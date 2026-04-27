@@ -10,11 +10,11 @@ export function CharCounter({
     ratio >= 1
       ? "text-red-500"
       : ratio >= 0.8
-        ? "text-amber-500"
-        : "text-gray-400";
+        ? "text-amber-600"
+        : "text-gray-500";
 
   return (
-    <span className={`text-[11px] tabular-nums ${color}`}>
+    <span className={`text-xs tabular-nums ${color}`}>
       {current}/{max}
     </span>
   );

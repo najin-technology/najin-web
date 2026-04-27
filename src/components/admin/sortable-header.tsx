@@ -46,12 +46,12 @@ export function SortableHeader({
         {label}
         {isActive ? (
           currentOrder === "asc" ? (
-            <ArrowUp className="w-3 h-3 text-brand-navy" />
+            <ArrowUp className="w-3.5 h-3.5 text-brand-navy" />
           ) : (
-            <ArrowDown className="w-3 h-3 text-brand-navy" />
+            <ArrowDown className="w-3.5 h-3.5 text-brand-navy" />
           )
         ) : (
-          <ArrowUpDown className="w-3 h-3 text-gray-300 group-hover:text-gray-400" />
+          <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-500" />
         )}
       </button>
     </TableHead>
