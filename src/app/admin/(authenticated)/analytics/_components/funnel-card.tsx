@@ -12,12 +12,12 @@ export function FunnelCard({ funnel }: { funnel: FunnelStats }) {
     <div className="bg-white border border-gray-200/80 rounded-2xl p-6 h-full">
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
-          <div className="w-1 h-1 rounded-full bg-brand-copper" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+          <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
             견적 전환
           </p>
         </div>
-        <span className="text-xs text-gray-400">방문 → 제출</span>
+        <span className="text-[13px] text-gray-500 font-medium">방문 → 제출</span>
       </div>
 
       <div className="space-y-5">
@@ -32,8 +32,8 @@ export function FunnelCard({ funnel }: { funnel: FunnelStats }) {
           return (
             <div key={step.label}>
               <div className="flex items-baseline justify-between mb-2">
-                <span className="text-sm font-medium text-brand-charcoal">{step.label}</span>
-                <span className="text-2xl font-semibold tabular-nums tracking-tight text-brand-navy">
+                <span className="text-sm font-semibold text-brand-charcoal">{step.label}</span>
+                <span className="text-2xl font-bold tabular-nums tracking-tight text-brand-navy">
                   {step.value.toLocaleString("ko-KR")}
                 </span>
               </div>
@@ -46,7 +46,7 @@ export function FunnelCard({ funnel }: { funnel: FunnelStats }) {
                 />
               </div>
               {stepConversion !== null && (
-                <p className="text-[11px] text-gray-400 mt-1.5 tabular-nums">
+                <p className="text-xs text-gray-500 mt-1.5 tabular-nums font-medium">
                   ↓ {stepConversion}% 진입 · {prevStep!.value - step.value > 0 ? `${(prevStep!.value - step.value).toLocaleString("ko-KR")} 이탈` : "이탈 없음"}
                 </p>
               )}
@@ -57,7 +57,7 @@ export function FunnelCard({ funnel }: { funnel: FunnelStats }) {
 
       {funnel.visitors > 0 && (
         <div className="mt-5 pt-4 border-t border-gray-100 flex items-baseline justify-between">
-          <span className="text-xs text-gray-400 uppercase tracking-widest">전체 전환율</span>
+          <span className="text-[13px] text-gray-500 uppercase tracking-widest font-semibold">전체 전환율</span>
           <span className="text-2xl font-semibold tabular-nums tracking-tight text-brand-copper">
             {Math.round((funnel.quoteSubmits / funnel.visitors) * 10000) / 100}
             <span className="text-base text-gray-400 font-normal ml-0.5">%</span>
