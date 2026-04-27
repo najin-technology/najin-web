@@ -5,7 +5,7 @@ import { requireAdmin } from "@/lib/auth";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { Building2, Phone, Mail, Calendar, FileText, Users, ExternalLink, Tag } from "lucide-react";
 import { CustomerStatusForm, CustomerNotesForm, CustomerDisplayForm } from "./client";
-import { getStatusStyle } from "@/lib/status-colors";
+import { StatusBadge } from "@/components/admin/status-badge";
 
 export const metadata = { title: "고객 상세", robots: "noindex, nofollow" };
 
@@ -117,30 +117,23 @@ export default async function CustomerDetailPage({
                 <Building2 className="w-6 h-6" />
               </div>
               <div className="flex-1 min-w-0">
-                <h2 className="text-lg font-bold text-brand-navy">
+                <h2 className="text-xl font-bold text-brand-navy tracking-tight">
                   {customer.display_name || customer.company_name}
                 </h2>
-                <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                  {(() => {
-                    const s = getStatusStyle("customer", customer.status);
-                    return (
-                      <span className={`inline-flex items-center font-medium px-2 py-0.5 rounded-full ${s.bg} ${s.text}`}>
-                        {customer.status}
-                      </span>
-                    );
-                  })()}
-                  <span>·</span>
+                <div className="flex items-center gap-2 mt-2 text-[13px] text-gray-600">
+                  <StatusBadge status={customer.status} type="customer" />
+                  <span className="text-gray-300">·</span>
                   <span>{SOURCE_LABELS[customer.source] || customer.source}</span>
                   {customer.client_slug && (
                     <>
-                      <span>·</span>
+                      <span className="text-gray-300">·</span>
                       <Link
                         href={`/ko/clients/${customer.client_slug}`}
                         target="_blank"
-                        className="inline-flex items-center gap-1 text-blue-600 hover:underline"
+                        className="inline-flex items-center gap-1 text-blue-600 hover:underline font-medium"
                       >
                         거래처 페이지
-                        <ExternalLink className="w-3 h-3" />
+                        <ExternalLink className="w-3.5 h-3.5" />
                       </Link>
                     </>
                   )}
