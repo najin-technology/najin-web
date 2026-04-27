@@ -30,13 +30,13 @@ type Order = {
 
 function priorityBadge(priority: string) {
   const map: Record<string, string> = {
-    "낮음": "bg-gray-50 text-gray-500",
-    "보통": "bg-blue-50 text-blue-600",
-    "높음": "bg-rose-50 text-rose-700 font-semibold",
+    "낮음": "bg-gray-50 text-gray-600",
+    "보통": "bg-blue-50 text-blue-700",
+    "높음": "bg-rose-50 text-rose-700 font-bold",
   };
   const cls = map[priority] ?? map["보통"];
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] ${cls}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${cls}`}>
       {priority}
     </span>
   );
@@ -52,18 +52,18 @@ function dDayBadge(deadline: string | null, status: string) {
   }
   const toneCls =
     dd.tone === "overdue"
-      ? "bg-rose-50 text-rose-700 font-semibold"
+      ? "bg-rose-50 text-rose-700 font-bold"
       : dd.tone === "urgent"
-        ? "bg-amber-50 text-amber-700 font-semibold"
+        ? "bg-amber-50 text-amber-700 font-bold"
         : dd.tone === "soon"
-          ? "bg-blue-50 text-blue-700"
-          : "bg-gray-50 text-gray-500";
+          ? "bg-blue-50 text-blue-700 font-semibold"
+          : "bg-gray-50 text-gray-600 font-semibold";
   return (
     <span className="inline-flex items-center gap-1.5">
-      <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] tabular-nums ${toneCls}`}>
+      <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[11px] tabular-nums ${toneCls}`}>
         {dd.label}
       </span>
-      <span className="text-xs tabular-nums text-gray-500">{dateStr}</span>
+      <span className="text-[13px] tabular-nums text-gray-600">{dateStr}</span>
     </span>
   );
 }
