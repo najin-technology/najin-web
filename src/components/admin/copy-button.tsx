@@ -19,7 +19,7 @@ export function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="inline-flex items-center justify-center w-6 h-6 rounded-md hover:bg-brand-navy/5 text-gray-400 hover:text-brand-navy transition-colors"
+      className="inline-flex items-center justify-center w-7 h-7 rounded-md hover:bg-brand-navy/5 text-gray-500 hover:text-brand-navy transition-colors"
       aria-label="복사"
       title={copied ? "복사됨!" : "클립보드에 복사"}
     >

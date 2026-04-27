@@ -43,12 +43,12 @@ export function ConfirmDialog({
       <DialogContent showCloseButton={false}>
         <DialogHeader>
           <div className="flex items-start gap-3">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${iconColors}`}>
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${iconColors}`}>
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div className="pt-0.5">
-              <DialogTitle className="text-base">{title}</DialogTitle>
-              <DialogDescription className="mt-1.5 leading-relaxed">{description}</DialogDescription>
+              <DialogTitle className="text-lg font-bold">{title}</DialogTitle>
+              <DialogDescription className="mt-1.5 leading-relaxed text-sm text-gray-600">{description}</DialogDescription>
             </div>
           </div>
         </DialogHeader>
