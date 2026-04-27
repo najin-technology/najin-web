@@ -32,7 +32,7 @@ export function Pagination({
 
   return (
     <div className="flex items-center justify-between px-5 py-3 border-t border-gray-100">
-      <span className="text-xs text-gray-400 tabular-nums">
+      <span className="text-sm text-gray-500 tabular-nums">
         {total}건 중 {(currentPage - 1) * pageSize + 1}-{Math.min(currentPage * pageSize, total)}
       </span>
       <div className="flex items-center gap-1">
@@ -46,7 +46,7 @@ export function Pagination({
         >
           <ChevronLeft className="w-4 h-4" />
         </Button>
-        <span className="text-xs text-gray-600 font-medium px-2 tabular-nums">
+        <span className="text-sm text-gray-700 font-medium px-2 tabular-nums">
           {currentPage} / {totalPages}
         </span>
         <Button
