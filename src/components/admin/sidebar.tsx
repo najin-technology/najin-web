@@ -28,33 +28,33 @@ const navGroups = [
     items: [{ href: "/admin", label: "대시보드", icon: Home }],
   },
   {
-    label: "고객",
+    label: "일일 업무",
     items: [
-      { href: "/admin/customers", label: "고객 관리", icon: Building2 },
       { href: "/admin/quotes", label: "견적 관리", icon: FileText },
       { href: "/admin/work-orders", label: "발주 관리", icon: ClipboardList },
+      { href: "/admin/customers", label: "고객 관리", icon: Building2 },
       { href: "/admin/applications", label: "채용 관리", icon: Users },
     ],
   },
   {
     label: "콘텐츠",
     items: [
-      { href: "/admin/notices", label: "회사소식", icon: Bell },
       { href: "/admin/posts", label: "제작사례", icon: BookOpen },
-      { href: "/admin/job-postings", label: "채용공고", icon: Briefcase },
+      { href: "/admin/notices", label: "회사소식", icon: Bell },
       { href: "/admin/products", label: "제품 관리", icon: Package },
-      { href: "/admin/history", label: "연혁 관리", icon: Clock },
+      { href: "/admin/job-postings", label: "채용공고", icon: Briefcase },
     ],
   },
   {
     label: "분석",
     items: [
-      { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+      { href: "/admin/analytics", label: "방문자 통계", icon: BarChart3 },
     ],
   },
   {
     label: "시스템",
     items: [
+      { href: "/admin/history", label: "연혁 관리", icon: Clock },
       { href: "/admin/invites", label: "관리자 초대", icon: ShieldPlus },
       { href: "/admin/settings", label: "설정", icon: Settings },
     ],

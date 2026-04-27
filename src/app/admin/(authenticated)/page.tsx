@@ -100,7 +100,7 @@ export default async function AdminDashboard() {
     <div className="space-y-6">
       {/* ───────────── Greeting ───────────── */}
       <div>
-        <h1 className="text-2xl font-bold text-brand-navy tracking-tight">{getGreeting()}</h1>
+        <h1 className="text-3xl font-bold text-brand-navy tracking-tight">{getGreeting()}</h1>
         <p className="text-sm text-gray-500 mt-1">{formatToday()}</p>
       </div>
 
@@ -245,7 +245,7 @@ export default async function AdminDashboard() {
             className="flex items-center gap-2 text-xs text-violet-700 hover:text-violet-800 pt-2 mt-2 border-t border-gray-100"
           >
             <BarChart3 className="w-3.5 h-3.5" />
-            방문자 통계 (Vercel Analytics)
+            방문자 통계 (Vercel)
             <ExternalLink className="w-3 h-3" />
           </a>
         </div>
@@ -270,15 +270,15 @@ function MetricCard({
   const isPositive = (delta ?? 0) > 0;
   const isNegative = (delta ?? 0) < 0;
   return (
-    <Link href={href} className="block px-5 py-4 hover:bg-gray-50/50 transition-colors">
-      <p className="text-xs text-gray-500 mb-1">{label}</p>
-      <p className="text-2xl font-bold text-brand-navy tabular-nums">
+    <Link href={href} className="block px-5 py-5 hover:bg-gray-50/50 transition-colors">
+      <p className="text-sm text-gray-600 mb-1.5">{label}</p>
+      <p className="text-4xl font-bold text-brand-navy tabular-nums leading-none">
         {value}
-        <span className="text-sm font-normal text-gray-400 ml-1">{unit}</span>
+        <span className="text-base font-normal text-gray-400 ml-1.5">{unit}</span>
       </p>
       {delta !== undefined && (
         <p
-          className={`text-xs tabular-nums mt-1 font-medium ${
+          className={`text-sm tabular-nums mt-2 font-medium ${
             isPositive ? "text-emerald-600" : isNegative ? "text-red-500" : "text-gray-400"
           }`}
         >
