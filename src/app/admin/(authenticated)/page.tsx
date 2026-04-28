@@ -101,7 +101,7 @@ export default async function AdminDashboard() {
       {/* ───────────── Greeting ───────────── */}
       <div>
         <h1 className="text-3xl font-bold text-brand-navy tracking-tight">{getGreeting()}</h1>
-        <p className="text-sm text-gray-500 mt-1">{formatToday()}</p>
+        <p className="text-sm text-gray-600 mt-1 font-medium">{formatToday()}</p>
       </div>
 
       {/* ───────────── Inbox: 오늘 처리할 것 ─────────────
@@ -124,7 +124,7 @@ export default async function AdminDashboard() {
         </div>
 
         {!hasUrgent ? (
-          <div className="px-5 py-6 text-center text-sm text-gray-400">
+          <div className="px-5 py-6 text-center text-sm text-gray-500 font-medium">
             새로 들어오는 견적·지원서는 여기에 자동으로 나타납니다.
           </div>
         ) : (
@@ -140,21 +140,21 @@ export default async function AdminDashboard() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-xs font-semibold text-amber-700">견적</span>
-                    <span className="text-sm font-medium text-brand-navy truncate">
+                    <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wide">견적</span>
+                    <span className="text-sm font-semibold text-brand-navy truncate">
                       {q.company_name}
                     </span>
-                    <span className="text-xs text-gray-400 truncate">{q.contact_name}</span>
+                    <span className="text-[13px] text-gray-500 font-medium truncate">{q.contact_name}</span>
                   </div>
-                  <div className="text-xs text-gray-500 mt-0.5">
+                  <div className="text-[13px] text-gray-600 mt-0.5 font-medium">
                     {q.processing_type === "콜백요청" ? "📞 콜백요청" : q.processing_type}
                   </div>
                 </div>
-                <span className={`text-xs tabular-nums flex-shrink-0 ${isStale(q.created_at) ? "text-red-500 font-semibold" : "text-gray-500"}`}>
+                <span className={`text-[13px] tabular-nums flex-shrink-0 font-medium ${isStale(q.created_at) ? "text-red-600 font-bold" : "text-gray-600"}`}>
                   {relativeTime(q.created_at)}
                   {isStale(q.created_at) && " · 24h+"}
                 </span>
-                <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-brand-navy group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-brand-navy group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </Link>
             ))}
             {(pendingAppList || []).map((a) => (
@@ -168,29 +168,29 @@ export default async function AdminDashboard() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-xs font-semibold text-rose-700">지원서</span>
-                    <span className="text-sm font-medium text-brand-navy truncate">{a.name}</span>
-                    <span className="text-xs text-gray-400 truncate">{a.position}</span>
+                    <span className="text-[11px] font-bold text-rose-700 uppercase tracking-wide">지원서</span>
+                    <span className="text-sm font-semibold text-brand-navy truncate">{a.name}</span>
+                    <span className="text-[13px] text-gray-500 font-medium truncate">{a.position}</span>
                   </div>
                 </div>
-                <span className={`text-xs tabular-nums flex-shrink-0 ${isStale(a.created_at) ? "text-red-500 font-semibold" : "text-gray-500"}`}>
+                <span className={`text-[13px] tabular-nums flex-shrink-0 font-medium ${isStale(a.created_at) ? "text-red-600 font-bold" : "text-gray-600"}`}>
                   {relativeTime(a.created_at)}
                   {isStale(a.created_at) && " · 24h+"}
                 </span>
-                <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-brand-navy group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-brand-navy group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </Link>
             ))}
             {((pendingQuotes || 0) + (pendingApps || 0)) > (pendingQuoteList?.length || 0) + (pendingAppList?.length || 0) && (
-              <div className="px-5 py-2.5 bg-gray-50/50 text-xs text-gray-500 flex items-center justify-between">
+              <div className="px-5 py-2.5 bg-gray-50/50 text-[13px] text-gray-600 font-medium flex items-center justify-between">
                 <span>상위 {(pendingQuoteList?.length || 0) + (pendingAppList?.length || 0)}건만 표시</span>
                 <div className="flex items-center gap-3">
                   {(pendingQuotes || 0) > (pendingQuoteList?.length || 0) && (
-                    <Link href="/admin/quotes?status=접수" className="text-brand-blue hover:underline">
+                    <Link href="/admin/quotes?status=접수" className="text-brand-blue hover:underline font-semibold">
                       견적 전체 {pendingQuotes}건 →
                     </Link>
                   )}
                   {(pendingApps || 0) > (pendingAppList?.length || 0) && (
-                    <Link href="/admin/applications?status=서류검토" className="text-brand-blue hover:underline">
+                    <Link href="/admin/applications?status=서류검토" className="text-brand-blue hover:underline font-semibold">
                       지원서 전체 {pendingApps}건 →
                     </Link>
                   )}
@@ -206,7 +206,7 @@ export default async function AdminDashboard() {
         <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-brand-navy" />
           <h2 className="text-base font-semibold text-brand-navy">이번 주 활동</h2>
-          <span className="ml-auto text-xs text-gray-500">최근 7일 vs 전주</span>
+          <span className="ml-auto text-[13px] text-gray-600 font-medium">최근 7일 vs 전주</span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-100">
           <MetricCard label="신규 고객" value={customersThisWeek || 0} delta={customerDelta} href="/admin/customers" />
@@ -242,11 +242,11 @@ export default async function AdminDashboard() {
             href="https://vercel.com/presentjays-projects/najin-webapp/analytics"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs text-violet-700 hover:text-violet-800 pt-2 mt-2 border-t border-gray-100"
+            className="flex items-center gap-2 text-[13px] text-violet-700 hover:text-violet-800 font-semibold pt-2 mt-2 border-t border-gray-100"
           >
-            <BarChart3 className="w-3.5 h-3.5" />
+            <BarChart3 className="w-4 h-4" />
             방문자 통계 (Vercel)
-            <ExternalLink className="w-3 h-3" />
+            <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>
       </div>
@@ -271,15 +271,15 @@ function MetricCard({
   const isNegative = (delta ?? 0) < 0;
   return (
     <Link href={href} className="block px-5 py-5 hover:bg-gray-50/50 transition-colors">
-      <p className="text-sm text-gray-600 mb-1.5">{label}</p>
+      <p className="text-[13px] text-gray-700 font-bold mb-1.5 uppercase tracking-[0.04em]">{label}</p>
       <p className="text-4xl font-bold text-brand-navy tabular-nums leading-none">
         {value}
-        <span className="text-base font-normal text-gray-400 ml-1.5">{unit}</span>
+        <span className="text-base font-medium text-gray-500 ml-1.5">{unit}</span>
       </p>
       {delta !== undefined && (
         <p
-          className={`text-sm tabular-nums mt-2 font-medium ${
-            isPositive ? "text-emerald-600" : isNegative ? "text-red-500" : "text-gray-400"
+          className={`text-[13px] tabular-nums mt-2 font-semibold ${
+            isPositive ? "text-emerald-600" : isNegative ? "text-red-600" : "text-gray-500"
           }`}
         >
           {isPositive ? "↑" : isNegative ? "↓" : "—"} {Math.abs(delta)}
@@ -310,12 +310,12 @@ function ContentBadge({
   return (
     <Link href={href} className="block p-3 rounded-lg border border-gray-200 hover:border-brand-navy/30 hover:bg-gray-50/50 transition-all">
       <div className={`w-7 h-7 rounded-md ${colors[color]} flex items-center justify-center mb-2`}>
-        <Icon className="w-3.5 h-3.5" />
+        <Icon className="w-4 h-4" />
       </div>
-      <p className="text-xs text-gray-500">{label}</p>
-      <p className="text-base font-bold text-brand-navy tabular-nums">
+      <p className="text-[13px] text-gray-700 font-semibold">{label}</p>
+      <p className="text-lg font-bold text-brand-navy tabular-nums">
         {count}
-        <span className="text-xs font-normal text-gray-400 ml-0.5">개</span>
+        <span className="text-[13px] font-medium text-gray-500 ml-0.5">개</span>
       </p>
     </Link>
   );
@@ -324,8 +324,8 @@ function ContentBadge({
 function QuickAction({ href, label }: { href: string; label: string }) {
   return (
     <Link href={href}>
-      <Button variant="outline" size="sm" className="gap-1.5 rounded-lg text-xs">
-        <Plus className="w-3.5 h-3.5" />
+      <Button variant="outline" size="sm" className="gap-1.5 rounded-lg text-[13px] font-semibold">
+        <Plus className="w-4 h-4" />
         {label}
       </Button>
     </Link>
