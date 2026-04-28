@@ -95,25 +95,25 @@ export function ListView({
           {orders.length > 0 ? (
             orders.map((o) => (
               <TableRow key={o.id} className="hover:bg-gray-50/50 cursor-pointer">
-                <TableCell className="font-mono text-xs text-brand-copper" data-label="발주번호">
+                <TableCell className="font-mono text-[13px] text-brand-copper font-bold" data-label="발주번호">
                   <Link href={`/admin/work-orders/${o.id}`} className="block">
                     {o.order_number}
                   </Link>
                 </TableCell>
-                <TableCell className="font-medium" data-label="고객사">
+                <TableCell className="font-semibold text-brand-charcoal" data-label="고객사">
                   <Link href={`/admin/work-orders/${o.id}`} className="block">
                     <HighlightText text={o.customer_name} query={searchQuery} />
                   </Link>
                 </TableCell>
-                <TableCell data-label="제품명">
+                <TableCell data-label="제품명" className="font-medium">
                   <Link href={`/admin/work-orders/${o.id}`} className="block">
                     <HighlightText text={o.product_name} query={searchQuery} />
                   </Link>
                 </TableCell>
-                <TableCell className="hidden md:table-cell text-sm text-gray-500" data-label="가공유형">
+                <TableCell className="hidden md:table-cell text-sm text-gray-600 font-medium" data-label="가공유형">
                   {o.processing_type || "—"}
                 </TableCell>
-                <TableCell className="hidden lg:table-cell text-sm text-gray-500" data-label="수량">
+                <TableCell className="hidden lg:table-cell text-sm text-gray-600 font-medium tabular-nums" data-label="수량">
                   {o.quantity || "—"}
                 </TableCell>
                 <TableCell data-label="상태">
@@ -125,7 +125,7 @@ export function ListView({
                 <TableCell data-label="마감일" className="text-sm">
                   {dDayBadge(o.deadline, o.status)}
                 </TableCell>
-                <TableCell className="hidden xl:table-cell text-sm text-gray-500" data-label="담당자">
+                <TableCell className="hidden xl:table-cell text-sm text-gray-600 font-medium" data-label="담당자">
                   {o.assignee || "—"}
                 </TableCell>
               </TableRow>
