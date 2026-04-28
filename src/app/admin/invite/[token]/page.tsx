@@ -50,7 +50,7 @@ export default async function InvitePage({
               <ShieldAlert className="w-6 h-6 text-white" />
             </div>
             <h1 className="text-xl font-bold text-brand-navy">나진테크 관리자 초대</h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-600 mt-1 font-medium">
               수락하면 관리자 권한이 부여됩니다
             </p>
           </div>
@@ -127,15 +127,15 @@ function InvalidState({
   };
   return (
     <div className={`rounded-lg border px-4 py-4 ${colors[color]} text-center`}>
-      <Icon className="w-6 h-6 mx-auto mb-2" />
-      <p className="font-semibold">{title}</p>
-      <p className="text-xs mt-1 opacity-80">{description}</p>
+      <Icon className="w-7 h-7 mx-auto mb-2" />
+      <p className="font-bold text-base">{title}</p>
+      <p className="text-[13px] mt-1 opacity-90 font-medium leading-relaxed">{description}</p>
       {meta && (
-        <dl className="mt-3 text-xs space-y-0.5">
+        <dl className="mt-3 text-[13px] space-y-1">
           {Object.entries(meta).map(([k, v]) => (
             <div key={k} className="flex items-center justify-center gap-1">
-              <dt className="opacity-60">{k}:</dt>
-              <dd className="font-medium">{v}</dd>
+              <dt className="opacity-70 font-medium">{k}:</dt>
+              <dd className="font-semibold">{v}</dd>
             </div>
           ))}
         </dl>

@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
               <span className="text-white text-xl font-bold">N</span>
             </div>
             <h1 className="text-xl font-bold text-brand-navy">나진테크 관리자</h1>
-            <p className="text-sm text-gray-400 mt-1.5">로그인하여 대시보드에 접속하세요</p>
+            <p className="text-sm text-gray-600 mt-1.5 font-medium">로그인하여 대시보드에 접속하세요</p>
           </div>
 
           {/* Google Login */}
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-xs text-gray-400 uppercase tracking-widest">또는</span>
+              <span className="bg-white px-3 text-xs text-gray-500 uppercase tracking-widest font-semibold">또는</span>
             </div>
           </div>
 
@@ -145,10 +145,10 @@ export default function AdminLoginPage() {
             </Button>
           </form>
         </div>
-        <p className="text-center text-[11px] text-gray-300 mt-4">
+        <p className="text-center text-xs text-gray-500 mt-4 font-medium">
           Enter 키로 로그인할 수 있습니다
         </p>
-        <p className="text-center text-[11px] text-gray-400 mt-2">
+        <p className="text-center text-xs text-gray-600 mt-2 font-medium">
           나진테크 관리자 전용 페이지입니다
         </p>
       </div>
