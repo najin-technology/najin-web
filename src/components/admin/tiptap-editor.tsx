@@ -138,7 +138,7 @@ export function TiptapEditor({
       <EditorContent editor={editor} />
 
       {/* Word/Char count */}
-      <div className="px-4 py-1.5 border-t border-gray-200 bg-gray-50 text-xs text-gray-400">
+      <div className="px-4 py-1.5 border-t border-gray-200 bg-gray-50 text-[13px] text-gray-600 font-medium tabular-nums">
         {charCount}자 · {wordCount}단어
       </div>
     </div>

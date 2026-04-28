@@ -97,7 +97,7 @@ export default async function SessionJourneyPage({
           <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-copper">
             세션 여정
           </p>
-          <span className="text-[11px] font-mono text-gray-300">
+          <span className="text-xs font-mono text-gray-500 font-semibold">
             #{hash.slice(0, 12)}…
           </span>
         </div>
@@ -129,16 +129,16 @@ export default async function SessionJourneyPage({
           <div className="flex items-start gap-3">
             <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" strokeWidth={2} />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-emerald-900">견적 제출 완료</p>
-              <p className="text-xs text-emerald-700 mt-1">
+              <p className="text-sm font-bold text-emerald-900">견적 제출 완료</p>
+              <p className="text-[13px] text-emerald-700 mt-1 font-medium">
                 {quoteData.company_name} · {quoteData.contact_name} · {quoteData.status}
               </p>
             </div>
             <Link
               href={`/admin/quotes/${quoteData.id}`}
-              className="text-xs font-medium text-emerald-700 hover:text-emerald-900 inline-flex items-center gap-1 flex-shrink-0"
+              className="text-[13px] font-semibold text-emerald-700 hover:text-emerald-900 inline-flex items-center gap-1 flex-shrink-0"
             >
-              상세 보기 <ExternalLink className="w-3 h-3" />
+              상세 보기 <ExternalLink className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
@@ -146,8 +146,8 @@ export default async function SessionJourneyPage({
 
       <section>
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-1 h-1 rounded-full bg-brand-copper" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+          <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
             타임라인 · 시간순
           </p>
         </div>
@@ -165,11 +165,11 @@ export default async function SessionJourneyPage({
                     <p className="text-sm font-semibold font-mono text-brand-charcoal break-all">
                       {clean}
                     </p>
-                    <span className="text-[11px] tabular-nums text-gray-400 flex-shrink-0">
+                    <span className="text-xs tabular-nums text-gray-600 flex-shrink-0 font-medium">
                       {ts.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-500">
+                  <div className="flex flex-wrap items-center gap-3 text-[13px] text-gray-600 font-medium">
                     {i === 0 && (
                       <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-brand-navy/5 text-brand-navy font-semibold uppercase tracking-widest">
                         진입
@@ -181,12 +181,12 @@ export default async function SessionJourneyPage({
                     </span>
                     <span>{referrerLabel(step.referrer_category)}</span>
                     {step.referrer_host && (
-                      <span className="text-gray-400 font-mono truncate">{step.referrer_host}</span>
+                      <span className="text-gray-500 font-mono truncate">{step.referrer_host}</span>
                     )}
                     {locale && locale !== "ko" && (
-                      <span className="uppercase tracking-widest text-gray-400">{locale}</span>
+                      <span className="uppercase tracking-widest text-gray-500 font-bold">{locale}</span>
                     )}
-                    {diff && <span className="text-gray-400">+{diff.replace(" 후", "")}</span>}
+                    {diff && <span className="text-gray-500 tabular-nums">+{diff.replace(" 후", "")}</span>}
                   </div>
                 </div>
               </li>
@@ -195,7 +195,7 @@ export default async function SessionJourneyPage({
         </ol>
       </section>
 
-      <footer className="text-[11px] text-gray-400 pt-4 border-t border-gray-100">
+      <footer className="text-xs text-gray-500 pt-4 border-t border-gray-100 leading-relaxed font-medium">
         세션 해시는 하루 단위로 회전됩니다 (ip + user-agent + 날짜). 다음 날 같은 방문자는 새 세션으로 기록됩니다.
       </footer>
     </div>
@@ -222,8 +222,8 @@ function SummaryCard({
       }`}
     >
       <div className="flex items-center gap-1.5 mb-2">
-        <Icon className={`w-3.5 h-3.5 ${accent ? "text-brand-copper" : "text-gray-400"}`} strokeWidth={1.5} />
-        <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-gray-400">{label}</p>
+        <Icon className={`w-4 h-4 ${accent ? "text-brand-copper" : "text-gray-500"}`} strokeWidth={1.5} />
+        <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-gray-600">{label}</p>
       </div>
       <p
         className={`font-semibold tabular-nums tracking-tight ${
