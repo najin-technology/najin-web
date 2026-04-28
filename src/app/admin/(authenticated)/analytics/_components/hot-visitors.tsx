@@ -56,7 +56,7 @@ export function HotVisitors({ visitors }: { visitors: HotVisitor[] }) {
                     <span className={`text-xl font-bold tabular-nums tracking-tight ${tone.text} leading-none`}>
                       {v.score}
                     </span>
-                    <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mt-1">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mt-1">
                       점수
                     </span>
                   </div>
