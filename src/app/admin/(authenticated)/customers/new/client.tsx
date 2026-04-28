@@ -83,7 +83,7 @@ export function NewCustomerForm() {
         </Button>
       </div>
 
-      <p className="text-xs text-gray-400 pt-2 border-t border-gray-100">
+      <p className="text-[13px] text-gray-600 font-medium pt-2 border-t border-gray-100 leading-relaxed">
         등록 후 상세 페이지에서 거래처 그리드 노출 설정·상태·태그 편집 가능.
       </p>
     </form>

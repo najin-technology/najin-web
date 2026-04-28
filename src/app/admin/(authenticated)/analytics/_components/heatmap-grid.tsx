@@ -11,12 +11,12 @@ export function HeatmapGrid({ cells }: { cells: HeatmapCell[] }) {
     <div className="bg-white border border-gray-200/80 rounded-2xl p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3 mb-5">
         <div className="flex items-center gap-2">
-          <div className="w-1 h-1 rounded-full bg-brand-copper" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+          <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
             요일 × 시간 방문 패턴 · 최근 30일
           </p>
         </div>
-        <p className="text-xs text-gray-400 tabular-nums">총 {total.toLocaleString("ko-KR")} 방문</p>
+        <p className="text-[13px] text-gray-600 tabular-nums font-semibold">총 <span className="text-brand-charcoal font-bold">{total.toLocaleString("ko-KR")}</span> 방문</p>
       </div>
 
       <div className="overflow-x-auto -mx-2 px-2">
@@ -25,7 +25,7 @@ export function HeatmapGrid({ cells }: { cells: HeatmapCell[] }) {
           {Array.from({ length: 24 }, (_, h) => (
             <div
               key={h}
-              className={`text-[9px] tabular-nums text-center ${h % 3 === 0 ? "text-gray-400" : "text-transparent"}`}
+              className={`text-[10px] tabular-nums text-center font-medium ${h % 3 === 0 ? "text-gray-500" : "text-transparent"}`}
             >
               {h}
             </div>
@@ -34,7 +34,7 @@ export function HeatmapGrid({ cells }: { cells: HeatmapCell[] }) {
             <>
               <div
                 key={`label-${dayIdx}`}
-                className="text-[10px] font-medium tabular-nums flex items-center justify-end pr-2 text-gray-400"
+                className="text-[11px] font-bold tabular-nums flex items-center justify-end pr-2 text-gray-600"
               >
                 {label}
               </div>
@@ -72,7 +72,7 @@ export function HeatmapGrid({ cells }: { cells: HeatmapCell[] }) {
       </div>
 
       <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
-        <div className="flex items-center gap-2 text-[11px] text-gray-400">
+        <div className="flex items-center gap-2 text-xs text-gray-600 font-medium">
           <span>적음</span>
           <div className="flex gap-0.5">
             {[0.1, 0.3, 0.5, 0.7, 0.9].map((o) => (
@@ -85,7 +85,7 @@ export function HeatmapGrid({ cells }: { cells: HeatmapCell[] }) {
           </div>
           <span>많음</span>
         </div>
-        <p className="text-[11px] text-gray-400">브랜드 블루=평일 · 카퍼=주말</p>
+        <p className="text-xs text-gray-600 font-medium">브랜드 블루=평일 · 카퍼=주말</p>
       </div>
     </div>
   );
