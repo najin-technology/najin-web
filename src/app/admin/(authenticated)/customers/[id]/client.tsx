@@ -73,10 +73,10 @@ export function CustomerStatusForm({
               key={s}
               onClick={() => handleStatusChange(s)}
               disabled={pending}
-              className={`text-xs font-medium px-2.5 py-1 rounded-full border transition-colors disabled:opacity-50 ${
+              className={`text-[13px] font-semibold px-3 py-1.5 rounded-full border transition-colors disabled:opacity-50 ${
                 currentStatus === s
                   ? "bg-brand-navy text-white border-brand-navy"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-brand-navy"
+                  : "bg-white text-gray-700 border-gray-200 hover:border-brand-navy"
               }`}
             >
               {s}
@@ -91,20 +91,20 @@ export function CustomerStatusForm({
           {tagList.map((t) => (
             <span
               key={t}
-              className="inline-flex items-center gap-1 text-xs text-gray-700 bg-gray-100 px-2 py-0.5 rounded-full"
+              className="inline-flex items-center gap-1 text-[13px] text-gray-700 font-medium bg-gray-100 px-2 py-0.5 rounded-full"
             >
               {t}
               <button
                 onClick={() => removeTag(t)}
                 disabled={pending}
-                className="text-gray-400 hover:text-red-500"
+                className="text-gray-500 hover:text-red-500"
                 aria-label="태그 제거"
               >
-                <X className="w-3 h-3" />
+                <X className="w-3.5 h-3.5" />
               </button>
             </span>
           ))}
-          {tagList.length === 0 && <p className="text-xs text-gray-400">아직 태그가 없습니다.</p>}
+          {tagList.length === 0 && <p className="text-[13px] text-gray-500 font-medium">아직 태그가 없습니다.</p>}
         </div>
         <div className="flex items-center gap-2">
           <input
@@ -118,16 +118,16 @@ export function CustomerStatusForm({
               }
             }}
             placeholder="태그 입력 후 Enter"
-            className="flex-1 text-xs h-8 px-2.5 rounded-md border border-input bg-background"
+            className="flex-1 text-[13px] h-9 px-2.5 rounded-md border border-input bg-background"
           />
           <Button
             size="sm"
             variant="outline"
             onClick={addTag}
             disabled={pending || !tagInput.trim()}
-            className="h-8 px-2"
+            className="h-9 px-2.5"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-4 h-4" />
           </Button>
         </div>
       </div>
@@ -171,7 +171,7 @@ export function CustomerNotesForm({
         className="text-sm"
       />
       <div className="flex items-center justify-between">
-        <p className="text-[11px] text-gray-400">
+        <p className="text-xs text-gray-500 font-medium tabular-nums">
           {savedAt
             ? `저장됨 — ${savedAt.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })}`
             : dirty
@@ -179,7 +179,7 @@ export function CustomerNotesForm({
               : "변경사항 없음"}
         </p>
         <Button size="sm" onClick={save} disabled={pending || !dirty}>
-          {pending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5 mr-1" />}
+          {pending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4 mr-1" />}
           저장
         </Button>
       </div>
@@ -227,24 +227,24 @@ export function CustomerDisplayForm({
           거래처 표시 설정
         </h3>
         <span
-          className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${
+          className={`text-[11px] font-bold px-2 py-0.5 rounded ${
             isClient
               ? "bg-blue-50 text-blue-700 border border-blue-200"
-              : "bg-gray-50 text-gray-500 border border-gray-200"
+              : "bg-gray-50 text-gray-600 border border-gray-200"
           }`}
         >
           {isClient ? "거래처 그리드 노출" : "비노출 (slug 없음)"}
         </span>
       </div>
 
-      <p className="text-[11px] text-gray-400 leading-relaxed">
+      <p className="text-xs text-gray-600 leading-relaxed font-medium">
         client_slug 가 비어있으면 거래처 그리드에 노출되지 않습니다.
         slug 설정 시 logo_url 도 필수입니다 (홈/포트폴리오/거래처 페이지에 표시).
       </p>
 
       <div className="space-y-3">
         <div>
-          <Label className="text-xs">client_slug (URL용)</Label>
+          <Label className="text-[13px] font-medium">client_slug (URL용)</Label>
           <Input
             value={form.client_slug ?? ""}
             onChange={(e) => setForm({ ...form, client_slug: e.target.value || null })}
@@ -254,7 +254,7 @@ export function CustomerDisplayForm({
         </div>
 
         <div>
-          <Label className="text-xs">logo_url</Label>
+          <Label className="text-[13px] font-medium">logo_url</Label>
           <Input
             value={form.logo_url ?? ""}
             onChange={(e) => setForm({ ...form, logo_url: e.target.value || null })}
@@ -270,7 +270,7 @@ export function CustomerDisplayForm({
         </div>
 
         <div>
-          <Label className="text-xs">영문명 (name_en)</Label>
+          <Label className="text-[13px] font-medium">영문명 (name_en)</Label>
           <Input
             value={form.name_en ?? ""}
             onChange={(e) => setForm({ ...form, name_en: e.target.value || null })}
@@ -281,7 +281,7 @@ export function CustomerDisplayForm({
 
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <Label className="text-xs">카테고리</Label>
+            <Label className="text-[13px] font-medium">카테고리</Label>
             <select
               value={form.display_category ?? ""}
               onChange={(e) =>
@@ -296,7 +296,7 @@ export function CustomerDisplayForm({
             </select>
           </div>
           <div>
-            <Label className="text-xs">순서</Label>
+            <Label className="text-[13px] font-medium">순서</Label>
             <Input
               type="number"
               min={0}
@@ -312,7 +312,7 @@ export function CustomerDisplayForm({
 
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <Label className="text-xs">등록 연도</Label>
+            <Label className="text-[13px] font-medium">등록 연도</Label>
             <Input
               type="number"
               min={1900}
@@ -329,8 +329,8 @@ export function CustomerDisplayForm({
             />
           </div>
           <div>
-            <Label className="text-xs">어두운 배경</Label>
-            <label className="flex items-center gap-2 mt-2 text-xs text-gray-700">
+            <Label className="text-[13px] font-medium">어두운 배경</Label>
+            <label className="flex items-center gap-2 mt-2 text-[13px] text-gray-700 font-medium">
               <input
                 type="checkbox"
                 checked={form.needs_dark_bg}

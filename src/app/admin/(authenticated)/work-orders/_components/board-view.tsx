@@ -64,14 +64,14 @@ function Column({
     >
       <div className="px-3 py-3 border-b border-gray-200/80 flex items-center justify-between gap-2 sticky top-0 bg-gray-50/95 backdrop-blur z-10 rounded-t-xl">
         <div className="flex items-center gap-2 min-w-0">
-          <span className={`w-2 h-2 rounded-full ${style.dot}`} />
-          <p className="text-[13px] font-semibold text-brand-charcoal truncate">{status}</p>
+          <span className={`w-2.5 h-2.5 rounded-full ${style.dot}`} />
+          <p className="text-[13px] font-bold text-brand-charcoal truncate">{status}</p>
         </div>
-        <span className="text-xs font-semibold tabular-nums text-gray-500 bg-white px-1.5 py-0.5 rounded">{orders.length}</span>
+        <span className="text-[13px] font-bold tabular-nums text-brand-charcoal bg-white px-2 py-0.5 rounded">{orders.length}</span>
       </div>
       <div className="p-2 flex-1 min-h-[120px] overflow-y-auto max-h-[calc(100vh-280px)]">
         {orders.length === 0 ? (
-          <p className="text-xs text-gray-400 text-center py-6">비어있음</p>
+          <p className="text-[13px] text-gray-500 text-center py-6 font-medium">비어있음</p>
         ) : (
           orders.map((o) => <DraggableCard key={o.id} order={o} />)
         )}
