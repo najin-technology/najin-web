@@ -124,7 +124,7 @@ export function BulkApplicationsTable({
                   <TableCell data-label="상태">
                     <StatusBadge status={a.status} type="application" />
                   </TableCell>
-                  <TableCell data-label="지원일" className="text-sm text-gray-500">
+                  <TableCell data-label="지원일" className="text-sm text-gray-600 font-medium tabular-nums">
                     {new Date(a.created_at).toLocaleDateString("ko-KR")}
                   </TableCell>
                 </TableRow>
@@ -133,7 +133,7 @@ export function BulkApplicationsTable({
           </TableBody>
         </Table>
         {applications.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-500 tabular-nums">
+          <div className="px-5 py-2.5 border-t border-gray-100 text-[13px] text-gray-500 tabular-nums font-medium">
             총 {applications.length}건
           </div>
         )}
