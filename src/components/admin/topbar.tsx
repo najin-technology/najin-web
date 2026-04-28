@@ -47,23 +47,23 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
         {parentTitle && subPage ? (
           <ol className="flex items-center gap-1.5 min-w-0">
             <li className="flex items-center gap-1.5 min-w-0">
-              <Link href={parentPath!} className="text-gray-400 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20 rounded transition-colors truncate">
+              <Link href={parentPath!} className="text-gray-600 font-medium hover:text-brand-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20 rounded transition-colors truncate">
                 {parentTitle}
               </Link>
-              <ChevronRight className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" aria-hidden="true" />
+              <ChevronRight className="w-4 h-4 text-gray-400 flex-shrink-0" aria-hidden="true" />
             </li>
             <li>
-              <span className="font-medium text-brand-navy truncate" aria-current="page">{subPage}</span>
+              <span className="font-bold text-brand-navy truncate" aria-current="page">{subPage}</span>
             </li>
           </ol>
         ) : (
-          <span className="font-medium text-brand-navy truncate" aria-current="page">{pageTitle}</span>
+          <span className="font-bold text-brand-navy truncate" aria-current="page">{pageTitle}</span>
         )}
       </nav>
       <div className="flex items-center gap-2 flex-shrink-0">
         {pendingCount != null && pendingCount > 0 && (
           <Link href="/admin" className="relative">
-            <Button variant="ghost" size="sm" className="text-gray-400 hover:text-brand-navy h-8 w-8 p-0" aria-label="알림">
+            <Button variant="ghost" size="sm" className="text-gray-500 hover:text-brand-navy h-8 w-8 p-0" aria-label="알림">
               <Bell className="w-4 h-4" />
               <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
                 {pendingCount > 9 ? "9+" : pendingCount}
@@ -71,7 +71,7 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
             </Button>
           </Link>
         )}
-        <span className="text-xs text-gray-500 hidden sm:block max-w-[160px] truncate">
+        <span className="text-[13px] text-gray-700 font-medium hidden sm:block max-w-[180px] truncate">
           {userEmail}
         </span>
         <div className="w-px h-4 bg-gray-200 hidden sm:block" />
@@ -79,11 +79,11 @@ export function AdminTopbar({ userEmail, pendingCount }: { userEmail: string; pe
           <Button
             variant="ghost"
             size="sm"
-            className="text-gray-500 hover:text-red-500 hover:bg-red-50 h-9 px-2.5 gap-1.5 transition-colors"
+            className="text-gray-600 hover:text-red-600 hover:bg-red-50 h-9 px-2.5 gap-1.5 transition-colors font-medium"
             aria-label="로그아웃"
           >
             <LogOut className="w-4 h-4" />
-            <span className="text-sm">로그아웃</span>
+            <span className="text-sm font-semibold">로그아웃</span>
           </Button>
         </form>
       </div>

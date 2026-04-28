@@ -106,8 +106,8 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
                   title={collapsed ? item.label : undefined}
                   className={`relative flex items-center gap-3 ${collapsed ? "justify-center px-2" : "px-3"} py-2 rounded-lg text-sm transition-all duration-150 ${
                     active
-                      ? "bg-brand-navy text-white font-medium shadow-sm"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-normal"
+                      ? "bg-brand-navy text-white font-bold shadow-sm"
+                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 font-medium"
                   }`}
                 >
                   {active && !collapsed && (
@@ -185,13 +185,13 @@ export function AdminSidebar({ badges = {} }: { badges?: Record<string, number> 
         {nav}
         <div className={`absolute bottom-0 left-0 right-0 ${collapsed ? "px-2" : "px-6"} py-3 border-t border-gray-100`}>
           {collapsed ? (
-            <a href="/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors" title="사이트 보기">
-              <Home className="w-3.5 h-3.5" />
+            <a href="/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-500 hover:text-brand-navy transition-colors" title="사이트 보기">
+              <Home className="w-4 h-4" />
             </a>
           ) : (
             <div className="flex items-center justify-between">
-              <p className="text-[10px] text-gray-300">나진테크 관리자 v4.0</p>
-              <a href="/" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-300 hover:text-gray-500 transition-colors">
+              <p className="text-[11px] text-gray-500 font-medium">나진테크 관리자 v4.0</p>
+              <a href="/" target="_blank" rel="noopener noreferrer" className="text-[11px] text-gray-600 hover:text-brand-navy font-semibold transition-colors">
                 사이트 보기 →
               </a>
             </div>

@@ -20,7 +20,7 @@ export function DetailPageHeader({
       </Link>
       <div>
         <h1 className="text-2xl font-bold text-brand-navy tracking-tight">{title}</h1>
-        {subtitle && <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>}
+        {subtitle && <p className="text-sm text-gray-600 mt-0.5 font-medium">{subtitle}</p>}
       </div>
     </div>
   );
