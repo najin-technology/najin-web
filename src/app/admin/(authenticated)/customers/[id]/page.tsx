@@ -156,9 +156,9 @@ export default async function CustomerDetailPage({
 
             {customer.tags && customer.tags.length > 0 && (
               <div className="mt-4 flex items-center gap-1.5 flex-wrap">
-                <Tag className="w-3.5 h-3.5 text-gray-400" />
+                <Tag className="w-3.5 h-3.5 text-gray-500" />
                 {customer.tags.map((t: string) => (
-                  <span key={t} className="text-xs text-gray-600 bg-gray-100 px-2 py-0.5 rounded-full">
+                  <span key={t} className="text-[13px] text-gray-700 font-medium bg-gray-100 px-2 py-0.5 rounded-full">
                     {t}
                   </span>
                 ))}
@@ -170,7 +170,7 @@ export default async function CustomerDetailPage({
           <div className="bg-white rounded-xl border border-gray-200 p-5">
             <h3 className="text-sm font-semibold text-brand-navy mb-4">활동 타임라인</h3>
             {timeline.length === 0 ? (
-              <p className="text-sm text-gray-400 py-4 text-center">기록된 활동이 없습니다.</p>
+              <p className="text-sm text-gray-500 py-4 text-center font-medium">기록된 활동이 없습니다.</p>
             ) : (
               <ol className="relative border-l-2 border-gray-200 pl-5 space-y-4">
                 {timeline.map((ev) => (
@@ -183,20 +183,20 @@ export default async function CustomerDetailPage({
                     }`} />
                     <div className="flex items-baseline gap-2 flex-wrap">
                       {ev.href ? (
-                        <Link href={ev.href} className="text-sm font-medium text-brand-blue hover:underline">
+                        <Link href={ev.href} className="text-sm font-semibold text-brand-blue hover:underline">
                           {ev.label}
                         </Link>
                       ) : (
-                        <span className="text-sm font-medium text-gray-700">{ev.label}</span>
+                        <span className="text-sm font-semibold text-brand-charcoal">{ev.label}</span>
                       )}
                       {ev.status && (
-                        <span className="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded-full">
+                        <span className="text-[11px] text-gray-700 font-bold bg-gray-100 px-2 py-0.5 rounded-full">
                           {ev.status}
                         </span>
                       )}
                     </div>
-                    {ev.sublabel && <p className="text-xs text-gray-400 mt-0.5">{ev.sublabel}</p>}
-                    <p className="text-[11px] text-gray-400 tabular-nums mt-0.5">
+                    {ev.sublabel && <p className="text-[13px] text-gray-500 mt-0.5 font-medium">{ev.sublabel}</p>}
+                    <p className="text-xs text-gray-500 tabular-nums mt-0.5 font-medium">
                       {new Date(ev.date).toLocaleString("ko-KR", {
                         year: "numeric",
                         month: "2-digit",
@@ -247,11 +247,11 @@ function Field({
 }) {
   return (
     <div>
-      <dt className="text-xs text-gray-400 mb-0.5 flex items-center gap-1">
-        <Icon className="w-3 h-3" />
+      <dt className="text-xs text-gray-600 mb-1 flex items-center gap-1 font-bold uppercase tracking-[0.04em]">
+        <Icon className="w-3.5 h-3.5" />
         {label}
       </dt>
-      <dd className="text-sm text-gray-700">
+      <dd className="text-sm text-brand-charcoal font-semibold">
         {href ? (
           <a href={href} className="hover:text-brand-blue hover:underline">
             {value}

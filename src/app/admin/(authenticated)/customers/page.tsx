@@ -168,36 +168,36 @@ export default async function CustomersPage({
                       </span>
                     )}
                   </TableCell>
-                  <TableCell data-label="담당자" className="text-sm">
+                  <TableCell data-label="담당자" className="text-sm font-medium">
                     {c.primary_contact_name ? (
                       <HighlightText text={c.primary_contact_name} query={searchQuery} />
                     ) : (
-                      <span className="text-gray-300">—</span>
+                      <span className="text-gray-400">—</span>
                     )}
                   </TableCell>
-                  <TableCell data-label="연락처" className="text-[13px] text-gray-600">
+                  <TableCell data-label="연락처" className="text-[13px] text-gray-700 font-medium">
                     {c.primary_contact_phone && (
-                      <div className="flex items-center gap-1.5">
-                        <Phone className="w-3.5 h-3.5 text-gray-400" />
+                      <div className="flex items-center gap-1.5 tabular-nums">
+                        <Phone className="w-3.5 h-3.5 text-gray-500" />
                         {c.primary_contact_phone}
                       </div>
                     )}
                     {c.primary_contact_email && (
                       <div className="flex items-center gap-1.5">
-                        <Mail className="w-3.5 h-3.5 text-gray-400" />
+                        <Mail className="w-3.5 h-3.5 text-gray-500" />
                         {c.primary_contact_email}
                       </div>
                     )}
                   </TableCell>
                   <TableCell data-label="출처">
-                    <span className="text-[13px] text-gray-600 px-2 py-0.5 rounded bg-gray-100 font-medium">
+                    <span className="text-[13px] text-gray-700 px-2 py-0.5 rounded bg-gray-100 font-semibold">
                       {SOURCE_LABELS[c.source] || c.source}
                     </span>
                   </TableCell>
                   <TableCell data-label="상태">
                     <StatusBadge status={c.status} type="customer" />
                   </TableCell>
-                  <TableCell data-label="등록일" className="text-sm text-gray-500 tabular-nums">
+                  <TableCell data-label="등록일" className="text-sm text-gray-600 tabular-nums font-medium">
                     {new Date(c.created_at).toLocaleDateString("ko-KR")}
                   </TableCell>
                 </TableRow>
@@ -206,8 +206,8 @@ export default async function CustomersPage({
           </TableBody>
         </Table>
         {list.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-sm text-gray-500 tabular-nums flex items-center gap-2">
-            <Tag className="w-3.5 h-3.5" />총 {list.length}명
+          <div className="px-5 py-2.5 border-t border-gray-100 text-[13px] text-gray-600 tabular-nums flex items-center gap-2 font-medium">
+            <Tag className="w-3.5 h-3.5" />총 <span className="font-bold text-brand-charcoal">{list.length}</span>명
           </div>
         )}
       </div>
