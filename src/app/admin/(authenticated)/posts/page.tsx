@@ -97,28 +97,28 @@ export default async function PostsPage({
                     <HighlightText text={p.title_ko} query={searchQuery} />
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[13px] font-semibold bg-gray-100 text-gray-700">
                       {p.category}
                     </span>
                   </TableCell>
-                  <TableCell className="text-xs text-gray-400 max-w-[200px] truncate hidden xl:table-cell">
+                  <TableCell className="text-[13px] text-gray-500 max-w-[200px] truncate hidden xl:table-cell">
                     {p.excerpt_ko || stripHtml(p.content_ko || "").slice(0, 60) || "—"}
                   </TableCell>
                   <TableCell className="hidden lg:table-cell" data-label="조회·기여">
                     {(() => {
                       const c = contribBySlug.get(p.slug);
                       if (!c || c.sessions_viewed === 0) {
-                        return <span className="text-xs text-gray-300">—</span>;
+                        return <span className="text-[13px] text-gray-400">—</span>;
                       }
                       return (
-                        <div className="flex items-center gap-3 text-xs">
-                          <span className="inline-flex items-center gap-1 text-gray-500 tabular-nums">
-                            <Eye className="w-3 h-3" />
+                        <div className="flex items-center gap-3 text-[13px]">
+                          <span className="inline-flex items-center gap-1 text-gray-600 tabular-nums font-medium">
+                            <Eye className="w-3.5 h-3.5" />
                             {c.sessions_viewed.toLocaleString("ko-KR")}
                           </span>
                           {c.quotes_from_viewers > 0 && (
-                            <span className="inline-flex items-center gap-1 text-brand-copper font-semibold tabular-nums">
-                              <TrendingUp className="w-3 h-3" />
+                            <span className="inline-flex items-center gap-1 text-brand-copper font-bold tabular-nums">
+                              <TrendingUp className="w-3.5 h-3.5" />
                               {c.quotes_from_viewers}건
                             </span>
                           )}
@@ -166,7 +166,7 @@ export default async function PostsPage({
           </TableBody>
         </Table>
         {posts && posts.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums">
+          <div className="px-5 py-2.5 border-t border-gray-100 text-[13px] text-gray-500 tabular-nums font-medium">
             총 {posts.length}건
           </div>
         )}
