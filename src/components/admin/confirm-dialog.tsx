@@ -48,7 +48,7 @@ export function ConfirmDialog({
             </div>
             <div className="pt-0.5">
               <DialogTitle className="text-lg font-bold">{title}</DialogTitle>
-              <DialogDescription className="mt-1.5 leading-relaxed text-sm text-gray-600">{description}</DialogDescription>
+              <DialogDescription className="mt-1.5 leading-relaxed text-sm text-gray-700 font-medium">{description}</DialogDescription>
             </div>
           </div>
         </DialogHeader>
