@@ -43,7 +43,7 @@ function priorityBadge(priority: string) {
 }
 
 function dDayBadge(deadline: string | null, status: string) {
-  if (!deadline) return <span className="text-gray-300">—</span>;
+  if (!deadline) return <span className="text-gray-400">—</span>;
   const closed = status === "완료" || status === "출하";
   const dd = dDayLabel(deadline);
   const dateStr = new Date(deadline).toLocaleDateString("ko-KR");

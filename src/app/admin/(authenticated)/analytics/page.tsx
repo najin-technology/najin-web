@@ -180,7 +180,7 @@ export default async function AnalyticsPage({
 
       {/* 리드 인텔리전스 (Tier 1) */}
       <section className="space-y-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
           리드 인텔리전스
         </h2>
         <HotVisitors visitors={hotVisitors} />
@@ -188,7 +188,7 @@ export default async function AnalyticsPage({
 
       {/* 추이 + 유입 */}
       <section className="space-y-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
           방문 흐름
         </h2>
         <VisitorChart data={dailyTrend} win={win} />
@@ -202,7 +202,7 @@ export default async function AnalyticsPage({
 
       {/* 패턴: 요일/시간 + 지역 */}
       <section className="space-y-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
           패턴
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -215,7 +215,7 @@ export default async function AnalyticsPage({
 
       {/* 콘텐츠 + 견적 퍼널 */}
       <section className="space-y-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
           콘텐츠와 전환
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">

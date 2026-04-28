@@ -122,11 +122,11 @@ export default async function CustomerDetailPage({
                 </h2>
                 <div className="flex items-center gap-2 mt-2 text-[13px] text-gray-600">
                   <StatusBadge status={customer.status} type="customer" />
-                  <span className="text-gray-300">·</span>
+                  <span className="text-gray-400">·</span>
                   <span>{SOURCE_LABELS[customer.source] || customer.source}</span>
                   {customer.client_slug && (
                     <>
-                      <span className="text-gray-300">·</span>
+                      <span className="text-gray-400">·</span>
                       <Link
                         href={`/ko/clients/${customer.client_slug}`}
                         target="_blank"
