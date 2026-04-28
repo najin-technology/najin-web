@@ -57,10 +57,10 @@ export function FunnelCard({ funnel }: { funnel: FunnelStats }) {
 
       {funnel.visitors > 0 && (
         <div className="mt-5 pt-4 border-t border-gray-100 flex items-baseline justify-between">
-          <span className="text-[13px] text-gray-500 uppercase tracking-widest font-semibold">전체 전환율</span>
-          <span className="text-2xl font-semibold tabular-nums tracking-tight text-brand-copper">
+          <span className="text-[13px] text-gray-600 uppercase tracking-widest font-bold">전체 전환율</span>
+          <span className="text-2xl font-bold tabular-nums tracking-tight text-brand-copper">
             {Math.round((funnel.quoteSubmits / funnel.visitors) * 10000) / 100}
-            <span className="text-base text-gray-400 font-normal ml-0.5">%</span>
+            <span className="text-base text-gray-500 font-medium ml-0.5">%</span>
           </span>
         </div>
       )}

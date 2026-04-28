@@ -31,7 +31,7 @@ export function RecentFeed({ visits }: { visits: RecentVisit[] }) {
       </div>
 
       {visits.length === 0 ? (
-        <p className="text-sm text-gray-400">아직 방문이 없습니다.</p>
+        <p className="text-sm text-gray-500 font-medium">아직 방문이 없습니다.</p>
       ) : (
         <ul className="divide-y divide-gray-100">
           {visits.map((v) => {

@@ -23,11 +23,11 @@ export function DevicePanel({ split }: { split: DeviceSplit }) {
       <div className="flex items-baseline gap-3 mb-6">
         <primary.icon className="w-7 h-7 text-brand-navy" strokeWidth={1.5} />
         <div>
-          <p className="text-4xl font-semibold tabular-nums tracking-tight text-brand-navy leading-none">
+          <p className="text-4xl font-bold tabular-nums tracking-tight text-brand-navy leading-none">
             {primary.pct}
-            <span className="text-xl font-normal text-gray-400 ml-0.5">%</span>
+            <span className="text-xl font-medium text-gray-500 ml-0.5">%</span>
           </p>
-          <p className="text-[13px] text-gray-500 mt-1.5 font-medium">주 이용: {primary.label}</p>
+          <p className="text-[13px] text-gray-600 mt-1.5 font-semibold">주 이용: {primary.label}</p>
         </div>
       </div>
 

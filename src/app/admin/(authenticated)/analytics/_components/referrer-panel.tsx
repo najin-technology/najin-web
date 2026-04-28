@@ -14,7 +14,7 @@ export function ReferrerPanel({ rows }: { rows: ReferrerRow[] }) {
       </div>
 
       {rows.length === 0 ? (
-        <p className="text-sm text-gray-400">아직 데이터가 없습니다.</p>
+        <p className="text-sm text-gray-500 font-medium">아직 데이터가 없습니다.</p>
       ) : (
         <ul className="space-y-3.5">
           {rows.slice(0, 7).map((r) => {
@@ -27,7 +27,7 @@ export function ReferrerPanel({ rows }: { rows: ReferrerRow[] }) {
                     <span className="tabular-nums text-brand-charcoal font-bold">
                       {r.count.toLocaleString("ko-KR")}
                     </span>
-                    <span className="tabular-nums text-[13px] text-gray-500 min-w-[3.5ch] text-right">
+                    <span className="tabular-nums text-[13px] text-gray-600 font-medium min-w-[3.5ch] text-right">
                       {r.percent}%
                     </span>
                   </span>

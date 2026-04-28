@@ -39,7 +39,7 @@ export function PopularPages({ pages }: { pages: PopularPage[] }) {
       </div>
 
       {pages.length === 0 ? (
-        <p className="text-sm text-gray-400">아직 방문 기록이 없습니다.</p>
+        <p className="text-sm text-gray-500 font-medium">아직 방문 기록이 없습니다.</p>
       ) : (
         <ul className="divide-y divide-gray-100">
           {pages.map((p, i) => {
@@ -47,15 +47,15 @@ export function PopularPages({ pages }: { pages: PopularPage[] }) {
             const barWidth = (p.count / max) * 100;
             return (
               <li key={p.path} className="py-3 first:pt-0 last:pb-0 flex items-center gap-4">
-                <span className="text-xs font-mono font-semibold tabular-nums text-gray-400 w-6 flex-shrink-0">
+                <span className="text-[13px] font-mono font-bold tabular-nums text-gray-500 w-6 flex-shrink-0">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-brand-charcoal truncate">
                     {pretty.label}
                   </p>
-                  <p className="text-xs text-gray-500 truncate font-mono">
-                    {pretty.locale && <span className="mr-1 text-gray-400 font-semibold">{pretty.locale.toUpperCase()}</span>}
+                  <p className="text-[13px] text-gray-600 truncate font-mono font-medium">
+                    {pretty.locale && <span className="mr-1 text-gray-500 font-bold">{pretty.locale.toUpperCase()}</span>}
                     {p.path}
                   </p>
                 </div>
@@ -66,7 +66,7 @@ export function PopularPages({ pages }: { pages: PopularPage[] }) {
                       style={{ width: `${barWidth}%` }}
                     />
                   </div>
-                  <span className="tabular-nums text-sm font-semibold text-brand-navy min-w-[3.5ch] text-right">
+                  <span className="tabular-nums text-sm font-bold text-brand-navy min-w-[3.5ch] text-right">
                     {p.count.toLocaleString("ko-KR")}
                   </span>
                 </div>

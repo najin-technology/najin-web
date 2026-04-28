@@ -31,7 +31,7 @@ export function RegionPanel({ rows }: { rows: RegionRow[] }) {
       </div>
 
       {rows.length === 0 ? (
-        <p className="text-sm text-gray-400">아직 데이터가 없습니다.</p>
+        <p className="text-sm text-gray-500 font-medium">아직 데이터가 없습니다.</p>
       ) : (
         <ul className="space-y-3">
           {rows.map((r, i) => {
