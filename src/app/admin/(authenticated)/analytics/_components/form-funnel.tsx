@@ -19,15 +19,15 @@ export function FormFunnel({ rows }: { rows: FormFunnelRow[] }) {
     return (
       <div className="bg-white border border-gray-200/80 rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-5">
-          <div className="w-1 h-1 rounded-full bg-brand-copper" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+          <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
             견적 폼 퍼널 · 최근 30일
           </p>
         </div>
-        <p className="text-sm text-gray-400 py-6 text-center">
+        <p className="text-sm text-gray-500 py-6 text-center font-medium">
           아직 폼 이벤트 데이터가 없습니다.
         </p>
-        <p className="text-[11px] text-gray-300 text-center">
+        <p className="text-xs text-gray-500 text-center">
           견적 폼에 입력이 발생하면 어느 필드에서 이탈하는지 자동으로 표시됩니다.
         </p>
       </div>
@@ -40,12 +40,12 @@ export function FormFunnel({ rows }: { rows: FormFunnelRow[] }) {
     <div className="bg-white border border-gray-200/80 rounded-2xl p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3 mb-5">
         <div className="flex items-center gap-2">
-          <div className="w-1 h-1 rounded-full bg-brand-copper" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+          <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
             견적 폼 퍼널 · 최근 30일
           </p>
         </div>
-        <p className="text-xs text-gray-400">필드별 시작 → 완료 비율</p>
+        <p className="text-[13px] text-gray-500 font-medium">필드별 시작 → 완료 비율</p>
       </div>
 
       <ul className="space-y-3">
@@ -55,15 +55,15 @@ export function FormFunnel({ rows }: { rows: FormFunnelRow[] }) {
           return (
             <li key={r.field} className="space-y-1.5">
               <div className="flex items-baseline justify-between gap-3 text-sm">
-                <span className="font-medium text-brand-charcoal">
+                <span className="font-semibold text-brand-charcoal">
                   {FIELD_LABELS[r.field] ?? r.field}
                 </span>
                 <span className="flex items-baseline gap-3 flex-shrink-0">
-                  <span className="tabular-nums text-xs text-gray-500">
+                  <span className="tabular-nums text-[13px] text-gray-600 font-medium">
                     {r.fills}/{r.starts}
                   </span>
                   <span
-                    className={`tabular-nums text-xs font-semibold min-w-[3.5ch] text-right ${
+                    className={`tabular-nums text-[13px] font-bold min-w-[3.5ch] text-right ${
                       r.fill_pct >= 80
                         ? "text-emerald-600"
                         : r.fill_pct >= 50
@@ -90,7 +90,7 @@ export function FormFunnel({ rows }: { rows: FormFunnelRow[] }) {
         })}
       </ul>
 
-      <p className="mt-5 pt-4 border-t border-gray-100 text-[11px] text-gray-400 leading-relaxed">
+      <p className="mt-5 pt-4 border-t border-gray-100 text-xs text-gray-500 leading-relaxed">
         밝은 회색: 필드 포커스 / 진한 네이비: 실제 입력 완료. 차이가 클수록 이탈 지점.
       </p>
     </div>
