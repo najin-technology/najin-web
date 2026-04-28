@@ -60,13 +60,13 @@ export function ApplicationStatusForm({
           const isCurrent = step === currentStatus;
           return (
             <div key={step} className="flex items-center gap-1 flex-1">
-              <div className={`flex items-center gap-1.5 ${isCurrent ? "font-medium text-brand-navy" : isActive ? "text-green-600" : "text-gray-300"}`}>
-                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${
-                  isCurrent ? "bg-brand-navy text-white" : isActive ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-400"
+              <div className={`flex items-center gap-1.5 ${isCurrent ? "font-bold text-brand-navy" : isActive ? "text-green-700 font-semibold" : "text-gray-400 font-medium"}`}>
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                  isCurrent ? "bg-brand-navy text-white" : isActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"
                 }`}>
                   {i + 1}
                 </div>
-                <span className="text-[11px] sm:text-xs">{step}</span>
+                <span className="text-[13px]">{step}</span>
               </div>
               {i < APP_STEPS.length - 1 && (
                 <div className={`flex-1 h-px ${isActive && i < currentIdx ? "bg-emerald-300" : "bg-gray-200"}`} />
