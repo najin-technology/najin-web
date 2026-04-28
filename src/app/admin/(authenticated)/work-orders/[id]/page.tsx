@@ -62,14 +62,14 @@ export default async function WorkOrderDetailPage({
               <span>{order.product_name}</span>
               {!closed && order.deadline && dd.label && (
                 <span
-                  className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold tabular-nums ${
+                  className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold tabular-nums ${
                     dd.tone === "overdue"
                       ? "bg-rose-100 text-rose-700"
                       : dd.tone === "urgent"
                         ? "bg-amber-100 text-amber-700"
                         : dd.tone === "soon"
                           ? "bg-blue-100 text-blue-700"
-                          : "bg-gray-100 text-gray-500"
+                          : "bg-gray-100 text-gray-600"
                   }`}
                 >
                   {dd.label}
@@ -89,14 +89,14 @@ export default async function WorkOrderDetailPage({
 
       {order.quote_id && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
-          <p className="text-xs text-blue-800">
+          <p className="text-[13px] text-blue-800 font-medium">
             이 발주는 견적에서 변환되었습니다.
           </p>
           <Link
             href={`/admin/quotes/${order.quote_id}`}
-            className="inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:text-blue-900"
+            className="inline-flex items-center gap-1 text-[13px] font-semibold text-blue-700 hover:text-blue-900"
           >
-            원본 견적 보기 <ExternalLink className="w-3 h-3" />
+            원본 견적 보기 <ExternalLink className="w-3.5 h-3.5" />
           </Link>
         </div>
       )}
@@ -129,7 +129,7 @@ export default async function WorkOrderDetailPage({
 
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <h2 className="text-sm font-semibold text-brand-navy mb-4">
-              도면 / 작업지시서 첨부 <span className="text-gray-400 font-normal">{attachments.length}</span>
+              도면 / 작업지시서 첨부 <span className="text-gray-600 font-bold tabular-nums ml-1">{attachments.length}</span>
             </h2>
             <AttachmentsSection
               workOrderId={order.id}
@@ -150,8 +150,8 @@ export default async function WorkOrderDetailPage({
           {history.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-200 p-5">
               <div className="flex items-center gap-2 mb-3">
-                <History className="w-4 h-4 text-gray-400" />
-                <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+                <History className="w-4 h-4 text-gray-500" />
+                <h2 className="text-xs font-bold uppercase tracking-[0.1em] text-gray-600">
                   변경 이력
                 </h2>
               </div>
@@ -160,17 +160,17 @@ export default async function WorkOrderDetailPage({
                   const details = (h.details ?? {}) as Record<string, unknown>;
                   const isCreate = h.action === "create";
                   return (
-                    <li key={h.id} className="text-xs">
+                    <li key={h.id} className="text-[13px]">
                       <div className="flex items-baseline justify-between gap-2">
-                        <span className="font-medium text-brand-charcoal">
+                        <span className="font-semibold text-brand-charcoal">
                           {isCreate ? "발주 생성" : `${details.from} → ${details.to}`}
                         </span>
-                        <span className="text-[10px] tabular-nums text-gray-400">
+                        <span className="text-[11px] tabular-nums text-gray-500 font-medium">
                           {formatRelative(h.created_at)}
                         </span>
                       </div>
                       {h.user_email && (
-                        <p className="text-[11px] text-gray-400 mt-0.5">
+                        <p className="text-xs text-gray-500 mt-0.5">
                           {h.user_email}
                         </p>
                       )}
