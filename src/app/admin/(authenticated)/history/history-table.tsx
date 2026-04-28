@@ -62,13 +62,13 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
               </TableRow>
             ) : (
               <TableRow key={item.id} className={`even:bg-gray-50/30 ${idx > 0 && items[idx - 1].year !== item.year ? "border-t border-gray-300" : ""}`}>
-                <TableCell className="font-medium">{item.year}</TableCell>
-                <TableCell>{item.month ?? "-"}</TableCell>
-                <TableCell>{item.description_ko}</TableCell>
-                <TableCell className="text-gray-500">
+                <TableCell className="font-bold text-brand-navy tabular-nums">{item.year}</TableCell>
+                <TableCell className="font-medium tabular-nums">{item.month ?? "-"}</TableCell>
+                <TableCell className="font-medium text-brand-charcoal">{item.description_ko}</TableCell>
+                <TableCell className="text-gray-600 font-medium">
                   {item.description_en || "-"}
                 </TableCell>
-                <TableCell>{item.sort_order}</TableCell>
+                <TableCell className="font-medium tabular-nums">{item.sort_order}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-1">
                     <Button
@@ -102,7 +102,7 @@ export function HistoryTable({ items }: { items: HistoryItemData[] }) {
           {items.length === 0 && (
             <TableRow>
               <TableCell colSpan={6}>
-                <div className="text-center py-8 text-sm text-gray-400">등록된 연혁이 없습니다</div>
+                <div className="text-center py-8 text-sm text-gray-500 font-medium">등록된 연혁이 없습니다</div>
               </TableCell>
             </TableRow>
           )}

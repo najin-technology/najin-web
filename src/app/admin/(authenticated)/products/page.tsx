@@ -82,7 +82,7 @@ export default async function ProductsPage({
             <a
               key={cat}
               href={`#category-${cat}`}
-              className="text-xs px-2.5 py-1 rounded-full border border-gray-200 text-gray-500 hover:text-brand-navy hover:border-brand-navy/30 transition-colors"
+              className="text-[13px] font-semibold px-3 py-1.5 rounded-full border border-gray-200 text-gray-700 hover:text-brand-navy hover:border-brand-navy/30 transition-colors"
             >
               {CATEGORY_LABELS[cat] || cat}
             </a>
@@ -95,12 +95,12 @@ export default async function ProductsPage({
           <div key={cat} id={`category-${cat}`} className="bg-white rounded-xl border border-gray-200 overflow-hidden scroll-mt-20">
             <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2.5">
               <span
-                className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}
+                className={`inline-flex items-center px-2.5 py-1 rounded-lg text-[13px] font-bold ${CATEGORY_COLORS[cat] || "bg-gray-100 text-gray-700"}`}
               >
                 {CATEGORY_LABELS[cat] || cat}
               </span>
-              <span className="text-xs text-gray-500 tabular-nums">{grouped[cat]?.length || 0}개</span>
-              <span className="text-xs text-gray-400 ml-auto">← 좌측 핸들을 드래그해 순서 변경</span>
+              <span className="text-[13px] text-gray-700 tabular-nums font-bold">{grouped[cat]?.length || 0}개</span>
+              <span className="text-xs text-gray-500 ml-auto font-medium">← 좌측 핸들을 드래그해 순서 변경</span>
             </div>
             <SortableProductTable items={grouped[cat]!} />
           </div>

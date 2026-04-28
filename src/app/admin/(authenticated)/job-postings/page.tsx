@@ -73,16 +73,16 @@ export default async function JobPostingsPage({
             {postings && postings.length > 0 ? (
               postings.map((p) => (
                 <TableRow key={p.id} className="hover:bg-gray-50/50">
-                  <TableCell className="font-medium">{p.title_ko}</TableCell>
-                  <TableCell data-label="부서">{p.department || "-"}</TableCell>
-                  <TableCell data-label="고용형태">{p.employment_type || "-"}</TableCell>
+                  <TableCell className="font-semibold text-brand-charcoal">{p.title_ko}</TableCell>
+                  <TableCell data-label="부서" className="font-medium">{p.department || "-"}</TableCell>
+                  <TableCell data-label="고용형태" className="font-medium">{p.employment_type || "-"}</TableCell>
                   <TableCell data-label="활성">
                     <JobPostingActiveToggle
                       postingId={p.id}
                       isActive={p.is_active}
                     />
                   </TableCell>
-                  <TableCell data-label="마감일" className="text-sm text-gray-500">
+                  <TableCell data-label="마감일" className="text-sm text-gray-600 font-medium tabular-nums">
                     {p.deadline
                       ? new Date(p.deadline).toLocaleDateString("ko-KR")
                       : "-"}
@@ -109,7 +109,7 @@ export default async function JobPostingsPage({
           </TableBody>
         </Table>
         {postings && postings.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums">
+          <div className="px-5 py-2.5 border-t border-gray-100 text-[13px] text-gray-500 tabular-nums font-medium">
             총 {postings.length}건
           </div>
         )}
