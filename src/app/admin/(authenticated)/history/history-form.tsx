@@ -119,11 +119,11 @@ export function HistoryEditForm({
       <input type="hidden" name="id" value={item.id} />
 
       {state.error && (
-        <span className="text-red-500 text-xs">{state.error}</span>
+        <span className="text-red-600 text-[13px] font-semibold">{state.error}</span>
       )}
 
       <div className="space-y-1">
-        <Label className="text-xs">연도</Label>
+        <Label className="text-[13px] font-medium">연도</Label>
         <Input
           name="year"
           type="number"
@@ -133,7 +133,7 @@ export function HistoryEditForm({
         />
       </div>
       <div className="space-y-1">
-        <Label className="text-xs">월</Label>
+        <Label className="text-[13px] font-medium">월</Label>
         <Input
           name="month"
           type="number"
@@ -144,7 +144,7 @@ export function HistoryEditForm({
         />
       </div>
       <div className="space-y-1">
-        <Label className="text-xs">순서</Label>
+        <Label className="text-[13px] font-medium">순서</Label>
         <Input
           name="sort_order"
           type="number"
@@ -153,7 +153,7 @@ export function HistoryEditForm({
         />
       </div>
       <div className="space-y-1 flex-1">
-        <Label className="text-xs">설명 (한국어)</Label>
+        <Label className="text-[13px] font-medium">설명 (한국어)</Label>
         <Input
           name="description_ko"
           defaultValue={item.description_ko}
@@ -161,7 +161,7 @@ export function HistoryEditForm({
         />
       </div>
       <div className="space-y-1 flex-1">
-        <Label className="text-xs">설명 (영어)</Label>
+        <Label className="text-[13px] font-medium">설명 (영어)</Label>
         <Input
           name="description_en"
           defaultValue={item.description_en ?? ""}
