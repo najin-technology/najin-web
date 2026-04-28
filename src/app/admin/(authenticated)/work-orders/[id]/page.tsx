@@ -170,7 +170,7 @@ export default async function WorkOrderDetailPage({
                         </span>
                       </div>
                       {h.user_email && (
-                        <p className="text-xs text-gray-500 mt-0.5">
+                        <p className="text-xs text-gray-500 mt-0.5 font-medium">
                           {h.user_email}
                         </p>
                       )}
