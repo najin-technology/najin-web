@@ -78,7 +78,7 @@ export default async function SettingsPage({
         hasEmail={hasEmail}
       />
 
-      <footer className="text-xs text-gray-500 pt-6 border-t border-gray-100 leading-relaxed">
+      <footer className="text-[13px] text-gray-600 pt-6 border-t border-gray-100 leading-relaxed font-medium">
         Tip: 한 관리자에 여러 로그인 수단을 연결해두면 특정 서비스가 장애여도 다른 방법으로 접속할 수 있습니다.
       </footer>
     </div>

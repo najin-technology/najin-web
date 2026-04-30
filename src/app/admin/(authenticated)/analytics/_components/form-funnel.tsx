@@ -27,7 +27,7 @@ export function FormFunnel({ rows }: { rows: FormFunnelRow[] }) {
         <p className="text-sm text-gray-500 py-6 text-center font-medium">
           아직 폼 이벤트 데이터가 없습니다.
         </p>
-        <p className="text-xs text-gray-500 text-center">
+        <p className="text-[13px] text-gray-600 text-center font-medium leading-relaxed">
           견적 폼에 입력이 발생하면 어느 필드에서 이탈하는지 자동으로 표시됩니다.
         </p>
       </div>
