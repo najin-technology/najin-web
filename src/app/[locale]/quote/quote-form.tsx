@@ -277,7 +277,7 @@ export function QuoteForm() {
       )}
 
       {/* Privacy Agreement */}
-      <div className="flex items-start gap-2">
+      <div className="flex items-start gap-2.5">
         <input
           id="privacy_agreed"
           name="privacy_agreed"
@@ -285,16 +285,16 @@ export function QuoteForm() {
           required
           className="mt-1 w-4 h-4 rounded border-gray-300 focus-visible:ring-2 focus-visible:ring-brand-navy/30 focus-visible:ring-offset-1"
         />
-        <Label htmlFor="privacy_agreed" className="text-sm font-normal">
+        <Label htmlFor="privacy_agreed" className="text-sm font-medium leading-relaxed text-brand-charcoal">
           {tc("privacyAgree")}{" "}
           <Link
             href="/privacy"
-            className="text-brand-blue hover:underline"
+            className="text-brand-blue hover:underline font-semibold"
             target="_blank"
           >
             [{t("pageTitle")}]
           </Link>
-          <span className="text-red-500 ml-1">*</span>
+          <span className="text-red-600 ml-1">*</span>
         </Label>
       </div>
 
