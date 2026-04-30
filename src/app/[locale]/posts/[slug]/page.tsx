@@ -154,13 +154,13 @@ export default async function PostDetailPage({
             {title}
           </h1>
           <div
-            className="flex items-center gap-4 text-gray-300 text-sm"
+            className="flex items-center gap-4 text-white/85 text-sm font-medium"
             data-animate="fade-up"
             data-animate-delay="1"
           >
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              <span>
+              <span className="tabular-nums">
                 {new Date(date).toLocaleDateString(
                   locale === "ko"
                     ? "ko-KR"
@@ -256,11 +256,11 @@ export default async function PostDetailPage({
             {post.tags && post.tags.length > 0 && (
               <div className="mt-8 pt-6 border-t border-surface-warm-200">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Tag className="w-4 h-4 text-brand-charcoal/40" />
+                  <Tag className="w-4 h-4 text-brand-charcoal/50" />
                   {post.tags.map((tag: string) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 bg-surface-warm-100 text-brand-charcoal/70 rounded-full text-xs"
+                      className="px-2.5 py-1 bg-surface-warm-100 text-brand-charcoal/85 rounded-full text-[13px] font-medium"
                     >
                       #{tag}
                     </span>
@@ -289,10 +289,10 @@ export default async function PostDetailPage({
                     </div>
                   )}
                   <div className="min-w-0">
-                    <div className="text-xs text-brand-charcoal/60">
+                    <div className="text-[11px] text-brand-charcoal/70 font-bold uppercase tracking-wide">
                       {tc("collaborationWith")}
                     </div>
-                    <div className="text-sm font-semibold text-brand-navy group-hover:text-brand-copper transition-colors">
+                    <div className="text-sm font-bold text-brand-navy group-hover:text-brand-copper transition-colors">
                       {locale !== "ko" && post.customer.name_en
                         ? post.customer.name_en
                         : post.customer.company_name}
