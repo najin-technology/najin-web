@@ -98,16 +98,16 @@ export function MultiFileUploader({
         />
         {pending ? (
           <>
-            <Loader2 className="w-7 h-7 text-brand-copper animate-spin" />
-            <p className="text-base font-medium text-gray-700">업로드 중...</p>
+            <Loader2 className="w-8 h-8 text-brand-copper animate-spin" />
+            <p className="text-base font-semibold text-brand-charcoal">업로드 중...</p>
           </>
         ) : (
           <>
-            <Upload className="w-7 h-7 text-gray-400" />
+            <Upload className="w-8 h-8 text-gray-500" />
             <p className="text-base font-semibold text-brand-charcoal">
               파일 끌어다 놓기 또는 클릭하여 선택
             </p>
-            <p className="text-[13px] text-gray-500">
+            <p className="text-[13px] text-gray-600 font-medium">
               PDF, DWG, DXF, STEP, IGES, STL, OBJ, JPG, PNG, DOC, XLSX (최대 {maxSizeMb}MB)
             </p>
           </>
@@ -117,16 +117,16 @@ export function MultiFileUploader({
       {errors.length > 0 && (
         <ul className="space-y-1">
           {errors.map((err, i) => (
-            <li key={i} className="flex items-start gap-1.5 text-[13px] text-rose-700 font-medium">
-              <AlertCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+            <li key={i} className="flex items-start gap-1.5 text-[13px] text-rose-700 font-semibold">
+              <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
               {err}
               <button
                 type="button"
                 onClick={() => setErrors(errors.filter((_, j) => j !== i))}
-                className="ml-auto opacity-60 hover:opacity-100"
+                className="ml-auto opacity-70 hover:opacity-100"
                 aria-label="에러 닫기"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             </li>
           ))}
