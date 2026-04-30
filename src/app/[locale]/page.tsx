@@ -409,14 +409,14 @@ export default async function HomePage() {
                 {t("ctaTitle")}
               </h2>
               <p
-                className="text-white/80 mb-4"
+                className="text-white/90 mb-4 font-medium leading-relaxed"
                 data-animate="fade-up"
                 data-animate-delay="1"
               >
                 {t("ctaSubtitle")}
               </p>
               <p
-                className="text-brand-copper font-medium mb-8"
+                className="text-brand-copper font-bold mb-8"
                 data-animate="fade-up"
                 data-animate-delay="1"
               >
@@ -437,7 +437,8 @@ export default async function HomePage() {
                 </Link>
                 <a
                   href="tel:+82-55-367-2596"
-                  className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm mt-2"
+                  aria-label="전화 걸기 055-367-2596"
+                  className="flex items-center gap-2 text-white/85 hover:text-white transition-colors text-sm font-semibold tabular-nums mt-2"
                 >
                   <Phone className="w-4 h-4" />
                   <span>{t("ctaPhone")}</span>
