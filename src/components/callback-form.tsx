@@ -86,17 +86,17 @@ export function CallbackForm() {
         />
       </div>
 
-      <div className="flex items-start gap-2">
+      <div className="flex items-start gap-2.5">
         <input
           id="cb_privacy"
           name="privacy_agreed"
           type="checkbox"
           required
-          className="mt-0.5 w-3.5 h-3.5 rounded border-white/30 focus-visible:ring-2 focus-visible:ring-brand-copper/30"
+          className="mt-0.5 w-4 h-4 rounded border-white/30 focus-visible:ring-2 focus-visible:ring-brand-copper/30"
         />
-        <label htmlFor="cb_privacy" className="text-xs text-white/70">
+        <label htmlFor="cb_privacy" className="text-[13px] text-white/85 font-medium leading-relaxed">
           {tc("privacyAgree")}{" "}
-          <Link href="/privacy" className="text-brand-copper hover:underline" target="_blank">
+          <Link href="/privacy" className="text-brand-copper hover:underline font-semibold" target="_blank">
             [{tc("privacy")}]
           </Link>
         </label>
