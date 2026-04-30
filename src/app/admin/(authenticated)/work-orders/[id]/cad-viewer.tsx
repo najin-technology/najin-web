@@ -179,9 +179,10 @@ export function CadViewer({ url, fileName, ext, onClose }: Props) {
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label="미리보기 닫기"
+            className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 hover:text-brand-charcoal transition-colors"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-5 h-5" />
           </button>
         </div>
         <div className="flex-1 relative overflow-hidden rounded-b-2xl">
