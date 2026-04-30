@@ -96,7 +96,7 @@ export default async function HomePage() {
               <TypewriterText text={t("heroTitle")} delayMs={50} startDelayMs={300} />
             </h1>
             <p
-              className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl"
+              className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl font-medium leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]"
               data-animate="fade-up"
               data-animate-delay="1"
             >
@@ -369,28 +369,28 @@ export default async function HomePage() {
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={25} suffix="+" />
               </div>
-              <div className="text-sm text-white/80">{t("statsYears")}</div>
+              <div className="text-sm text-white/90 font-semibold tracking-wide">{t("statsYears")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="2">
               <Users className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={10} suffix="+" />
               </div>
-              <div className="text-sm text-white/80">{t("statsClients")}</div>
+              <div className="text-sm text-white/90 font-semibold tracking-wide">{t("statsClients")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="3">
               <Award className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 ISO 9001
               </div>
-              <div className="text-sm text-white/80">{t("statsCertified")}</div>
+              <div className="text-sm text-white/90 font-semibold tracking-wide">{t("statsCertified")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="4">
               <FileCheck className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={1} suffix="+" />
               </div>
-              <div className="text-sm text-white/80">{t("statsPatent")}</div>
+              <div className="text-sm text-white/90 font-semibold tracking-wide">{t("statsPatent")}</div>
             </div>
           </div>
         </div>
