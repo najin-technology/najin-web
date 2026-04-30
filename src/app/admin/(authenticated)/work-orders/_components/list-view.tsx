@@ -48,7 +48,7 @@ function dDayBadge(deadline: string | null, status: string) {
   const dd = dDayLabel(deadline);
   const dateStr = new Date(deadline).toLocaleDateString("ko-KR");
   if (closed) {
-    return <span className="text-xs tabular-nums text-gray-400">{dateStr}</span>;
+    return <span className="text-[13px] tabular-nums text-gray-500 font-medium">{dateStr}</span>;
   }
   const toneCls =
     dd.tone === "overdue"
