@@ -67,18 +67,18 @@ export function Footer() {
             <h3 className="text-base font-semibold text-white/80 uppercase tracking-wider mb-4">
               {t("contactInfo")}
             </h3>
-            <div className="space-y-3 text-sm text-white/70">
+            <div className="space-y-3 text-sm text-white/80">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 mt-0.5 text-brand-copper shrink-0" />
-                <span>{t("address")}</span>
+                <span className="leading-relaxed">{t("address")}</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-brand-copper shrink-0" />
-                <span>{t("phone")}</span>
+                <span className="font-semibold tabular-nums">{t("phone")}</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Printer className="w-4 h-4 text-brand-copper shrink-0" />
-                <span>{t("fax")}</span>
+                <span className="font-medium tabular-nums">{t("fax")}</span>
               </div>
             </div>
           </div>
