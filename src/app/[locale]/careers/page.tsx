@@ -57,8 +57,8 @@ export default async function CareersPage() {
               className="text-center py-16 bg-white rounded-2xl border border-surface-warm-200"
               data-animate="fade-up"
             >
-              <Briefcase className="w-10 h-10 text-brand-charcoal/30 mx-auto mb-3" />
-              <p className="text-brand-charcoal/60">{t("noOpenings")}</p>
+              <Briefcase className="w-10 h-10 text-brand-charcoal/40 mx-auto mb-3" />
+              <p className="text-brand-charcoal/75 font-medium">{t("noOpenings")}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -103,17 +103,19 @@ export default async function CareersPage() {
                               </span>
                             )}
                             {job.employment_type && (
-                              <span className="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-brand-copper bg-brand-copper/10 rounded-full">
+                              <span className="inline-flex items-center px-2.5 py-0.5 text-[13px] font-bold text-brand-copper bg-brand-copper/10 rounded-full">
                                 {job.employment_type}
                               </span>
                             )}
                             {job.deadline && (
-                              <span className="inline-flex items-center gap-1 text-xs text-brand-charcoal/60">
-                                <Clock className="w-3 h-3" />
+                              <span className="inline-flex items-center gap-1 text-[13px] text-brand-charcoal/75 font-medium">
+                                <Clock className="w-3.5 h-3.5" />
                                 {t("deadlineLabel")}:{" "}
+                                <span className="tabular-nums font-semibold">
                                 {new Date(job.deadline).toLocaleDateString(
                                   locale === "ko" ? "ko-KR" : locale === "zh" ? "zh-CN" : "en-US"
                                 )}
+                                </span>
                               </span>
                             )}
                           </div>
