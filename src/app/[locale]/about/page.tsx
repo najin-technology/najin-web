@@ -232,11 +232,11 @@ export default async function AboutPage() {
                   <cert.icon className="w-6 h-6 text-brand-copper" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-brand-navy">
+                  <h3 className="font-bold text-brand-navy">
                     {cert.title}
                   </h3>
-                  <p className="text-sm text-brand-charcoal/70 mt-1">{cert.desc}</p>
-                  <p className="text-xs text-brand-charcoal/60 mt-1.5">{cert.year}</p>
+                  <p className="text-sm text-brand-charcoal/80 mt-1 font-medium leading-relaxed">{cert.desc}</p>
+                  <p className="text-[13px] text-brand-charcoal/70 mt-1.5 font-semibold tabular-nums">{cert.year}</p>
                 </div>
               </div>
             ))}
@@ -297,8 +297,8 @@ export default async function AboutPage() {
                 <Phone className="w-4 h-4 text-brand-copper" />
               </div>
               <div>
-                <span className="text-xs text-brand-charcoal/60 uppercase tracking-wide">TEL</span>
-                <p className="text-brand-charcoal font-medium">055-367-2596</p>
+                <span className="text-xs text-brand-charcoal/70 uppercase tracking-wide font-bold">TEL</span>
+                <p className="text-brand-charcoal font-bold tabular-nums">055-367-2596</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -306,8 +306,8 @@ export default async function AboutPage() {
                 <Printer className="w-4 h-4 text-brand-copper" />
               </div>
               <div>
-                <span className="text-xs text-brand-charcoal/60 uppercase tracking-wide">FAX</span>
-                <p className="text-brand-charcoal font-medium">055-367-2597</p>
+                <span className="text-xs text-brand-charcoal/70 uppercase tracking-wide font-bold">FAX</span>
+                <p className="text-brand-charcoal font-semibold tabular-nums">055-367-2597</p>
               </div>
             </div>
           </div>
