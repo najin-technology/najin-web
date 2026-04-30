@@ -96,5 +96,8 @@ export default async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/(ko|en|zh)/:path*", "/admin/:path*"],
+  // catch-all except api, Next.js internals, and files with extensions.
+  // 비-locale URL(/about, /posts 등)도 intl middleware 거쳐 /ko/* 로 리다이렉트
+  // → GSC 404 이슈 해결, 외부 링크 SEO 가치 회복.
+  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };
