@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, Flame, ChevronRight, CheckCircle2, Smartphone, Monitor, Tablet } from "lucide-react";
+import { Building2, Flame, ChevronRight, CheckCircle2 } from "lucide-react";
 import { type HotVisitor, formatRelativeKo } from "@/lib/analytics/queries";
 
 function stripLocale(path: string | null): string {

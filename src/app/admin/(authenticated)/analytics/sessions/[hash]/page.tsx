@@ -17,7 +17,6 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import {
   getSessionJourney,
   getSessionScore,
-  formatRelativeKo,
   referrerLabel,
   type JourneyStep,
 } from "@/lib/analytics/queries";

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { requireAdmin } from "@/lib/auth";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
-import { Building2, Phone, Mail, Calendar, FileText, Users, ExternalLink, Tag } from "lucide-react";
+import { Building2, Phone, Mail, Calendar, Users, ExternalLink, Tag } from "lucide-react";
 import { CustomerStatusForm, CustomerNotesForm, CustomerDisplayForm } from "./client";
 import { StatusBadge } from "@/components/admin/status-badge";
 
