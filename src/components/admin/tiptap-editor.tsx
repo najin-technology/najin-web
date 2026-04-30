@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 
 function ToolBtn({ onClick, active, title, children }: { onClick: () => void; active?: boolean; title: string; children: React.ReactNode }) {
   return (
-    <Button type="button" variant="ghost" size="sm" onClick={onClick} title={title} aria-label={title} className={active ? "bg-gray-200" : ""}>
+    <Button type="button" variant="ghost" size="sm" onClick={onClick} title={title} aria-label={title} className={active ? "bg-brand-navy/10 text-brand-navy hover:bg-brand-navy/15" : "text-gray-700 hover:text-brand-navy"}>
       {children}
     </Button>
   );
