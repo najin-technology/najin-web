@@ -125,12 +125,12 @@ export default async function NoticeDetailPage({
             {title}
           </h1>
           <div
-            className="flex items-center gap-2 text-gray-300 text-sm"
+            className="flex items-center gap-2 text-white/85 text-sm font-medium"
             data-animate="fade-up"
             data-animate-delay="1"
           >
             <Calendar className="w-4 h-4" />
-            <span>
+            <span className="tabular-nums">
               {new Date(date).toLocaleDateString(
                 locale === "ko" ? "ko-KR" : locale === "zh" ? "zh-CN" : "en-US",
                 { year: "numeric", month: "long", day: "numeric" }

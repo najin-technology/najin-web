@@ -106,17 +106,17 @@ export function QuoteForm() {
         <h3 className="text-2xl font-bold text-brand-navy mb-3">
           {t("successTitle")}
         </h3>
-        <p className="text-brand-charcoal mb-6 text-lg">{t("successMessage")}</p>
+        <p className="text-brand-charcoal/90 mb-6 text-lg font-medium leading-relaxed">{t("successMessage")}</p>
 
         <div className="bg-white rounded-xl p-6 mb-6 border border-surface-warm-200 max-w-sm mx-auto">
-          <div className="flex items-center justify-center gap-2 text-brand-copper font-semibold mb-2">
+          <div className="flex items-center justify-center gap-2 text-brand-copper font-bold mb-2">
             <Clock className="w-4 h-4" />
             <span>{t("responsePromise")}</span>
           </div>
-          <p className="text-sm text-brand-charcoal/70">{t("nextSteps")}</p>
+          <p className="text-sm text-brand-charcoal/85 font-medium leading-relaxed">{t("nextSteps")}</p>
         </div>
 
-        <p className="text-sm text-brand-charcoal/50 mb-6">{t("contactInfo")}</p>
+        <p className="text-sm text-brand-charcoal/70 mb-6 font-medium">{t("contactInfo")}</p>
 
         <Link href="/">
           <Button variant="outline" className="border-brand-navy/20 text-brand-navy hover:bg-brand-navy/5">
