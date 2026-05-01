@@ -113,7 +113,7 @@ export function AcceptInviteClient({
           <Button
             onClick={handleAccept}
             disabled={pending}
-            className="w-full bg-brand-navy hover:bg-brand-navy-light text-white"
+            className="w-full bg-brand-navy hover:bg-brand-navy-light text-white font-semibold"
           >
             {pending ? <Loader2 className="w-4 h-4 animate-spin" /> : "초대 수락"}
           </Button>
@@ -127,7 +127,7 @@ export function AcceptInviteClient({
             <Button
               onClick={handleGoogleSignIn}
               variant="outline"
-              className="w-full h-11 gap-2"
+              className="w-full h-11 gap-2 font-semibold"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -151,7 +151,7 @@ export function AcceptInviteClient({
             </Button>
             <Button
               onClick={handleNaverSignIn}
-              className="w-full h-11 gap-2 bg-[#03C75A] hover:bg-[#02B551] text-white border-transparent"
+              className="w-full h-11 gap-2 bg-[#03C75A] hover:bg-[#02B551] text-white border-transparent font-semibold"
               variant="outline"
             >
               <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
