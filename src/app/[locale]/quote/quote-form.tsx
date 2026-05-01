@@ -146,7 +146,7 @@ export function QuoteForm() {
         {/* Company Name */}
         <div className="space-y-2">
           <Label htmlFor="company_name">
-            {t("companyName")} <span className="text-red-500">*</span>
+            {t("companyName")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="company_name" name="company_name" autoComplete="organization" required placeholder={t("companyNamePlaceholder")} />
         </div>
@@ -154,7 +154,7 @@ export function QuoteForm() {
         {/* Contact Name */}
         <div className="space-y-2">
           <Label htmlFor="contact_name">
-            {t("contactName")} <span className="text-red-500">*</span>
+            {t("contactName")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="contact_name" name="contact_name" autoComplete="name" required placeholder={t("contactNamePlaceholder")} />
         </div>
@@ -162,7 +162,7 @@ export function QuoteForm() {
         {/* Phone */}
         <div className="space-y-2">
           <Label htmlFor="phone">
-            {t("phone")} <span className="text-red-500">*</span>
+            {t("phone")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="phone" name="phone" type="tel" autoComplete="tel" required placeholder={t("phonePlaceholder")} inputMode="tel" />
         </div>
@@ -170,7 +170,7 @@ export function QuoteForm() {
         {/* Email */}
         <div className="space-y-2">
           <Label htmlFor="email">
-            {t("email")} <span className="text-red-500">*</span>
+            {t("email")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="email" name="email" type="email" autoComplete="email" required placeholder={t("emailPlaceholder")} inputMode="email" />
         </div>
@@ -179,7 +179,7 @@ export function QuoteForm() {
       {/* Processing Type */}
       <div className="space-y-2">
         <Label htmlFor="processing_type">
-          {t("processingType")} <span className="text-red-500">*</span>
+          {t("processingType")} <span className="text-red-600 font-bold">*</span>
         </Label>
         <select
           id="processing_type"

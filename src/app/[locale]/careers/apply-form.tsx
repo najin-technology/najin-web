@@ -55,14 +55,14 @@ export function ApplyForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="name">
-            {t("name")} <span className="text-red-500">*</span>
+            {t("name")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="name" name="name" autoComplete="name" required placeholder={t("namePlaceholder")} />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="phone">
-            {t("phone")} <span className="text-red-500">*</span>
+            {t("phone")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="phone" name="phone" type="tel" autoComplete="tel" required placeholder={t("phonePlaceholder")} inputMode="tel" />
         </div>
@@ -76,7 +76,7 @@ export function ApplyForm() {
 
         <div className="space-y-2">
           <Label htmlFor="position">
-            {t("position")} <span className="text-red-500">*</span>
+            {t("position")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input
             id="position"

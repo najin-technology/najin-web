@@ -49,7 +49,7 @@ export function CallbackForm() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1.5">
           <Label htmlFor="cb_company" className="text-white/90 text-sm">
-            {t("companyName")} <span className="text-red-400">*</span>
+            {t("companyName")} <span className="text-red-300 font-bold">*</span>
           </Label>
           <Input
             id="cb_company"
@@ -61,7 +61,7 @@ export function CallbackForm() {
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="cb_phone" className="text-white/90 text-sm">
-            {t("phone")} <span className="text-red-400">*</span>
+            {t("phone")} <span className="text-red-300 font-bold">*</span>
           </Label>
           <Input
             id="cb_phone"
