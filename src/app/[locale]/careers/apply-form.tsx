@@ -141,7 +141,7 @@ export function ApplyForm() {
       <Button
         type="submit"
         disabled={pending}
-        className="w-full bg-brand-blue hover:bg-brand-blue-hover text-white py-3"
+        className="w-full bg-brand-blue hover:bg-brand-blue-hover text-white py-3 font-bold"
         size="lg"
       >
         {pending ? "..." : tc("submit")}
