@@ -79,7 +79,7 @@ export default async function PortfolioPage() {
             {t("clientsTitle")}
           </h2>
           <p
-            className="text-brand-charcoal mb-10 text-lg"
+            className="text-brand-charcoal/90 mb-10 text-lg font-medium leading-relaxed"
             data-animate="fade-up"
             data-animate-delay="1"
           >
