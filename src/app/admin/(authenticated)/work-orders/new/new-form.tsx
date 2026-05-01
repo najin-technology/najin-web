@@ -129,7 +129,7 @@ export function NewWorkOrderForm({ prefill }: { prefill: Prefill }) {
         <Button
           type="submit"
           disabled={pending}
-          className="bg-brand-navy hover:bg-brand-navy-light text-white"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white font-semibold"
         >
           {pending ? "생성 중..." : "발주 생성"}
         </Button>

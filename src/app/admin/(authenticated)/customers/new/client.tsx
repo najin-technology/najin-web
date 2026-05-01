@@ -77,7 +77,7 @@ export function NewCustomerForm() {
       )}
 
       <div className="flex items-center justify-end gap-2 pt-2">
-        <Button type="submit" disabled={pending} className="bg-brand-navy hover:bg-brand-navy-light text-white">
+        <Button type="submit" disabled={pending} className="bg-brand-navy hover:bg-brand-navy-light text-white font-semibold">
           {pending ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : null}
           고객 등록
         </Button>

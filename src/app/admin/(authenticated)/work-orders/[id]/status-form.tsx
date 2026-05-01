@@ -85,7 +85,7 @@ export function WorkOrderStatusForm({
       <Button
         type="submit"
         disabled={pending}
-        className="w-full bg-brand-navy hover:bg-brand-navy-light text-white"
+        className="w-full bg-brand-navy hover:bg-brand-navy-light text-white font-semibold"
       >
         {pending ? "저장 중..." : "상태 변경"}
       </Button>
