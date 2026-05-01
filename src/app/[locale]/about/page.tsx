@@ -129,7 +129,7 @@ export default async function AboutPage() {
               <h3 className="text-xl md:text-2xl font-bold text-brand-navy mb-4">
                 {t("missionTitle")}
               </h3>
-              <p className="text-brand-charcoal leading-relaxed">
+              <p className="text-brand-charcoal/90 leading-relaxed font-medium">
                 {t("missionContent")}
               </p>
             </div>
@@ -174,7 +174,7 @@ export default async function AboutPage() {
 
                   {/* Description */}
                   <div className="flex-1 bg-white rounded-lg p-4 border border-surface-warm-200 shadow-sm">
-                    <p className="text-brand-charcoal">
+                    <p className="text-brand-charcoal/90 font-medium leading-relaxed">
                       {locale === "ko"
                         ? item.description_ko
                         : item.description_en || item.description_ko}
