@@ -166,7 +166,7 @@ export default async function HomePage() {
       <section className="py-10 md:py-14 bg-surface-warm-50 border-y border-surface-warm-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p
-            className="text-center text-sm font-semibold text-brand-charcoal/60 uppercase tracking-[0.2em] mb-8"
+            className="text-center text-sm font-bold text-brand-charcoal/75 uppercase tracking-[0.2em] mb-8"
             data-animate="fade-in"
           >
             {t("clientsTitle")}
@@ -226,12 +226,12 @@ export default async function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/50 to-transparent" />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-brand-navy group-hover:text-brand-blue transition-colors flex items-center gap-1.5">
+                  <h3 className="font-bold text-brand-navy group-hover:text-brand-blue transition-colors flex items-center gap-1.5">
                     <area.icon className="w-4 h-4 text-brand-copper shrink-0" />
                     {tb(`${area.key}.title`)}
                     <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity ml-auto shrink-0" />
                   </h3>
-                  <p className="text-sm text-brand-charcoal/70 mt-1 line-clamp-2">{tb(`${area.key}.desc`)}</p>
+                  <p className="text-sm text-brand-charcoal/85 mt-1 line-clamp-2 font-medium leading-relaxed">{tb(`${area.key}.desc`)}</p>
                 </div>
               </Link>
             ))}
@@ -249,7 +249,7 @@ export default async function HomePage() {
             {t("whyTitle")}
           </h2>
           <p
-            className="text-brand-charcoal/70 mb-10 max-w-2xl"
+            className="text-brand-charcoal/85 mb-10 max-w-2xl font-medium leading-relaxed"
             data-animate="fade-up"
             data-animate-delay="1"
           >
@@ -288,8 +288,8 @@ export default async function HomePage() {
                   <item.icon className="w-5 h-5 text-brand-copper icon-hover-bounce" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-brand-navy mb-1">{item.title}</h3>
-                  <p className="text-sm text-brand-charcoal/70 leading-relaxed">{item.desc}</p>
+                  <h3 className="font-bold text-brand-navy mb-1">{item.title}</h3>
+                  <p className="text-sm text-brand-charcoal/85 leading-relaxed font-medium">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -304,7 +304,7 @@ export default async function HomePage() {
             <h2 className="text-2xl md:text-3xl font-bold text-brand-navy mb-3">
               {t("portfolioTitle")}
             </h2>
-            <p className="text-brand-charcoal/70">{t("portfolioSubtitle")}</p>
+            <p className="text-brand-charcoal/85 font-medium">{t("portfolioSubtitle")}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
