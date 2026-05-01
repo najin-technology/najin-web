@@ -125,26 +125,26 @@ export default async function CareersPage() {
                     </summary>
                     <div className="px-6 pb-6 space-y-4 border-t border-surface-warm-200 pt-4 ml-12">
                       {description && (
-                        <div className="text-sm text-brand-charcoal whitespace-pre-line">
+                        <div className="text-sm text-brand-charcoal/90 whitespace-pre-line font-medium leading-relaxed">
                           {description}
                         </div>
                       )}
                       {requirements && (
                         <div>
-                          <h4 className="text-sm font-semibold text-brand-navy mb-1">
+                          <h4 className="text-sm font-bold text-brand-navy mb-1.5">
                             {t("requirements")}
                           </h4>
-                          <p className="text-sm text-brand-charcoal whitespace-pre-line">
+                          <p className="text-sm text-brand-charcoal/90 whitespace-pre-line font-medium leading-relaxed">
                             {requirements}
                           </p>
                         </div>
                       )}
                       {benefits && (
                         <div>
-                          <h4 className="text-sm font-semibold text-brand-navy mb-1">
+                          <h4 className="text-sm font-bold text-brand-navy mb-1.5">
                             {t("benefits")}
                           </h4>
-                          <p className="text-sm text-brand-charcoal whitespace-pre-line">
+                          <p className="text-sm text-brand-charcoal/90 whitespace-pre-line font-medium leading-relaxed">
                             {benefits}
                           </p>
                         </div>
@@ -165,7 +165,7 @@ export default async function CareersPage() {
             <h2 className="text-2xl font-bold text-brand-navy mb-2">
               {t("applyTitle")}
             </h2>
-            <p className="text-brand-charcoal mb-8">{t("applyDesc")}</p>
+            <p className="text-brand-charcoal/90 mb-8 font-medium leading-relaxed">{t("applyDesc")}</p>
           </div>
           <div
             className="bg-surface-warm-50 rounded-2xl border border-surface-warm-200 p-8"
