@@ -109,7 +109,7 @@ export function ApplicationStatusForm({
       <Button
         type="submit"
         disabled={pending}
-        className="w-full bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm"
+        className="w-full bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm font-semibold"
       >
         {pending ? "저장 중..." : "저장하기"}
       </Button>

@@ -96,7 +96,7 @@ export function HistoryAddForm() {
         <Button
           type="submit"
           disabled={pending}
-          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm font-semibold"
         >
           {pending ? "추가 중..." : "추가"}
         </Button>
