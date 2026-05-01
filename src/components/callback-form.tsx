@@ -105,7 +105,7 @@ export function CallbackForm() {
       <Button
         type="submit"
         disabled={pending}
-        className="w-full bg-brand-copper hover:bg-brand-copper-light text-white py-2.5 min-h-[44px]"
+        className="w-full bg-brand-copper hover:bg-brand-copper-light text-white py-2.5 min-h-[44px] font-bold"
       >
         <Phone className="w-4 h-4 mr-2" />
         {pending ? "..." : t("submit")}
