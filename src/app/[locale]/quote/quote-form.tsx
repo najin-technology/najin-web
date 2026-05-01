@@ -204,7 +204,7 @@ export function QuoteForm() {
         <button
           type="button"
           onClick={() => setShowDetails(!showDetails)}
-          className="flex items-center gap-2 text-sm font-medium text-brand-blue hover:text-brand-blue-hover transition-colors w-full"
+          className="flex items-center gap-2 text-sm font-semibold text-brand-blue hover:text-brand-blue-hover transition-colors w-full"
         >
           <ChevronDown className={`w-4 h-4 transition-transform ${showDetails ? "rotate-180" : ""}`} />
           {t("optionalFieldsToggle")}
