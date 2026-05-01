@@ -135,7 +135,7 @@ export default async function PortfolioPage() {
             {t("caseStudiesTitle")}
           </h2>
           <p
-            className="text-brand-charcoal/70 mb-10"
+            className="text-brand-charcoal/85 mb-10 font-medium leading-relaxed"
             data-animate="fade-up"
             data-animate-delay="1"
           >
@@ -213,7 +213,7 @@ export default async function PortfolioPage() {
             {t("galleryTitle")}
           </h2>
           <p
-            className="text-brand-charcoal/60 mb-8"
+            className="text-brand-charcoal/85 mb-8 font-medium"
             data-animate="fade-up"
             data-animate-delay="1"
           >
