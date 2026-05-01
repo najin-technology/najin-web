@@ -148,7 +148,7 @@ export default async function HomePage() {
               ].map((cert) => (
                 <div key={cert.label} className="flex items-center gap-2">
                   <cert.icon className="w-4 h-4 text-brand-copper" />
-                  <span className="text-sm text-white/80 font-medium">{cert.label}</span>
+                  <span className="text-sm text-white/95 font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">{cert.label}</span>
                 </div>
               ))}
             </div>
