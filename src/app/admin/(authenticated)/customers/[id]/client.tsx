@@ -350,7 +350,7 @@ export function CustomerDisplayForm({
           size="sm"
           onClick={save}
           disabled={pending || !dirty}
-          className="bg-brand-navy hover:bg-brand-navy-light text-white"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white font-semibold"
         >
           {pending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5 mr-1" />}
           저장
