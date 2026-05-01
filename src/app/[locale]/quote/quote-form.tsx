@@ -210,7 +210,7 @@ export function QuoteForm() {
           {t("optionalFieldsToggle")}
         </button>
         {!showDetails && (
-          <p className="text-xs text-brand-charcoal/50 mt-1 ml-6">{t("optionalFieldsHint")}</p>
+          <p className="text-[13px] text-brand-charcoal/70 mt-1 ml-6 font-medium">{t("optionalFieldsHint")}</p>
         )}
       </div>
 
@@ -271,7 +271,7 @@ export function QuoteForm() {
                 }
               }}
             />
-            <p className="text-xs text-gray-600">{t("attachmentHelp")}</p>
+            <p className="text-[13px] text-brand-charcoal/75 font-medium">{t("attachmentHelp")}</p>
           </div>
         </div>
       )}
