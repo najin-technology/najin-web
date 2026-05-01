@@ -36,10 +36,10 @@ export function ApplyForm() {
             <CheckCircle className="w-9 h-9 text-green-600" />
           </div>
         </div>
-        <h3 className="text-xl font-bold text-brand-navy mb-2">
+        <h3 className="text-2xl font-bold text-brand-navy mb-3">
           {t("successTitle")}
         </h3>
-        <p className="text-brand-charcoal">{t("successMessage")}</p>
+        <p className="text-brand-charcoal/90 text-lg font-medium leading-relaxed">{t("successMessage")}</p>
       </div>
     );
   }
@@ -112,7 +112,7 @@ export function ApplyForm() {
             }
           }}
         />
-        <p className="text-xs text-gray-600">{t("resumeHelp")}</p>
+        <p className="text-[13px] text-brand-charcoal/75 font-medium">{t("resumeHelp")}</p>
       </div>
 
       <div className="flex items-start gap-2.5">
