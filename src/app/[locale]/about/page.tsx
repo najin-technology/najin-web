@@ -263,7 +263,7 @@ export default async function AboutPage() {
             <div className="w-10 h-10 rounded-full bg-brand-copper/10 flex items-center justify-center shrink-0 mt-0.5">
               <MapPin className="w-5 h-5 text-brand-copper" />
             </div>
-            <p className="text-brand-charcoal text-lg leading-relaxed">
+            <p className="text-brand-charcoal/90 text-lg leading-relaxed font-medium">
               {t("mapAddress")}
             </p>
           </div>

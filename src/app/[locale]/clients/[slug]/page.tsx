@@ -108,10 +108,10 @@ export default async function ClientPage({
                 {locale === "ko" ? client.name : client.nameEn}
               </h1>
               {client.name !== client.nameEn && locale === "ko" && (
-                <p className="text-white/70 text-sm mb-2">{client.nameEn}</p>
+                <p className="text-white/85 text-sm mb-2 font-medium">{client.nameEn}</p>
               )}
               {client.registeredYear && (
-                <p className="text-brand-copper text-sm font-medium">
+                <p className="text-brand-copper text-sm font-bold tabular-nums">
                   {t("registeredYear", { year: client.registeredYear })}
                 </p>
               )}
