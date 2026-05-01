@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
           <Button
             type="button"
             variant="outline"
-            className="w-full mb-2.5 h-11 rounded-xl border-gray-200 hover:bg-gray-50 transition-colors"
+            className="w-full mb-2.5 h-11 rounded-xl border-gray-200 hover:bg-gray-50 font-semibold transition-colors"
             onClick={handleGoogleLogin}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -80,7 +80,7 @@ export default function AdminLoginPage() {
           <Button
             type="button"
             variant="outline"
-            className="w-full mb-6 h-11 rounded-xl border-transparent bg-[#03C75A] hover:bg-[#02B551] text-white transition-colors"
+            className="w-full mb-6 h-11 rounded-xl border-transparent bg-[#03C75A] hover:bg-[#02B551] text-white font-semibold transition-colors"
             onClick={handleNaverLogin}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 20 20" fill="none">
@@ -139,7 +139,7 @@ export default function AdminLoginPage() {
             <Button
               type="submit"
               disabled={pending}
-              className="w-full h-11 rounded-xl bg-brand-navy hover:bg-brand-navy-light text-white shadow-sm transition-all"
+              className="w-full h-11 rounded-xl bg-brand-navy hover:bg-brand-navy-light text-white shadow-sm font-semibold transition-all"
             >
               {pending ? "로그인 중..." : "이메일로 로그인"}
             </Button>
