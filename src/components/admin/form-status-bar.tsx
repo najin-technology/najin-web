@@ -25,10 +25,10 @@ export function FormStatusBar({
         onCheckedChange={onCheckedChange}
       />
       <div>
-        <Label className="text-sm font-medium">
+        <Label className="text-base font-bold text-brand-charcoal">
           {checked ? activeLabel : inactiveLabel}
         </Label>
-        <p className="text-xs text-gray-400 mt-0.5">
+        <p className="text-[13px] text-gray-600 mt-0.5 font-medium">
           {checked ? activeDescription : inactiveDescription}
         </p>
       </div>

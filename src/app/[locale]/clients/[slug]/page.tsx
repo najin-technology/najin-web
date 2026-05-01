@@ -108,10 +108,10 @@ export default async function ClientPage({
                 {locale === "ko" ? client.name : client.nameEn}
               </h1>
               {client.name !== client.nameEn && locale === "ko" && (
-                <p className="text-white/70 text-sm mb-2">{client.nameEn}</p>
+                <p className="text-white/85 text-sm mb-2 font-medium">{client.nameEn}</p>
               )}
               {client.registeredYear && (
-                <p className="text-brand-copper text-sm font-medium">
+                <p className="text-brand-copper text-sm font-bold tabular-nums">
                   {t("registeredYear", { year: client.registeredYear })}
                 </p>
               )}
@@ -142,7 +142,7 @@ export default async function ClientPage({
             {t("deliveriesTitle")}
           </h2>
           <p
-            className="text-brand-charcoal/70 mb-8 text-sm"
+            className="text-brand-charcoal/85 mb-8 text-sm font-medium leading-relaxed"
             data-animate="fade-up"
             data-animate-delay="1"
           >
@@ -154,24 +154,25 @@ export default async function ClientPage({
               className="text-center py-12 md:py-16 bg-white rounded-2xl border border-surface-warm-200"
               data-animate="fade-up"
             >
-              <FileText className="w-10 h-10 text-brand-charcoal/30 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-brand-navy mb-2">
+              <FileText className="w-10 h-10 text-brand-charcoal/40 mx-auto mb-4" />
+              <h3 className="text-lg font-bold text-brand-navy mb-2">
                 {t("noDeliveriesTitle")}
               </h3>
-              <p className="text-sm text-brand-charcoal/70 max-w-md mx-auto mb-6">
+              <p className="text-sm text-brand-charcoal/85 max-w-md mx-auto mb-6 font-medium leading-relaxed">
                 {t("noDeliveriesDesc", {
                   name: (locale === "ko" ? client.name : client.nameEn) || client.name,
                 })}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link href="/quote">
-                  <Button className="bg-brand-copper hover:bg-brand-copper-light text-white">
+                  <Button className="bg-brand-copper hover:bg-brand-copper-light text-white font-semibold">
                     {t("ctaQuote")}
                   </Button>
                 </Link>
                 <a
                   href="tel:055-367-2596"
-                  className="flex items-center gap-2 text-brand-charcoal/70 hover:text-brand-navy text-sm"
+                  aria-label="전화 걸기 055-367-2596"
+                  className="flex items-center gap-2 text-brand-charcoal/85 hover:text-brand-navy text-sm font-semibold tabular-nums"
                 >
                   <Phone className="w-4 h-4" />
                   <span>055-367-2596</span>
@@ -193,16 +194,16 @@ export default async function ClientPage({
                     data-animate-delay={String(Math.min((i % 3) + 1, 3))}
                   >
                     <span className="absolute -left-[34px] top-5 w-3 h-3 rounded-full bg-brand-copper border-4 border-surface-warm-50" />
-                    <div className="flex items-center gap-2 text-xs text-brand-copper font-semibold mb-2">
-                      <Calendar className="w-3.5 h-3.5" />
+                    <div className="flex items-center gap-2 text-[13px] text-brand-copper font-bold mb-2 tabular-nums">
+                      <Calendar className="w-4 h-4" />
                       <span>
                         {d.year}
                         {d.month ? ` · ${t("monthLabel", { month: d.month })}` : ""}
                       </span>
                     </div>
-                    <p className="text-brand-charcoal leading-relaxed">{desc}</p>
+                    <p className="text-brand-charcoal/90 leading-relaxed font-medium">{desc}</p>
                     {d.source && (
-                      <p className="text-[11px] text-brand-charcoal/40 mt-3">
+                      <p className="text-xs text-brand-charcoal/60 mt-3 font-medium">
                         {t("sourceLabel")}: {d.source}
                       </p>
                     )}
@@ -225,7 +226,7 @@ export default async function ClientPage({
               관련 제작사례
             </h2>
             <p
-              className="text-sm text-brand-charcoal/60 mb-6"
+              className="text-sm text-brand-charcoal/80 mb-6 font-medium"
               data-animate="fade-up"
               data-animate-delay="1"
             >
@@ -261,16 +262,16 @@ export default async function ClientPage({
                       )}
                     </div>
                     <div className="p-4">
-                      <h3 className="font-semibold text-brand-navy text-sm mb-1 line-clamp-2 group-hover:text-brand-blue transition-colors">
+                      <h3 className="font-bold text-brand-navy text-sm mb-1 line-clamp-2 group-hover:text-brand-blue transition-colors">
                         {title}
                       </h3>
                       {excerpt && (
-                        <p className="text-xs text-brand-charcoal/70 line-clamp-2 mb-2">
+                        <p className="text-[13px] text-brand-charcoal/80 line-clamp-2 mb-2 font-medium leading-relaxed">
                           {excerpt}
                         </p>
                       )}
                       {date && (
-                        <p className="text-[11px] text-brand-charcoal/40 tabular-nums">
+                        <p className="text-xs text-brand-charcoal/60 tabular-nums font-medium">
                           {new Date(date).toLocaleDateString(
                             locale === "ko" ? "ko-KR" : locale === "zh" ? "zh-CN" : "en-US"
                           )}

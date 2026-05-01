@@ -47,18 +47,18 @@ export function WorkOrderStatusForm({
           const isCurrent = step === currentStatus;
           return (
             <div key={step} className="flex items-center gap-1 flex-1 min-w-0">
-              <div className={`flex flex-col items-center gap-0.5 min-w-0 ${
-                isCurrent ? "font-medium text-brand-navy" : isActive ? "text-emerald-600" : "text-gray-300"
+              <div className={`flex flex-col items-center gap-1 min-w-0 ${
+                isCurrent ? "font-bold text-brand-navy" : isActive ? "text-emerald-700 font-semibold" : "text-gray-400 font-medium"
               }`}>
-                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
-                  isCurrent ? "bg-brand-navy text-white" : isActive ? "bg-emerald-100 text-emerald-600" : "bg-gray-100 text-gray-400"
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0 ${
+                  isCurrent ? "bg-brand-navy text-white" : isActive ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-500"
                 }`}>
                   {i + 1}
                 </div>
-                <span className="text-[10px] truncate w-full text-center">{step}</span>
+                <span className="text-[11px] truncate w-full text-center">{step}</span>
               </div>
               {i < WORK_ORDER_STATUSES.length - 1 && (
-                <div className={`flex-1 h-px mt-2.5 ${isActive && i < currentIdx ? "bg-emerald-300" : "bg-gray-200"}`} />
+                <div className={`flex-1 h-px mt-3 ${isActive && i < currentIdx ? "bg-emerald-300" : "bg-gray-200"}`} />
               )}
             </div>
           );
@@ -85,7 +85,7 @@ export function WorkOrderStatusForm({
       <Button
         type="submit"
         disabled={pending}
-        className="w-full bg-brand-navy hover:bg-brand-navy-light text-white"
+        className="w-full bg-brand-navy hover:bg-brand-navy-light text-white font-semibold"
       >
         {pending ? "저장 중..." : "상태 변경"}
       </Button>

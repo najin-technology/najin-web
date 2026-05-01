@@ -87,14 +87,14 @@ export function AttachmentsSection({
                   {fileIcon(ext)}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-brand-charcoal truncate">
+                  <p className="text-sm font-semibold text-brand-charcoal truncate">
                     {att.fileName}
-                    <span className="ml-1.5 text-[10px] uppercase font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded tracking-wider">
+                    <span className="ml-1.5 text-[11px] uppercase font-bold text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded tracking-wider">
                       {ext}
                     </span>
                   </p>
-                  <div className="flex items-center gap-2 text-[11px] text-gray-400">
-                    <span>{formatSize(att.fileSize)}</span>
+                  <div className="flex items-center gap-2 text-[13px] text-gray-500 font-medium mt-0.5">
+                    <span className="tabular-nums">{formatSize(att.fileSize)}</span>
                     {isDwg && (
                       <span className="text-brand-copper" title="DWG는 다운로드 후 PC CAD 뷰어로 열어주세요. DXF로 export 시 인앱 미리보기 가능">
                         💡 DXF로 export하면 인앱 보기 가능

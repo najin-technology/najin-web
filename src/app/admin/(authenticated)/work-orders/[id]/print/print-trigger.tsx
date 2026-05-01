@@ -19,9 +19,9 @@ export function PrintTrigger() {
       type="button"
       onClick={() => window.print()}
       size="sm"
-      className="bg-brand-navy hover:bg-brand-navy-light text-white gap-1.5"
+      className="bg-brand-navy hover:bg-brand-navy-light text-white gap-1.5 font-semibold"
     >
-      <Printer className="w-3.5 h-3.5" />
+      <Printer className="w-4 h-4" />
       인쇄
     </Button>
   );

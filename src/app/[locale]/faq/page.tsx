@@ -65,10 +65,10 @@ export default function FAQPage() {
           <Accordion>
             {faqItems.map((n) => (
               <AccordionItem key={n} value={`faq-${n}`}>
-                <AccordionTrigger className="text-left font-medium text-brand-charcoal">
+                <AccordionTrigger className="text-left font-bold text-brand-charcoal">
                   {t(`question${n}`)}
                 </AccordionTrigger>
-                <AccordionContent className="text-brand-charcoal/80 leading-relaxed">
+                <AccordionContent className="text-brand-charcoal/90 leading-relaxed font-medium">
                   {t(`answer${n}`)}
                 </AccordionContent>
               </AccordionItem>

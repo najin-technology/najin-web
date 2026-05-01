@@ -132,9 +132,9 @@ export function BulkQuotesTable({
                   </TableCell>
                   <TableCell data-label="가공종류">
                     {q.processing_type === "콜백요청" ? (
-                      <span className="inline-flex items-center gap-1 text-purple-700 font-medium">📞 콜백</span>
+                      <span className="inline-flex items-center gap-1 text-purple-700 font-bold">📞 콜백</span>
                     ) : (
-                      q.processing_type
+                      <span className="font-medium">{q.processing_type}</span>
                     )}
                   </TableCell>
                   <TableCell data-label="상태">
@@ -143,12 +143,12 @@ export function BulkQuotesTable({
                   <TableCell data-label="접수일" className="text-sm">
                     {(() => {
                       const e = formatElapsed(q.created_at, q.status);
-                      if (!e.pending) return <span className="text-gray-500">{e.text}</span>;
+                      if (!e.pending) return <span className="text-gray-600 font-medium tabular-nums">{e.text}</span>;
                       return (
-                        <span className={e.overdue ? "text-red-600 font-medium" : "text-amber-600"}>
+                        <span className={e.overdue ? "text-red-700 font-bold" : "text-amber-700 font-semibold"}>
                           {e.text}
                           {e.overdue && (
-                            <span className="ml-1 text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full">
+                            <span className="ml-1 text-[11px] font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
                               초과
                             </span>
                           )}
@@ -162,7 +162,7 @@ export function BulkQuotesTable({
           </TableBody>
         </Table>
         {quotes.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-500 tabular-nums">
+          <div className="px-5 py-2.5 border-t border-gray-100 text-[13px] text-gray-500 tabular-nums font-medium">
             총 {quotes.length}건
           </div>
         )}

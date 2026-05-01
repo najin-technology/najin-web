@@ -35,8 +35,8 @@ export default async function InvitesPage() {
       <ListPageHeader title="관리자 초대" count={activeCount} />
 
       <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-blue-800">
-        <p className="font-medium mb-1">초대 링크 사용법</p>
-        <ol className="list-decimal list-inside space-y-0.5 text-blue-700/90 text-xs">
+        <p className="font-semibold mb-1.5">초대 링크 사용법</p>
+        <ol className="list-decimal list-inside space-y-1 text-blue-700/90 text-[13px] leading-relaxed">
           <li>아래 폼에서 초대 생성 → 링크 복사</li>
           <li>초대받을 사람에게 링크 전달 (이메일/메신저)</li>
           <li>받은 사람이 링크 열고 Google 또는 이메일로 가입</li>
@@ -75,18 +75,18 @@ export default async function InvitesPage() {
                     <tr key={row.id} className="hover:bg-gray-50/50">
                       <td className="px-4 py-3">
                         <span
-                          className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full border ${status.color}`}
+                          className={`inline-flex items-center gap-1 text-[13px] font-bold px-2 py-0.5 rounded-full border ${status.color}`}
                         >
-                          <StatusIcon className="w-3 h-3" />
+                          <StatusIcon className="w-3.5 h-3.5" />
                           {status.label}
                         </span>
                       </td>
                       <td className="px-4 py-3">
-                        <div className="font-medium text-gray-700">{row.email_hint || <span className="text-gray-400 italic">메모 없음</span>}</div>
-                        {row.notes && <div className="text-xs text-gray-400 mt-0.5">{row.notes}</div>}
+                        <div className="font-semibold text-brand-charcoal">{row.email_hint || <span className="text-gray-500 italic font-normal">메모 없음</span>}</div>
+                        {row.notes && <div className="text-[13px] text-gray-500 mt-0.5">{row.notes}</div>}
                       </td>
-                      <td className="px-4 py-3 text-gray-500 text-xs">{row.invited_by_email}</td>
-                      <td className="px-4 py-3 text-xs text-gray-500 tabular-nums">
+                      <td className="px-4 py-3 text-gray-600 text-[13px] font-medium">{row.invited_by_email}</td>
+                      <td className="px-4 py-3 text-[13px] text-gray-600 tabular-nums font-medium">
                         {new Date(row.expires_at).toLocaleString("ko-KR", {
                           year: "2-digit",
                           month: "2-digit",
@@ -95,17 +95,17 @@ export default async function InvitesPage() {
                           minute: "2-digit",
                         })}
                       </td>
-                      <td className="px-4 py-3 text-xs text-gray-500">
+                      <td className="px-4 py-3 text-[13px] text-gray-600">
                         {row.used_at ? (
                           <span>
-                            {row.used_by_email}
+                            <span className="font-medium">{row.used_by_email}</span>
                             <br />
-                            <span className="text-gray-400 tabular-nums">
+                            <span className="text-gray-500 tabular-nums">
                               {new Date(row.used_at).toLocaleString("ko-KR", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })}
                             </span>
                           </span>
                         ) : (
-                          <span className="text-gray-300">—</span>
+                          <span className="text-gray-400">—</span>
                         )}
                       </td>
                       <td className="px-4 py-3 text-right">
@@ -115,7 +115,7 @@ export default async function InvitesPage() {
                             <RevokeButton id={row.id} />
                           </div>
                         ) : (
-                          <span className="text-xs text-gray-300">—</span>
+                          <span className="text-[13px] text-gray-400">—</span>
                         )}
                       </td>
                     </tr>

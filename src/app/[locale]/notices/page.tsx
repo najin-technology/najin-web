@@ -50,8 +50,8 @@ export default async function NoticesPage() {
               className="text-center py-16 bg-white rounded-2xl border border-surface-warm-200"
               data-animate="fade-up"
             >
-              <FileText className="w-10 h-10 text-brand-charcoal/30 mx-auto mb-3" />
-              <p className="text-brand-charcoal/60">{t("noNotices")}</p>
+              <FileText className="w-10 h-10 text-brand-charcoal/40 mx-auto mb-3" />
+              <p className="text-brand-charcoal/75 font-medium">{t("noNotices")}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -68,12 +68,12 @@ export default async function NoticesPage() {
                       <FileText className="w-5 h-5 text-brand-copper" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-brand-navy mb-2 truncate">
+                      <h3 className="font-bold text-brand-navy mb-2 truncate">
                         {locale === "ko"
                           ? notice.title_ko
                           : notice.title_en || notice.title_ko}
                       </h3>
-                      <div className="flex items-center gap-1.5 text-sm text-brand-charcoal/60">
+                      <div className="flex items-center gap-1.5 text-sm text-brand-charcoal/75 font-medium">
                         <Calendar className="w-3.5 h-3.5" />
                         <span>
                           {notice.published_at

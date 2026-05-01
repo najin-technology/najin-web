@@ -140,7 +140,7 @@ export function WorkOrderForm({ order }: { order: WorkOrder }) {
       <Button
         type="submit"
         disabled={pending}
-        className="bg-brand-navy hover:bg-brand-navy-light text-white"
+        className="bg-brand-navy hover:bg-brand-navy-light text-white font-semibold"
       >
         {pending ? "저장 중..." : "변경사항 저장"}
       </Button>

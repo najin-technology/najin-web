@@ -22,11 +22,11 @@ export function SortableClientsPanel({ items }: { items: ClientCustomer[] }) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
-        <span className="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200">
+        <span className="inline-flex items-center text-[13px] font-bold px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200">
           거래처 그리드
         </span>
-        <span className="text-xs text-gray-500 tabular-nums">{items.length}개</span>
-        <span className="text-xs text-gray-400 ml-auto">← 좌측 핸들 드래그로 순서 변경 · 홈/포트폴리오 그리드에 즉시 반영</span>
+        <span className="text-[13px] text-gray-700 tabular-nums font-bold">{items.length}개</span>
+        <span className="text-xs text-gray-500 ml-auto font-medium">← 좌측 핸들 드래그로 순서 변경 · 홈/포트폴리오 그리드에 즉시 반영</span>
       </div>
       <SortableList
         items={items}
@@ -50,14 +50,14 @@ export function SortableClientsPanel({ items }: { items: ClientCustomer[] }) {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-baseline gap-2">
-                <Link href={`/admin/customers/${c.id}`} className="font-medium text-sm text-brand-navy hover:underline truncate">
+                <Link href={`/admin/customers/${c.id}`} className="font-semibold text-sm text-brand-navy hover:underline truncate">
                   {c.company_name}
                 </Link>
                 {c.name_en && c.name_en !== c.company_name && (
-                  <span className="text-xs text-gray-400 truncate">{c.name_en}</span>
+                  <span className="text-[13px] text-gray-500 truncate font-medium">{c.name_en}</span>
                 )}
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] text-gray-400 mt-0.5">
+              <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-0.5 font-medium">
                 <code className="font-mono">{c.client_slug}</code>
                 {c.display_category && (
                   <>
@@ -71,11 +71,11 @@ export function SortableClientsPanel({ items }: { items: ClientCustomer[] }) {
               <Link
                 href={`/ko/clients/${c.client_slug}`}
                 target="_blank"
-                className="text-[11px] text-gray-400 hover:text-brand-navy inline-flex items-center gap-1 flex-shrink-0"
+                className="text-xs text-gray-600 hover:text-brand-navy inline-flex items-center gap-1 flex-shrink-0 font-semibold"
                 title="공개 페이지 보기"
               >
                 공개
-                <ExternalLink className="w-3 h-3" />
+                <ExternalLink className="w-3.5 h-3.5" />
               </Link>
             )}
           </div>

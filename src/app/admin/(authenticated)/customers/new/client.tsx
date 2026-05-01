@@ -77,13 +77,13 @@ export function NewCustomerForm() {
       )}
 
       <div className="flex items-center justify-end gap-2 pt-2">
-        <Button type="submit" disabled={pending} className="bg-brand-navy hover:bg-brand-navy-light text-white">
+        <Button type="submit" disabled={pending} className="bg-brand-navy hover:bg-brand-navy-light text-white font-semibold">
           {pending ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : null}
           고객 등록
         </Button>
       </div>
 
-      <p className="text-xs text-gray-400 pt-2 border-t border-gray-100">
+      <p className="text-[13px] text-gray-600 font-medium pt-2 border-t border-gray-100 leading-relaxed">
         등록 후 상세 페이지에서 거래처 그리드 노출 설정·상태·태그 편집 가능.
       </p>
     </form>

@@ -117,9 +117,9 @@ export default function BusinessPage() {
               <a
                 key={cat.key}
                 href={`#${cat.key}`}
-                className="group flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-brand-charcoal rounded-lg transition-all hover:bg-brand-copper/10 hover:text-brand-copper"
+                className="group flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-brand-charcoal rounded-lg transition-all hover:bg-brand-copper/10 hover:text-brand-copper"
               >
-                <cat.icon className="w-4 h-4 text-brand-charcoal/40 group-hover:text-brand-copper transition-colors" />
+                <cat.icon className="w-4 h-4 text-brand-charcoal/55 group-hover:text-brand-copper transition-colors" />
                 {t(`${cat.key}.title`)}
               </a>
             ))}
@@ -149,7 +149,7 @@ export default function BusinessPage() {
                 </div>
 
                 {/* Description */}
-                <p className="text-brand-charcoal leading-relaxed text-base md:text-lg mb-8">
+                <p className="text-brand-charcoal/90 leading-relaxed text-base md:text-lg mb-8 font-medium">
                   {t(`${cat.key}.desc`)}
                 </p>
 

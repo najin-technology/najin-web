@@ -15,10 +15,10 @@ export default function AdminError({
       <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center mb-4">
         <AlertTriangle className="w-6 h-6 text-red-500" />
       </div>
-      <h2 className="text-base font-semibold text-gray-900 mb-1">
+      <h2 className="text-lg font-bold text-brand-charcoal mb-1.5">
         문제가 발생했습니다
       </h2>
-      <p className="text-sm text-gray-500 mb-6 text-center max-w-sm">
+      <p className="text-sm text-gray-600 mb-6 text-center max-w-sm font-medium leading-relaxed">
         {error.message ||
           "페이지를 불러오는 중 오류가 발생했습니다. 다시 시도해 주세요."}
       </p>

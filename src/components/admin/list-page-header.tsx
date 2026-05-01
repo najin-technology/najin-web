@@ -16,9 +16,9 @@ export function ListPageHeader({
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <h1 className="text-lg font-bold text-brand-navy">{title}</h1>
+        <h1 className="text-2xl font-bold text-brand-navy tracking-tight">{title}</h1>
         {count != null && count > 0 && (
-          <span className="text-xs text-gray-500 tabular-nums bg-gray-100 px-2 py-0.5 rounded-full">
+          <span className="text-sm text-gray-600 tabular-nums bg-gray-100 px-2.5 py-0.5 rounded-full font-medium">
             {count}건
           </span>
         )}

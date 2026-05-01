@@ -50,14 +50,14 @@ export default async function QuoteDetailPage({
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
               <div>
-                <h2 className="text-base font-semibold text-brand-navy">
+                <h2 className="text-lg font-bold text-brand-navy">
                   {quote.company_name}
                 </h2>
-                <p className="text-xs text-gray-400 mt-1">{quote.contact_name} · {quote.processing_type || "미지정"}</p>
+                <p className="text-[13px] text-gray-600 mt-1 font-medium">{quote.contact_name} · {quote.processing_type || "미지정"}</p>
               </div>
               <div className="flex items-center gap-2">
                 {quote.processing_type === "콜백요청" && (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[13px] font-bold bg-purple-100 text-purple-700">
                     📞 콜백
                   </span>
                 )}
@@ -99,7 +99,7 @@ export default async function QuoteDetailPage({
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               <div className="px-5 py-3.5 border-b border-gray-100">
                 <h2 className="text-sm font-semibold text-brand-navy">
-                  첨부파일 <span className="text-gray-500 font-normal ml-1">{attachments.length}</span>
+                  첨부파일 <span className="text-gray-600 font-bold tabular-nums ml-1">{attachments.length}</span>
                 </h2>
               </div>
               <div className="p-5 space-y-2">
@@ -116,14 +116,14 @@ export default async function QuoteDetailPage({
                           <Download className="w-4 h-4 text-blue-600 group-hover:text-blue-700" />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium text-gray-700 truncate">
+                          <p className="text-sm font-semibold text-brand-charcoal truncate">
                             {att.fileName}
-                            <span className="ml-1.5 text-[11px] uppercase font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded tracking-wider">
+                            <span className="ml-1.5 text-[11px] uppercase font-bold text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded tracking-wider">
                               {att.fileName.split(".").pop()}
                             </span>
                           </p>
                           {att.fileSize && (
-                            <p className="text-xs text-gray-400">{(att.fileSize / 1024).toFixed(0)} KB</p>
+                            <p className="text-[13px] text-gray-500 font-medium tabular-nums mt-0.5">{(att.fileSize / 1024).toFixed(0)} KB</p>
                           )}
                         </div>
                       </a>
@@ -132,7 +132,7 @@ export default async function QuoteDetailPage({
                         <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
                           <Download className="w-4 h-4 text-gray-400" />
                         </div>
-                        <p className="text-sm text-gray-400 min-w-0 truncate">{att.fileName} (다운로드 불가)</p>
+                        <p className="text-sm text-gray-500 min-w-0 truncate font-medium">{att.fileName} (다운로드 불가)</p>
                       </div>
                     )}
                   </div>
@@ -156,19 +156,19 @@ export default async function QuoteDetailPage({
               {existingWorkOrder ? (
                 <Link href={`/admin/work-orders/${existingWorkOrder.id}`} className="block group">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-xs text-brand-copper">
+                    <span className="font-mono text-sm text-brand-copper font-bold">
                       {existingWorkOrder.order_number}
                     </span>
                     <StatusBadge type="work_order" status={existingWorkOrder.status} />
                   </div>
-                  <p className="text-xs text-gray-500 group-hover:text-brand-navy inline-flex items-center gap-1">
+                  <p className="text-[13px] text-gray-600 font-semibold group-hover:text-brand-navy inline-flex items-center gap-1">
                     발주 상세 열기
-                    <ExternalLink className="w-3 h-3" />
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </p>
                 </Link>
               ) : (
                 <div className="space-y-3">
-                  <p className="text-xs text-gray-500">
+                  <p className="text-[13px] text-gray-600 font-medium leading-relaxed">
                     이 견적을 발주로 변환하면 상태 추적과 도면 관리가 가능합니다.
                   </p>
                   <Link href={`/admin/work-orders/new?from=${quote.id}`} className="block">

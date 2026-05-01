@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 
 function ToolBtn({ onClick, active, title, children }: { onClick: () => void; active?: boolean; title: string; children: React.ReactNode }) {
   return (
-    <Button type="button" variant="ghost" size="sm" onClick={onClick} title={title} aria-label={title} className={active ? "bg-gray-200" : ""}>
+    <Button type="button" variant="ghost" size="sm" onClick={onClick} title={title} aria-label={title} className={active ? "bg-brand-navy/10 text-brand-navy hover:bg-brand-navy/15" : "text-gray-700 hover:text-brand-navy"}>
       {children}
     </Button>
   );
@@ -138,7 +138,7 @@ export function TiptapEditor({
       <EditorContent editor={editor} />
 
       {/* Word/Char count */}
-      <div className="px-4 py-1.5 border-t border-gray-200 bg-gray-50 text-xs text-gray-400">
+      <div className="px-4 py-1.5 border-t border-gray-200 bg-gray-50 text-[13px] text-gray-600 font-medium tabular-nums">
         {charCount}자 · {wordCount}단어
       </div>
     </div>

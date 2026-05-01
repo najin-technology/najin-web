@@ -77,7 +77,7 @@ export function ProductForm({
       <FormStatusBar checked={isActive} onCheckedChange={setIsActive} />
 
       <div className="border-t border-gray-200 pt-5 mt-4">
-        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">기본 정보</p>
+        <p className="text-xs font-bold text-gray-600 uppercase tracking-[0.1em]">기본 정보</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -108,7 +108,7 @@ export function ProductForm({
       </div>
 
       <div className="border-t border-gray-200 pt-5 mt-4">
-        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">콘텐츠</p>
+        <p className="text-xs font-bold text-gray-600 uppercase tracking-[0.1em]">콘텐츠</p>
       </div>
 
       <Tabs value={tabValue} onValueChange={(v) => {
@@ -171,7 +171,7 @@ export function ProductForm({
       </Tabs>
 
       <div className="border-t border-gray-200 pt-5 mt-4">
-        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">미디어</p>
+        <p className="text-xs font-bold text-gray-600 uppercase tracking-[0.1em]">미디어</p>
       </div>
 
       {/* Image Management */}
@@ -206,9 +206,9 @@ export function ProductForm({
 
         {/* New image upload */}
         <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-brand-navy/30 hover:bg-gray-50/50 transition-colors">
-          <Upload className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-          <p className="text-sm text-gray-500 mb-1">이미지를 드래그하거나 클릭하여 업로드</p>
-          <p className="text-xs text-gray-400 mb-3">JPG, PNG, WebP (최대 5MB)</p>
+          <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+          <p className="text-sm text-gray-700 font-semibold mb-1">이미지를 드래그하거나 클릭하여 업로드</p>
+          <p className="text-[13px] text-gray-600 mb-3 font-medium">JPG, PNG, WebP (최대 5MB)</p>
           <Input
             name="images"
             type="file"
@@ -223,7 +223,7 @@ export function ProductForm({
         <Button
           type="submit"
           disabled={pending}
-          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px]"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px] font-semibold"
         >
           {pending
             ? "저장 중..."

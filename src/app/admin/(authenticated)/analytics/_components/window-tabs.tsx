@@ -17,10 +17,10 @@ export function WindowTabs({ active }: { active: TimeWindow }) {
             key={t.key}
             href={`/admin/analytics?win=${t.key}`}
             prefetch={false}
-            className={`px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-150 ${
+            className={`px-4 py-2 text-[13px] font-semibold rounded-full transition-all duration-150 ${
               isActive
                 ? "bg-white text-brand-navy shadow-sm"
-                : "text-gray-500 hover:text-brand-navy"
+                : "text-gray-600 hover:text-brand-navy"
             }`}
           >
             {t.label}

@@ -79,7 +79,7 @@ export default async function PortfolioPage() {
             {t("clientsTitle")}
           </h2>
           <p
-            className="text-brand-charcoal mb-10 text-lg"
+            className="text-brand-charcoal/90 mb-10 text-lg font-medium leading-relaxed"
             data-animate="fade-up"
             data-animate-delay="1"
           >
@@ -113,11 +113,11 @@ export default async function PortfolioPage() {
                     unoptimized
                   />
                 </div>
-                <p className="font-semibold text-brand-navy text-sm">
+                <p className="font-bold text-brand-navy text-sm">
                   {client.name}
                 </p>
                 {client.nameEn && client.name !== client.nameEn && (
-                  <p className="text-xs text-brand-charcoal/60 mt-1">{client.nameEn}</p>
+                  <p className="text-[13px] text-brand-charcoal/70 mt-1 font-medium">{client.nameEn}</p>
                 )}
               </Link>
             ))}
@@ -135,7 +135,7 @@ export default async function PortfolioPage() {
             {t("caseStudiesTitle")}
           </h2>
           <p
-            className="text-brand-charcoal/70 mb-10"
+            className="text-brand-charcoal/85 mb-10 font-medium leading-relaxed"
             data-animate="fade-up"
             data-animate-delay="1"
           >
@@ -189,12 +189,12 @@ export default async function PortfolioPage() {
                   </div>
                 </div>
                 <div className="p-5">
-                  <p className="text-xs text-brand-copper font-semibold mb-1">{t(cs.clientKey)}</p>
+                  <p className="text-[13px] text-brand-copper font-bold mb-1 uppercase tracking-wide">{t(cs.clientKey)}</p>
                   <h3 className="font-bold text-brand-navy mb-2">{t(cs.titleKey)}</h3>
-                  <p className="text-sm text-brand-charcoal/70 mb-3 leading-relaxed">{t(cs.descKey)}</p>
+                  <p className="text-sm text-brand-charcoal/80 mb-3 leading-relaxed font-medium">{t(cs.descKey)}</p>
                   <div className="bg-white rounded-lg p-3 border border-surface-warm-200">
-                    <p className="text-xs text-brand-charcoal/60 mb-0.5">{t("caseResult")}</p>
-                    <p className="text-sm font-semibold text-brand-navy">{t(cs.resultKey)}</p>
+                    <p className="text-xs text-brand-charcoal/70 mb-0.5 font-bold uppercase tracking-wide">{t("caseResult")}</p>
+                    <p className="text-sm font-bold text-brand-navy">{t(cs.resultKey)}</p>
                   </div>
                 </div>
               </div>
@@ -213,7 +213,7 @@ export default async function PortfolioPage() {
             {t("galleryTitle")}
           </h2>
           <p
-            className="text-brand-charcoal/60 mb-8"
+            className="text-brand-charcoal/85 mb-8 font-medium"
             data-animate="fade-up"
             data-animate-delay="1"
           >

@@ -39,9 +39,9 @@ export function CsvExportButton({
       variant="outline"
       size="sm"
       onClick={handleExport}
-      className="gap-1.5 text-gray-600"
+      className="gap-1.5 text-gray-700 font-semibold"
     >
-      <Download className="w-3.5 h-3.5" />
+      <Download className="w-4 h-4" />
       CSV
     </Button>
   );

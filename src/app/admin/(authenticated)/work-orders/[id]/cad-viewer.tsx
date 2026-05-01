@@ -173,23 +173,24 @@ export function CadViewer({ url, fileName, ext, onClose }: Props) {
       >
         <div className="flex items-center justify-between px-5 py-3 border-b border-gray-200">
           <div className="min-w-0">
-            <p className="font-mono text-sm font-semibold text-brand-navy truncate">{fileName}</p>
-            <p className="text-[11px] text-gray-400 uppercase tracking-widest">{ext} 미리보기</p>
+            <p className="font-mono text-sm font-bold text-brand-navy truncate">{fileName}</p>
+            <p className="text-xs text-gray-600 uppercase tracking-widest font-bold">{ext} 미리보기</p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label="미리보기 닫기"
+            className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 hover:text-brand-charcoal transition-colors"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-5 h-5" />
           </button>
         </div>
         <div className="flex-1 relative overflow-hidden rounded-b-2xl">
           {loading && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-surface-warm-50">
-              <Loader2 className="w-6 h-6 text-brand-copper animate-spin" />
-              <p className="text-xs text-gray-500">미리보기 로드 중...</p>
-              <p className="text-[10px] text-gray-400">큰 파일은 시간이 걸릴 수 있습니다</p>
+              <Loader2 className="w-7 h-7 text-brand-copper animate-spin" />
+              <p className="text-sm text-gray-700 font-semibold">미리보기 로드 중...</p>
+              <p className="text-xs text-gray-500 font-medium">큰 파일은 시간이 걸릴 수 있습니다</p>
             </div>
           )}
           {error && (

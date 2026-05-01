@@ -180,7 +180,7 @@ export default async function AnalyticsPage({
 
       {/* 리드 인텔리전스 (Tier 1) */}
       <section className="space-y-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
           리드 인텔리전스
         </h2>
         <HotVisitors visitors={hotVisitors} />
@@ -188,7 +188,7 @@ export default async function AnalyticsPage({
 
       {/* 추이 + 유입 */}
       <section className="space-y-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
           방문 흐름
         </h2>
         <VisitorChart data={dailyTrend} win={win} />
@@ -202,7 +202,7 @@ export default async function AnalyticsPage({
 
       {/* 패턴: 요일/시간 + 지역 */}
       <section className="space-y-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
           패턴
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -215,7 +215,7 @@ export default async function AnalyticsPage({
 
       {/* 콘텐츠 + 견적 퍼널 */}
       <section className="space-y-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
           콘텐츠와 전환
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -234,13 +234,13 @@ export default async function AnalyticsPage({
 
       {/* 실시간 */}
       <section className="space-y-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+        <h2 className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">
           실시간
         </h2>
         <RecentFeed visits={recent} />
       </section>
 
-      <footer className="pt-2 flex flex-wrap items-center justify-between gap-3 text-[11px] text-gray-400">
+      <footer className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-600 font-medium">
         <span className="uppercase tracking-[0.1em]">
           자체 수집 · 익명 세션 해시 · 서울 시간 기준
         </span>
@@ -248,7 +248,7 @@ export default async function AnalyticsPage({
           href="https://vercel.com/dashboard"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-brand-navy transition-colors"
+          className="hover:text-brand-navy transition-colors font-semibold"
         >
           Vercel 성능 대시보드 →
         </a>

@@ -57,7 +57,7 @@ export default async function WorkOrdersPage({
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <ViewTabs active={view} />
-        <p className="text-xs text-gray-400">
+        <p className="text-[13px] text-gray-600 font-medium">
           견적 → 가공 → 출하 진행 상태를 한곳에서 관리합니다.
         </p>
       </div>

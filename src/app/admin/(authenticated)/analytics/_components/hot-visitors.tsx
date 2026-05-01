@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, Flame, ChevronRight, CheckCircle2, Smartphone, Monitor, Tablet } from "lucide-react";
+import { Building2, Flame, ChevronRight, CheckCircle2 } from "lucide-react";
 import { type HotVisitor, formatRelativeKo } from "@/lib/analytics/queries";
 
 function stripLocale(path: string | null): string {
@@ -23,20 +23,20 @@ export function HotVisitors({ visitors }: { visitors: HotVisitor[] }) {
       <div className="flex flex-wrap items-baseline justify-between gap-3 mb-5">
         <div className="flex items-center gap-2">
           <Flame className="w-4 h-4 text-brand-copper" strokeWidth={2} />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
             주목할 방문자 · 최근 7일
           </p>
         </div>
-        <p className="text-xs text-gray-400">
+        <p className="text-[13px] text-gray-600 font-medium">
           행동 패턴 · 재방문 · 회사 식별 · 업무시간 방문을 종합한 리드 점수
         </p>
       </div>
 
       {visitors.length === 0 ? (
         <div className="py-10 text-center">
-          <Building2 className="w-8 h-8 text-gray-300 mx-auto mb-3" strokeWidth={1.5} />
-          <p className="text-sm text-gray-400">아직 주목할 방문자가 없습니다.</p>
-          <p className="text-xs text-gray-300 mt-1">데이터가 쌓이면 자동으로 표시됩니다.</p>
+          <Building2 className="w-9 h-9 text-gray-400 mx-auto mb-3" strokeWidth={1.5} />
+          <p className="text-sm text-gray-600 font-medium">아직 주목할 방문자가 없습니다.</p>
+          <p className="text-[13px] text-gray-500 mt-1 font-medium">데이터가 쌓이면 자동으로 표시됩니다.</p>
         </div>
       ) : (
         <ul className="divide-y divide-gray-100">
@@ -56,7 +56,7 @@ export function HotVisitors({ visitors }: { visitors: HotVisitor[] }) {
                     <span className={`text-xl font-bold tabular-nums tracking-tight ${tone.text} leading-none`}>
                       {v.score}
                     </span>
-                    <span className="text-[9px] font-semibold uppercase tracking-widest text-gray-400 mt-1">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mt-1">
                       점수
                     </span>
                   </div>
@@ -72,25 +72,25 @@ export function HotVisitors({ visitors }: { visitors: HotVisitor[] }) {
                         <span className="text-sm font-medium text-gray-500">익명 방문자</span>
                       )}
                       {v.submitted && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                          <CheckCircle2 className="w-3 h-3" />
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                          <CheckCircle2 className="w-3.5 h-3.5" />
                           견적 제출
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-gray-500 mb-1 font-mono truncate">
+                    <p className="text-[13px] text-gray-600 mb-1 font-mono truncate">
                       최근: {stripLocale(v.sample_path)}
                     </p>
-                    <div className="flex items-center gap-3 text-[11px] text-gray-400">
+                    <div className="flex items-center gap-2 text-[13px] text-gray-600 font-medium">
                       <span className="tabular-nums">{v.visit_count}회 방문</span>
-                      <span>·</span>
+                      <span className="text-gray-400">·</span>
                       <span className="truncate">{loc}</span>
-                      <span>·</span>
+                      <span className="text-gray-400">·</span>
                       <span>{formatRelativeKo(new Date(v.last_seen))}</span>
                     </div>
                   </div>
 
-                  <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-brand-navy transition-colors flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-brand-navy transition-colors flex-shrink-0" />
                 </Link>
               </li>
             );
@@ -98,7 +98,7 @@ export function HotVisitors({ visitors }: { visitors: HotVisitor[] }) {
         </ul>
       )}
 
-      <p className="mt-4 pt-3 border-t border-gray-100 text-[11px] text-gray-400">
+      <p className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-500 leading-relaxed">
         점수 규칙: 업무영역 +3 · 포트폴리오 +5 · 제작사례 +3 · 견적페이지 +10 · 재방문 +10 · 회사 식별 +20 · 업무시간 +3 · 제출 완료 +50
       </p>
     </div>

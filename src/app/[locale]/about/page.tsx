@@ -87,7 +87,7 @@ export default async function AboutPage() {
             >
               &ldquo;
             </span>
-            <div className="relative text-brand-charcoal leading-relaxed whitespace-pre-line text-base md:text-lg">
+            <div className="relative text-brand-charcoal/90 leading-relaxed whitespace-pre-line text-base md:text-lg font-medium">
               {t("ceoContent")}
             </div>
             <p className="mt-6 text-right text-brand-navy font-bold">
@@ -113,7 +113,7 @@ export default async function AboutPage() {
               <h3 className="text-xl md:text-2xl font-bold mb-4">
                 {t("visionTitle")}
               </h3>
-              <p className="text-white/70 leading-relaxed text-lg">
+              <p className="text-white/90 leading-relaxed text-lg font-medium">
                 {t("visionContent")}
               </p>
             </div>
@@ -129,7 +129,7 @@ export default async function AboutPage() {
               <h3 className="text-xl md:text-2xl font-bold text-brand-navy mb-4">
                 {t("missionTitle")}
               </h3>
-              <p className="text-brand-charcoal leading-relaxed">
+              <p className="text-brand-charcoal/90 leading-relaxed font-medium">
                 {t("missionContent")}
               </p>
             </div>
@@ -160,11 +160,11 @@ export default async function AboutPage() {
                 >
                   {/* Year */}
                   <div className="flex-shrink-0 w-[80px] md:w-[120px] text-right pr-5 md:pr-7 relative">
-                    <span className="text-lg md:text-xl font-bold text-brand-navy">
+                    <span className="text-lg md:text-xl font-bold text-brand-navy tabular-nums">
                       {item.year}
                     </span>
                     {item.month && (
-                      <span className="text-sm text-brand-charcoal/60 ml-0.5">
+                      <span className="text-sm text-brand-charcoal/75 ml-0.5 font-semibold tabular-nums">
                         .{String(item.month).padStart(2, "0")}
                       </span>
                     )}
@@ -174,7 +174,7 @@ export default async function AboutPage() {
 
                   {/* Description */}
                   <div className="flex-1 bg-white rounded-lg p-4 border border-surface-warm-200 shadow-sm">
-                    <p className="text-brand-charcoal">
+                    <p className="text-brand-charcoal/90 font-medium leading-relaxed">
                       {locale === "ko"
                         ? item.description_ko
                         : item.description_en || item.description_ko}
@@ -232,11 +232,11 @@ export default async function AboutPage() {
                   <cert.icon className="w-6 h-6 text-brand-copper" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-brand-navy">
+                  <h3 className="font-bold text-brand-navy">
                     {cert.title}
                   </h3>
-                  <p className="text-sm text-brand-charcoal/70 mt-1">{cert.desc}</p>
-                  <p className="text-xs text-brand-charcoal/60 mt-1.5">{cert.year}</p>
+                  <p className="text-sm text-brand-charcoal/80 mt-1 font-medium leading-relaxed">{cert.desc}</p>
+                  <p className="text-[13px] text-brand-charcoal/70 mt-1.5 font-semibold tabular-nums">{cert.year}</p>
                 </div>
               </div>
             ))}
@@ -263,7 +263,7 @@ export default async function AboutPage() {
             <div className="w-10 h-10 rounded-full bg-brand-copper/10 flex items-center justify-center shrink-0 mt-0.5">
               <MapPin className="w-5 h-5 text-brand-copper" />
             </div>
-            <p className="text-brand-charcoal text-lg leading-relaxed">
+            <p className="text-brand-charcoal/90 text-lg leading-relaxed font-medium">
               {t("mapAddress")}
             </p>
           </div>
@@ -297,8 +297,8 @@ export default async function AboutPage() {
                 <Phone className="w-4 h-4 text-brand-copper" />
               </div>
               <div>
-                <span className="text-xs text-brand-charcoal/60 uppercase tracking-wide">TEL</span>
-                <p className="text-brand-charcoal font-medium">055-367-2596</p>
+                <span className="text-xs text-brand-charcoal/70 uppercase tracking-wide font-bold">TEL</span>
+                <p className="text-brand-charcoal font-bold tabular-nums">055-367-2596</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -306,8 +306,8 @@ export default async function AboutPage() {
                 <Printer className="w-4 h-4 text-brand-copper" />
               </div>
               <div>
-                <span className="text-xs text-brand-charcoal/60 uppercase tracking-wide">FAX</span>
-                <p className="text-brand-charcoal font-medium">055-367-2597</p>
+                <span className="text-xs text-brand-charcoal/70 uppercase tracking-wide font-bold">FAX</span>
+                <p className="text-brand-charcoal font-semibold tabular-nums">055-367-2597</p>
               </div>
             </div>
           </div>

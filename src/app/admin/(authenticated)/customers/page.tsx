@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/table";
 import { Building2, Phone, Mail, Tag } from "lucide-react";
 import { SortableClientsPanel } from "./sortable-clients";
-import { getStatusStyle, CUSTOMER_STATUS_STYLES } from "@/lib/status-colors";
+import { CUSTOMER_STATUS_STYLES } from "@/lib/status-colors";
+import { StatusBadge } from "@/components/admin/status-badge";
 
 export const metadata = { title: "고객 관리", description: "고객 통합 관리", robots: "noindex, nofollow" };
 
@@ -162,48 +163,41 @@ export default async function CustomersPage({
                       <HighlightText text={c.display_name || c.company_name} query={searchQuery} />
                     </Link>
                     {c.client_slug && (
-                      <span className="ml-2 text-[10px] font-medium px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 border border-blue-200">
+                      <span className="ml-2 text-[11px] font-semibold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
                         거래처
                       </span>
                     )}
                   </TableCell>
-                  <TableCell data-label="담당자" className="text-sm">
+                  <TableCell data-label="담당자" className="text-sm font-medium">
                     {c.primary_contact_name ? (
                       <HighlightText text={c.primary_contact_name} query={searchQuery} />
                     ) : (
-                      <span className="text-gray-300">—</span>
+                      <span className="text-gray-400">—</span>
                     )}
                   </TableCell>
-                  <TableCell data-label="연락처" className="text-xs text-gray-500">
+                  <TableCell data-label="연락처" className="text-[13px] text-gray-700 font-medium">
                     {c.primary_contact_phone && (
-                      <div className="flex items-center gap-1">
-                        <Phone className="w-3 h-3" />
+                      <div className="flex items-center gap-1.5 tabular-nums">
+                        <Phone className="w-3.5 h-3.5 text-gray-500" />
                         {c.primary_contact_phone}
                       </div>
                     )}
                     {c.primary_contact_email && (
-                      <div className="flex items-center gap-1">
-                        <Mail className="w-3 h-3" />
+                      <div className="flex items-center gap-1.5">
+                        <Mail className="w-3.5 h-3.5 text-gray-500" />
                         {c.primary_contact_email}
                       </div>
                     )}
                   </TableCell>
                   <TableCell data-label="출처">
-                    <span className="text-xs text-gray-500 px-1.5 py-0.5 rounded bg-gray-50">
+                    <span className="text-[13px] text-gray-700 px-2 py-0.5 rounded bg-gray-100 font-semibold">
                       {SOURCE_LABELS[c.source] || c.source}
                     </span>
                   </TableCell>
                   <TableCell data-label="상태">
-                    {(() => {
-                      const s = getStatusStyle("customer", c.status);
-                      return (
-                        <span className={`inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-full ${s.bg} ${s.text}`}>
-                          {c.status}
-                        </span>
-                      );
-                    })()}
+                    <StatusBadge status={c.status} type="customer" />
                   </TableCell>
-                  <TableCell data-label="등록일" className="text-sm text-gray-500 tabular-nums">
+                  <TableCell data-label="등록일" className="text-sm text-gray-600 tabular-nums font-medium">
                     {new Date(c.created_at).toLocaleDateString("ko-KR")}
                   </TableCell>
                 </TableRow>
@@ -212,8 +206,8 @@ export default async function CustomersPage({
           </TableBody>
         </Table>
         {list.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums flex items-center gap-3">
-            <Tag className="w-3 h-3" />총 {list.length}명
+          <div className="px-5 py-2.5 border-t border-gray-100 text-[13px] text-gray-600 tabular-nums flex items-center gap-2 font-medium">
+            <Tag className="w-3.5 h-3.5" />총 <span className="font-bold text-brand-charcoal">{list.length}</span>명
           </div>
         )}
       </div>

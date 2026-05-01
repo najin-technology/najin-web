@@ -46,7 +46,7 @@ export function BulkSelectBar({
         {labelPrefix} {selectedCount}건
       </span>
       <div className="h-4 w-px bg-white/20" />
-      <span className="text-xs text-white/70 mr-1">상태 일괄 변경:</span>
+      <span className="text-[13px] text-white/80 mr-1">상태 일괄 변경:</span>
       <div className="flex flex-wrap gap-1.5">
         {statusOptions.map((s) => (
           <Button
@@ -54,7 +54,7 @@ export function BulkSelectBar({
             size="sm"
             disabled={pending}
             onClick={() => handleSelect(s)}
-            className="bg-white/10 hover:bg-white/20 text-white h-7 px-2.5 text-xs"
+            className="bg-white/10 hover:bg-white/20 text-white h-8 px-3 text-[13px] font-semibold"
           >
             {s}
           </Button>

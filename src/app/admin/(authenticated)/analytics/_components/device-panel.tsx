@@ -14,8 +14,8 @@ export function DevicePanel({ split }: { split: DeviceSplit }) {
   return (
     <div className="bg-white border border-gray-200/80 rounded-2xl p-6 h-full">
       <div className="flex items-center gap-2 mb-5">
-        <div className="w-1 h-1 rounded-full bg-brand-copper" />
-        <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+        <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
           기기 분포
         </p>
       </div>
@@ -23,11 +23,11 @@ export function DevicePanel({ split }: { split: DeviceSplit }) {
       <div className="flex items-baseline gap-3 mb-6">
         <primary.icon className="w-7 h-7 text-brand-navy" strokeWidth={1.5} />
         <div>
-          <p className="text-4xl font-semibold tabular-nums tracking-tight text-brand-navy leading-none">
+          <p className="text-4xl font-bold tabular-nums tracking-tight text-brand-navy leading-none">
             {primary.pct}
-            <span className="text-xl font-normal text-gray-400 ml-0.5">%</span>
+            <span className="text-xl font-medium text-gray-500 ml-0.5">%</span>
           </p>
-          <p className="text-xs text-gray-400 mt-1.5">주 이용: {primary.label}</p>
+          <p className="text-[13px] text-gray-600 mt-1.5 font-semibold">주 이용: {primary.label}</p>
         </div>
       </div>
 
@@ -35,9 +35,9 @@ export function DevicePanel({ split }: { split: DeviceSplit }) {
         {cells.map((c) => (
           <div key={c.label} className="flex items-center gap-3 text-sm">
             <c.icon className="w-4 h-4 text-gray-400 flex-shrink-0" strokeWidth={1.5} />
-            <span className="text-brand-charcoal flex-1">{c.label}</span>
-            <span className="tabular-nums text-gray-500 font-medium">{c.count.toLocaleString("ko-KR")}</span>
-            <span className="tabular-nums text-xs text-gray-400 min-w-[3.5ch] text-right">
+            <span className="text-brand-charcoal flex-1 font-medium">{c.label}</span>
+            <span className="tabular-nums text-brand-navy font-semibold">{c.count.toLocaleString("ko-KR")}</span>
+            <span className="tabular-nums text-[13px] text-gray-500 min-w-[3.5ch] text-right">
               {c.pct}%
             </span>
           </div>

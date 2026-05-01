@@ -57,8 +57,8 @@ export default async function CareersPage() {
               className="text-center py-16 bg-white rounded-2xl border border-surface-warm-200"
               data-animate="fade-up"
             >
-              <Briefcase className="w-10 h-10 text-brand-charcoal/30 mx-auto mb-3" />
-              <p className="text-brand-charcoal/60">{t("noOpenings")}</p>
+              <Briefcase className="w-10 h-10 text-brand-charcoal/40 mx-auto mb-3" />
+              <p className="text-brand-charcoal/75 font-medium">{t("noOpenings")}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -93,27 +93,29 @@ export default async function CareersPage() {
                           <Briefcase className="w-4 h-4 text-brand-copper" />
                         </div>
                         <div>
-                          <h3 className="font-semibold text-brand-navy">
+                          <h3 className="font-bold text-brand-navy">
                             {title}
                           </h3>
                           <div className="flex flex-wrap gap-2 mt-2">
                             {job.department && (
-                              <span className="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-brand-blue bg-blue-50 rounded-full">
+                              <span className="inline-flex items-center px-2.5 py-0.5 text-[13px] font-bold text-brand-blue bg-blue-50 rounded-full">
                                 {job.department}
                               </span>
                             )}
                             {job.employment_type && (
-                              <span className="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-brand-copper bg-brand-copper/10 rounded-full">
+                              <span className="inline-flex items-center px-2.5 py-0.5 text-[13px] font-bold text-brand-copper bg-brand-copper/10 rounded-full">
                                 {job.employment_type}
                               </span>
                             )}
                             {job.deadline && (
-                              <span className="inline-flex items-center gap-1 text-xs text-brand-charcoal/60">
-                                <Clock className="w-3 h-3" />
+                              <span className="inline-flex items-center gap-1 text-[13px] text-brand-charcoal/75 font-medium">
+                                <Clock className="w-3.5 h-3.5" />
                                 {t("deadlineLabel")}:{" "}
+                                <span className="tabular-nums font-semibold">
                                 {new Date(job.deadline).toLocaleDateString(
                                   locale === "ko" ? "ko-KR" : locale === "zh" ? "zh-CN" : "en-US"
                                 )}
+                                </span>
                               </span>
                             )}
                           </div>
@@ -123,26 +125,26 @@ export default async function CareersPage() {
                     </summary>
                     <div className="px-6 pb-6 space-y-4 border-t border-surface-warm-200 pt-4 ml-12">
                       {description && (
-                        <div className="text-sm text-brand-charcoal whitespace-pre-line">
+                        <div className="text-sm text-brand-charcoal/90 whitespace-pre-line font-medium leading-relaxed">
                           {description}
                         </div>
                       )}
                       {requirements && (
                         <div>
-                          <h4 className="text-sm font-semibold text-brand-navy mb-1">
+                          <h4 className="text-sm font-bold text-brand-navy mb-1.5">
                             {t("requirements")}
                           </h4>
-                          <p className="text-sm text-brand-charcoal whitespace-pre-line">
+                          <p className="text-sm text-brand-charcoal/90 whitespace-pre-line font-medium leading-relaxed">
                             {requirements}
                           </p>
                         </div>
                       )}
                       {benefits && (
                         <div>
-                          <h4 className="text-sm font-semibold text-brand-navy mb-1">
+                          <h4 className="text-sm font-bold text-brand-navy mb-1.5">
                             {t("benefits")}
                           </h4>
-                          <p className="text-sm text-brand-charcoal whitespace-pre-line">
+                          <p className="text-sm text-brand-charcoal/90 whitespace-pre-line font-medium leading-relaxed">
                             {benefits}
                           </p>
                         </div>
@@ -163,7 +165,7 @@ export default async function CareersPage() {
             <h2 className="text-2xl font-bold text-brand-navy mb-2">
               {t("applyTitle")}
             </h2>
-            <p className="text-brand-charcoal mb-8">{t("applyDesc")}</p>
+            <p className="text-brand-charcoal/90 mb-8 font-medium leading-relaxed">{t("applyDesc")}</p>
           </div>
           <div
             className="bg-surface-warm-50 rounded-2xl border border-surface-warm-200 p-8"

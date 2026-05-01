@@ -53,7 +53,7 @@ export function JobPostingForm({
       <FormStatusBar checked={isActive} onCheckedChange={setIsActive} />
 
       <div className="border-t border-gray-200 pt-5 mt-4">
-        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">기본 정보</p>
+        <p className="text-xs font-bold text-gray-600 uppercase tracking-[0.1em]">기본 정보</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -87,7 +87,7 @@ export function JobPostingForm({
       </div>
 
       <div className="border-t border-gray-200 pt-5 mt-4">
-        <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">콘텐츠</p>
+        <p className="text-xs font-bold text-gray-600 uppercase tracking-[0.1em]">콘텐츠</p>
       </div>
 
       <Tabs value={tabValue} onValueChange={(v) => {
@@ -193,7 +193,7 @@ export function JobPostingForm({
         <Button
           type="submit"
           disabled={pending}
-          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px]"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px] font-semibold"
         >
           {pending
             ? "저장 중..."

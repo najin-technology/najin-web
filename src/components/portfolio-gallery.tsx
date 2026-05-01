@@ -43,10 +43,10 @@ export function PortfolioGallery({
             <button
               key={cat.key}
               onClick={() => setFilter(cat.key)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 isActive
                   ? "bg-brand-navy text-white"
-                  : "bg-white text-brand-charcoal/70 border border-surface-warm-200 hover:bg-surface-warm-50"
+                  : "bg-white text-brand-charcoal/85 border border-surface-warm-200 hover:bg-surface-warm-50 hover:text-brand-navy"
               }`}
             >
               {locale === "ko" ? cat.label : cat.labelEn}
