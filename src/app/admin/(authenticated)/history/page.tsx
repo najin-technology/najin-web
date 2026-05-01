@@ -17,9 +17,9 @@ export default async function HistoryPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <h1 className="text-lg font-bold text-brand-navy">연혁 관리</h1>
+        <h1 className="text-2xl font-bold text-brand-navy tracking-tight">연혁 관리</h1>
         {items && items.length > 0 && (
-          <span className="text-xs text-gray-400 tabular-nums">{items.length}건</span>
+          <span className="text-sm text-gray-700 tabular-nums bg-gray-100 px-2.5 py-0.5 rounded-full font-semibold">{items.length}건</span>
         )}
       </div>
 

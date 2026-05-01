@@ -63,7 +63,7 @@ export function SearchFilterBar({
           defaultValue={currentQuery}
           onChange={(e) => handleSearch(e.target.value)}
           aria-label={searchPlaceholder}
-          className="h-9 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-8 text-sm transition-all placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40"
+          className="h-10 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-8 text-sm transition-all placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40"
         />
         {currentQuery && (
           <button
@@ -83,10 +83,10 @@ export function SearchFilterBar({
               defaultValue={searchParams.get(filter.key) || ""}
               onChange={(e) => updateParams(filter.key, e.target.value)}
               aria-label={filter.label}
-              className={`h-9 rounded-lg border bg-white pl-3 pr-8 text-sm transition-all appearance-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40 ${
+              className={`h-10 rounded-lg border bg-white pl-3 pr-8 text-sm transition-all appearance-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40 ${
                 isFiltered
-                  ? "border-brand-navy/30 text-brand-navy font-medium"
-                  : "border-gray-200 text-gray-600"
+                  ? "border-brand-navy/30 text-brand-navy font-semibold"
+                  : "border-gray-200 text-gray-700 font-medium"
               }`}
             >
               <option value="">{filter.label}</option>
@@ -96,7 +96,7 @@ export function SearchFilterBar({
                 </option>
               ))}
             </select>
-            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
           </div>
         );
       })}
@@ -106,8 +106,8 @@ export function SearchFilterBar({
         </div>
       )}
       {currentQuery && resultCount != null && (
-        <span className="text-xs text-gray-400 tabular-nums">
-          {resultCount}건
+        <span className="text-sm text-gray-700 tabular-nums font-semibold">
+          <span className="text-brand-charcoal font-bold">{resultCount}</span>건
         </span>
       )}
     </div>

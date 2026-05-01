@@ -17,7 +17,8 @@
     "privacy": "Privacy Policy",
     "ctaTitle": "Need a Quote?",
     "ctaDesc": "Send us your drawings and we'll reply as soon as possible.",
-    "collaborationWith": "Collaboration with"
+    "collaborationWith": "Collaboration with",
+    "menuToggle": "Toggle menu"
   },
   "callback": {
     "title": "Request a Callback",

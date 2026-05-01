@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { requireAdmin } from "@/lib/auth";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
-import { Building2, Phone, Mail, Calendar, FileText, Users, ExternalLink, Tag } from "lucide-react";
+import { Building2, Phone, Mail, Calendar, Users, ExternalLink, Tag } from "lucide-react";
 import { CustomerStatusForm, CustomerNotesForm, CustomerDisplayForm } from "./client";
-import { getStatusStyle } from "@/lib/status-colors";
+import { StatusBadge } from "@/components/admin/status-badge";
 
 export const metadata = { title: "고객 상세", robots: "noindex, nofollow" };
 
@@ -117,30 +117,23 @@ export default async function CustomerDetailPage({
                 <Building2 className="w-6 h-6" />
               </div>
               <div className="flex-1 min-w-0">
-                <h2 className="text-lg font-bold text-brand-navy">
+                <h2 className="text-xl font-bold text-brand-navy tracking-tight">
                   {customer.display_name || customer.company_name}
                 </h2>
-                <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                  {(() => {
-                    const s = getStatusStyle("customer", customer.status);
-                    return (
-                      <span className={`inline-flex items-center font-medium px-2 py-0.5 rounded-full ${s.bg} ${s.text}`}>
-                        {customer.status}
-                      </span>
-                    );
-                  })()}
-                  <span>·</span>
+                <div className="flex items-center gap-2 mt-2 text-[13px] text-gray-600">
+                  <StatusBadge status={customer.status} type="customer" />
+                  <span className="text-gray-400">·</span>
                   <span>{SOURCE_LABELS[customer.source] || customer.source}</span>
                   {customer.client_slug && (
                     <>
-                      <span>·</span>
+                      <span className="text-gray-400">·</span>
                       <Link
                         href={`/ko/clients/${customer.client_slug}`}
                         target="_blank"
-                        className="inline-flex items-center gap-1 text-blue-600 hover:underline"
+                        className="inline-flex items-center gap-1 text-blue-600 hover:underline font-medium"
                       >
                         거래처 페이지
-                        <ExternalLink className="w-3 h-3" />
+                        <ExternalLink className="w-3.5 h-3.5" />
                       </Link>
                     </>
                   )}
@@ -163,9 +156,9 @@ export default async function CustomerDetailPage({
 
             {customer.tags && customer.tags.length > 0 && (
               <div className="mt-4 flex items-center gap-1.5 flex-wrap">
-                <Tag className="w-3.5 h-3.5 text-gray-400" />
+                <Tag className="w-3.5 h-3.5 text-gray-500" />
                 {customer.tags.map((t: string) => (
-                  <span key={t} className="text-xs text-gray-600 bg-gray-100 px-2 py-0.5 rounded-full">
+                  <span key={t} className="text-[13px] text-gray-700 font-medium bg-gray-100 px-2 py-0.5 rounded-full">
                     {t}
                   </span>
                 ))}
@@ -177,7 +170,7 @@ export default async function CustomerDetailPage({
           <div className="bg-white rounded-xl border border-gray-200 p-5">
             <h3 className="text-sm font-semibold text-brand-navy mb-4">활동 타임라인</h3>
             {timeline.length === 0 ? (
-              <p className="text-sm text-gray-400 py-4 text-center">기록된 활동이 없습니다.</p>
+              <p className="text-sm text-gray-500 py-4 text-center font-medium">기록된 활동이 없습니다.</p>
             ) : (
               <ol className="relative border-l-2 border-gray-200 pl-5 space-y-4">
                 {timeline.map((ev) => (
@@ -190,20 +183,20 @@ export default async function CustomerDetailPage({
                     }`} />
                     <div className="flex items-baseline gap-2 flex-wrap">
                       {ev.href ? (
-                        <Link href={ev.href} className="text-sm font-medium text-brand-blue hover:underline">
+                        <Link href={ev.href} className="text-sm font-semibold text-brand-blue hover:underline">
                           {ev.label}
                         </Link>
                       ) : (
-                        <span className="text-sm font-medium text-gray-700">{ev.label}</span>
+                        <span className="text-sm font-semibold text-brand-charcoal">{ev.label}</span>
                       )}
                       {ev.status && (
-                        <span className="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded-full">
+                        <span className="text-[11px] text-gray-700 font-bold bg-gray-100 px-2 py-0.5 rounded-full">
                           {ev.status}
                         </span>
                       )}
                     </div>
-                    {ev.sublabel && <p className="text-xs text-gray-400 mt-0.5">{ev.sublabel}</p>}
-                    <p className="text-[11px] text-gray-400 tabular-nums mt-0.5">
+                    {ev.sublabel && <p className="text-[13px] text-gray-500 mt-0.5 font-medium">{ev.sublabel}</p>}
+                    <p className="text-xs text-gray-500 tabular-nums mt-0.5 font-medium">
                       {new Date(ev.date).toLocaleString("ko-KR", {
                         year: "numeric",
                         month: "2-digit",
@@ -254,11 +247,11 @@ function Field({
 }) {
   return (
     <div>
-      <dt className="text-xs text-gray-400 mb-0.5 flex items-center gap-1">
-        <Icon className="w-3 h-3" />
+      <dt className="text-xs text-gray-600 mb-1 flex items-center gap-1 font-bold uppercase tracking-[0.04em]">
+        <Icon className="w-3.5 h-3.5" />
         {label}
       </dt>
-      <dd className="text-sm text-gray-700">
+      <dd className="text-sm text-brand-charcoal font-semibold">
         {href ? (
           <a href={href} className="hover:text-brand-blue hover:underline">
             {value}

@@ -42,7 +42,7 @@ export function ConnectedAccounts({
 
   return (
     <section className="space-y-3">
-      <h2 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
+      <h2 className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">
         연결된 로그인 방식
       </h2>
 
@@ -118,13 +118,13 @@ function ProviderRow({
         <div className="flex items-center gap-2">
           <p className="font-semibold text-brand-navy">{name}</p>
           {connected && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
               <CheckCircle2 className="w-3 h-3" />
               연결됨
             </span>
           )}
         </div>
-        <p className="text-xs text-gray-500 truncate mt-0.5">
+        <p className="text-[13px] text-gray-600 truncate mt-0.5 font-medium">
           {label ?? "연결되지 않음"}
         </p>
       </div>
@@ -141,7 +141,7 @@ function ProviderRow({
         </Button>
       )}
       {actionDisabled && (
-        <span className="text-[11px] text-gray-300 flex-shrink-0">자동 생성</span>
+        <span className="text-xs text-gray-500 flex-shrink-0 font-medium">자동 생성</span>
       )}
     </div>
   );

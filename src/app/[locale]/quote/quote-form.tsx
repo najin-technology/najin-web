@@ -106,17 +106,17 @@ export function QuoteForm() {
         <h3 className="text-2xl font-bold text-brand-navy mb-3">
           {t("successTitle")}
         </h3>
-        <p className="text-brand-charcoal mb-6 text-lg">{t("successMessage")}</p>
+        <p className="text-brand-charcoal/90 mb-6 text-lg font-medium leading-relaxed">{t("successMessage")}</p>
 
         <div className="bg-white rounded-xl p-6 mb-6 border border-surface-warm-200 max-w-sm mx-auto">
-          <div className="flex items-center justify-center gap-2 text-brand-copper font-semibold mb-2">
+          <div className="flex items-center justify-center gap-2 text-brand-copper font-bold mb-2">
             <Clock className="w-4 h-4" />
             <span>{t("responsePromise")}</span>
           </div>
-          <p className="text-sm text-brand-charcoal/70">{t("nextSteps")}</p>
+          <p className="text-sm text-brand-charcoal/85 font-medium leading-relaxed">{t("nextSteps")}</p>
         </div>
 
-        <p className="text-sm text-brand-charcoal/50 mb-6">{t("contactInfo")}</p>
+        <p className="text-sm text-brand-charcoal/70 mb-6 font-medium">{t("contactInfo")}</p>
 
         <Link href="/">
           <Button variant="outline" className="border-brand-navy/20 text-brand-navy hover:bg-brand-navy/5">
@@ -146,7 +146,7 @@ export function QuoteForm() {
         {/* Company Name */}
         <div className="space-y-2">
           <Label htmlFor="company_name">
-            {t("companyName")} <span className="text-red-500">*</span>
+            {t("companyName")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="company_name" name="company_name" autoComplete="organization" required placeholder={t("companyNamePlaceholder")} />
         </div>
@@ -154,7 +154,7 @@ export function QuoteForm() {
         {/* Contact Name */}
         <div className="space-y-2">
           <Label htmlFor="contact_name">
-            {t("contactName")} <span className="text-red-500">*</span>
+            {t("contactName")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="contact_name" name="contact_name" autoComplete="name" required placeholder={t("contactNamePlaceholder")} />
         </div>
@@ -162,7 +162,7 @@ export function QuoteForm() {
         {/* Phone */}
         <div className="space-y-2">
           <Label htmlFor="phone">
-            {t("phone")} <span className="text-red-500">*</span>
+            {t("phone")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="phone" name="phone" type="tel" autoComplete="tel" required placeholder={t("phonePlaceholder")} inputMode="tel" />
         </div>
@@ -170,7 +170,7 @@ export function QuoteForm() {
         {/* Email */}
         <div className="space-y-2">
           <Label htmlFor="email">
-            {t("email")} <span className="text-red-500">*</span>
+            {t("email")} <span className="text-red-600 font-bold">*</span>
           </Label>
           <Input id="email" name="email" type="email" autoComplete="email" required placeholder={t("emailPlaceholder")} inputMode="email" />
         </div>
@@ -179,7 +179,7 @@ export function QuoteForm() {
       {/* Processing Type */}
       <div className="space-y-2">
         <Label htmlFor="processing_type">
-          {t("processingType")} <span className="text-red-500">*</span>
+          {t("processingType")} <span className="text-red-600 font-bold">*</span>
         </Label>
         <select
           id="processing_type"
@@ -204,13 +204,13 @@ export function QuoteForm() {
         <button
           type="button"
           onClick={() => setShowDetails(!showDetails)}
-          className="flex items-center gap-2 text-sm font-medium text-brand-blue hover:text-brand-blue-hover transition-colors w-full"
+          className="flex items-center gap-2 text-sm font-semibold text-brand-blue hover:text-brand-blue-hover transition-colors w-full"
         >
           <ChevronDown className={`w-4 h-4 transition-transform ${showDetails ? "rotate-180" : ""}`} />
           {t("optionalFieldsToggle")}
         </button>
         {!showDetails && (
-          <p className="text-xs text-brand-charcoal/50 mt-1 ml-6">{t("optionalFieldsHint")}</p>
+          <p className="text-[13px] text-brand-charcoal/70 mt-1 ml-6 font-medium">{t("optionalFieldsHint")}</p>
         )}
       </div>
 
@@ -271,13 +271,13 @@ export function QuoteForm() {
                 }
               }}
             />
-            <p className="text-xs text-gray-600">{t("attachmentHelp")}</p>
+            <p className="text-[13px] text-brand-charcoal/75 font-medium">{t("attachmentHelp")}</p>
           </div>
         </div>
       )}
 
       {/* Privacy Agreement */}
-      <div className="flex items-start gap-2">
+      <div className="flex items-start gap-2.5">
         <input
           id="privacy_agreed"
           name="privacy_agreed"
@@ -285,16 +285,16 @@ export function QuoteForm() {
           required
           className="mt-1 w-4 h-4 rounded border-gray-300 focus-visible:ring-2 focus-visible:ring-brand-navy/30 focus-visible:ring-offset-1"
         />
-        <Label htmlFor="privacy_agreed" className="text-sm font-normal">
+        <Label htmlFor="privacy_agreed" className="text-sm font-medium leading-relaxed text-brand-charcoal">
           {tc("privacyAgree")}{" "}
           <Link
             href="/privacy"
-            className="text-brand-blue hover:underline"
+            className="text-brand-blue hover:underline font-semibold"
             target="_blank"
           >
             [{t("pageTitle")}]
           </Link>
-          <span className="text-red-500 ml-1">*</span>
+          <span className="text-red-600 ml-1">*</span>
         </Label>
       </div>
 
@@ -303,7 +303,7 @@ export function QuoteForm() {
       <Button
         type="submit"
         disabled={pending}
-        className="w-full bg-brand-blue hover:bg-brand-blue-hover text-white py-3"
+        className="w-full bg-brand-blue hover:bg-brand-blue-hover text-white py-3 font-bold"
         size="lg"
       >
         {pending ? "..." : tc("submit")}

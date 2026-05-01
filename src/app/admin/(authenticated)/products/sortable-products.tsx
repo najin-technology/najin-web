@@ -27,9 +27,9 @@ export function SortableProductTable({ items }: { items: Product[] }) {
           {dragHandle}
           <div className="flex items-center gap-2.5 flex-1 min-w-0">
             <div className="w-8 h-8 rounded-md bg-gray-100 flex items-center justify-center flex-shrink-0">
-              <Package className="w-4 h-4 text-gray-300" />
+              <Package className="w-4 h-4 text-gray-500" />
             </div>
-            <span className="font-medium text-sm truncate">{p.name_ko}</span>
+            <span className="font-semibold text-sm text-brand-charcoal truncate">{p.name_ko}</span>
           </div>
           <ProductActiveToggle productId={p.id} isActive={p.is_active} />
           <div className="flex items-center gap-1 flex-shrink-0">

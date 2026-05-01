@@ -96,7 +96,7 @@ export default async function HomePage() {
               <TypewriterText text={t("heroTitle")} delayMs={50} startDelayMs={300} />
             </h1>
             <p
-              className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl"
+              className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl font-medium leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]"
               data-animate="fade-up"
               data-animate-delay="1"
             >
@@ -148,7 +148,7 @@ export default async function HomePage() {
               ].map((cert) => (
                 <div key={cert.label} className="flex items-center gap-2">
                   <cert.icon className="w-4 h-4 text-brand-copper" />
-                  <span className="text-sm text-white/80 font-medium">{cert.label}</span>
+                  <span className="text-sm text-white/95 font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">{cert.label}</span>
                 </div>
               ))}
             </div>
@@ -166,7 +166,7 @@ export default async function HomePage() {
       <section className="py-10 md:py-14 bg-surface-warm-50 border-y border-surface-warm-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p
-            className="text-center text-sm font-semibold text-brand-charcoal/60 uppercase tracking-[0.2em] mb-8"
+            className="text-center text-sm font-bold text-brand-charcoal/75 uppercase tracking-[0.2em] mb-8"
             data-animate="fade-in"
           >
             {t("clientsTitle")}
@@ -226,12 +226,12 @@ export default async function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/50 to-transparent" />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-brand-navy group-hover:text-brand-blue transition-colors flex items-center gap-1.5">
+                  <h3 className="font-bold text-brand-navy group-hover:text-brand-blue transition-colors flex items-center gap-1.5">
                     <area.icon className="w-4 h-4 text-brand-copper shrink-0" />
                     {tb(`${area.key}.title`)}
                     <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity ml-auto shrink-0" />
                   </h3>
-                  <p className="text-sm text-brand-charcoal/70 mt-1 line-clamp-2">{tb(`${area.key}.desc`)}</p>
+                  <p className="text-sm text-brand-charcoal/85 mt-1 line-clamp-2 font-medium leading-relaxed">{tb(`${area.key}.desc`)}</p>
                 </div>
               </Link>
             ))}
@@ -249,7 +249,7 @@ export default async function HomePage() {
             {t("whyTitle")}
           </h2>
           <p
-            className="text-brand-charcoal/70 mb-10 max-w-2xl"
+            className="text-brand-charcoal/85 mb-10 max-w-2xl font-medium leading-relaxed"
             data-animate="fade-up"
             data-animate-delay="1"
           >
@@ -288,8 +288,8 @@ export default async function HomePage() {
                   <item.icon className="w-5 h-5 text-brand-copper icon-hover-bounce" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-brand-navy mb-1">{item.title}</h3>
-                  <p className="text-sm text-brand-charcoal/70 leading-relaxed">{item.desc}</p>
+                  <h3 className="font-bold text-brand-navy mb-1">{item.title}</h3>
+                  <p className="text-sm text-brand-charcoal/85 leading-relaxed font-medium">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -304,7 +304,7 @@ export default async function HomePage() {
             <h2 className="text-2xl md:text-3xl font-bold text-brand-navy mb-3">
               {t("portfolioTitle")}
             </h2>
-            <p className="text-brand-charcoal/70">{t("portfolioSubtitle")}</p>
+            <p className="text-brand-charcoal/85 font-medium">{t("portfolioSubtitle")}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
@@ -369,28 +369,28 @@ export default async function HomePage() {
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={25} suffix="+" />
               </div>
-              <div className="text-sm text-white/80">{t("statsYears")}</div>
+              <div className="text-sm text-white/90 font-semibold tracking-wide">{t("statsYears")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="2">
               <Users className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={10} suffix="+" />
               </div>
-              <div className="text-sm text-white/80">{t("statsClients")}</div>
+              <div className="text-sm text-white/90 font-semibold tracking-wide">{t("statsClients")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="3">
               <Award className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 ISO 9001
               </div>
-              <div className="text-sm text-white/80">{t("statsCertified")}</div>
+              <div className="text-sm text-white/90 font-semibold tracking-wide">{t("statsCertified")}</div>
             </div>
             <div data-animate="fade-up" data-animate-delay="4">
               <FileCheck className="w-6 h-6 mx-auto mb-3 text-brand-copper" />
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 <StatsCounter end={1} suffix="+" />
               </div>
-              <div className="text-sm text-white/80">{t("statsPatent")}</div>
+              <div className="text-sm text-white/90 font-semibold tracking-wide">{t("statsPatent")}</div>
             </div>
           </div>
         </div>
@@ -409,14 +409,14 @@ export default async function HomePage() {
                 {t("ctaTitle")}
               </h2>
               <p
-                className="text-white/80 mb-4"
+                className="text-white/90 mb-4 font-medium leading-relaxed"
                 data-animate="fade-up"
                 data-animate-delay="1"
               >
                 {t("ctaSubtitle")}
               </p>
               <p
-                className="text-brand-copper font-medium mb-8"
+                className="text-brand-copper font-bold mb-8"
                 data-animate="fade-up"
                 data-animate-delay="1"
               >
@@ -437,7 +437,8 @@ export default async function HomePage() {
                 </Link>
                 <a
                   href="tel:+82-55-367-2596"
-                  className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm mt-2"
+                  aria-label="전화 걸기 055-367-2596"
+                  className="flex items-center gap-2 text-white/85 hover:text-white transition-colors text-sm font-semibold tabular-nums mt-2"
                 >
                   <Phone className="w-4 h-4" />
                   <span>{t("ctaPhone")}</span>

@@ -48,11 +48,11 @@ export default async function SettingsPage({
   return (
     <div className="space-y-8 max-w-2xl">
       <header className="space-y-1.5">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-copper">
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-copper">
           관리자 · 설정
         </p>
         <h1 className="text-3xl font-semibold tracking-tight text-brand-navy">계정 연결</h1>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-600">
           여러 로그인 방식을 이 관리자 계정에 연결할 수 있습니다.
         </p>
       </header>
@@ -78,7 +78,7 @@ export default async function SettingsPage({
         hasEmail={hasEmail}
       />
 
-      <footer className="text-[11px] text-gray-400 pt-6 border-t border-gray-100">
+      <footer className="text-[13px] text-gray-600 pt-6 border-t border-gray-100 leading-relaxed font-medium">
         Tip: 한 관리자에 여러 로그인 수단을 연결해두면 특정 서비스가 장애여도 다른 방법으로 접속할 수 있습니다.
       </footer>
     </div>

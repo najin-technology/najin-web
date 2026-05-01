@@ -80,7 +80,7 @@ export default async function NoticesPage({
               notices.map((n) => (
                 <TableRow key={n.id} className="hover:bg-gray-50/50">
                   <TableCell className="font-medium"><HighlightText text={n.title_ko} query={searchQuery} /></TableCell>
-                  <TableCell className="text-xs text-gray-400 max-w-[200px] truncate hidden md:table-cell">
+                  <TableCell className="text-[13px] text-gray-500 max-w-[200px] truncate hidden md:table-cell">
                     {stripHtml(n.content_ko || "").slice(0, 60) || "—"}
                   </TableCell>
                   <TableCell data-label="공개">
@@ -124,7 +124,7 @@ export default async function NoticesPage({
           </TableBody>
         </Table>
         {notices && notices.length > 0 && (
-          <div className="px-5 py-2.5 border-t border-gray-100 text-xs text-gray-400 tabular-nums">
+          <div className="px-5 py-2.5 border-t border-gray-100 text-[13px] text-gray-500 tabular-nums font-medium">
             총 {notices.length}건
           </div>
         )}

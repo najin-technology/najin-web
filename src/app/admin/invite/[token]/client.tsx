@@ -65,8 +65,8 @@ export function AcceptInviteClient({
         <div className="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto mb-3">
           <Check className="w-6 h-6" />
         </div>
-        <p className="font-semibold text-emerald-900">관리자 권한이 부여되었습니다</p>
-        <p className="text-xs text-emerald-700 mt-1">잠시 후 관리자 대시보드로 이동합니다.</p>
+        <p className="font-bold text-emerald-900 text-base">관리자 권한이 부여되었습니다</p>
+        <p className="text-[13px] text-emerald-700 mt-1 font-medium">잠시 후 관리자 대시보드로 이동합니다.</p>
       </div>
     );
   }
@@ -81,20 +81,20 @@ export function AcceptInviteClient({
 
   return (
     <div className="space-y-4">
-      <div className="bg-gray-50 rounded-lg border border-gray-200 px-4 py-3 text-sm space-y-1">
+      <div className="bg-gray-50 rounded-lg border border-gray-200 px-4 py-3 text-sm space-y-1.5">
         <div className="flex items-center justify-between">
-          <span className="text-gray-500">초대자</span>
-          <span className="font-medium text-gray-800">{invitedByEmail}</span>
+          <span className="text-gray-600 font-medium">초대자</span>
+          <span className="font-semibold text-brand-charcoal">{invitedByEmail}</span>
         </div>
         {emailHint && (
           <div className="flex items-center justify-between">
-            <span className="text-gray-500">대상 메모</span>
-            <span className="font-medium text-gray-800">{emailHint}</span>
+            <span className="text-gray-600 font-medium">대상 메모</span>
+            <span className="font-semibold text-brand-charcoal">{emailHint}</span>
           </div>
         )}
         <div className="flex items-center justify-between">
-          <span className="text-gray-500">만료</span>
-          <span className="text-gray-600 tabular-nums text-xs">{expiry}</span>
+          <span className="text-gray-600 font-medium">만료</span>
+          <span className="text-gray-700 tabular-nums text-[13px] font-semibold">{expiry}</span>
         </div>
       </div>
 
@@ -113,21 +113,21 @@ export function AcceptInviteClient({
           <Button
             onClick={handleAccept}
             disabled={pending}
-            className="w-full bg-brand-navy hover:bg-brand-navy-light text-white"
+            className="w-full bg-brand-navy hover:bg-brand-navy-light text-white font-semibold"
           >
             {pending ? <Loader2 className="w-4 h-4 animate-spin" /> : "초대 수락"}
           </Button>
         </>
       ) : (
         <>
-          <p className="text-sm text-gray-600 text-center">
+          <p className="text-sm text-gray-700 text-center font-medium">
             아래 계정 중 하나로 로그인하여 초대를 수락하세요.
           </p>
           <div className="space-y-2">
             <Button
               onClick={handleGoogleSignIn}
               variant="outline"
-              className="w-full h-11 gap-2"
+              className="w-full h-11 gap-2 font-semibold"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -151,7 +151,7 @@ export function AcceptInviteClient({
             </Button>
             <Button
               onClick={handleNaverSignIn}
-              className="w-full h-11 gap-2 bg-[#03C75A] hover:bg-[#02B551] text-white border-transparent"
+              className="w-full h-11 gap-2 bg-[#03C75A] hover:bg-[#02B551] text-white border-transparent font-semibold"
               variant="outline"
             >
               <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
@@ -160,7 +160,7 @@ export function AcceptInviteClient({
               네이버로 로그인
             </Button>
           </div>
-          <p className="text-[11px] text-gray-400 text-center">
+          <p className="text-xs text-gray-600 text-center font-medium">
             로그인 후 자동으로 관리자 권한이 부여됩니다.
           </p>
         </>

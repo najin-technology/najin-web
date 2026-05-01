@@ -24,14 +24,14 @@ export function RegionPanel({ rows }: { rows: RegionRow[] }) {
   return (
     <div className="bg-white border border-gray-200/80 rounded-2xl p-6 h-full">
       <div className="flex items-center gap-2 mb-5">
-        <div className="w-1 h-1 rounded-full bg-brand-copper" />
-        <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+        <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
           지역 분포 · 최근 30일
         </p>
       </div>
 
       {rows.length === 0 ? (
-        <p className="text-sm text-gray-400">아직 데이터가 없습니다.</p>
+        <p className="text-sm text-gray-500 font-medium">아직 데이터가 없습니다.</p>
       ) : (
         <ul className="space-y-3">
           {rows.map((r, i) => {
@@ -40,9 +40,9 @@ export function RegionPanel({ rows }: { rows: RegionRow[] }) {
               <li key={`${r.country}-${r.city}-${i}`} className="space-y-1.5">
                 <div className="flex items-baseline gap-2 text-sm">
                   <span className="text-base">{flag(r.country)}</span>
-                  <span className="font-medium text-brand-charcoal truncate">{r.city}</span>
-                  <span className="text-xs text-gray-400 truncate">{countryLabel(r.country)}</span>
-                  <span className="ml-auto tabular-nums text-xs text-gray-500">{r.visits.toLocaleString("ko-KR")}</span>
+                  <span className="font-semibold text-brand-charcoal truncate">{r.city}</span>
+                  <span className="text-[13px] text-gray-500 truncate">{countryLabel(r.country)}</span>
+                  <span className="ml-auto tabular-nums text-[13px] text-brand-navy font-bold">{r.visits.toLocaleString("ko-KR")}</span>
                 </div>
                 <div className="h-1 bg-surface-warm-100 rounded-full overflow-hidden">
                   <div

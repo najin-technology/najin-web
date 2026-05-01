@@ -19,25 +19,25 @@ export function ViewTabs({ active }: { active: "board" | "list" }) {
       <button
         type="button"
         onClick={() => setView("list")}
-        className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+        className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-[13px] font-semibold transition-colors ${
           active === "list"
             ? "bg-brand-navy text-white shadow-sm"
-            : "text-gray-500 hover:text-brand-navy"
+            : "text-gray-600 hover:text-brand-navy"
         }`}
       >
-        <List className="w-3.5 h-3.5" />
+        <List className="w-4 h-4" />
         리스트
       </button>
       <button
         type="button"
         onClick={() => setView("board")}
-        className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+        className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-[13px] font-semibold transition-colors ${
           active === "board"
             ? "bg-brand-navy text-white shadow-sm"
-            : "text-gray-500 hover:text-brand-navy"
+            : "text-gray-600 hover:text-brand-navy"
         }`}
       >
-        <LayoutGrid className="w-3.5 h-3.5" />
+        <LayoutGrid className="w-4 h-4" />
         칸반
       </button>
     </div>

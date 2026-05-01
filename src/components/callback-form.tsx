@@ -26,14 +26,14 @@ export function CallbackForm() {
     return (
       <div className="text-center py-6" data-animate="scale-in">
         <div className="flex justify-center mb-3">
-          <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-            <CheckCircle className="w-6 h-6 text-green-600" />
+          <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
+            <CheckCircle className="w-7 h-7 text-green-600" />
           </div>
         </div>
-        <h3 className="text-lg font-bold text-white mb-1">
+        <h3 className="text-xl font-bold text-white mb-2">
           {t("successTitle")}
         </h3>
-        <p className="text-white/80 text-sm">{t("successMessage")}</p>
+        <p className="text-white/90 text-sm font-medium leading-relaxed">{t("successMessage")}</p>
       </div>
     );
   }
@@ -49,7 +49,7 @@ export function CallbackForm() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1.5">
           <Label htmlFor="cb_company" className="text-white/90 text-sm">
-            {t("companyName")} <span className="text-red-400">*</span>
+            {t("companyName")} <span className="text-red-300 font-bold">*</span>
           </Label>
           <Input
             id="cb_company"
@@ -61,7 +61,7 @@ export function CallbackForm() {
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="cb_phone" className="text-white/90 text-sm">
-            {t("phone")} <span className="text-red-400">*</span>
+            {t("phone")} <span className="text-red-300 font-bold">*</span>
           </Label>
           <Input
             id="cb_phone"
@@ -86,17 +86,17 @@ export function CallbackForm() {
         />
       </div>
 
-      <div className="flex items-start gap-2">
+      <div className="flex items-start gap-2.5">
         <input
           id="cb_privacy"
           name="privacy_agreed"
           type="checkbox"
           required
-          className="mt-0.5 w-3.5 h-3.5 rounded border-white/30 focus-visible:ring-2 focus-visible:ring-brand-copper/30"
+          className="mt-0.5 w-4 h-4 rounded border-white/30 focus-visible:ring-2 focus-visible:ring-brand-copper/30"
         />
-        <label htmlFor="cb_privacy" className="text-xs text-white/70">
+        <label htmlFor="cb_privacy" className="text-[13px] text-white/85 font-medium leading-relaxed">
           {tc("privacyAgree")}{" "}
-          <Link href="/privacy" className="text-brand-copper hover:underline" target="_blank">
+          <Link href="/privacy" className="text-brand-copper hover:underline font-semibold" target="_blank">
             [{tc("privacy")}]
           </Link>
         </label>
@@ -105,7 +105,7 @@ export function CallbackForm() {
       <Button
         type="submit"
         disabled={pending}
-        className="w-full bg-brand-copper hover:bg-brand-copper-light text-white py-2.5 min-h-[44px]"
+        className="w-full bg-brand-copper hover:bg-brand-copper-light text-white py-2.5 min-h-[44px] font-bold"
       >
         <Phone className="w-4 h-4 mr-2" />
         {pending ? "..." : t("submit")}

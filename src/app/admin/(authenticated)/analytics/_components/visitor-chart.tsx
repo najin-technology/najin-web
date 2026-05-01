@@ -78,21 +78,21 @@ export function VisitorChart({ data, win }: { data: DailyPoint[]; win: TimeWindo
     <div className="bg-white border border-gray-200/80 rounded-2xl p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-4 mb-6">
         <div className="flex items-center gap-2">
-          <div className="w-1 h-1 rounded-full bg-brand-copper" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+          <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
             방문 추이
           </p>
         </div>
-        <div className="flex items-center gap-5 text-xs">
+        <div className="flex items-center gap-5 text-[13px]">
           <span className="inline-flex items-center gap-2">
             <span className="w-3 h-0.5 bg-brand-navy rounded-full" />
-            <span className="text-gray-500">총 방문</span>
-            <span className="font-semibold tabular-nums text-brand-navy">{totalVisits.toLocaleString("ko-KR")}</span>
+            <span className="text-gray-600 font-medium">총 방문</span>
+            <span className="font-bold tabular-nums text-brand-navy">{totalVisits.toLocaleString("ko-KR")}</span>
           </span>
           <span className="inline-flex items-center gap-2">
             <span className="w-3 h-0.5 bg-brand-copper rounded-full" />
-            <span className="text-gray-500">고유 방문자</span>
-            <span className="font-semibold tabular-nums text-brand-copper">{totalUniques.toLocaleString("ko-KR")}</span>
+            <span className="text-gray-600 font-medium">고유 방문자</span>
+            <span className="font-bold tabular-nums text-brand-copper">{totalUniques.toLocaleString("ko-KR")}</span>
           </span>
         </div>
       </div>

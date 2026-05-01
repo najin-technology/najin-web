@@ -38,9 +38,9 @@ export function StatusProgress({
       </div>
       <div className="flex flex-wrap gap-x-3 gap-y-1">
         {segments.map(([status, count]) => (
-          <span key={status} className="flex items-center gap-1.5 text-xs text-gray-600">
-            <span className={`w-2 h-2 rounded-full ${getStatusStyle(type, status).dot}`} />
-            {status} {count}
+          <span key={status} className="flex items-center gap-1.5 text-[13px] text-gray-700 font-medium">
+            <span className={`w-2.5 h-2.5 rounded-full ${getStatusStyle(type, status).dot}`} />
+            {status} <span className="tabular-nums font-bold text-brand-charcoal">{count}</span>
           </span>
         ))}
       </div>

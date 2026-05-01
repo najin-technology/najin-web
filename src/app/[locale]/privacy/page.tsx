@@ -104,7 +104,7 @@ function PrivacyKo() {
         <li>주소: 경상남도 양산시 산막공단남14길 170 (북정동)</li>
       </ul>
 
-      <p className="mt-8 text-xs text-gray-400">
+      <p className="mt-8 text-[13px] text-brand-charcoal/70 font-medium">
         본 방침은 2024년 1월 1일부터 시행됩니다.
       </p>
     </>
@@ -179,7 +179,7 @@ function PrivacyEn() {
         <li>Address: 170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea</li>
       </ul>
 
-      <p className="mt-8 text-xs text-gray-400">
+      <p className="mt-8 text-[13px] text-brand-charcoal/70 font-medium">
         Effective date: January 1, 2024
       </p>
     </>
@@ -241,7 +241,7 @@ function PrivacyZh() {
         <li>地址：韩国庆尚南道梁山市山幕工团南14街170号</li>
       </ul>
 
-      <p className="mt-8 text-xs text-gray-400">
+      <p className="mt-8 text-[13px] text-brand-charcoal/70 font-medium">
         生效日期：2024年1月1日
       </p>
     </>

@@ -2,10 +2,10 @@ export default function QuoteDetailLoading() {
   return (
     <div className="space-y-6 animate-pulse">
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-gray-200" />
-        <div className="space-y-1.5">
-          <div className="h-5 w-24 rounded bg-gray-200" />
-          <div className="h-3 w-32 rounded bg-gray-100" />
+        <div className="w-9 h-9 rounded-lg bg-gray-200" />
+        <div className="space-y-2">
+          <div className="h-7 w-40 rounded bg-gray-200" />
+          <div className="h-3.5 w-48 rounded bg-gray-100" />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

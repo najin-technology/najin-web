@@ -17,24 +17,24 @@ function formatNumber(n: number): string {
 function Delta({ value, prev, compareLabel }: { value: number; prev: number | null; compareLabel: string }) {
   if (prev == null) {
     return (
-      <div className="flex items-center gap-1.5 text-xs">
-        <span className="text-gray-400">{compareLabel}</span>
+      <div className="flex items-center gap-1.5 text-[13px]">
+        <span className="text-gray-500 font-medium">{compareLabel}</span>
       </div>
     );
   }
   if (prev === 0 && value === 0) {
     return (
-      <div className="flex items-center gap-1.5 text-xs text-gray-400">
-        <Minus className="w-3 h-3" />
+      <div className="flex items-center gap-1.5 text-[13px] text-gray-600 font-medium">
+        <Minus className="w-3.5 h-3.5" />
         <span>변화 없음</span>
       </div>
     );
   }
   if (prev === 0) {
     return (
-      <div className="flex items-center gap-1.5 text-xs">
-        <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
-        <span className="font-medium text-emerald-600">신규</span>
+      <div className="flex items-center gap-1.5 text-[13px]">
+        <TrendingUp className="w-4 h-4 text-emerald-600" />
+        <span className="font-bold text-emerald-600">신규</span>
       </div>
     );
   }
@@ -42,8 +42,8 @@ function Delta({ value, prev, compareLabel }: { value: number; prev: number | nu
   const pct = Math.round((diff / prev) * 1000) / 10;
   if (pct === 0) {
     return (
-      <div className="flex items-center gap-1.5 text-xs text-gray-400">
-        <Minus className="w-3 h-3" />
+      <div className="flex items-center gap-1.5 text-[13px] text-gray-600 font-medium">
+        <Minus className="w-3.5 h-3.5" />
         <span>{compareLabel}</span>
       </div>
     );
@@ -51,12 +51,12 @@ function Delta({ value, prev, compareLabel }: { value: number; prev: number | nu
   const up = pct > 0;
   const Icon = up ? TrendingUp : TrendingDown;
   return (
-    <div className="flex items-center gap-1.5 text-xs">
-      <Icon className={`w-3.5 h-3.5 ${up ? "text-emerald-600" : "text-red-500"}`} />
-      <span className={`font-semibold tabular-nums ${up ? "text-emerald-600" : "text-red-500"}`}>
+    <div className="flex items-center gap-1.5 text-[13px]">
+      <Icon className={`w-4 h-4 ${up ? "text-emerald-600" : "text-red-600"}`} />
+      <span className={`font-bold tabular-nums ${up ? "text-emerald-600" : "text-red-600"}`}>
         {up ? "+" : ""}{pct}%
       </span>
-      <span className="text-gray-400">· {compareLabel}</span>
+      <span className="text-gray-500 font-medium">· {compareLabel}</span>
     </div>
   );
 }
@@ -72,8 +72,8 @@ export function HeroMetrics({ metrics }: { metrics: Metric[] }) {
           } ${m.tone === "primary" ? "lg:row-start-1" : ""}`}
         >
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-1 h-1 rounded-full bg-brand-copper" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-400">
+            <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-500">
               {m.label}
             </p>
           </div>
@@ -83,7 +83,7 @@ export function HeroMetrics({ metrics }: { metrics: Metric[] }) {
             }`}
           >
             {(m.format ?? formatNumber)(m.value)}
-            {m.suffix && <span className="text-xl text-gray-400 font-normal ml-1">{m.suffix}</span>}
+            {m.suffix && <span className="text-xl text-gray-500 font-medium ml-1">{m.suffix}</span>}
           </p>
           <Delta value={m.value} prev={m.prev} compareLabel={m.compareLabel} />
         </div>

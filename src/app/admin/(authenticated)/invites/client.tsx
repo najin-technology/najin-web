@@ -31,7 +31,7 @@ export function CreateInviteForm() {
 
       <form action={formAction} className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="md:col-span-1">
-          <Label htmlFor="email_hint" className="text-xs">대상 메모 (선택)</Label>
+          <Label htmlFor="email_hint" className="text-[13px] font-medium">대상 메모 (선택)</Label>
           <Input
             id="email_hint"
             name="email_hint"
@@ -40,7 +40,7 @@ export function CreateInviteForm() {
           />
         </div>
         <div className="md:col-span-1">
-          <Label htmlFor="notes" className="text-xs">설명 (선택)</Label>
+          <Label htmlFor="notes" className="text-[13px] font-medium">설명 (선택)</Label>
           <Input
             id="notes"
             name="notes"
@@ -49,7 +49,7 @@ export function CreateInviteForm() {
           />
         </div>
         <div className="md:col-span-1">
-          <Label htmlFor="expiry" className="text-xs">만료</Label>
+          <Label htmlFor="expiry" className="text-[13px] font-medium">만료</Label>
           <select
             id="expiry"
             name="expiry"
@@ -64,7 +64,7 @@ export function CreateInviteForm() {
         </div>
 
         <div className="md:col-span-3 flex items-center justify-between">
-          <p className="text-xs text-gray-400">
+          <p className="text-[13px] text-gray-500 font-medium">
             초대 링크는 1회용입니다. 공유 후 즉시 만료시킬 수 있습니다.
           </p>
           <Button
@@ -88,7 +88,7 @@ export function CreateInviteForm() {
             초대 링크가 생성되었습니다 — 아래 링크를 복사해 전달하세요.
           </div>
           <div className="flex items-center gap-2 bg-white rounded-md border border-emerald-200 px-3 py-2">
-            <code className="flex-1 text-xs text-gray-700 truncate font-mono">{inviteUrl}</code>
+            <code className="flex-1 text-[13px] text-brand-charcoal truncate font-mono font-medium">{inviteUrl}</code>
             <CopyInline text={inviteUrl} />
           </div>
         </div>
@@ -111,7 +111,7 @@ function CopyInline({ text }: { text: string }) {
           toast.error("복사 실패");
         }
       }}
-      className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:text-emerald-800 px-2 py-1 rounded hover:bg-emerald-100"
+      className="inline-flex items-center gap-1 text-[13px] font-semibold text-emerald-700 hover:text-emerald-800 px-2 py-1 rounded hover:bg-emerald-100"
     >
       {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
       {copied ? "복사됨" : "복사"}
@@ -135,7 +135,7 @@ export function CopyLinkButton({ token }: { token: string }) {
           toast.error("복사 실패");
         }
       }}
-      className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 px-2 py-1 rounded hover:bg-blue-50"
+      className="inline-flex items-center gap-1 text-[13px] font-semibold text-blue-600 hover:text-blue-700 px-2 py-1 rounded hover:bg-blue-50"
       title="초대 링크 복사"
     >
       {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -157,7 +157,7 @@ export function RevokeButton({ id }: { id: string }) {
           toast.success("초대가 취소되었습니다");
         });
       }}
-      className="inline-flex items-center gap-1 text-xs font-medium text-red-600 hover:text-red-700 px-2 py-1 rounded hover:bg-red-50 disabled:opacity-50"
+      className="inline-flex items-center gap-1 text-[13px] font-semibold text-red-600 hover:text-red-700 px-2 py-1 rounded hover:bg-red-50 disabled:opacity-50"
       title="초대 취소"
     >
       {pending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}

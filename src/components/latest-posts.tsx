@@ -79,7 +79,7 @@ export async function LatestPosts() {
                     />
                   )}
                   <span
-                    className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-medium ${
+                    className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-[13px] font-bold shadow-sm ${
                       CATEGORY_COLORS[post.category] ||
                       "bg-gray-100 text-gray-800"
                     }`}
@@ -88,17 +88,17 @@ export async function LatestPosts() {
                   </span>
                 </div>
                 <div className="p-5">
-                  <h3 className="font-semibold text-brand-navy mb-2 line-clamp-2 group-hover:text-brand-blue transition-colors">
+                  <h3 className="font-bold text-brand-navy mb-2 line-clamp-2 group-hover:text-brand-blue transition-colors">
                     {title}
                   </h3>
                   {excerpt && (
-                    <p className="text-sm text-brand-charcoal/70 mb-3 line-clamp-2">
+                    <p className="text-sm text-brand-charcoal/80 mb-3 line-clamp-2 font-medium leading-relaxed">
                       {excerpt}
                     </p>
                   )}
-                  <div className="flex items-center gap-1.5 text-xs text-brand-charcoal/50">
+                  <div className="flex items-center gap-1.5 text-[13px] text-brand-charcoal/60 font-medium">
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>
+                    <span className="tabular-nums">
                       {new Date(date).toLocaleDateString(
                         locale === "ko"
                           ? "ko-KR"

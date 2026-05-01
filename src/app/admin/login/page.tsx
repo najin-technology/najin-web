@@ -45,14 +45,14 @@ export default function AdminLoginPage() {
               <span className="text-white text-xl font-bold">N</span>
             </div>
             <h1 className="text-xl font-bold text-brand-navy">나진테크 관리자</h1>
-            <p className="text-sm text-gray-400 mt-1.5">로그인하여 대시보드에 접속하세요</p>
+            <p className="text-sm text-gray-600 mt-1.5 font-medium">로그인하여 대시보드에 접속하세요</p>
           </div>
 
           {/* Google Login */}
           <Button
             type="button"
             variant="outline"
-            className="w-full mb-2.5 h-11 rounded-xl border-gray-200 hover:bg-gray-50 transition-colors"
+            className="w-full mb-2.5 h-11 rounded-xl border-gray-200 hover:bg-gray-50 font-semibold transition-colors"
             onClick={handleGoogleLogin}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -80,7 +80,7 @@ export default function AdminLoginPage() {
           <Button
             type="button"
             variant="outline"
-            className="w-full mb-6 h-11 rounded-xl border-transparent bg-[#03C75A] hover:bg-[#02B551] text-white transition-colors"
+            className="w-full mb-6 h-11 rounded-xl border-transparent bg-[#03C75A] hover:bg-[#02B551] text-white font-semibold transition-colors"
             onClick={handleNaverLogin}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 20 20" fill="none">
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-xs text-gray-400 uppercase tracking-widest">또는</span>
+              <span className="bg-white px-3 text-xs text-gray-500 uppercase tracking-widest font-semibold">또는</span>
             </div>
           </div>
 
@@ -139,16 +139,16 @@ export default function AdminLoginPage() {
             <Button
               type="submit"
               disabled={pending}
-              className="w-full h-11 rounded-xl bg-brand-navy hover:bg-brand-navy-light text-white shadow-sm transition-all"
+              className="w-full h-11 rounded-xl bg-brand-navy hover:bg-brand-navy-light text-white shadow-sm font-semibold transition-all"
             >
               {pending ? "로그인 중..." : "이메일로 로그인"}
             </Button>
           </form>
         </div>
-        <p className="text-center text-[11px] text-gray-300 mt-4">
+        <p className="text-center text-xs text-gray-500 mt-4 font-medium">
           Enter 키로 로그인할 수 있습니다
         </p>
-        <p className="text-center text-[11px] text-gray-400 mt-2">
+        <p className="text-center text-xs text-gray-600 mt-2 font-medium">
           나진테크 관리자 전용 페이지입니다
         </p>
       </div>

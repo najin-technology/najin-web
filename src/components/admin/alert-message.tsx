@@ -37,9 +37,9 @@ export function AlertMessage({
   return (
     <div
       role="alert"
-      className={`${v.bg} border ${v.border} ${v.text} px-3 py-2.5 rounded-lg text-sm flex items-center gap-2`}
+      className={`${v.bg} border ${v.border} ${v.text} px-3 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${v.dot} flex-shrink-0`} />
+      <span className={`w-2 h-2 rounded-full ${v.dot} flex-shrink-0`} />
       {children}
     </div>
   );

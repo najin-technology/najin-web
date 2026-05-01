@@ -40,10 +40,10 @@ export default async function ApplicationDetailPage({
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
               <div>
-                <h2 className="text-base font-semibold text-brand-navy">
+                <h2 className="text-lg font-bold text-brand-navy">
                   {application.name}
                 </h2>
-                <p className="text-xs text-gray-400 mt-1">{application.position || "포지션 미지정"} · {application.email || ""}</p>
+                <p className="text-[13px] text-gray-600 mt-1 font-medium">{application.position || "포지션 미지정"} · {application.email || ""}</p>
               </div>
               <StatusBadge status={application.status} type="application" />
             </div>
@@ -80,14 +80,14 @@ export default async function ApplicationDetailPage({
                           <Download className="w-4 h-4 text-blue-600 group-hover:text-blue-700" />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium text-gray-700 truncate">
+                          <p className="text-sm font-semibold text-brand-charcoal truncate">
                             {att.fileName}
-                            <span className="ml-1.5 text-[11px] uppercase font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded tracking-wider">
+                            <span className="ml-1.5 text-[11px] uppercase font-bold text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded tracking-wider">
                               {att.fileName.split(".").pop()}
                             </span>
                           </p>
                           {att.fileSize && (
-                            <p className="text-xs text-gray-400">{(att.fileSize / 1024).toFixed(0)} KB</p>
+                            <p className="text-[13px] text-gray-500 font-medium tabular-nums mt-0.5">{(att.fileSize / 1024).toFixed(0)} KB</p>
                           )}
                         </div>
                       </a>
@@ -96,7 +96,7 @@ export default async function ApplicationDetailPage({
                         <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
                           <Download className="w-4 h-4 text-gray-400" />
                         </div>
-                        <p className="text-sm text-gray-400 min-w-0 truncate">{att.fileName} (다운로드 불가)</p>
+                        <p className="text-sm text-gray-500 min-w-0 truncate font-medium">{att.fileName} (다운로드 불가)</p>
                       </div>
                     )}
                   </div>
