@@ -194,16 +194,16 @@ export default async function ClientPage({
                     data-animate-delay={String(Math.min((i % 3) + 1, 3))}
                   >
                     <span className="absolute -left-[34px] top-5 w-3 h-3 rounded-full bg-brand-copper border-4 border-surface-warm-50" />
-                    <div className="flex items-center gap-2 text-xs text-brand-copper font-semibold mb-2">
-                      <Calendar className="w-3.5 h-3.5" />
+                    <div className="flex items-center gap-2 text-[13px] text-brand-copper font-bold mb-2 tabular-nums">
+                      <Calendar className="w-4 h-4" />
                       <span>
                         {d.year}
                         {d.month ? ` · ${t("monthLabel", { month: d.month })}` : ""}
                       </span>
                     </div>
-                    <p className="text-brand-charcoal leading-relaxed">{desc}</p>
+                    <p className="text-brand-charcoal/90 leading-relaxed font-medium">{desc}</p>
                     {d.source && (
-                      <p className="text-[11px] text-brand-charcoal/40 mt-3">
+                      <p className="text-xs text-brand-charcoal/60 mt-3 font-medium">
                         {t("sourceLabel")}: {d.source}
                       </p>
                     )}
