@@ -93,12 +93,12 @@ export default async function CareersPage() {
                           <Briefcase className="w-4 h-4 text-brand-copper" />
                         </div>
                         <div>
-                          <h3 className="font-semibold text-brand-navy">
+                          <h3 className="font-bold text-brand-navy">
                             {title}
                           </h3>
                           <div className="flex flex-wrap gap-2 mt-2">
                             {job.department && (
-                              <span className="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-brand-blue bg-blue-50 rounded-full">
+                              <span className="inline-flex items-center px-2.5 py-0.5 text-[13px] font-bold text-brand-blue bg-blue-50 rounded-full">
                                 {job.department}
                               </span>
                             )}
