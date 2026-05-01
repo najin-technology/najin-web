@@ -66,10 +66,10 @@ export default function QuotePage() {
                       <Phone className="w-5 h-5 text-brand-copper" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-brand-charcoal">
+                      <p className="text-xs font-bold text-brand-charcoal uppercase tracking-wide">
                         {t("contactPhone")}
                       </p>
-                      <p className="text-sm text-brand-charcoal/70 mt-0.5">
+                      <p className="text-sm text-brand-charcoal/85 mt-0.5 font-semibold tabular-nums">
                         055-367-2596
                       </p>
                     </div>
@@ -85,10 +85,10 @@ export default function QuotePage() {
                       <MapPin className="w-5 h-5 text-brand-copper" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-brand-charcoal">
+                      <p className="text-xs font-bold text-brand-charcoal uppercase tracking-wide">
                         {t("contactAddress")}
                       </p>
-                      <p className="text-sm text-brand-charcoal/70 mt-0.5">
+                      <p className="text-sm text-brand-charcoal/85 mt-0.5 font-medium leading-relaxed">
                         경상남도 양산시 산막공단남14길 170
                       </p>
                     </div>
@@ -104,10 +104,10 @@ export default function QuotePage() {
                       <Mail className="w-5 h-5 text-brand-copper" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-brand-charcoal">
+                      <p className="text-xs font-bold text-brand-charcoal uppercase tracking-wide">
                         {t("contactEmail")}
                       </p>
-                      <p className="text-sm text-brand-charcoal/70 mt-0.5">
+                      <p className="text-sm text-brand-charcoal/85 mt-0.5 font-semibold">
                         kinghak1@naver.com
                       </p>
                     </div>
