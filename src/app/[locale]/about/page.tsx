@@ -87,7 +87,7 @@ export default async function AboutPage() {
             >
               &ldquo;
             </span>
-            <div className="relative text-brand-charcoal leading-relaxed whitespace-pre-line text-base md:text-lg">
+            <div className="relative text-brand-charcoal/90 leading-relaxed whitespace-pre-line text-base md:text-lg font-medium">
               {t("ceoContent")}
             </div>
             <p className="mt-6 text-right text-brand-navy font-bold">
@@ -113,7 +113,7 @@ export default async function AboutPage() {
               <h3 className="text-xl md:text-2xl font-bold mb-4">
                 {t("visionTitle")}
               </h3>
-              <p className="text-white/70 leading-relaxed text-lg">
+              <p className="text-white/90 leading-relaxed text-lg font-medium">
                 {t("visionContent")}
               </p>
             </div>
