@@ -160,11 +160,11 @@ export default async function AboutPage() {
                 >
                   {/* Year */}
                   <div className="flex-shrink-0 w-[80px] md:w-[120px] text-right pr-5 md:pr-7 relative">
-                    <span className="text-lg md:text-xl font-bold text-brand-navy">
+                    <span className="text-lg md:text-xl font-bold text-brand-navy tabular-nums">
                       {item.year}
                     </span>
                     {item.month && (
-                      <span className="text-sm text-brand-charcoal/60 ml-0.5">
+                      <span className="text-sm text-brand-charcoal/75 ml-0.5 font-semibold tabular-nums">
                         .{String(item.month).padStart(2, "0")}
                       </span>
                     )}
