@@ -26,14 +26,14 @@ export function CallbackForm() {
     return (
       <div className="text-center py-6" data-animate="scale-in">
         <div className="flex justify-center mb-3">
-          <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-            <CheckCircle className="w-6 h-6 text-green-600" />
+          <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
+            <CheckCircle className="w-7 h-7 text-green-600" />
           </div>
         </div>
-        <h3 className="text-lg font-bold text-white mb-1">
+        <h3 className="text-xl font-bold text-white mb-2">
           {t("successTitle")}
         </h3>
-        <p className="text-white/80 text-sm">{t("successMessage")}</p>
+        <p className="text-white/90 text-sm font-medium leading-relaxed">{t("successMessage")}</p>
       </div>
     );
   }
