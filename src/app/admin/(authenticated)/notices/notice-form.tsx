@@ -147,7 +147,7 @@ export function NoticeForm({
         <Button
           type="submit"
           disabled={pending}
-          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px]"
+          className="bg-brand-navy hover:bg-brand-navy-light text-white rounded-lg shadow-sm min-w-[100px] font-semibold"
         >
           {pending
             ? "저장 중..."
