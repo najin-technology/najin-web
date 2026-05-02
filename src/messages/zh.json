@@ -95,7 +95,29 @@
     "certClean": "产业安全健康优秀企业",
     "certPatent": "自主技术专利",
     "mapTitle": "交通指南",
-    "mapAddress": "庆尚南道梁山市山幕工团南14街170号"
+    "mapAddress": "庆尚南道梁山市山幕工团南14街170号",
+    "factsTitle": "纳进科技一览",
+    "factsSubtitle": "已验证的企业事实信息",
+    "facts": {
+      "founded": "2002年12月成立",
+      "location": "韩国庆尚南道梁山市山幕工团南14街170号",
+      "employees": "员工20~50人",
+      "certifications": "ISO 9001质量管理体系 · CLEAN工厂认证",
+      "patent": "聚氨酯模具支撑技术自主专利",
+      "businessAreas": "聚氨酯成型 · 合成树脂加工 · CNC精密加工 · 模具制作 · EV零部件",
+      "majorClients": "现代汽车 · SK · 海外整车厂 · 雷诺三星 · 星宇Hitech · 华信",
+      "contact": "TEL +82-55-367-2596 · 营业时间 周一~周五 08:30~17:30(韩国时间)"
+    },
+    "factsLabels": {
+      "founded": "成立时间",
+      "location": "本社 / 工厂",
+      "employees": "员工规模",
+      "certifications": "认证",
+      "patent": "专利",
+      "businessAreas": "业务领域",
+      "majorClients": "主要客户",
+      "contact": "联系方式 / 营业时间"
+    }
   },
   "business": {
     "pageTitle": "业务领域",
