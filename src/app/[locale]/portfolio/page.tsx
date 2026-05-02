@@ -10,6 +10,7 @@ import { Phone } from "lucide-react";
 import { PortfolioGallery } from "@/components/portfolio-gallery";
 
 import { createPageMetadata } from "@/lib/metadata";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -64,8 +65,14 @@ export default async function PortfolioPage() {
         }))
     : fallbackGallery;
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [SEGMENTS.portfolio]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <PageHeader titleKey="pageTitle" namespace="portfolio" descriptionKey="pageDescription" bgImage="/images/factory/cnc-lathe.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 

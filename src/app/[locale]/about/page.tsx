@@ -31,6 +31,7 @@ const fallbackHistory = [
 ];
 
 import { createPageMetadata } from "@/lib/metadata";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -61,8 +62,14 @@ export default async function AboutPage() {
     historyItems = fallbackHistory as typeof historyItems;
   }
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [SEGMENTS.about]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <PageHeader titleKey="pageTitle" namespace="about" descriptionKey="pageDescription" bgImage="/images/factory/factory-interior-1.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 

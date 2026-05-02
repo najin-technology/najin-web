@@ -6,6 +6,8 @@ import { ApplyForm } from "./apply-form";
 import { Briefcase, ChevronDown, Clock } from "lucide-react";
 
 import { createPageMetadata } from "@/lib/metadata";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
+import { buildJobPostingsJsonLd } from "@/lib/schema/job-posting";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -32,8 +34,21 @@ export default async function CareersPage() {
     // fallback
   }
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [SEGMENTS.careers]);
+  const jobPostingJsonLd = buildJobPostingsJsonLd(jobs, locale);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      {jobPostingJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingJsonLd) }}
+        />
+      )}
       <PageHeader
         titleKey="pageTitle"
         namespace="careers"
