@@ -54,6 +54,7 @@ export async function generateMetadata({
           ko: `${BASE_URL}/ko/posts/${slug}`,
           en: `${BASE_URL}/en/posts/${slug}`,
           zh: `${BASE_URL}/zh/posts/${slug}`,
+          "x-default": `${BASE_URL}/ko/posts/${slug}`,
         },
       },
     };
