@@ -95,7 +95,29 @@
     "certClean": "Excellent Occupational Safety and Health Workplace",
     "certPatent": "Patent Acquired Through Proprietary Technology",
     "mapTitle": "Location",
-    "mapAddress": "170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea"
+    "mapAddress": "170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea",
+    "factsTitle": "NAJIN TECHNOLOGY at a Glance",
+    "factsSubtitle": "Verified company facts",
+    "facts": {
+      "founded": "Founded December 2002",
+      "location": "170 Sanmakgongdannam 14-gil, Yangsan, Gyeongnam, Korea",
+      "employees": "20–50 employees",
+      "certifications": "ISO 9001 Quality Management · CLEAN Workplace Certification",
+      "patent": "Proprietary urethane mold base technology patent",
+      "businessAreas": "Urethane molding · Synthetic resin · CNC precision · Mold fabrication · EV parts",
+      "majorClients": "Hyundai · SK · GM Shanghai · Renault Samsung · Sungwoo Hitech · Hwashin",
+      "contact": "TEL +82-55-367-2596 · Mon–Fri 08:30–17:30 KST"
+    },
+    "factsLabels": {
+      "founded": "Founded",
+      "location": "HQ / Factory",
+      "employees": "Employees",
+      "certifications": "Certifications",
+      "patent": "Patents",
+      "businessAreas": "Business areas",
+      "majorClients": "Major clients",
+      "contact": "Contact / Hours"
+    }
   },
   "business": {
     "pageTitle": "Business Areas",
