@@ -21,9 +21,12 @@ export function createPageMetadata({
     description,
     alternates: {
       canonical: `${BASE_URL}/${locale}${path}`,
-      languages: Object.fromEntries(
-        LOCALES.map((l) => [l, `${BASE_URL}/${l}${path}`])
-      ),
+      languages: {
+        ...Object.fromEntries(
+          LOCALES.map((l) => [l, `${BASE_URL}/${l}${path}`])
+        ),
+        "x-default": `${BASE_URL}/ko${path}`,
+      },
     },
     openGraph: {
       title,

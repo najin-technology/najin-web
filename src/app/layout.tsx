@@ -79,6 +79,24 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "나진테크 | NAJIN TECHNOLOGY",
+              alternateName: ["나진테크", "NAJIN TECHNOLOGY", "纳进科技"],
+              url: SITE_URL,
+              inLanguage: ["ko-KR", "en-US", "zh-CN"],
+              publisher: {
+                "@type": "Organization",
+                name: "나진테크",
+                url: SITE_URL,
+              },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
               "@type": "Organization",
               name: "나진테크",
               alternateName: "NAJIN TECHNOLOGY",
