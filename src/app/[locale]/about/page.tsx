@@ -2,7 +2,7 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
-import { getHistoryItems } from "@/lib/queries";
+import { getHistoryItems, getSiteAbout } from "@/lib/queries";
 import { ImageFade } from "@/components/image-fade";
 import {
   Award,
@@ -17,15 +17,10 @@ import {
 
 const fallbackHistory = [
   { id: "h1", year: 2002, month: 12, description_ko: "나진테크 설립", description_en: "NAJIN TECHNOLOGY Founded" },
-  { id: "h2", year: 2003, month: 6, description_ko: "㈜주요 화학사 등록 (현 주요 화학사)", description_en: "Registered with Major chemical company (now Major chemical company)" },
   { id: "h3", year: 2005, month: 6, description_ko: "부산 사상구 괘법동 공장 설립", description_en: "Busan Sasang Factory Established" },
-  { id: "h4", year: 2010, month: 6, description_ko: "㈜주요 부품사 등록", description_en: "Registered with Sungwoo Hightech" },
   { id: "h5", year: 2013, month: 4, description_ko: "경남 양산 산막공단 자가공장 설립", description_en: "Yangsan Sanmak Factory Established" },
   { id: "h6", year: 2013, month: 6, description_ko: "ISO 9001 획득", description_en: "ISO 9001 Certified" },
   { id: "h7", year: 2013, month: 8, description_ko: "CLEAN 사업장 인정", description_en: "CLEAN Workplace Certified" },
-  { id: "h8", year: 2014, month: 1, description_ko: "국내 완성차사 자동차㈜ 등록", description_en: "Registered with Domestic automaker Motors" },
-  { id: "h9", year: 2014, month: 2, description_ko: "주요 부품사 등록", description_en: "Registered with Major parts supplier" },
-  { id: "h10", year: 2016, month: 4, description_ko: "SK㈜ 등록", description_en: "Registered with SK" },
   { id: "h11", year: 2016, month: 6, description_ko: "우레탄 금형 받침대 특허 획득", description_en: "Urethane Mold Base Patent Acquired" },
   { id: "h12", year: 2022, month: 2, description_ko: "확장 이전 (산막공단남14길 170)", description_en: "Expanded & Relocated to New Factory" },
 ];
@@ -40,9 +35,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     path: "/about",
     titles: { ko: "회사소개", en: "About Us", zh: "公司介绍" },
     descriptions: {
-      ko: "나진테크 회사소개. 2002년 설립된 경남 양산 정밀 가공 제조업체. ISO 9001 인증, 우레탄 금형받침대 특허 보유. 국내외 주요 완성차사, SK, Overseas automaker 등 대기업 납품 25년 노하우. 대표이사 인사말, 연혁, 인증현황, 오시는 길.",
-      en: "About NAJIN TECHNOLOGY — precision manufacturer in Yangsan, South Korea since 2002. ISO 9001 certified, urethane mold base patent holder. 25 years supplying Hyundai, SK, Overseas automaker and other major industrial clients. CEO message, history, certifications, location.",
-      zh: "纳进科技公司介绍。2002年成立的庆南梁山精密加工制造企业。ISO 9001认证，聚氨酯模具支撑专利持有。25年向现代汽车、SK、海外整车厂等大企业供货经验。CEO致辞、发展历程、资质认证、交通指南。",
+      ko: "나진테크 회사소개. 2002년 설립된 경남 양산 정밀 가공 제조업체. ISO 9001 인증, 우레탄 금형받침대 특허 보유. 국내외 주요 완성차·배터리·소재 기업 납품 25년 노하우. 대표이사 인사말, 연혁, 인증현황, 오시는 길.",
+      en: "About NAJIN TECHNOLOGY — precision manufacturer in Yangsan, South Korea since 2002. ISO 9001 certified, urethane mold base patent holder. 25 years supplying major automotive, battery, and materials clients at home and abroad. CEO message, history, certifications, location.",
+      zh: "纳进科技公司介绍。2002年成立的庆南梁山精密加工制造企业。ISO 9001认证，聚氨酯模具支撑专利持有。25年向国内外主要整车、电池、材料企业供货经验。CEO致辞、发展历程、资质认证、交通指南。",
     },
   });
 }
@@ -64,6 +59,11 @@ export default async function AboutPage() {
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [SEGMENTS.about]);
 
+  const siteAbout = await getSiteAbout();
+  const localeKey = locale === "en" || locale === "zh" ? locale : "ko";
+  const ceoName = siteAbout?.[`ceo_name_${localeKey}` as const] ?? "";
+  const ceoContent = siteAbout?.[`ceo_greeting_${localeKey}` as const] ?? "";
+
   return (
     <>
       <script
@@ -73,36 +73,40 @@ export default async function AboutPage() {
       <PageHeader titleKey="pageTitle" namespace="about" descriptionKey="pageDescription" bgImage="/images/factory/factory-interior-1.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
-      {/* CEO Greeting */}
-      <section className="py-16 md:py-24 bg-surface-warm-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2
-            className="text-2xl md:text-3xl font-bold text-brand-navy mb-8"
-            data-animate="fade-up"
-          >
-            {t("ceoTitle")}
-          </h2>
-          <div
-            className="relative bg-white rounded-xl p-8 md:p-10 border border-surface-warm-200 border-l-4 border-l-brand-copper shadow-sm"
-            data-animate="fade-up"
-            data-animate-delay="1"
-          >
-            {/* Decorative large quote mark */}
-            <span
-              className="absolute -top-2 left-6 text-8xl leading-none text-brand-copper/20 font-serif select-none pointer-events-none"
-              aria-hidden="true"
+      {/* CEO Greeting (DB-driven) */}
+      {ceoContent ? (
+        <section className="py-16 md:py-24 bg-surface-warm-50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2
+              className="text-2xl md:text-3xl font-bold text-brand-navy mb-8"
+              data-animate="fade-up"
             >
-              &ldquo;
-            </span>
-            <div className="relative text-brand-charcoal/90 leading-relaxed whitespace-pre-line text-base md:text-lg font-medium">
-              {t("ceoContent")}
+              {t("ceoTitle")}
+            </h2>
+            <div
+              className="relative bg-white rounded-xl p-8 md:p-10 border border-surface-warm-200 border-l-4 border-l-brand-copper shadow-sm"
+              data-animate="fade-up"
+              data-animate-delay="1"
+            >
+              {/* Decorative large quote mark */}
+              <span
+                className="absolute -top-2 left-6 text-8xl leading-none text-brand-copper/20 font-serif select-none pointer-events-none"
+                aria-hidden="true"
+              >
+                &ldquo;
+              </span>
+              <div className="relative text-brand-charcoal/90 leading-relaxed whitespace-pre-line text-base md:text-lg font-medium">
+                {ceoContent}
+              </div>
+              {ceoName ? (
+                <p className="mt-6 text-right text-brand-navy font-bold">
+                  {ceoName}
+                </p>
+              ) : null}
             </div>
-            <p className="mt-6 text-right text-brand-navy font-bold">
-              {t("ceoName")}
-            </p>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* Key Facts (GEO-friendly structured data) */}
       <section className="py-16 md:py-20" aria-labelledby="facts-title">

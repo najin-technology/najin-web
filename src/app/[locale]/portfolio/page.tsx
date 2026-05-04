@@ -19,9 +19,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     path: "/portfolio",
     titles: { ko: "주요실적", en: "Portfolio", zh: "主要业绩" },
     descriptions: {
-      ko: "나진테크 주요 실적과 제품 갤러리. 국내외 주요 완성차사, 주요 부품사, SK, Overseas automaker, 주요 화학사, 국내 완성차사, 주요 부품사 등 대기업 납품 사례. 우레탄 성형, CNC 정밀가공, 합성수지 가공, 금형 제작 프로젝트 모음.",
-      en: "NAJIN TECHNOLOGY portfolio — case studies and product gallery. Supplying Major automaker, Major parts supplier, SK, Overseas automaker, Major chemical company, Domestic automaker, Major parts supplier and more. Urethane molding, CNC precision machining, synthetic resin processing, mold fabrication projects.",
-      zh: "纳进科技主要业绩与产品展示。向现代汽车、现代Powertech、SK、海外整车厂、韩华Impact、雷诺三星、东喜产业等大企业供货案例。聚氨酯成型、CNC精密加工、合成树脂加工、模具制作项目集。",
+      ko: "나진테크 주요 실적과 제품 갤러리. 국내외 주요 완성차·배터리·소재 기업 납품 사례. 우레탄 성형, CNC 정밀가공, 합성수지 가공, 금형 제작 프로젝트 모음.",
+      en: "NAJIN TECHNOLOGY portfolio — case studies and product gallery. Supplying major automotive, battery, and materials companies at home and abroad. Urethane molding, CNC precision machining, synthetic resin processing, mold fabrication projects.",
+      zh: "纳进科技主要业绩与产品展示。向国内外主要整车、电池、材料企业供货案例。聚氨酯成型、CNC精密加工、合成树脂加工、模具制作项目集。",
     },
   });
 }

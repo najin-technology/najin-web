@@ -16,16 +16,6 @@ CREATE INDEX IF NOT EXISTS idx_customers_display_order
   WHERE client_slug IS NOT NULL AND deleted_at IS NULL;
 
 -- ============================================================
--- 10개 거래처 메타 백필 (lib/clients.ts 의 기존 값)
+-- 거래처 메타 백필: 실 데이터는 scripts/seed/customer_meta.sql (gitignored).
+-- 신규 환경 구축 시 별도 적용 필요. scripts/seed/README.example.md 참고.
 -- ============================================================
-
-UPDATE customers SET logo_url = '/images/logos/hyundai.svg',           name_en = 'Major automaker',         display_category = 'automotive', display_order = 10  WHERE client_slug = 'hyundai';
-UPDATE customers SET logo_url = '/images/logos/hyundai-powertech.svg', name_en = 'Major parts supplier',     display_category = 'automotive', display_order = 20  WHERE client_slug = 'hyundai-powertech';
-UPDATE customers SET logo_url = '/images/logos/renault.svg',           name_en = 'Domestic automaker',       display_category = 'automotive', display_order = 30, needs_dark_bg = TRUE, registered_year = 2014 WHERE client_slug = 'renault-samsung';
-UPDATE customers SET logo_url = '/images/logos/sk.svg',                name_en = 'SK',                    display_category = 'industrial', display_order = 40, registered_year = 2016 WHERE client_slug = 'sk';
-UPDATE customers SET logo_url = '/images/logos/hanwha.svg',            name_en = 'Major chemical company',         display_category = 'industrial', display_order = 50, registered_year = 2003 WHERE client_slug = 'hanwha-impact';
-UPDATE customers SET logo_url = '/images/logos/donghee.png',           name_en = 'Major parts supplier',    display_category = 'automotive', display_order = 60, registered_year = 2014 WHERE client_slug = 'donghee';
-UPDATE customers SET logo_url = '/images/logos/hwashin.svg',           name_en = 'Major parts supplier',               display_category = 'automotive', display_order = 70  WHERE client_slug = 'hwashin';
-UPDATE customers SET logo_url = '/images/logos/sungwoo.svg',           name_en = 'Major parts supplier',        display_category = 'automotive', display_order = 80, registered_year = 2010 WHERE client_slug = 'sungwoo-hitech';
-UPDATE customers SET logo_url = '/images/logos/gm.png',                name_en = 'Overseas automaker',           display_category = 'overseas',   display_order = 90  WHERE client_slug = 'gm-shanghai';
-UPDATE customers SET logo_url = '/images/logos/lear.svg',              name_en = '해외 부품사',            display_category = 'overseas',   display_order = 100 WHERE client_slug = 'lear-dymos';

@@ -172,30 +172,8 @@ CREATE TRIGGER trg_applications_attach_customer
   BEFORE INSERT ON applications
   FOR EACH ROW EXECUTE FUNCTION attach_customer_for_application();
 
--- ============================================================
--- 거래처 시드 → 10개 client (lib/clients.ts) 를 customers 로 흡수
--- 검증된 거래처는 status='완료' 로 분류 (오랜 거래 + 이력 있음)
--- 거래 등록만 있는 곳(주요화학사/부품사4)은 status='완료' (일단 거래 관계 등록됨)
--- ============================================================
 
-INSERT INTO customers (company_name, company_name_normalized, display_name, status, source, client_slug, notes) VALUES
-  ('국내외 주요 완성차사', normalize_company_name('국내외 주요 완성차사'), '국내외 주요 완성차사 (Major automaker)', '완료', 'client_delivery', 'hyundai',
-   '회사소개 (2019) 납품현황: 2008~2012년 다수 가공/우레탄 납품'),
-  ('주요 부품사', normalize_company_name('주요 부품사'), '주요 부품사 (Major parts supplier)', '완료', 'client_delivery', 'hyundai-powertech',
-   '회사소개 (2019) 납품현황: 2016.04 서산 우레탄 조립'),
-  ('국내 완성차사', normalize_company_name('국내 완성차사'), '국내 완성차사 (Domestic automaker)', '완료', 'client_delivery', 'renault-samsung',
-   '회사소개 (2019) 납품현황: 2014 거래 등록, 2019.12 LG 배터리팩 가공'),
-  ('SK', normalize_company_name('SK'), 'SK', '완료', 'client_delivery', 'sk',
-   '회사소개 (2019) 납품현황: 2016 거래 등록, 2017/2018 전지공장 MC블럭 가공'),
-  ('주요 화학사', normalize_company_name('주요 화학사'), '주요 화학사 (전 주요 화학사)', '완료', 'client_delivery', 'hanwha-impact',
-   '회사소개 (2019): 2003.06 ㈜주요 화학사 거래 등록'),
-  ('주요 부품사', normalize_company_name('주요 부품사'), '주요 부품사 (Major parts supplier)', '완료', 'client_delivery', 'donghee',
-   '회사소개 (2019): 2014.02 거래 등록'),
-  ('주요 부품사', normalize_company_name('주요 부품사'), '주요 부품사 (Major parts supplier)', '완료', 'client_delivery', 'hwashin',
-   '회사소개 (2019) 납품현황: 2018 TM/LX2 PE/PC 가공'),
-  ('주요 부품사', normalize_company_name('주요 부품사'), '주요 부품사 (Major parts supplier)', '완료', 'client_delivery', 'sungwoo-hitech',
-   '회사소개 (2019): 2010 거래 등록, 2019.08 CN7 PE/MC 가공'),
-  ('해외 자동차사', normalize_company_name('해외 자동차사'), 'Overseas automaker', '완료', 'client_delivery', 'gm-shanghai',
-   '회사소개 (2019) 납품현황: 2017.10 자동창고용 시트'),
-  ('해외 부품사', normalize_company_name('해외 부품사'), '해외 부품사 (China)', '완료', 'client_delivery', 'lear-dymos',
-   '회사소개 (2019) 납품현황: 2017.12 중국공장 자동창고용 시트');
+-- ============================================================
+-- 거래처 시드: 실 데이터는 scripts/seed/customers.sql (gitignored) 으로 이전.
+-- 신규 환경 구축 시 별도 적용 필요. scripts/seed/README.example.md 참고.
+-- ============================================================

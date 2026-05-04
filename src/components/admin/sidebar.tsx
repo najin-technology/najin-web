@@ -21,6 +21,7 @@ import {
   BarChart3,
   Settings,
   ClipboardList,
+  UserCog,
 } from "lucide-react";
 
 const navGroups = [
@@ -43,6 +44,7 @@ const navGroups = [
       { href: "/admin/notices", label: "회사소식", icon: Bell },
       { href: "/admin/products", label: "제품 관리", icon: Package },
       { href: "/admin/job-postings", label: "채용공고", icon: Briefcase },
+      { href: "/admin/site/about", label: "회사 정보", icon: UserCog },
     ],
   },
   {

@@ -20,9 +20,9 @@ export async function generateMetadata({
     path: "/posts",
     titles: { ko: "제작사례", en: "Projects", zh: "制作案例" },
     descriptions: {
-      ko: "나진테크 25년 노하우의 우레탄 성형, CNC 정밀가공, 합성수지 가공, 금형 제작 제작사례. 국내외 주요 완성차사 프레스공장 우레탄 금형받침대, SK CNC 정밀부품, Overseas automaker 절연재, EV 배터리 인슐레이션 등 대기업 납품 실적 모음.",
-      en: "NAJIN TECHNOLOGY project gallery — 25 years of urethane molding, CNC precision machining, synthetic resin processing, mold fabrication. Hyundai press shop urethane mold supports, SK CNC precision parts, Overseas automaker insulation, EV battery insulation, and more enterprise deliveries.",
-      zh: "纳进科技制作案例集——25年聚氨酯成型、CNC精密加工、合成树脂加工、模具制作积淀。现代汽车冲压工厂聚氨酯模具支撑、SK CNC精密零件、海外整车厂绝缘件、电动车电池绝缘等大企业交付实绩。",
+      ko: "나진테크 25년 노하우의 우레탄 성형, CNC 정밀가공, 합성수지 가공, 금형 제작 제작사례. 완성차 프레스공장 우레탄 금형받침대, 배터리 공장 CNC 정밀부품, 해외 자동차사 절연재, EV 배터리 인슐레이션 등 국내외 주요 기업 납품 실적 모음.",
+      en: "NAJIN TECHNOLOGY project gallery — 25 years of urethane molding, CNC precision machining, synthetic resin processing, mold fabrication. Automaker press shop urethane mold supports, battery plant CNC precision parts, overseas automotive insulation, EV battery insulation, and more enterprise deliveries.",
+      zh: "纳进科技制作案例集——25年聚氨酯成型、CNC精密加工、合成树脂加工、模具制作积淀。整车冲压工厂聚氨酯模具支撑、电池工厂 CNC 精密零件、海外整车厂绝缘件、电动车电池绝缘等国内外主要企业交付实绩。",
     },
   });
 }
