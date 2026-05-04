@@ -12,6 +12,7 @@ import {
   getClientGridRowBySlug,
 } from "@/lib/queries";
 import { createPageMetadata } from "@/lib/metadata";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 import { Calendar, Phone, ArrowRight, FileText, ImageIcon } from "lucide-react";
 
 export async function generateStaticParams() {
@@ -85,8 +86,23 @@ export default async function ClientPage({
     // empty fallback
   }
 
+  const clientName = locale === "ko" ? client.name : client.nameEn || client.name;
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [
+    SEGMENTS.portfolio,
+    {
+      ko: clientName,
+      en: clientName,
+      zh: clientName,
+      path: `/clients/${slug}`,
+    },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Hero with logo */}
       <section className="relative bg-brand-navy text-white py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 hero-gradient hero-pattern opacity-40" />
