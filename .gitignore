@@ -49,3 +49,11 @@ package-lock.json
 qa-round*.png
 .playwright-mcp/
 .superpowers/
+
+# Operational seed data — real client / customer / blog data, kept out of public repo
+# Apply manually to staging/prod (see scripts/seed/README.example.md)
+scripts/seed/*.sql
+
+# Internal deployment / operational notes (private wiki only)
+docs/post-deploy-checklist.md
+docs/private/

@@ -248,7 +248,7 @@ export function CustomerDisplayForm({
           <Input
             value={form.client_slug ?? ""}
             onChange={(e) => setForm({ ...form, client_slug: e.target.value || null })}
-            placeholder="예: hyundai (영문 lower-kebab)"
+            placeholder="예: client-slug (영문 lower-kebab)"
             className="text-sm mt-1"
           />
         </div>
@@ -258,7 +258,7 @@ export function CustomerDisplayForm({
           <Input
             value={form.logo_url ?? ""}
             onChange={(e) => setForm({ ...form, logo_url: e.target.value || null })}
-            placeholder="예: /images/logos/hyundai.svg"
+            placeholder="예: /images/logos/client.svg"
             className="text-sm mt-1"
           />
           {form.logo_url && (
@@ -274,7 +274,7 @@ export function CustomerDisplayForm({
           <Input
             value={form.name_en ?? ""}
             onChange={(e) => setForm({ ...form, name_en: e.target.value || null })}
-            placeholder="예: Hyundai Motor"
+            placeholder="예: Company Name (English)"
             className="text-sm mt-1"
           />
         </div>

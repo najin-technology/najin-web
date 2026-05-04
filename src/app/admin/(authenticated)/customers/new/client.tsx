@@ -21,7 +21,7 @@ export function NewCustomerForm() {
           id="company_name"
           name="company_name"
           required
-          placeholder="예: 현대자동차"
+          placeholder="예: ㈜회사명"
           className="mt-1.5 text-base"
         />
       </div>

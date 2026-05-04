@@ -81,7 +81,7 @@ export default async function Image() {
           <span>·</span>
           <span>특허 보유</span>
           <span>·</span>
-          <span>현대자동차 · SK · GM Shanghai 납품</span>
+          <span>국내외 주요 산업 고객사 납품</span>
         </div>
       </div>
     ),

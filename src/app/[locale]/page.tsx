@@ -13,9 +13,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       zh: "纳进科技 — 25年精密加工专业企业",
     },
     descriptions: {
-      ko: "나진테크 공식 홈페이지. 경남 양산 우레탄 성형, 합성수지 가공, CNC 정밀가공, 금형 제작 전문기업. 현대자동차, SK, GM Shanghai 등 주요 대기업 납품.",
-      en: "NAJIN TECHNOLOGY official site. Urethane molding, synthetic resin, CNC machining, mold fabrication in Yangsan, Korea. Supplying Hyundai, SK, GM Shanghai and other major clients.",
-      zh: "纳进科技官方网站。庆南梁山聚氨酯成型、合成树脂加工、CNC精密加工、模具制作专业企业。向现代汽车、SK、GM上海等主要大企业供货。",
+      ko: "나진테크 공식 홈페이지. 경남 양산 우레탄 성형, 합성수지 가공, CNC 정밀가공, 금형 제작 전문기업. 국내외 주요 완성차·배터리·소재 기업 납품.",
+      en: "NAJIN TECHNOLOGY official site. Urethane molding, synthetic resin, CNC machining, mold fabrication in Yangsan, Korea. Supplying major automotive, battery, and materials clients.",
+      zh: "纳进科技官方网站。庆南梁山聚氨酯成型、合成树脂加工、CNC精密加工、模具制作专业企业。向国内外主要整车、电池、材料企业供货。",
     },
   });
 }
@@ -308,9 +308,9 @@ export default async function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { key: "portfolio1", image: "/images/products/pe-rod-1.jpg", logo: "/images/logos/hyundai.svg" },
-              { key: "portfolio2", image: "/images/products/3d-mc-part-1.jpg", logo: "/images/logos/sk.svg" },
-              { key: "portfolio3", image: "/images/products/db-4421a7e9-0.jpg", logo: "/images/logos/gm.png" },
+              { key: "portfolio1", image: "/images/products/pe-rod-1.jpg" },
+              { key: "portfolio2", image: "/images/products/3d-mc-part-1.jpg" },
+              { key: "portfolio3", image: "/images/products/db-4421a7e9-0.jpg" },
             ].map((item, i) => (
               <div
                 key={item.key}
@@ -327,15 +327,7 @@ export default async function HomePage() {
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
-                <div className="p-5 flex items-center gap-3">
-                  <Image
-                    src={item.logo}
-                    alt=""
-                    width={28}
-                    height={28}
-                    className="object-contain opacity-60"
-                    unoptimized
-                  />
+                <div className="p-5">
                   <p className="text-sm font-medium text-brand-charcoal line-clamp-1">{t(item.key)}</p>
                 </div>
               </div>

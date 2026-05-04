@@ -17,16 +17,7 @@ export type Client = {
 /**
  * Fallback slug 리스트.
  * generateStaticParams 등에서 DB 접근 실패 시 사용. 평소엔 DB 가 source of truth.
+ * 거래처 실명 노출 방지를 위해 의도적으로 비어있음 — 빌드 시 DB 조회가 실패하면
+ * /clients/[slug] 는 dynamic 라우트로 폴백되어 런타임에 DB 조회 후 렌더된다.
  */
-export const FALLBACK_CLIENT_SLUGS = [
-  "hyundai",
-  "hyundai-powertech",
-  "renault-samsung",
-  "sk",
-  "hanwha-impact",
-  "donghee",
-  "hwashin",
-  "sungwoo-hitech",
-  "gm-shanghai",
-  "lear-dymos",
-];
+export const FALLBACK_CLIENT_SLUGS: string[] = [];

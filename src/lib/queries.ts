@@ -223,3 +223,25 @@ export async function getProductsByCategory() {
   if (error) throw error;
   return data;
 }
+
+export type SiteAbout = {
+  id: number;
+  ceo_name_ko: string;
+  ceo_name_en: string;
+  ceo_name_zh: string;
+  ceo_greeting_ko: string;
+  ceo_greeting_en: string;
+  ceo_greeting_zh: string;
+  updated_at: string | null;
+  updated_by: string | null;
+};
+
+export async function getSiteAbout(): Promise<SiteAbout | null> {
+  const { data, error } = await supabase
+    .from("site_about")
+    .select("*")
+    .eq("id", 1)
+    .single();
+  if (error) return null;
+  return data as SiteAbout;
+}
