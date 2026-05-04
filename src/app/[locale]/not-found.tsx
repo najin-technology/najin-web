@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { getLocale } from "next-intl/server";
+
+export const metadata: Metadata = {
+  title: "404 — 페이지를 찾을 수 없습니다",
+  robots: { index: false, follow: true },
+};
 
 const messages: Record<string, { text: string; button: string; quote: string }> = {
   ko: { text: "페이지를 찾을 수 없습니다.", button: "홈으로 돌아가기", quote: "견적문의" },

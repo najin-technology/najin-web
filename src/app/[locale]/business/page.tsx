@@ -1,4 +1,5 @@
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
@@ -80,6 +81,9 @@ const SERVICE_CATALOG = [
 
 export default function BusinessPage() {
   const t = useTranslations("business");
+  const locale = useLocale();
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [SEGMENTS.business]);
 
   const serviceGraph = {
     "@context": "https://schema.org",
@@ -102,6 +106,10 @@ export default function BusinessPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceGraph) }}

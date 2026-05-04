@@ -38,6 +38,7 @@ export async function generateMetadata({
           ko: `${BASE_URL}/ko/notices/${id}`,
           en: `${BASE_URL}/en/notices/${id}`,
           zh: `${BASE_URL}/zh/notices/${id}`,
+          "x-default": `${BASE_URL}/ko/notices/${id}`,
         },
       },
     };

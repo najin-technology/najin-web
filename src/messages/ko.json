@@ -95,7 +95,29 @@
     "certClean": "산업안전보건 우수 사업장",
     "certPatent": "자체 기술력으로 취득한 특허",
     "mapTitle": "오시는길",
-    "mapAddress": "경상남도 양산시 산막공단남14길 170 (북정동)"
+    "mapAddress": "경상남도 양산시 산막공단남14길 170 (북정동)",
+    "factsTitle": "한눈에 보는 나진테크",
+    "factsSubtitle": "검증된 사실 정보",
+    "facts": {
+      "founded": "2002년 12월 설립",
+      "location": "경상남도 양산시 산막공단남14길 170",
+      "employees": "직원 20~50명 규모",
+      "certifications": "ISO 9001 품질경영시스템 · CLEAN 사업장 인증",
+      "patent": "우레탄 금형베이스 기술 특허 보유",
+      "businessAreas": "우레탄 성형 · 합성수지 가공 · CNC 정밀가공 · 금형 제작 · EV 부품",
+      "majorClients": "국내외 주요 완성차사 · SK · Overseas automaker · 국내 완성차사 · 주요 부품사 · 주요 부품사",
+      "contact": "TEL 055-367-2596 · 영업시간 월~금 08:30~17:30"
+    },
+    "factsLabels": {
+      "founded": "설립",
+      "location": "본사 / 공장",
+      "employees": "임직원",
+      "certifications": "인증",
+      "patent": "특허",
+      "businessAreas": "사업영역",
+      "majorClients": "주요 거래처",
+      "contact": "연락처 / 영업시간"
+    }
   },
   "business": {
     "pageTitle": "사업영역",

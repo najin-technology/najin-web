@@ -31,6 +31,7 @@ const fallbackHistory = [
 ];
 
 import { createPageMetadata } from "@/lib/metadata";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -61,8 +62,14 @@ export default async function AboutPage() {
     historyItems = fallbackHistory as typeof historyItems;
   }
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [SEGMENTS.about]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <PageHeader titleKey="pageTitle" namespace="about" descriptionKey="pageDescription" bgImage="/images/factory/factory-interior-1.jpg" />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
@@ -94,6 +101,53 @@ export default async function AboutPage() {
               {t("ceoName")}
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Key Facts (GEO-friendly structured data) */}
+      <section className="py-16 md:py-20" aria-labelledby="facts-title">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 md:mb-10" data-animate="fade-up">
+            <h2
+              id="facts-title"
+              className="text-2xl md:text-3xl font-bold text-brand-navy"
+            >
+              {t("factsTitle")}
+            </h2>
+            <p className="mt-2 text-sm md:text-base text-brand-charcoal/75 font-medium">
+              {t("factsSubtitle")}
+            </p>
+          </div>
+          <dl
+            className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 bg-white rounded-xl border border-surface-warm-200 p-6 md:p-8 shadow-sm"
+            data-animate="fade-up"
+            data-animate-delay="1"
+          >
+            {(
+              [
+                "founded",
+                "location",
+                "employees",
+                "certifications",
+                "patent",
+                "businessAreas",
+                "majorClients",
+                "contact",
+              ] as const
+            ).map((key) => (
+              <div
+                key={key}
+                className="flex flex-col gap-1 border-l-2 border-brand-copper/40 pl-4"
+              >
+                <dt className="text-[12px] font-bold text-brand-charcoal/65 uppercase tracking-wide">
+                  {t(`factsLabels.${key}`)}
+                </dt>
+                <dd className="text-sm md:text-base font-semibold text-brand-navy leading-relaxed">
+                  {t(`facts.${key}`)}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
