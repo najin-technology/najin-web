@@ -32,6 +32,10 @@ import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 
 export const revalidate = 3600;
 
+export function generateStaticParams() {
+  return [{ locale: "ko" }, { locale: "en" }, { locale: "zh" }];
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   return createPageMetadata({
