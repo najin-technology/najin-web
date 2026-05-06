@@ -1,9 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { CACHE_TAGS } from "@/lib/queries";
 
 const STATUSES = ["리드", "검토중", "견적전송", "진행중", "완료", "보류", "거절"] as const;
 
@@ -104,6 +105,10 @@ export async function updateCustomerDisplay(
   });
 
   // Revalidate public surfaces that consume the client grid
+  updateTag(CACHE_TAGS.customers);
+  if (cleaned.client_slug) {
+    updateTag(`customer:${cleaned.client_slug}`);
+  }
   revalidatePath(`/admin/customers/${id}`);
   revalidatePath("/admin/customers");
   revalidatePath("/", "layout"); // home + portfolio + clients/* layouts

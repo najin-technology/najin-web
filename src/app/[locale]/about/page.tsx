@@ -1,5 +1,7 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
+
+// ISR: 1시간 캐시. admin 편집 시 revalidatePath/Tag 로 즉시 무효화.
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
 import { getHistoryItems, getSiteAbout } from "@/lib/queries";
@@ -28,6 +30,8 @@ const fallbackHistory = [
 import { createPageMetadata } from "@/lib/metadata";
 import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   return createPageMetadata({
@@ -46,12 +50,13 @@ export default async function AboutPage() {
   const t = await getTranslations("about");
   const locale = await getLocale();
 
-  let historyItems: Awaited<ReturnType<typeof getHistoryItems>> = [];
-  try {
-    historyItems = await getHistoryItems();
-  } catch {
-    // fallback to empty if fetch fails
-  }
+  // 두 DB 쿼리 병렬 실행 (시퀀셜 → 병렬: ~200~400ms 단축)
+  const [historyResult, siteAbout] = await Promise.all([
+    getHistoryItems().catch(() => [] as Awaited<ReturnType<typeof getHistoryItems>>),
+    getSiteAbout(),
+  ]);
+
+  let historyItems = historyResult;
   // Use fallback if DB has fewer items than static data
   if (historyItems.length < fallbackHistory.length) {
     historyItems = fallbackHistory as typeof historyItems;
@@ -59,7 +64,6 @@ export default async function AboutPage() {
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [SEGMENTS.about]);
 
-  const siteAbout = await getSiteAbout();
   const localeKey = locale === "en" || locale === "zh" ? locale : "ko";
   const ceoName = siteAbout?.[`ceo_name_${localeKey}` as const] ?? "";
   const ceoContent = siteAbout?.[`ceo_greeting_${localeKey}` as const] ?? "";

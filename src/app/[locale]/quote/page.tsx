@@ -7,6 +7,9 @@ import { Phone, MapPin, Mail } from "lucide-react";
 
 import { createPageMetadata } from "@/lib/metadata";
 
+// 폼 자체는 client component, 페이지 셸은 정적 → ISR.
+export const revalidate = 86400;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   return createPageMetadata({

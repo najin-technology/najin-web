@@ -15,6 +15,8 @@ import { createPageMetadata } from "@/lib/metadata";
 import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 import { Calendar, Phone, ArrowRight, FileText, ImageIcon } from "lucide-react";
 
+export const revalidate = 3600;
+
 export async function generateStaticParams() {
   try {
     const grid = await getClientGrid();

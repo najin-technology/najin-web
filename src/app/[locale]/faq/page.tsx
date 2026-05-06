@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/accordion";
 import { createPageMetadata } from "@/lib/metadata";
 
+export const revalidate = 3600;
+
 export async function generateMetadata({
   params,
 }: {

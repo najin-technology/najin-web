@@ -1,6 +1,7 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
+import { CACHE_TAGS } from "@/lib/queries";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
@@ -53,6 +54,7 @@ export async function createNotice(
     details: { title_ko: titleKo },
   });
 
+  updateTag(CACHE_TAGS.notices);
   revalidatePath("/admin/notices");
   redirect("/admin/notices");
 }
@@ -114,6 +116,7 @@ export async function updateNotice(
     details: { title_ko: titleKo },
   });
 
+  updateTag(CACHE_TAGS.notices);
   revalidatePath("/admin/notices");
   redirect("/admin/notices");
 }
@@ -150,6 +153,7 @@ export async function toggleNoticePublish(id: string) {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.notices);
   revalidatePath("/admin/notices");
 }
 
@@ -174,6 +178,7 @@ export async function deleteNotice(id: string) {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.notices);
   revalidatePath("/admin/notices");
   revalidatePath("/ko/notices");
   revalidatePath("/en/notices");

@@ -6,6 +6,8 @@ import { ArrowLeft, Calendar, Tag, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { SITE_URL as BASE_URL } from "@/lib/env";
 
+export const revalidate = 3600;
+
 function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 }

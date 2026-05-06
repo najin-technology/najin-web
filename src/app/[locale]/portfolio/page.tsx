@@ -12,6 +12,8 @@ import { PortfolioGallery } from "@/components/portfolio-gallery";
 import { createPageMetadata } from "@/lib/metadata";
 import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   return createPageMetadata({

@@ -1,10 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { CACHE_TAGS } from "@/lib/queries";
 
 type ActionState = {
   error?: string;
@@ -69,6 +70,7 @@ export async function createPost(
     details: { slug, title_ko: titleKo },
   });
 
+  updateTag(CACHE_TAGS.posts);
   revalidatePath("/admin/posts");
   revalidatePath("/ko/posts");
   revalidatePath("/en/posts");
@@ -147,6 +149,7 @@ export async function updatePost(
     details: { slug, title_ko: titleKo },
   });
 
+  updateTag(CACHE_TAGS.posts);
   revalidatePath("/admin/posts");
   revalidatePath("/ko/posts");
   revalidatePath("/en/posts");
@@ -185,6 +188,7 @@ export async function togglePostPublish(id: string) {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.posts);
   revalidatePath("/admin/posts");
   revalidatePath("/ko/posts");
   revalidatePath("/en/posts");
@@ -211,6 +215,7 @@ export async function deletePost(id: string) {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.posts);
   revalidatePath("/admin/posts");
   revalidatePath("/ko/posts");
   revalidatePath("/en/posts");
