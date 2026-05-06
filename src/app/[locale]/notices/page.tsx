@@ -9,6 +9,7 @@ import { FileText, Calendar } from "lucide-react";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const revalidate = 3600;
+export const dynamic = "force-static";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

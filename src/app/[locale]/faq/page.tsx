@@ -11,6 +11,7 @@ import {
 import { createPageMetadata } from "@/lib/metadata";
 
 export const revalidate = 3600;
+export const dynamic = "force-static";
 
 export async function generateMetadata({
   params,

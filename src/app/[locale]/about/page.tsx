@@ -31,6 +31,11 @@ import { createPageMetadata } from "@/lib/metadata";
 import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 
 export const revalidate = 3600;
+export const dynamic = "force-static";
+
+export function generateStaticParams() {
+  return [{ locale: "ko" }, { locale: "en" }, { locale: "zh" }];
+}
 
 export function generateStaticParams() {
   return [{ locale: "ko" }, { locale: "en" }, { locale: "zh" }];

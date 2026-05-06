@@ -10,6 +10,7 @@ import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 import { buildJobPostingsJsonLd } from "@/lib/schema/job-posting";
 
 export const revalidate = 3600;
+export const dynamic = "force-static";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

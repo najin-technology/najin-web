@@ -5,8 +5,29 @@ import { Link } from "@/i18n/routing";
 import { ArrowLeft, Calendar, Tag, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { SITE_URL as BASE_URL } from "@/lib/env";
+import { supabase } from "@/lib/supabase";
 
 export const revalidate = 3600;
+export const dynamic = "force-static";
+
+export async function generateStaticParams() {
+  // Build time 에 발행된 post slug 모두 prerender (locale × slug 조합).
+  // Supabase client 가 build context 에서 null 일 수 있어 안전하게 처리.
+  try {
+    if (!supabase) return [];
+    const { data } = await supabase
+      .from("posts")
+      .select("slug")
+      .eq("is_published", true)
+      .is("deleted_at", null);
+    if (!data) return [];
+    return data.flatMap((p) =>
+      ["ko", "en", "zh"].map((locale) => ({ locale, slug: p.slug })),
+    );
+  } catch {
+    return [];
+  }
+}
 
 function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();

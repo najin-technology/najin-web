@@ -2,8 +2,14 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { createPageMetadata } from "@/lib/metadata";
 
-// ISR: 1시간마다 백그라운드 재생성. admin 콘텐츠 변경 시 server action 의 revalidatePath/Tag 로 즉시 무효화.
+// ISR: 1시간 캐시. admin 콘텐츠 변경 시 server action 의 updateTag/revalidatePath 로 즉시 무효화.
+// force-static: Next.js 16 의 자동 dynamic 분류를 override 해서 build-time prerender 강제.
 export const revalidate = 3600;
+export const dynamic = "force-static";
+
+export function generateStaticParams() {
+  return [{ locale: "ko" }, { locale: "en" }, { locale: "zh" }];
+}
 
 // 명시적으로 build time 에 3개 locale 모두 prerender (layout 의 generateStaticParams 와 중복이지만
 // Next.js 16 의 page-level static 분류에 필요).
