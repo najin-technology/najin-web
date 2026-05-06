@@ -11,12 +11,6 @@ export function generateStaticParams() {
   return [{ locale: "ko" }, { locale: "en" }, { locale: "zh" }];
 }
 
-// 명시적으로 build time 에 3개 locale 모두 prerender (layout 의 generateStaticParams 와 중복이지만
-// Next.js 16 의 page-level static 분류에 필요).
-export function generateStaticParams() {
-  return [{ locale: "ko" }, { locale: "en" }, { locale: "zh" }];
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   return createPageMetadata({
