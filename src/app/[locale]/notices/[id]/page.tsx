@@ -4,8 +4,23 @@ import { getNoticeById } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { SITE_URL as BASE_URL } from "@/lib/env";
+import { supabase } from "@/lib/supabase";
 
 export const revalidate = 3600;
+export const dynamic = "force-static";
+
+export async function generateStaticParams() {
+  // Build time 에 발행된 notice id 모두 prerender (locale × id 조합).
+  const { data } = await supabase
+    .from("notices")
+    .select("id")
+    .eq("is_published", true)
+    .is("deleted_at", null);
+  if (!data) return [];
+  return data.flatMap((n) =>
+    ["ko", "en", "zh"].map((locale) => ({ locale, id: n.id })),
+  );
+}
 
 function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();

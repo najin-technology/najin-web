@@ -10,6 +10,7 @@ import Image from "next/image";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const revalidate = 3600;
+// 주의: searchParams (category/tag 필터) 사용으로 force-static 미적용. dynamic SSR + revalidate 동작.
 
 export async function generateMetadata({
   params,
