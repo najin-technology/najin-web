@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 31536000,
     qualities: [50, 75, 90],
   },
+  turbopack: {
+    resolveAlias: {
+      // dxf-viewer 가 `import opentype from "opentype.js"` 로 default import 사용.
+      // opentype.js 1.3.5 의 .mjs 는 named exports 만 제공 → Turbopack 빌드 에러.
+      // .js (UMD) 는 default 포함이라 강제로 UMD 빌드 사용.
+      "opentype.js": "opentype.js/dist/opentype.js",
+    },
+  },
   async rewrites() {
     return [
       { source: "/favicon.ico", destination: "/icon" },
