@@ -4,6 +4,9 @@ import { Breadcrumb } from "@/components/breadcrumb";
 
 import { createPageMetadata } from "@/lib/metadata";
 
+// 거의 변경 없는 정적 정책 페이지 → 1일 캐시.
+export const revalidate = 86400;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   return createPageMetadata({

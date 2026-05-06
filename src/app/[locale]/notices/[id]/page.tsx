@@ -5,6 +5,8 @@ import { Link } from "@/i18n/routing";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { SITE_URL as BASE_URL } from "@/lib/env";
 
+export const revalidate = 3600;
+
 function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 }

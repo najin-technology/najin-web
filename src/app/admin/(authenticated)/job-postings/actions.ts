@@ -1,10 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { CACHE_TAGS } from "@/lib/queries";
 
 type ActionState = {
   error?: string;
@@ -66,6 +67,7 @@ export async function createJobPosting(
     details: { title_ko: titleKo },
   });
 
+  updateTag(CACHE_TAGS.jobPostings);
   revalidatePath("/admin/job-postings");
   redirect("/admin/job-postings");
 }
@@ -126,6 +128,7 @@ export async function updateJobPosting(
     details: { title_ko: titleKo },
   });
 
+  updateTag(CACHE_TAGS.jobPostings);
   revalidatePath("/admin/job-postings");
   redirect("/admin/job-postings");
 }
@@ -161,6 +164,7 @@ export async function toggleJobPostingActive(id: string) {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.jobPostings);
   revalidatePath("/admin/job-postings");
 }
 
@@ -185,5 +189,6 @@ export async function deleteJobPosting(id: string) {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.jobPostings);
   revalidatePath("/admin/job-postings");
 }

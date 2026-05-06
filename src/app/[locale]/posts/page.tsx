@@ -9,6 +9,8 @@ import Image from "next/image";
 
 import { createPageMetadata } from "@/lib/metadata";
 
+export const revalidate = 3600;
+
 export async function generateMetadata({
   params,
 }: {

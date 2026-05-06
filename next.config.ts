@@ -6,6 +6,13 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
+    // 모바일 360 ~ 4K 디스플레이 커버
+    deviceSizes: [360, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    // small assets (logo, icon, thumbnail)
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // 1년 캐시 (immutable optimized output)
+    minimumCacheTTL: 31536000,
+    qualities: [50, 75, 90],
   },
   async rewrites() {
     return [

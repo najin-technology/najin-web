@@ -1,10 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { CACHE_TAGS } from "@/lib/queries";
 
 function normalizeCompany(name: string) {
   return name
@@ -68,6 +69,7 @@ export async function createCustomer(
     targetId: data.id,
     details: { company_name: companyName, source: "manual" },
   });
+  updateTag(CACHE_TAGS.customers);
   revalidatePath("/admin/customers");
   redirect(`/admin/customers/${data.id}`);
 }
@@ -93,6 +95,7 @@ export async function reorderClientCustomers(ids: string[]) {
     details: { count: ids.length, first: ids[0] },
   });
 
+  updateTag(CACHE_TAGS.customers);
   revalidatePath("/admin/customers");
   revalidatePath("/", "layout"); // home + portfolio + clients/*
   return { success: true };

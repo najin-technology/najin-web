@@ -1,10 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { CACHE_TAGS } from "@/lib/queries";
 
 type ActionState = {
   error?: string;
@@ -89,6 +90,7 @@ export async function createProduct(
     details: { name_ko: nameKo, category },
   });
 
+  updateTag(CACHE_TAGS.products);
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
@@ -172,6 +174,7 @@ export async function updateProduct(
     details: { name_ko: nameKo, category },
   });
 
+  updateTag(CACHE_TAGS.products);
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
@@ -207,6 +210,7 @@ export async function toggleProductActive(id: string) {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.products);
   revalidatePath("/admin/products");
 }
 
@@ -231,6 +235,7 @@ export async function deleteProduct(id: string) {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.products);
   revalidatePath("/admin/products");
 }
 
@@ -253,6 +258,7 @@ export async function reorderProducts(ids: string[]) {
     details: { count: ids.length, first: ids[0] },
   });
 
+  updateTag(CACHE_TAGS.products);
   revalidatePath("/admin/products");
   revalidatePath("/ko/portfolio");
   revalidatePath("/en/portfolio");

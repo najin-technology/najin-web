@@ -1,9 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { CACHE_TAGS } from "@/lib/queries";
 
 type ActionState = {
   error?: string;
@@ -43,6 +44,7 @@ export async function updateSiteAbout(
     details: { fields: Object.keys(payload) },
   });
 
+  updateTag(CACHE_TAGS.siteAbout);
   revalidatePath("/ko/about");
   revalidatePath("/en/about");
   revalidatePath("/zh/about");

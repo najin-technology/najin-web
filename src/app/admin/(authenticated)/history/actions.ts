@@ -1,9 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { CACHE_TAGS } from "@/lib/queries";
 
 type ActionState = {
   error?: string;
@@ -52,6 +53,7 @@ export async function createHistoryItem(
     details: { year, description_ko: descriptionKo },
   });
 
+  updateTag(CACHE_TAGS.history);
   revalidatePath("/admin/history");
 
   return { success: true };
@@ -99,6 +101,7 @@ export async function updateHistoryItem(
     details: { year, description_ko: descriptionKo },
   });
 
+  updateTag(CACHE_TAGS.history);
   revalidatePath("/admin/history");
 
   return { success: true };
@@ -126,6 +129,7 @@ export async function deleteHistoryItem(id: string) {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.history);
   revalidatePath("/admin/history");
 }
 
@@ -146,6 +150,7 @@ export async function reorderHistoryItems(ids: string[]) {
     details: { count: ids.length, first: ids[0] },
   });
 
+  updateTag(CACHE_TAGS.history);
   revalidatePath("/admin/history");
   revalidatePath("/", "layout");
   return { success: true };

@@ -2,6 +2,9 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { createPageMetadata } from "@/lib/metadata";
 
+// ISR: 1시간마다 백그라운드 재생성. admin 콘텐츠 변경 시 server action 의 revalidatePath/Tag 로 즉시 무효화.
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   return createPageMetadata({
