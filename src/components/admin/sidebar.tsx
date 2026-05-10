@@ -22,6 +22,8 @@ import {
   Settings,
   ClipboardList,
   UserCog,
+  Mail,
+  ShieldCheck,
 } from "lucide-react";
 
 const navGroups = [
@@ -44,6 +46,7 @@ const navGroups = [
       { href: "/admin/notices", label: "회사소식", icon: Bell },
       { href: "/admin/products", label: "제품 관리", icon: Package },
       { href: "/admin/job-postings", label: "채용공고", icon: Briefcase },
+      { href: "/admin/certifications", label: "인증서", icon: ShieldCheck },
       { href: "/admin/site/about", label: "회사 정보", icon: UserCog },
     ],
   },
@@ -57,6 +60,7 @@ const navGroups = [
     label: "시스템",
     items: [
       { href: "/admin/history", label: "연혁 관리", icon: Clock },
+      { href: "/admin/email-templates", label: "메일 자동발송", icon: Mail },
       { href: "/admin/invites", label: "관리자 초대", icon: ShieldPlus },
       { href: "/admin/settings", label: "설정", icon: Settings },
     ],
