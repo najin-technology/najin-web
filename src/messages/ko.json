@@ -115,6 +115,13 @@
       "businessAreas": "사업영역",
       "majorClients": "주요 거래처",
       "contact": "연락처 / 영업시간"
+    },
+    "certifications": {
+      "title": "인증·특허"
+    },
+    "brochure": {
+      "title": "회사소개서",
+      "download": "PDF 다운로드"
     }
   },
   "business": {

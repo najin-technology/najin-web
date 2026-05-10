@@ -115,6 +115,13 @@
       "businessAreas": "业务领域",
       "majorClients": "主要客户",
       "contact": "联系方式 / 营业时间"
+    },
+    "certifications": {
+      "title": "认证·专利"
+    },
+    "brochure": {
+      "title": "公司简介",
+      "download": "下载 PDF"
     }
   },
   "business": {

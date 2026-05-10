@@ -1,8 +1,16 @@
 import { Resend } from "resend";
 import { getSupabaseAdmin } from "./supabase-admin";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
+
+let resendClient: Resend | null = null;
+function getResend(): Resend | null {
+  if (resendClient) return resendClient;
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return null;
+  resendClient = new Resend(key);
+  return resendClient;
+}
 
 export type Locale = "ko" | "en" | "zh";
 type Vars = Record<string, string | undefined>;
@@ -45,6 +53,9 @@ export async function sendByTemplateKey(args: {
   const subject = (row[`subject_${args.locale}` as const] || row.subject_ko) as string;
   const body = (row[`body_${args.locale}` as const] || row.body_ko) as string;
   if (!subject || !body) return { ok: false, reason: "empty_for_locale" };
+
+  const resend = getResend();
+  if (!resend) return { ok: false, reason: "resend_unavailable" };
 
   try {
     await resend.emails.send({

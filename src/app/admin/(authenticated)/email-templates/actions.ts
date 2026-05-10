@@ -10,7 +10,15 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { renderTemplate, type Locale } from "@/lib/email-templates";
 
 const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
-const resend = new Resend(process.env.RESEND_API_KEY);
+
+let resendClient: Resend | null = null;
+function getResend(): Resend | null {
+  if (resendClient) return resendClient;
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return null;
+  resendClient = new Resend(key);
+  return resendClient;
+}
 
 const SAMPLE_VARS: Record<string, string> = {
   contact_name: "홍길동",
@@ -134,6 +142,9 @@ export async function sendTestEmail(input: {
   const subject = row[`subject_${input.locale}` as const] || row.subject_ko;
   const body = row[`body_${input.locale}` as const] || row.body_ko;
   if (!subject || !body) return { ok: false, error: "해당 언어의 제목/본문이 비어 있습니다." };
+
+  const resend = getResend();
+  if (!resend) return { ok: false, error: "메일 서버가 구성되지 않았습니다 (RESEND_API_KEY 누락)." };
 
   try {
     await resend.emails.send({

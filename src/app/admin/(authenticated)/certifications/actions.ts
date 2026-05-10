@@ -1,9 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { CACHE_TAGS } from "@/lib/queries";
 
 const ALLOWED_IMAGE_EXT = ["jpg", "jpeg", "png", "webp"];
 const ALLOWED_PDF_EXT = ["pdf"];
@@ -158,6 +159,7 @@ export async function upsertCertification(
     details: { title_ko, is_published },
   });
 
+  updateTag(CACHE_TAGS.certifications);
   revalidatePath("/admin/certifications");
   revalidatePath("/ko/about");
   revalidatePath("/en/about");
@@ -197,6 +199,7 @@ export async function deleteCertification(id: string): Promise<ActionResult> {
     targetId: id,
   });
 
+  updateTag(CACHE_TAGS.certifications);
   revalidatePath("/admin/certifications");
   revalidatePath("/ko/about");
   revalidatePath("/en/about");

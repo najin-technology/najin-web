@@ -115,6 +115,13 @@
       "businessAreas": "Business areas",
       "majorClients": "Major clients",
       "contact": "Contact / Hours"
+    },
+    "certifications": {
+      "title": "Certifications"
+    },
+    "brochure": {
+      "title": "Company Brochure",
+      "download": "Download PDF"
     }
   },
   "business": {

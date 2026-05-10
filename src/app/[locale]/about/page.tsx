@@ -4,8 +4,9 @@ import { PageHeader } from "@/components/page-header";
 // ISR: 1시간 캐시. admin 편집 시 revalidatePath/Tag 로 즉시 무효화.
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
-import { getHistoryItems, getSiteAbout } from "@/lib/queries";
+import { getHistoryItems, getSiteAbout, getPublishedCertifications } from "@/lib/queries";
 import { ImageFade } from "@/components/image-fade";
+import { documentsUrl } from "@/lib/storage-public";
 import {
   Award,
   Building2,
@@ -15,6 +16,8 @@ import {
   MapPin,
   Phone,
   Printer,
+  Download,
+  FileText,
 } from "lucide-react";
 
 const fallbackHistory = [
@@ -55,10 +58,11 @@ export default async function AboutPage() {
   const t = await getTranslations("about");
   const locale = await getLocale();
 
-  // 두 DB 쿼리 병렬 실행 (시퀀셜 → 병렬: ~200~400ms 단축)
-  const [historyResult, siteAbout] = await Promise.all([
+  // 세 DB 쿼리 병렬 실행
+  const [historyResult, siteAbout, certifications] = await Promise.all([
     getHistoryItems().catch(() => [] as Awaited<ReturnType<typeof getHistoryItems>>),
     getSiteAbout(),
+    getPublishedCertifications().catch(() => []),
   ]);
 
   let historyItems = historyResult;
@@ -72,6 +76,19 @@ export default async function AboutPage() {
   const localeKey = locale === "en" || locale === "zh" ? locale : "ko";
   const ceoName = siteAbout?.[`ceo_name_${localeKey}` as const] ?? "";
   const ceoContent = siteAbout?.[`ceo_greeting_${localeKey}` as const] ?? "";
+
+  const brochurePath = siteAbout?.brochure_pdf_path ?? null;
+  const brochureName = siteAbout?.brochure_pdf_name ?? null;
+  const certTitle = await getTranslations("about.certifications");
+  const brochureT = await getTranslations("about.brochure");
+  const certSectionTitle = certTitle("title");
+  const brochureSectionTitle = brochureT("title");
+  const brochureDownloadLabel = brochureT("download");
+  const localizedCertTitle = (cert: { title_ko: string; title_en: string; title_zh: string }) => {
+    if (localeKey === "en") return cert.title_en || cert.title_ko;
+    if (localeKey === "zh") return cert.title_zh || cert.title_ko;
+    return cert.title_ko;
+  };
 
   return (
     <>
@@ -254,7 +271,84 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Certifications */}
+      {/* Certification gallery (DB-driven) — hides if no published certs */}
+      {certifications.length > 0 && (
+        <section className="py-16 md:py-24 bg-white">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2
+              className="text-2xl md:text-3xl font-bold text-brand-navy mb-10"
+              data-animate="fade-up"
+            >
+              {certSectionTitle}
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+              {certifications.map((cert, i) => {
+                const title = localizedCertTitle(cert);
+                const downloadHref = cert.pdf_path
+                  ? documentsUrl(cert.pdf_path)
+                  : documentsUrl(cert.image_path);
+                return (
+                  <a
+                    key={cert.id}
+                    href={downloadHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block rounded-xl border border-surface-warm-200 bg-white overflow-hidden hover:shadow-md hover:border-brand-copper/40 transition-all"
+                    data-animate="fade-up"
+                    data-animate-delay={String(Math.min(i + 1, 6))}
+                  >
+                    <div className="relative aspect-[3/4] bg-surface-warm-50 overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={documentsUrl(cert.image_path)}
+                        alt={title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                      />
+                    </div>
+                    <p className="px-3 py-3 text-sm font-semibold text-brand-navy text-center line-clamp-2">
+                      {title}
+                    </p>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Brochure download (DB-driven) — hides if no brochure */}
+      {brochurePath && (
+        <section className="py-12 md:py-16">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 rounded-xl border border-surface-warm-200 bg-white p-6 md:p-8 shadow-sm"
+              data-animate="fade-up"
+            >
+              <div className="w-14 h-14 rounded-full bg-brand-copper/10 flex items-center justify-center shrink-0">
+                <FileText className="w-7 h-7 text-brand-copper" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg md:text-xl font-bold text-brand-navy">{brochureSectionTitle}</h3>
+                {brochureName && (
+                  <p className="text-sm text-brand-charcoal/70 mt-0.5 font-medium">{brochureName}</p>
+                )}
+              </div>
+              <a
+                href={documentsUrl(brochurePath)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-brand-navy hover:bg-brand-navy-light text-white font-bold px-4 py-2.5 text-sm shadow-sm transition-colors"
+              >
+                <Download className="w-4 h-4" />
+                {brochureDownloadLabel}
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Certifications (static fallback) */}
       <section className="py-16 md:py-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
