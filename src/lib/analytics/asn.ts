@@ -20,13 +20,25 @@ type IpInfoResponse = {
   city?: string;
 };
 
+// ISP 패턴은 별도 분류 — 일반 가정/모바일 인터넷 사용자가 SK/KT/LG 그룹사로
+// 오인되는 false positive 를 방지하기 위해 "(ISP)" suffix 를 붙여 구분한다.
+// 운영자는 ISP 라벨을 보고 거래처 방문이 아니라 일반 사용자임을 즉시 식별.
+const KR_ISP_KEYWORDS: Array<[RegExp, string]> = [
+  [/sk\s*(broadband|telecom)/i, "SK Broadband/Telecom (ISP)"],
+  [/lg\s*(uplus|u\+|dacom)/i, "LG U+ (ISP)"],
+  [/\bkt\s*corp|\bkorea\s*telecom|\bktf\b/i, "KT (ISP)"],
+  [/sejong\s*telecom|drimnet|tbroad|hellovision|cmb|dlive/i, "Other ISP"],
+];
+
+// 실제 기업/그룹사 패턴 — ISP 패턴은 위에서 먼저 걸리므로 여기 도달하지 않음.
+// (예: "SK Hynix" 는 SK_BROADBAND/TELECOM 정규식에 매칭되지 않아 여기로 떨어짐)
 const KR_ENTERPRISE_KEYWORDS: Array<[RegExp, string]> = [
   [/samsung/i, "Samsung"],
+  [/sk\s*hynix/i, "SK Hynix"],
+  [/sk\s*holdings|sk\s*innovation|sk\s*networks/i, "SK Group"],
+  [/hyundai\s*mobis|hmc\s*investment/i, "Hyundai Mobis"],
   [/hyundai/i, "Hyundai"],
-  [/sk\s*(hynix|telecom|holdings|broadband|innovation|networks)/i, "SK"],
-  [/\bsk\s+/i, "SK"],
-  [/lg\s*(electronics|chem|display|innotek|uplus|u\+|dacom|cns)/i, "LG"],
-  [/\blg\s+/i, "LG"],
+  [/lg\s*(electronics|chem|display|innotek|cns)/i, "LG"],
   [/posco/i, "POSCO"],
   [/kakao/i, "Kakao"],
   [/naver/i, "Naver"],
@@ -34,11 +46,9 @@ const KR_ENTERPRISE_KEYWORDS: Array<[RegExp, string]> = [
   [/doosan/i, "Doosan"],
   [/hanwha/i, "Hanwha"],
   [/gs\s*(caltex|retail|engineering|e&c)/i, "GS"],
-  [/hyundai\s*mobis|hmc\s*investment/i, "Hyundai Mobis"],
   [/amorepacific/i, "AmorePacific"],
   [/celltrion/i, "Celltrion"],
   [/hdc/i, "HDC"],
-  [/kt\s*corp|kt\s*global|\bkorea\s*telecom/i, "KT"],
   [/coupang/i, "Coupang"],
   [/woori\s*bank|hana\s*financial|shinhan\s*bank|kb\s*financial/i, "Korean Bank"],
   [/korea\s*gas|kogas/i, "KOGAS"],
@@ -47,6 +57,10 @@ const KR_ENTERPRISE_KEYWORDS: Array<[RegExp, string]> = [
 
 export function classifyAsnCompany(asnOrg: string | null | undefined): string | null {
   if (!asnOrg) return null;
+  // ISP 먼저 — false positive 방지가 우선.
+  for (const [pattern, label] of KR_ISP_KEYWORDS) {
+    if (pattern.test(asnOrg)) return label;
+  }
   for (const [pattern, company] of KR_ENTERPRISE_KEYWORDS) {
     if (pattern.test(asnOrg)) return company;
   }
