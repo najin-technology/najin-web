@@ -297,6 +297,8 @@ export type SiteAbout = {
   ceo_greeting_ko: string;
   ceo_greeting_en: string;
   ceo_greeting_zh: string;
+  brochure_pdf_path: string | null;
+  brochure_pdf_name: string | null;
   updated_at: string | null;
   updated_by: string | null;
 };

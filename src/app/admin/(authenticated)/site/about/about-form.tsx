@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertMessage } from "@/components/admin/alert-message";
+import { documentsUrl } from "@/lib/storage-public";
 import type { SiteAbout } from "@/lib/queries";
 
 const LOCALES = [
@@ -16,6 +17,9 @@ const LOCALES = [
 
 export function AboutForm({ initial }: { initial: SiteAbout | null }) {
   const [state, formAction, pending] = useActionState(updateSiteAbout, {});
+
+  const brochurePath = initial?.brochure_pdf_path ?? null;
+  const brochureName = initial?.brochure_pdf_name ?? null;
 
   return (
     <form action={formAction} className="space-y-8">
@@ -63,6 +67,37 @@ export function AboutForm({ initial }: { initial: SiteAbout | null }) {
           </fieldset>
         );
       })}
+
+      {/* Brochure PDF */}
+      <fieldset className="space-y-4 rounded-xl border border-gray-200 bg-white p-5">
+        <legend className="px-2 text-sm font-bold text-brand-navy">회사소개서 (PDF)</legend>
+
+        {brochurePath && (
+          <div className="rounded-lg bg-surface-warm-50 border border-surface-warm-200 px-4 py-3 text-sm">
+            <p className="font-medium text-brand-charcoal">현재 등록된 파일: {brochureName || "회사소개서.pdf"}</p>
+            <a
+              href={documentsUrl(brochurePath)}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-1 inline-block text-brand-blue hover:underline text-xs font-semibold"
+            >
+              현재 회사소개서 다운로드
+            </a>
+          </div>
+        )}
+
+        <div>
+          <Label htmlFor="brochure_pdf">새 회사소개서 업로드 (선택)</Label>
+          <Input
+            id="brochure_pdf"
+            name="brochure_pdf"
+            type="file"
+            accept="application/pdf,.pdf"
+            className="mt-1.5"
+          />
+          <p className="mt-1 text-xs text-gray-500">PDF, 최대 30MB. 업로드 시 기존 파일은 교체됩니다.</p>
+        </div>
+      </fieldset>
 
       <div className="flex items-center justify-end gap-3 border-t border-gray-200 pt-5">
         <Button type="submit" disabled={pending}>
