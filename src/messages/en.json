@@ -115,6 +115,13 @@
       "businessAreas": "Business areas",
       "majorClients": "Major clients",
       "contact": "Contact / Hours"
+    },
+    "certifications": {
+      "title": "Certifications"
+    },
+    "brochure": {
+      "title": "Company Brochure",
+      "download": "Download PDF"
     }
   },
   "business": {
@@ -236,6 +243,25 @@
       "fileType": "File type not allowed.",
       "submitFailed": "An error occurred while submitting. Please try again.",
       "fileUploadFailed": "File upload failed. Your quote request was received, but the attachment could not be sent. Please email your drawing."
+    },
+    "checkStatusLink": "Check quote status",
+    "status": {
+      "title": "Check Quote Status",
+      "description": "Enter your quote number and the email address you used.",
+      "quoteIdLabel": "Quote Number",
+      "emailLabel": "Email",
+      "submit": "Look up",
+      "notFound": "We couldn't find a matching quote. Please check your quote number and email.",
+      "rateLimited": "Too many lookups. Please try again later.",
+      "serviceUnavailable": "Lookup is temporarily unavailable. Please try again shortly.",
+      "currentStep": "Current Status",
+      "lastUpdated": "Last Updated",
+      "steps": {
+        "received": "Received",
+        "reviewing": "Reviewing",
+        "sent": "Quote Sent",
+        "completed": "Completed"
+      }
     }
   },
   "careers": {

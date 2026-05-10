@@ -11,6 +11,7 @@ export const CACHE_TAGS = {
   customers: "customers",
   clientDeliveries: "client-deliveries",
   siteAbout: "site-about",
+  certifications: "certifications",
 } as const;
 
 const ONE_HOUR = 3600;
@@ -297,6 +298,8 @@ export type SiteAbout = {
   ceo_greeting_ko: string;
   ceo_greeting_en: string;
   ceo_greeting_zh: string;
+  brochure_pdf_path: string | null;
+  brochure_pdf_name: string | null;
   updated_at: string | null;
   updated_by: string | null;
 };
@@ -313,4 +316,28 @@ export const getSiteAbout = unstable_cache(
   },
   ["site-about"],
   { revalidate: ONE_HOUR, tags: [CACHE_TAGS.siteAbout] },
+);
+
+export type Certification = {
+  id: string;
+  title_ko: string;
+  title_en: string;
+  title_zh: string;
+  image_path: string;
+  pdf_path: string | null;
+  sort_order: number;
+};
+
+export const getPublishedCertifications = unstable_cache(
+  async (): Promise<Certification[]> => {
+    const { data, error } = await supabase
+      .from("certifications")
+      .select("id, title_ko, title_en, title_zh, image_path, pdf_path, sort_order")
+      .eq("is_published", true)
+      .order("sort_order", { ascending: true });
+    if (error) return [];
+    return (data ?? []) as Certification[];
+  },
+  ["certifications-published"],
+  { revalidate: ONE_HOUR, tags: [CACHE_TAGS.certifications] },
 );

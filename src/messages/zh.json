@@ -115,6 +115,13 @@
       "businessAreas": "业务领域",
       "majorClients": "主要客户",
       "contact": "联系方式 / 营业时间"
+    },
+    "certifications": {
+      "title": "认证·专利"
+    },
+    "brochure": {
+      "title": "公司简介",
+      "download": "下载 PDF"
     }
   },
   "business": {
@@ -236,6 +243,25 @@
       "fileType": "不支持的文件类型。",
       "submitFailed": "提交时发生错误，请重试。",
       "fileUploadFailed": "文件上传失败。报价请求已接收，但附件发送失败。请通过邮件发送图纸。"
+    },
+    "checkStatusLink": "查询报价进度",
+    "status": {
+      "title": "报价进度查询",
+      "description": "请输入报价编号和登记的邮箱地址。",
+      "quoteIdLabel": "报价编号",
+      "emailLabel": "邮箱",
+      "submit": "查询",
+      "notFound": "未找到匹配的报价。请重新确认报价编号和邮箱。",
+      "rateLimited": "查询过于频繁。请稍后再试。",
+      "serviceUnavailable": "暂时无法查询。请稍后再试。",
+      "currentStep": "当前状态",
+      "lastUpdated": "最近更新",
+      "steps": {
+        "received": "已收到",
+        "reviewing": "审核中",
+        "sent": "已发送",
+        "completed": "已完成"
+      }
     }
   },
   "careers": {
