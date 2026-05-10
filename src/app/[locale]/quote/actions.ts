@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import { supabase } from "@/lib/supabase";
 import { sendQuoteNotification } from "@/lib/email";
+import { sendByTemplateKey, type Locale } from "@/lib/email-templates";
 import { formLimiter, getClientIp } from "@/lib/ratelimit";
 import { verifyTurnstileToken } from "@/lib/turnstile";
 import { sessionHash } from "@/lib/analytics/classify";
@@ -43,6 +44,11 @@ export async function submitQuote(
   const description = (formData.get("description") as string) || undefined;
   const privacy_agreed = formData.get("privacy_agreed") === "on";
   const file = formData.get("attachment") as File | null;
+
+  const localeRaw = (formData.get("locale") as string) || "ko";
+  const locale: Locale = (["ko", "en", "zh"] as const).includes(localeRaw as Locale)
+    ? (localeRaw as Locale)
+    : "ko";
 
   // Validate required fields
   if (!company_name || !contact_name || !phone || !email || !processing_type) {
@@ -85,6 +91,7 @@ export async function submitQuote(
       description,
       privacy_agreed,
       session_hash: submitSession,
+      locale,
     })
     .select("id")
     .single();
@@ -130,6 +137,28 @@ export async function submitQuote(
     deadline,
     description,
   });
+
+  // Customer auto-reply (template-driven, non-blocking)
+  if (email) {
+    try {
+      const quoteIdShort = quote.id.slice(0, 8).toUpperCase();
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+      await sendByTemplateKey({
+        key: "quote_received",
+        to: email,
+        locale,
+        vars: {
+          contact_name,
+          company_name,
+          quote_id_short: quoteIdShort,
+          status_url: `${siteUrl}/${locale}/quote/status?id=${quoteIdShort}`,
+          processing_type,
+        },
+      });
+    } catch (e) {
+      console.error("quote_received auto-reply failed:", e);
+    }
+  }
 
   return { success: true, error: "" };
 }

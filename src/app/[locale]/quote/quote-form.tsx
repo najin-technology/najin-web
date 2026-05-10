@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState, useEffect, useRef, useCallback } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { submitQuote } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +26,7 @@ const processingTypeKeys = [
 export function QuoteForm() {
   const t = useTranslations("quote");
   const tc = useTranslations("common");
+  const locale = useLocale();
   const [state, formAction, pending] = useActionState(submitQuote, {
     success: false,
     error: "",
@@ -136,6 +137,8 @@ export function QuoteForm() {
       onBlurCapture={handleFieldBlur}
       className="space-y-6"
     >
+      <input type="hidden" name="locale" value={locale} />
+
       {(state.error || state.errorKey) && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
           {state.errorKey ? t(`errors.${state.errorKey}`) : state.error}
