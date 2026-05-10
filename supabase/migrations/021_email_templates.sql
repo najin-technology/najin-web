@@ -20,7 +20,7 @@ CREATE TABLE email_templates (
   enabled BOOLEAN NOT NULL DEFAULT FALSE,
   variables_doc TEXT NOT NULL DEFAULT '',
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_by UUID REFERENCES auth.users(id)
+  updated_by UUID REFERENCES auth.users(id) ON DELETE SET NULL
 );
 
 CREATE TRIGGER trg_email_templates_updated_at
