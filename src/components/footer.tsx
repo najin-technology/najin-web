@@ -28,7 +28,7 @@ export function Footer() {
             <h3 className="text-base font-semibold text-white/80 uppercase tracking-wider mb-4">
               {t("quickLinks")}
             </h3>
-            <div className="space-y-2.5 text-sm">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm">
               <Link
                 href="/about"
                 className="block text-white/80 hover:text-white transition-colors"
@@ -42,16 +42,40 @@ export function Footer() {
                 {tn("business")}
               </Link>
               <Link
-                href="/quote"
+                href="/portfolio"
                 className="block text-white/80 hover:text-white transition-colors"
               >
-                {tc("requestQuote")}
+                {tn("portfolio")}
               </Link>
               <Link
                 href="/posts"
                 className="block text-white/80 hover:text-white transition-colors"
               >
                 {tn("posts")}
+              </Link>
+              <Link
+                href="/notices"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
+                {tn("notices")}
+              </Link>
+              <Link
+                href="/careers"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
+                {tn("careers")}
+              </Link>
+              <Link
+                href="/faq"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
+                {tn("faq")}
+              </Link>
+              <Link
+                href="/quote"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
+                {tc("requestQuote")}
               </Link>
               <Link
                 href="/privacy"

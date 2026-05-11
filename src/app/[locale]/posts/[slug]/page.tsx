@@ -61,9 +61,15 @@ export async function generateMetadata({
         : post.content_en || post.content_ko;
     const description = rawContent ? stripHtml(rawContent).slice(0, 160) : "";
 
+    // posts 테이블에 title_zh / content_zh 컬럼 없음 — zh 페이지는 항상 영어/한국어 fallback.
+    // en 페이지도 title_en 없으면 한국어 fallback. 이 경우 중복 콘텐츠 신호 방지 위해 noindex.
+    const hasTranslation =
+      locale === "ko" || (locale === "en" && Boolean(post.title_en));
+
     return {
       title,
       description,
+      robots: hasTranslation ? undefined : { index: false, follow: true },
       openGraph: {
         title,
         description,

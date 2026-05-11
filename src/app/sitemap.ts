@@ -6,9 +6,12 @@ const locales = ["ko", "en", "zh"];
 
 function withAlternates(route: string) {
   return {
-    languages: Object.fromEntries(
-      locales.map((l) => [l, `${BASE_URL}/${l}${route}`])
-    ),
+    languages: {
+      ...Object.fromEntries(
+        locales.map((l) => [l, `${BASE_URL}/${l}${route}`])
+      ),
+      "x-default": `${BASE_URL}/ko${route}`,
+    },
   };
 }
 
@@ -59,8 +62,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }))
       );
     }
-  } catch {
-    // skip dynamic entries on error
+  } catch (err) {
+    console.error("[sitemap] notices fetch failed:", err);
   }
 
   // Dynamic post pages
@@ -84,8 +87,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }))
       );
     }
-  } catch {
-    // skip dynamic entries on error
+  } catch (err) {
+    console.error("[sitemap] posts fetch failed:", err);
   }
 
   // Dynamic client pages (/clients/[slug])
@@ -111,8 +114,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           }))
         );
     }
-  } catch {
-    // skip dynamic entries on error
+  } catch (err) {
+    console.error("[sitemap] clients fetch failed:", err);
   }
 
   return [...staticEntries, ...noticeEntries, ...postEntries, ...clientEntries];
