@@ -22,6 +22,7 @@ export async function sendQuoteNotification(data: {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: NOTIFICATION_EMAIL,
+      ...(data.email ? { reply_to: data.email } : {}),
       subject: `[견적문의] ${data.company_name} - ${data.contact_name}`,
       text: `새로운 견적 문의가 접수되었습니다.
 
@@ -58,6 +59,7 @@ export async function sendApplicationNotification(data: {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: NOTIFICATION_EMAIL,
+      ...(data.email ? { reply_to: data.email } : {}),
       subject: `[채용지원] ${data.name} - ${data.position}`,
       text: `새로운 채용 지원서가 접수되었습니다.
 

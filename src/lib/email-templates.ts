@@ -2,6 +2,7 @@ import { Resend } from "resend";
 import { getSupabaseAdmin } from "./supabase-admin";
 
 const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
+const REPLY_TO_EMAIL = process.env.REPLY_TO_EMAIL || process.env.NOTIFICATION_EMAIL || "";
 
 let resendClient: Resend | null = null;
 function getResend(): Resend | null {
@@ -61,6 +62,7 @@ export async function sendByTemplateKey(args: {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: args.to,
+      ...(REPLY_TO_EMAIL ? { reply_to: REPLY_TO_EMAIL } : {}),
       subject: renderTemplate(subject, args.vars),
       text: renderTemplate(body, args.vars),
     });
