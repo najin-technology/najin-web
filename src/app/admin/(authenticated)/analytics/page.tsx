@@ -14,9 +14,12 @@ import {
   getRegionBreakdown,
   getFormFunnel,
   windowBounds,
+  ANALYTICS_TABS,
   type TimeWindow,
+  type AnalyticsTab,
 } from "@/lib/analytics/queries";
 import { WindowTabs } from "./_components/window-tabs";
+import { TabsNav } from "./_components/tabs-nav";
 import { HeroMetrics } from "./_components/hero-metrics";
 import { VisitorChart } from "./_components/visitor-chart";
 import { ReferrerPanel } from "./_components/referrer-panel";
@@ -53,13 +56,16 @@ function compareLabel(win: TimeWindow): string {
 export default async function AnalyticsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ win?: string }>;
+  searchParams: Promise<{ win?: string; tab?: string }>;
 }) {
   await requireAdmin();
-  const { win: winParam } = await searchParams;
+  const { win: winParam, tab: tabParam } = await searchParams;
   const win: TimeWindow = VALID_WINDOWS.includes(winParam as TimeWindow)
     ? (winParam as TimeWindow)
     : "7d";
+  const tab: AnalyticsTab = ANALYTICS_TABS.includes(tabParam as AnalyticsTab)
+    ? (tabParam as AnalyticsTab)
+    : "overview";
 
   const supabase = await createSupabaseServerClient();
 
@@ -125,8 +131,10 @@ export default async function AnalyticsPage({
 
   const cmp = compareLabel(win);
 
+  const hotVisitorsTop6 = hotVisitors.slice(0, 6);
+
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       <header className="flex flex-wrap items-end justify-between gap-5">
         <div className="space-y-1.5">
           <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-copper">
@@ -139,106 +147,104 @@ export default async function AnalyticsPage({
             {windowLabel(win)} · 누가, 어디서, 어떻게 왔고 견적으로 이어졌는지.
           </p>
         </div>
-        <WindowTabs active={win} />
+        <WindowTabs active={win} tab={tab} />
       </header>
 
-      {/* Hero metrics */}
-      <section className="space-y-3">
-        <HeroMetrics
-          metrics={[
-            {
-              label: "총 방문",
-              value: visitorStats.visits,
-              prev: visitorStats.prevVisits,
-              compareLabel: cmp,
-              tone: "primary",
-            },
-            {
-              label: "고유 방문자",
-              value: visitorStats.uniqueVisitors,
-              prev: visitorStats.prevUniqueVisitors,
-              compareLabel: cmp,
-            },
-            {
-              label: "견적 문의",
-              value: quotesCur,
-              prev: quotesPrev,
-              suffix: "건",
-              compareLabel: cmp,
-            },
-            {
-              label: "전환율",
-              value: conversionRate,
-              prev: prevConversionRate === 0 ? null : prevConversionRate,
-              suffix: "%",
-              format: (n) => n.toFixed(2),
-              compareLabel: cmp,
-            },
-          ]}
-        />
-      </section>
+      <TabsNav active={tab} win={win} />
 
-      {/* 리드 인텔리전스 (Tier 1) */}
-      <section className="space-y-4">
-        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
-          리드 인텔리전스
-        </h2>
-        <HotVisitors visitors={hotVisitors} />
-      </section>
+      {tab === "overview" && (
+        <div className="space-y-10">
+          <section className="space-y-3">
+            <HeroMetrics
+              metrics={[
+                { label: "총 방문", value: visitorStats.visits, prev: visitorStats.prevVisits, compareLabel: cmp, tone: "primary" },
+                { label: "고유 방문자", value: visitorStats.uniqueVisitors, prev: visitorStats.prevUniqueVisitors, compareLabel: cmp },
+                { label: "견적 문의", value: quotesCur, prev: quotesPrev, suffix: "건", compareLabel: cmp },
+                {
+                  label: "전환율",
+                  value: conversionRate,
+                  prev: prevConversionRate === 0 ? null : prevConversionRate,
+                  suffix: "%",
+                  format: (n) => n.toFixed(2),
+                  compareLabel: cmp,
+                },
+              ]}
+            />
+          </section>
 
-      {/* 추이 + 유입 */}
-      <section className="space-y-4">
-        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
-          방문 흐름
-        </h2>
-        <VisitorChart data={dailyTrend} win={win} />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <div className="lg:col-span-2">
-            <ReferrerPanel rows={referrers} />
-          </div>
-          <DevicePanel split={devices} />
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">방문 흐름</h2>
+            <VisitorChart data={dailyTrend} win={win} />
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">주목할 방문자 (TOP 6)</h2>
+            <HotVisitors visitors={hotVisitorsTop6} />
+          </section>
         </div>
-      </section>
+      )}
 
-      {/* 패턴: 요일/시간 + 지역 */}
-      <section className="space-y-4">
-        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
-          패턴
-        </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <div className="lg:col-span-2">
-            <HeatmapGrid cells={heatmap} />
-          </div>
-          <RegionPanel rows={regions} />
+      {tab === "traffic" && (
+        <div className="space-y-10">
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">유입과 기기</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+              <div className="lg:col-span-2">
+                <ReferrerPanel rows={referrers} />
+              </div>
+              <DevicePanel split={devices} />
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">패턴</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+              <div className="lg:col-span-2">
+                <HeatmapGrid cells={heatmap} />
+              </div>
+              <RegionPanel rows={regions} />
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">AI 크롤러와 실시간</h2>
+            <AiCrawlerBadge rows={aiCrawlers} />
+            <RecentFeed visits={recent} />
+          </section>
         </div>
-      </section>
+      )}
 
-      {/* 콘텐츠 + 견적 퍼널 */}
-      <section className="space-y-4">
-        <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">
-          콘텐츠와 전환
-        </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <div className="lg:col-span-2">
+      {tab === "content" && (
+        <div className="space-y-10">
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">콘텐츠</h2>
             <PopularPages pages={popular} />
-          </div>
-          <FunnelCard funnel={funnel} />
+            {/* TODO Phase 2: <PostsContribution rows={postsContribution} /> */}
+          </section>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <div className="lg:col-span-2">
-            <FormFunnel rows={formFunnel} />
-          </div>
-          <AiCrawlerBadge rows={aiCrawlers} />
-        </div>
-      </section>
+      )}
 
-      {/* 실시간 */}
-      <section className="space-y-4">
-        <h2 className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">
-          실시간
-        </h2>
-        <RecentFeed visits={recent} />
-      </section>
+      {tab === "journey" && (
+        <div className="space-y-10">
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">리드 인텔리전스</h2>
+            <HotVisitors visitors={hotVisitors} />
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">견적 퍼널</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+              <FunnelCard funnel={funnel} />
+              <div className="lg:col-span-2">
+                <FormFunnel rows={formFunnel} />
+              </div>
+            </div>
+          </section>
+
+          {/* TODO Phase 4: <SubmitterProfile data={submitterBehavior} /> */}
+          {/* TODO Phase 5: <CompanyActivity rows={companyActivity} /> */}
+        </div>
+      )}
 
       <footer className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-600 font-medium">
         <span className="uppercase tracking-[0.1em]">

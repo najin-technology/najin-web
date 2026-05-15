@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { TimeWindow } from "@/lib/analytics/queries";
+import type { AnalyticsTab, TimeWindow } from "@/lib/analytics/queries";
 
 const TABS: Array<{ key: TimeWindow; label: string }> = [
   { key: "today", label: "오늘" },
@@ -7,7 +7,7 @@ const TABS: Array<{ key: TimeWindow; label: string }> = [
   { key: "30d", label: "30일" },
 ];
 
-export function WindowTabs({ active }: { active: TimeWindow }) {
+export function WindowTabs({ active, tab = "overview" }: { active: TimeWindow; tab?: AnalyticsTab }) {
   return (
     <div className="inline-flex items-center gap-1 p-1 bg-surface-warm-100 rounded-full">
       {TABS.map((t) => {
@@ -15,7 +15,7 @@ export function WindowTabs({ active }: { active: TimeWindow }) {
         return (
           <Link
             key={t.key}
-            href={`/admin/analytics?win=${t.key}`}
+            href={`/admin/analytics?tab=${tab}&win=${t.key}`}
             prefetch={false}
             className={`px-4 py-2 text-[13px] font-semibold rounded-full transition-all duration-150 ${
               isActive
