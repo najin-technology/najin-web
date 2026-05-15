@@ -2,6 +2,10 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 export type TimeWindow = "today" | "7d" | "30d";
 
+export type AnalyticsTab = "overview" | "traffic" | "content" | "journey";
+
+export const ANALYTICS_TABS: ReadonlyArray<AnalyticsTab> = ["overview", "traffic", "content", "journey"];
+
 export function windowBounds(win: TimeWindow) {
   const now = new Date();
   const end = new Date(now);
