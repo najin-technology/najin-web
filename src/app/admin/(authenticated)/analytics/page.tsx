@@ -13,6 +13,7 @@ import {
   getHeatmap,
   getRegionBreakdown,
   getFormFunnel,
+  getPostsContribution,
   windowBounds,
   ANALYTICS_TABS,
   type TimeWindow,
@@ -32,6 +33,7 @@ import { HeatmapGrid } from "./_components/heatmap-grid";
 import { RegionPanel } from "./_components/region-panel";
 import { AiCrawlerBadge } from "./_components/ai-crawler-badge";
 import { FormFunnel } from "./_components/form-funnel";
+import { PostsContribution } from "./_components/posts-contribution";
 
 export const metadata = {
   title: "Analytics",
@@ -82,6 +84,7 @@ export default async function AnalyticsPage({
     heatmap,
     regions,
     formFunnel,
+    postsContribution,
     quoteCurRes,
     quotePrevRes,
   ] = await Promise.all([
@@ -97,6 +100,7 @@ export default async function AnalyticsPage({
     getHeatmap(supabase),
     getRegionBreakdown(supabase, 10),
     getFormFunnel(supabase),
+    getPostsContribution(supabase),
     (async () => {
       const { start, end } = windowBounds(win);
       return supabase
@@ -218,8 +222,10 @@ export default async function AnalyticsPage({
         <div className="space-y-10">
           <section className="space-y-4">
             <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">콘텐츠</h2>
-            <PopularPages pages={popular} />
-            {/* TODO Phase 2: <PostsContribution rows={postsContribution} /> */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              <PopularPages pages={popular} />
+              <PostsContribution rows={postsContribution} />
+            </div>
           </section>
         </div>
       )}
