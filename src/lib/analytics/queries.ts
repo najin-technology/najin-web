@@ -279,6 +279,17 @@ export type SubmitterBehavior = {
   top_pages: SubmitterTopPage[];
 };
 
+export type CompanyActivityFilter = "all" | "unsubmitted" | "hot";
+
+export type CompanyActivityRow = {
+  asn_company: string;
+  visitor_count: number;
+  session_count: number;
+  last_seen: string;
+  has_submitted: boolean;
+  hot_score: number;
+};
+
 export type AiCrawlerRow = { browser: string; visits: number; last_seen: string };
 export type HeatmapCell = { day_of_week: number; hour: number; visits: number };
 export type RegionRow = { country: string; city: string; visits: number; uniques: number };
@@ -400,6 +411,27 @@ export async function getSubmitterBehavior(
     bucket_ge_2w: Number(row.bucket_ge_2w ?? 0),
     top_pages: (row.top_pages as SubmitterTopPage[] | null) ?? [],
   };
+}
+
+export async function getCompanyActivity(
+  supabase: SupabaseClient,
+  days: number = 30,
+  limit: number = 20,
+  filter: CompanyActivityFilter = "all"
+): Promise<CompanyActivityRow[]> {
+  const { data } = await supabase.rpc("company_activity", {
+    p_days: days,
+    p_limit: limit,
+    p_filter: filter,
+  });
+  return ((data as CompanyActivityRow[] | null) ?? []).map((r) => ({
+    asn_company: r.asn_company,
+    visitor_count: Number(r.visitor_count),
+    session_count: Number(r.session_count),
+    last_seen: r.last_seen,
+    has_submitted: Boolean(r.has_submitted),
+    hot_score: Number(r.hot_score),
+  }));
 }
 
 export function formatRelativeKo(date: Date): string {
