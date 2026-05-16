@@ -15,11 +15,13 @@ import {
   getFormFunnel,
   getPostsContribution,
   getSubmitterBehavior,
+  getCompanyActivity,
   windowBounds,
   ANALYTICS_TABS,
   type TimeWindow,
   type AnalyticsTab,
   type SubmitterDays,
+  type CompanyActivityFilter,
 } from "@/lib/analytics/queries";
 import { WindowTabs } from "./_components/window-tabs";
 import { TabsNav } from "./_components/tabs-nav";
@@ -37,6 +39,7 @@ import { AiCrawlerBadge } from "./_components/ai-crawler-badge";
 import { FormFunnel } from "./_components/form-funnel";
 import { PostsContribution } from "./_components/posts-contribution";
 import { SubmitterProfile } from "./_components/submitter-profile";
+import { CompanyActivity } from "./_components/company-activity";
 
 export const metadata = {
   title: "Analytics",
@@ -61,10 +64,10 @@ function compareLabel(win: TimeWindow): string {
 export default async function AnalyticsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ win?: string; tab?: string; sb?: string }>;
+  searchParams: Promise<{ win?: string; tab?: string; sb?: string; cf?: string }>;
 }) {
   await requireAdmin();
-  const { win: winParam, tab: tabParam, sb: sbParam } = await searchParams;
+  const { win: winParam, tab: tabParam, sb: sbParam, cf: cfParam } = await searchParams;
   const win: TimeWindow = VALID_WINDOWS.includes(winParam as TimeWindow)
     ? (winParam as TimeWindow)
     : "7d";
@@ -72,6 +75,8 @@ export default async function AnalyticsPage({
     ? (tabParam as AnalyticsTab)
     : "overview";
   const submitterDays: SubmitterDays = sbParam === "90" ? 90 : 30;
+  const companyFilter: CompanyActivityFilter =
+    cfParam === "unsubmitted" || cfParam === "hot" ? cfParam : "all";
 
   const supabase = await createSupabaseServerClient();
 
@@ -90,6 +95,7 @@ export default async function AnalyticsPage({
     formFunnel,
     postsContribution,
     submitterBehavior,
+    companyActivity,
     quoteCurRes,
     quotePrevRes,
   ] = await Promise.all([
@@ -107,6 +113,7 @@ export default async function AnalyticsPage({
     getFormFunnel(supabase),
     getPostsContribution(supabase),
     getSubmitterBehavior(supabase, submitterDays),
+    getCompanyActivity(supabase, 30, 20, companyFilter),
     (async () => {
       const { start, end } = windowBounds(win);
       return supabase
@@ -263,7 +270,15 @@ export default async function AnalyticsPage({
             />
           </section>
 
-          {/* TODO Phase 5: <CompanyActivity rows={companyActivity} /> */}
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">회사별 활동</h2>
+            <CompanyActivity
+              rows={companyActivity}
+              filter={companyFilter}
+              win={win}
+              tab={tab}
+            />
+          </section>
         </div>
       )}
 
