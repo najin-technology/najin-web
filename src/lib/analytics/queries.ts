@@ -266,6 +266,19 @@ export type PostContribution = {
   conversion_pct: number;
 };
 
+export type SubmitterTopPage = { path: string; percent: number };
+
+export type SubmitterBehavior = {
+  submitter_count: number;
+  avg_page_count: number;
+  median_time_to_submit_minutes: number;
+  bucket_lt_1h: number;
+  bucket_lt_3d: number;
+  bucket_lt_2w: number;
+  bucket_ge_2w: number;
+  top_pages: SubmitterTopPage[];
+};
+
 export type AiCrawlerRow = { browser: string; visits: number; last_seen: string };
 export type HeatmapCell = { day_of_week: number; hour: number; visits: number };
 export type RegionRow = { country: string; city: string; visits: number; uniques: number };
@@ -349,6 +362,44 @@ export async function getFormFunnel(supabase: SupabaseClient): Promise<FormFunne
     fills: Number(r.fills),
     fill_pct: Number(r.fill_pct),
   }));
+}
+
+export type SubmitterDays = 30 | 90;
+
+export async function getSubmitterBehavior(
+  supabase: SupabaseClient,
+  days: SubmitterDays = 30
+): Promise<SubmitterBehavior> {
+  const end = new Date();
+  const start = new Date();
+  start.setDate(start.getDate() - days);
+  const { data } = await supabase.rpc("submitter_behavior", {
+    p_start: start.toISOString(),
+    p_end: end.toISOString(),
+  });
+  const row = (data as Array<Record<string, unknown>> | null)?.[0];
+  if (!row) {
+    return {
+      submitter_count: 0,
+      avg_page_count: 0,
+      median_time_to_submit_minutes: 0,
+      bucket_lt_1h: 0,
+      bucket_lt_3d: 0,
+      bucket_lt_2w: 0,
+      bucket_ge_2w: 0,
+      top_pages: [],
+    };
+  }
+  return {
+    submitter_count: Number(row.submitter_count ?? 0),
+    avg_page_count: Number(row.avg_page_count ?? 0),
+    median_time_to_submit_minutes: Number(row.median_time_to_submit_minutes ?? 0),
+    bucket_lt_1h: Number(row.bucket_lt_1h ?? 0),
+    bucket_lt_3d: Number(row.bucket_lt_3d ?? 0),
+    bucket_lt_2w: Number(row.bucket_lt_2w ?? 0),
+    bucket_ge_2w: Number(row.bucket_ge_2w ?? 0),
+    top_pages: (row.top_pages as SubmitterTopPage[] | null) ?? [],
+  };
 }
 
 export function formatRelativeKo(date: Date): string {
