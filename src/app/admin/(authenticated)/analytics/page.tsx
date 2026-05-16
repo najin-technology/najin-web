@@ -14,10 +14,12 @@ import {
   getRegionBreakdown,
   getFormFunnel,
   getPostsContribution,
+  getSubmitterBehavior,
   windowBounds,
   ANALYTICS_TABS,
   type TimeWindow,
   type AnalyticsTab,
+  type SubmitterDays,
 } from "@/lib/analytics/queries";
 import { WindowTabs } from "./_components/window-tabs";
 import { TabsNav } from "./_components/tabs-nav";
@@ -34,6 +36,7 @@ import { RegionPanel } from "./_components/region-panel";
 import { AiCrawlerBadge } from "./_components/ai-crawler-badge";
 import { FormFunnel } from "./_components/form-funnel";
 import { PostsContribution } from "./_components/posts-contribution";
+import { SubmitterProfile } from "./_components/submitter-profile";
 
 export const metadata = {
   title: "Analytics",
@@ -58,16 +61,17 @@ function compareLabel(win: TimeWindow): string {
 export default async function AnalyticsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ win?: string; tab?: string }>;
+  searchParams: Promise<{ win?: string; tab?: string; sb?: string }>;
 }) {
   await requireAdmin();
-  const { win: winParam, tab: tabParam } = await searchParams;
+  const { win: winParam, tab: tabParam, sb: sbParam } = await searchParams;
   const win: TimeWindow = VALID_WINDOWS.includes(winParam as TimeWindow)
     ? (winParam as TimeWindow)
     : "7d";
   const tab: AnalyticsTab = ANALYTICS_TABS.includes(tabParam as AnalyticsTab)
     ? (tabParam as AnalyticsTab)
     : "overview";
+  const submitterDays: SubmitterDays = sbParam === "90" ? 90 : 30;
 
   const supabase = await createSupabaseServerClient();
 
@@ -85,6 +89,7 @@ export default async function AnalyticsPage({
     regions,
     formFunnel,
     postsContribution,
+    submitterBehavior,
     quoteCurRes,
     quotePrevRes,
   ] = await Promise.all([
@@ -101,6 +106,7 @@ export default async function AnalyticsPage({
     getRegionBreakdown(supabase, 10),
     getFormFunnel(supabase),
     getPostsContribution(supabase),
+    getSubmitterBehavior(supabase, submitterDays),
     (async () => {
       const { start, end } = windowBounds(win);
       return supabase
@@ -247,7 +253,16 @@ export default async function AnalyticsPage({
             </div>
           </section>
 
-          {/* TODO Phase 4: <SubmitterProfile data={submitterBehavior} /> */}
+          <section className="space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-gray-600">제출자 행동</h2>
+            <SubmitterProfile
+              data={submitterBehavior}
+              days={submitterDays}
+              win={win}
+              tab={tab}
+            />
+          </section>
+
           {/* TODO Phase 5: <CompanyActivity rows={companyActivity} /> */}
         </div>
       )}
