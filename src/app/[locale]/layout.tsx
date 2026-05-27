@@ -6,6 +6,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ScrollAnimationObserver } from "@/components/scroll-animation-observer";
 import { MobileCTA } from "@/components/mobile-cta";
+import { DesktopFloatingCTA } from "@/components/desktop-floating-cta";
 import { Toaster } from "@/components/ui/sonner";
 import { PageTracker } from "@/components/analytics/page-tracker";
 
@@ -41,6 +42,7 @@ export default async function LocaleLayout({
       <main id="main-content" className="flex-1">{children}</main>
       <Footer />
       <MobileCTA />
+      <DesktopFloatingCTA />
       <ScrollAnimationObserver />
       <PageTracker locale={locale} />
       <Toaster position="top-center" richColors />
