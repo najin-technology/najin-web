@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { submitCallback } from "@/app/[locale]/callback-action";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/routing";
 import { CheckCircle, Phone } from "lucide-react";
 import { track } from "@vercel/analytics";
+import { trackFormEvent } from "@/lib/analytics/track-form-event";
 
 export function CallbackForm() {
   const t = useTranslations("callback");
@@ -21,6 +22,23 @@ export function CallbackForm() {
   useEffect(() => {
     if (state.success) track("callback_requested");
   }, [state.success]);
+
+  const handleFieldFocus = useCallback((e: React.FocusEvent<HTMLFormElement>) => {
+    const target = e.target as unknown as HTMLInputElement;
+    if (target && "name" in target && target.name) {
+      trackFormEvent(`callback_${target.name}`, "focus");
+    }
+  }, []);
+
+  const handleFieldBlur = useCallback((e: React.FocusEvent<HTMLFormElement>) => {
+    const target = e.target as unknown as HTMLInputElement;
+    if (!target || !("name" in target) || !target.name) return;
+    const val = "value" in target ? target.value : "";
+    trackFormEvent(
+      `callback_${target.name}`,
+      val && val.length > 0 ? "fill" : "blur_empty"
+    );
+  }, []);
 
   if (state.success) {
     return (
@@ -39,7 +57,12 @@ export function CallbackForm() {
   }
 
   return (
-    <form action={formAction} className="space-y-4">
+    <form
+      action={formAction}
+      onFocusCapture={handleFieldFocus}
+      onBlurCapture={handleFieldBlur}
+      className="space-y-4"
+    >
       {state.error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded-lg text-sm">
           {state.error}
