@@ -57,3 +57,7 @@ scripts/seed/*.sql
 # Internal deployment / operational notes (private wiki only)
 docs/post-deploy-checklist.md
 docs/private/
+
+# Autopilot local logs
+.autopilot.log/
+.autopilot.milestones/
