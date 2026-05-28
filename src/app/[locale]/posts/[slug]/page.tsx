@@ -334,20 +334,42 @@ export default async function PostDetailPage({
             )}
           </div>
 
-          <div className="mt-10 flex items-center justify-between">
+          {/* Inline conversion box — gives the reader a clear next step */}
+          <div
+            className="mt-10 rounded-2xl border border-brand-copper/20 bg-gradient-to-br from-surface-warm-50 to-white p-6 md:p-8"
+            data-animate="fade-up"
+          >
+            <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-2">
+              이런 부품을 만들고 싶으신가요?
+            </h3>
+            <p className="text-sm text-brand-charcoal/85 mb-5 leading-relaxed font-medium">
+              비슷한 사양·소재로 견적이 가능합니다. 도면이나 참고 이미지가 있으면 함께 첨부해주세요. 영업일 기준 빠르게 회신드립니다.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/quote"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-copper hover:bg-brand-copper-light text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
+              >
+                {tc("requestQuote")}
+                <ArrowLeft className="w-4 h-4 rotate-180" />
+              </Link>
+              <a
+                href="tel:+82-55-367-2596"
+                aria-label="전화 걸기 055-367-2596"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 border border-brand-navy/20 text-brand-navy hover:bg-brand-navy/5 text-sm font-semibold rounded-lg transition-colors tabular-nums"
+              >
+                055-367-2596
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-8 flex items-center justify-between">
             <Link
               href="/posts"
               className="inline-flex items-center gap-2 text-sm font-medium text-brand-blue hover:text-brand-blue-hover transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               {tc("backToList")}
-            </Link>
-
-            <Link
-              href="/quote"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-copper hover:bg-brand-copper-light text-white text-sm font-medium rounded-lg transition-colors"
-            >
-              {tc("requestQuote")}
             </Link>
           </div>
         </div>
