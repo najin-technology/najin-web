@@ -6,7 +6,7 @@ import { useLocale } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, Phone } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -67,6 +67,14 @@ export function Header() {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-3">
+            <a
+              href="tel:+82-55-367-2596"
+              aria-label="전화 걸기 055-367-2596"
+              className="hidden lg:inline-flex items-center gap-1.5 text-sm font-semibold text-brand-charcoal hover:text-brand-copper transition-colors tabular-nums"
+            >
+              <Phone className="w-3.5 h-3.5 text-brand-copper" />
+              055-367-2596
+            </a>
             <DropdownMenu>
               <DropdownMenuTrigger
                 render={<Button variant="ghost" size="sm" className="text-sm gap-1.5" />}
@@ -85,7 +93,7 @@ export function Header() {
             <Link href="/quote">
               <Button
                 size="sm"
-                className="bg-brand-copper hover:bg-brand-copper-light text-white"
+                className="bg-brand-copper hover:bg-brand-copper-light text-white shadow-sm font-semibold"
               >
                 {tc("requestQuote")}
               </Button>
@@ -125,28 +133,38 @@ export function Header() {
                 {t(item.key)}
               </Link>
             ))}
-            <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
-              {otherLocales.map((l) => (
-                <Link key={l} href={pathname} locale={l}>
+            <div className="pt-3 border-t border-gray-100 space-y-3">
+              <a
+                href="tel:+82-55-367-2596"
+                aria-label="전화 걸기 055-367-2596"
+                className="flex items-center gap-2 text-sm font-semibold text-brand-charcoal hover:text-brand-copper transition-colors tabular-nums py-2"
+              >
+                <Phone className="w-4 h-4 text-brand-copper" />
+                055-367-2596
+              </a>
+              <div className="flex items-center gap-3">
+                {otherLocales.map((l) => (
+                  <Link key={l} href={pathname} locale={l}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-xs"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {localeLabels[l]}
+                    </Button>
+                  </Link>
+                ))}
+                <Link href="/quote" className="flex-1">
                   <Button
-                    variant="ghost"
                     size="sm"
-                    className="text-xs"
+                    className="w-full bg-brand-copper hover:bg-brand-copper-light text-white font-semibold"
                     onClick={() => setMobileOpen(false)}
                   >
-                    {localeLabels[l]}
+                    {tc("requestQuote")}
                   </Button>
                 </Link>
-              ))}
-              <Link href="/quote">
-                <Button
-                  size="sm"
-                  className="bg-brand-copper hover:bg-brand-copper-light text-white"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {tc("requestQuote")}
-                </Button>
-              </Link>
+              </div>
             </div>
           </nav>
         </div>
