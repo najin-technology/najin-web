@@ -2,6 +2,7 @@
 
 import { headers } from "next/headers";
 import { supabase } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { sendQuoteNotification } from "@/lib/email";
 import { sendByTemplateKey, type Locale } from "@/lib/email-templates";
 import { formLimiter, getClientIp } from "@/lib/ratelimit";
@@ -76,8 +77,13 @@ export async function submitQuote(
   const userAgent = h.get("user-agent") ?? "";
   const submitSession = sessionHash(ip, userAgent);
 
+  // 견적 insert 는 `.select("id")` 로 생성된 row 를 즉시 읽는다. quotes 의 SELECT 는
+  // admin(is_admin) 전용이라 anon 클라이언트로는 insert 직후 select 가 RLS(42501) 로 막힌다.
+  // server action 전용 경로이므로 service-role 클라이언트로 RLS 를 우회한다 (없으면 anon fallback).
+  const db = getSupabaseAdmin() ?? supabase;
+
   // Insert quote
-  const { data: quote, error: quoteError } = await supabase
+  const { data: quote, error: quoteError } = await db
     .from("quotes")
     .insert({
       company_name,
@@ -106,7 +112,7 @@ export async function submitQuote(
     const fileExt = file.name.split(".").pop()?.toLowerCase();
     const filePath = `${quote.id}/${Date.now()}.${fileExt}`;
 
-    const { error: uploadError } = await supabase.storage
+    const { error: uploadError } = await db.storage
       .from("quote-attachments")
       .upload(filePath, file);
 
@@ -115,7 +121,7 @@ export async function submitQuote(
       return { success: false, error: "", errorKey: "fileUploadFailed" };
     }
 
-    await supabase.from("attachments").insert({
+    await db.from("attachments").insert({
       parent_table: "quotes",
       parent_id: quote.id,
       file_url: filePath,
