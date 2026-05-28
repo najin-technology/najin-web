@@ -117,7 +117,13 @@ export default function BusinessPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceGraph) }}
       />
-      <PageHeader titleKey="pageTitle" namespace="business" descriptionKey="pageDescription" bgImage="/images/factory/workshop-2.jpg" />
+      <PageHeader
+        titleKey="pageTitle"
+        namespace="business"
+        descriptionKey="pageDescription"
+        bgImage="/images/factory/workshop-2.jpg"
+        cta={{ labelKey: "requestQuote", href: "/quote", ns: "common" }}
+      />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       {/* Category Quick Nav */}

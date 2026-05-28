@@ -185,12 +185,12 @@ export default async function HomePage() {
               <Link
                 key={client.slug}
                 href={`/clients/${client.slug}`}
-                className={`flex items-center justify-center h-16 md:h-20 w-full px-3 rounded-lg border transition-all hover:shadow-md hover:-translate-y-0.5 ${
+                className={`group relative flex items-center justify-center h-16 md:h-20 w-full px-3 rounded-lg border transition-all hover:shadow-md hover:-translate-y-0.5 hover:border-brand-copper ${
                   client.needsDarkBg
                     ? "bg-brand-navy border-brand-navy"
                     : "bg-white border-surface-warm-200"
                 }`}
-                aria-label={client.name}
+                aria-label={`${client.name} 협업사례 보기`}
               >
                 <Image
                   src={client.logo}
@@ -200,8 +200,20 @@ export default async function HomePage() {
                   className="max-h-12 md:max-h-14 w-auto max-w-[140px] md:max-w-[160px] object-contain"
                   unoptimized
                 />
+                <span className="pointer-events-none absolute inset-x-0 -bottom-5 text-[10px] font-bold uppercase tracking-widest text-brand-copper opacity-0 group-hover:opacity-100 transition-opacity text-center">
+                  자세히 →
+                </span>
               </Link>
             ))}
+          </div>
+          <div className="mt-10 text-center" data-animate="fade-up" data-animate-delay="1">
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-brand-copper transition-colors"
+            >
+              전체 거래처 보기
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>

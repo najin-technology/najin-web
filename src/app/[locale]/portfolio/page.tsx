@@ -76,7 +76,13 @@ export default async function PortfolioPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <PageHeader titleKey="pageTitle" namespace="portfolio" descriptionKey="pageDescription" bgImage="/images/factory/cnc-lathe.jpg" />
+      <PageHeader
+        titleKey="pageTitle"
+        namespace="portfolio"
+        descriptionKey="pageDescription"
+        bgImage="/images/factory/cnc-lathe.jpg"
+        cta={{ labelKey: "requestQuote", href: "/quote", ns: "common" }}
+      />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       {/* Major Clients */}

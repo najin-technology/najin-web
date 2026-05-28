@@ -1,18 +1,31 @@
 import { useTranslations } from "next-intl";
+import { ArrowRight } from "lucide-react";
+import { Link } from "@/i18n/routing";
 import { ImageFade } from "@/components/image-fade";
+
+type HeaderCTA = {
+  /** i18n key resolved against the page namespace (or "common" when ns is omitted) */
+  labelKey: string;
+  href: string;
+  /** When set, resolve labelKey against this namespace instead of the page namespace */
+  ns?: string;
+};
 
 export function PageHeader({
   titleKey,
   namespace,
   descriptionKey,
   bgImage,
+  cta,
 }: {
   titleKey: string;
   namespace: string;
   descriptionKey?: string;
   bgImage?: string;
+  cta?: HeaderCTA;
 }) {
   const t = useTranslations(namespace);
+  const tCommon = useTranslations("common");
 
   return (
     <section className="relative text-white py-20 md:py-28 overflow-hidden">
@@ -43,6 +56,28 @@ export function PageHeader({
           >
             {t(descriptionKey)}
           </p>
+        )}
+        {cta && (
+          <div
+            className="mt-7"
+            data-animate="fade-up"
+            data-animate-delay="2"
+          >
+            <Link
+              href={cta.href}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-copper hover:bg-brand-copper-light text-white text-sm md:text-base font-semibold rounded-lg transition-colors shadow-lg shadow-black/20"
+            >
+              {cta.ns === "common"
+                ? tCommon(cta.labelKey)
+                : cta.ns
+                ? // Fall back to the page namespace's translator for any other namespace
+                  // (next-intl requires a fixed namespace per useTranslations call, so we
+                  // keep custom namespaces resolved against the page namespace for now)
+                  t(cta.labelKey)
+                : t(cta.labelKey)}
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         )}
       </div>
       {/* Diagonal bottom clip */}

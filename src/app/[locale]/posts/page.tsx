@@ -73,6 +73,7 @@ export default async function PostsPage({
         namespace="posts"
         descriptionKey="pageDescription"
         bgImage="/images/factory/milling.jpg"
+        cta={{ labelKey: "requestQuote", href: "/quote", ns: "common" }}
       />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 

@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Logo } from "@/components/logo";
+import { FooterBrochureLink } from "@/components/footer-brochure-link";
 import { Phone, MapPin, Printer } from "lucide-react";
 
 export function Footer() {
@@ -83,6 +84,7 @@ export function Footer() {
               >
                 {t("privacy")}
               </Link>
+              <FooterBrochureLink />
             </div>
           </div>
 

@@ -209,6 +209,25 @@ export function QuoteForm() {
         </select>
       </div>
 
+      {/* File Upload — visible upfront (도면이 견적 정확도의 핵심) */}
+      <div className="space-y-2">
+        <Label htmlFor="attachment">{t("attachment")}</Label>
+        <Input
+          id="attachment"
+          name="attachment"
+          type="file"
+          accept=".pdf,.dwg,.dxf,.step,.igs,.stp,.jpg,.jpeg,.png"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file && file.size > 10 * 1024 * 1024) {
+              toast.error(tc("fileSizeError"));
+              e.target.value = "";
+            }
+          }}
+        />
+        <p className="text-[13px] text-brand-charcoal/75 font-medium">{t("attachmentHelp")}</p>
+      </div>
+
       {/* Optional fields toggle */}
       <div className="border-t border-surface-warm-200 pt-4">
         <button
@@ -263,25 +282,6 @@ export function QuoteForm() {
               rows={5}
               placeholder={t("descriptionPlaceholder")}
             />
-          </div>
-
-          {/* File Upload */}
-          <div className="space-y-2">
-            <Label htmlFor="attachment">{t("attachment")}</Label>
-            <Input
-              id="attachment"
-              name="attachment"
-              type="file"
-              accept=".pdf,.dwg,.dxf,.step,.igs,.stp,.jpg,.jpeg,.png"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file && file.size > 10 * 1024 * 1024) {
-                  toast.error(tc("fileSizeError"));
-                  e.target.value = "";
-                }
-              }}
-            />
-            <p className="text-[13px] text-brand-charcoal/75 font-medium">{t("attachmentHelp")}</p>
           </div>
         </div>
       )}

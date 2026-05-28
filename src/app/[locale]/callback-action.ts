@@ -1,6 +1,9 @@
 "use server";
 
+import { headers } from "next/headers";
 import { supabase } from "@/lib/supabase";
+import { sessionHash } from "@/lib/analytics/classify";
+import { getClientIp } from "@/lib/ratelimit";
 
 type CallbackState = {
   success: boolean;
@@ -24,6 +27,11 @@ export async function submitCallback(
     return { success: false, error: "개인정보 수집 동의가 필요합니다." };
   }
 
+  const h = await headers();
+  const ip = getClientIp(h);
+  const userAgent = h.get("user-agent") ?? "";
+  const submitSession = sessionHash(ip, userAgent);
+
   const { error } = await supabase.from("quotes").insert({
     company_name,
     contact_name: company_name,
@@ -31,6 +39,7 @@ export async function submitCallback(
     processing_type: "콜백요청",
     description: preferred_time ? `희망 연락 시간: ${preferred_time}` : undefined,
     privacy_agreed,
+    session_hash: submitSession,
   });
 
   if (error) {
