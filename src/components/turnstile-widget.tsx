@@ -8,10 +8,13 @@ type Props = {
   name?: string;
 };
 
+// Build-time inlined. Read once at module scope so the value is embedded in the
+// client bundle even when the component tree-shakes; trimmed defensively because
+// env injection can append a trailing newline that Turnstile rejects as "Invalid input".
+const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() ?? "";
+
 export function TurnstileWidget({ onToken, name = "turnstileToken" }: Props) {
-  // env 주입 시 trailing newline 들어가면 Turnstile API가 "Invalid input" 거부.
-  // 방어적 trim — 한 줄로 봇 검증 실패 방지.
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim();
+  const siteKey = SITE_KEY;
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (!siteKey) return null;
