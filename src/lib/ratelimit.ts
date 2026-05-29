@@ -42,8 +42,19 @@ function buildLimiter(limiter: ReturnType<typeof Ratelimit.slidingWindow>, prefi
   });
   return {
     async limit(key: string) {
-      const res = await rl.limit(key);
-      return { success: res.success, remaining: res.remaining, reset: res.reset };
+      try {
+        const res = await rl.limit(key);
+        return { success: res.success, remaining: res.remaining, reset: res.reset };
+      } catch (e) {
+        // Upstash 장애(인스턴스 삭제 / 네트워크 / DNS) 시 폼을 막지 않는다 — fail-open.
+        // rate limit은 보조 방어일 뿐이고, 주 봇 방어는 Turnstile + 개인정보 동의.
+        // fail-closed 로 두면 외부 KV 장애가 견적 제출 전체를 500 으로 막아버린다.
+        if (!warnedOnce) {
+          console.error("[ratelimit] limiter unavailable, failing open:", e);
+          warnedOnce = true;
+        }
+        return { success: true, remaining: Number.MAX_SAFE_INTEGER, reset: 0 };
+      }
     },
   };
 }
