@@ -386,6 +386,25 @@
   .admin-card-table tbody tr td:first-child::before {
     display: none;
   }
+  /* bulk-select 체크박스 테이블: 첫 셀이 체크박스라 카드 제목이 되어선 안 된다.
+     체크박스는 작은 칸으로 두고, 바로 다음 셀(회사명/이름)을 제목으로 올린다.
+     체크박스 없는 6개 테이블은 .admin-card-checkbox 클래스가 없어 기존 동작 유지. */
+  .admin-card-table tbody tr td.admin-card-checkbox:first-child {
+    grid-column: auto;
+    font-weight: 400;
+    font-size: inherit;
+  }
+  .admin-card-table tbody tr td.admin-card-checkbox:first-child::before {
+    display: none;
+  }
+  .admin-card-table tbody tr td.admin-card-checkbox + td {
+    grid-column: 1 / -1;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .admin-card-table tbody tr td.admin-card-checkbox + td::before {
+    display: none;
+  }
 }
 
 /* ===== Admin link utility ===== */
