@@ -34,8 +34,24 @@ function relativeTime(dateStr: string) {
   return date.toLocaleDateString("ko-KR");
 }
 
-function isStale(dateStr: string) {
-  return Date.now() - new Date(dateStr).getTime() > 86400000;
+// 경과 시간을 긴급도 3단계로 표시한다. 같은 "대기"라도 1일과 1주일은 다른 우선순위 —
+// 공장 관리자가 목록을 훑을 때 가장 오래 방치된 건을 색으로 즉시 가려낸다.
+// nowMs 는 부모(server component)에서 한 번 계산해 넘긴다 — render 중 Date.now() 호출 금지 규칙 회피.
+function StaleTime({ date, nowMs }: { date: string; nowMs: number }) {
+  const days = (nowMs - new Date(date).getTime()) / 86_400_000;
+  const cls =
+    days >= 3
+      ? "text-red-600 font-bold"
+      : days >= 1
+        ? "text-amber-600 font-semibold"
+        : "text-gray-600";
+  const suffix = days >= 3 ? ` · ${Math.floor(days)}일 지연` : days >= 1 ? " · 1일+" : "";
+  return (
+    <span className={`text-[13px] tabular-nums flex-shrink-0 font-medium ${cls}`}>
+      {relativeTime(date)}
+      {suffix}
+    </span>
+  );
 }
 
 function getGreeting() {
@@ -58,6 +74,7 @@ export default async function AdminDashboard() {
   const supabase = await createSupabaseServerClient();
 
   const now = new Date();
+  const nowMs = now.getTime();
   const weekStart = new Date(now); weekStart.setDate(now.getDate() - 7); weekStart.setHours(0, 0, 0, 0);
   const prevWeekStart = new Date(weekStart); prevWeekStart.setDate(weekStart.getDate() - 7);
   const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
@@ -150,10 +167,7 @@ export default async function AdminDashboard() {
                     {q.processing_type === "콜백요청" ? "📞 콜백요청" : q.processing_type}
                   </div>
                 </div>
-                <span className={`text-[13px] tabular-nums flex-shrink-0 font-medium ${isStale(q.created_at) ? "text-red-600 font-bold" : "text-gray-600"}`}>
-                  {relativeTime(q.created_at)}
-                  {isStale(q.created_at) && " · 24h+"}
-                </span>
+                <StaleTime date={q.created_at} nowMs={nowMs} />
                 <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-brand-navy group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </Link>
             ))}
@@ -173,10 +187,7 @@ export default async function AdminDashboard() {
                     <span className="text-[13px] text-gray-500 font-medium truncate">{a.position}</span>
                   </div>
                 </div>
-                <span className={`text-[13px] tabular-nums flex-shrink-0 font-medium ${isStale(a.created_at) ? "text-red-600 font-bold" : "text-gray-600"}`}>
-                  {relativeTime(a.created_at)}
-                  {isStale(a.created_at) && " · 24h+"}
-                </span>
+                <StaleTime date={a.created_at} nowMs={nowMs} />
                 <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-brand-navy group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </Link>
             ))}
