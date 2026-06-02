@@ -219,7 +219,7 @@
     "successMessage": "Our team will review and contact you shortly.",
     "contactInfo": "Urgent inquiries: TEL +82-55-367-2596",
     "responsePromise": "We'll respond as soon as possible",
-    "nextSteps": "Our team will review your drawings and send a detailed quotation.",
+    "nextSteps": "Our team will review your request and send a detailed quotation.",
     "processTitle": "Quote Process",
     "processStep1": "Submit Quote Request",
     "processStep2": "Review by Our Team",
@@ -241,7 +241,7 @@
       "privacyAgreed": "You must agree to the privacy policy.",
       "fileSize": "File size must be 10MB or less.",
       "fileType": "File type not allowed.",
-      "submitFailed": "An error occurred while submitting. Please try again.",
+      "submitFailed": "Something went wrong while submitting. Please try again, or call us at +82-55-367-2596.",
       "fileUploadFailed": "File upload failed. Your quote request was received, but the attachment could not be sent. Please email your drawing."
     },
     "checkStatusLink": "Check quote status",

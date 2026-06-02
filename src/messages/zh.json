@@ -219,7 +219,7 @@
     "successMessage": "负责人确认后将尽快与您联系。",
     "contactInfo": "紧急咨询: TEL +82-55-367-2596",
     "responsePromise": "尽快回复",
-    "nextSteps": "负责人审核图纸后将发送详细报价单。",
+    "nextSteps": "负责人审核您的需求后将发送详细报价单。",
     "processTitle": "询价流程",
     "processStep1": "提交询价申请",
     "processStep2": "负责人审核",
@@ -241,7 +241,7 @@
       "privacyAgreed": "请同意个人信息收集政策。",
       "fileSize": "文件大小不能超过10MB。",
       "fileType": "不支持的文件类型。",
-      "submitFailed": "提交时发生错误，请重试。",
+      "submitFailed": "提交时发生错误。请稍后重试，或致电 +82-55-367-2596。",
       "fileUploadFailed": "文件上传失败。报价请求已接收，但附件发送失败。请通过邮件发送图纸。"
     },
     "checkStatusLink": "查询报价进度",
