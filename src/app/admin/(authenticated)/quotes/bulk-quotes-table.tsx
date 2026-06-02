@@ -107,7 +107,7 @@ export function BulkQuotesTable({
                   key={q.id}
                   className={`group hover:bg-gray-50/50 ${isSelected ? "bg-blue-50/40" : ""}`}
                 >
-                  <TableCell>
+                  <TableCell className="admin-card-checkbox">
                     <input
                       type="checkbox"
                       checked={isSelected}
