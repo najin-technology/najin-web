@@ -6,12 +6,20 @@ let warnedOnce = false;
 
 function getRedis(): Redis | null {
   if (redis) return redis;
-  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+  // najin-kv2 통합은 najin_kv_ prefix 변수로 주입된다. prefix 없는 KV_REST_API_URL 은
+  // 삭제된 옛 인스턴스를 가리키므로 najin_kv_* 를 우선 읽는다. (UPSTASH_* > najin_kv_* > 표준)
+  const url =
+    process.env.UPSTASH_REDIS_REST_URL ||
+    process.env.najin_kv_KV_REST_API_URL ||
+    process.env.KV_REST_API_URL;
+  const token =
+    process.env.UPSTASH_REDIS_REST_TOKEN ||
+    process.env.najin_kv_KV_REST_API_TOKEN ||
+    process.env.KV_REST_API_TOKEN;
   if (!url || !token) {
     if (!warnedOnce && process.env.NODE_ENV === "production") {
       console.warn(
-        "[ratelimit] Upstash Redis env missing (UPSTASH_REDIS_REST_URL/TOKEN or KV_REST_API_URL/TOKEN) — rate limiting DISABLED."
+        "[ratelimit] Upstash Redis env missing (UPSTASH_*, najin_kv_KV_REST_API_*, or KV_REST_API_*) — rate limiting DISABLED."
       );
       warnedOnce = true;
     }
