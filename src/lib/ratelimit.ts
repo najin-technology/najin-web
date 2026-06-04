@@ -4,7 +4,7 @@ import { Redis } from "@upstash/redis";
 let redis: Redis | null = null;
 let warnedOnce = false;
 
-function getRedis(): Redis | null {
+export function getRedis(): Redis | null {
   if (redis) return redis;
   // najin-kv2 통합은 najin_kv_ prefix 변수로 주입된다. prefix 없는 KV_REST_API_URL 은
   // 삭제된 옛 인스턴스를 가리키므로 najin_kv_* 를 우선 읽는다. (UPSTASH_* > najin_kv_* > 표준)
