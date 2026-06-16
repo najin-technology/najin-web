@@ -5,7 +5,6 @@ import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
 import { getHistoryItems, getSiteAbout, getPublishedCertifications } from "@/lib/queries";
-import { ImageFade } from "@/components/image-fade";
 import { documentsUrl } from "@/lib/storage-public";
 import {
   Award,
@@ -473,21 +472,6 @@ export default async function AboutPage() {
             </div>
           </div>
 
-          {/* Factory Photo */}
-          <div
-            className="mt-8 rounded-xl overflow-hidden border border-surface-warm-200 shadow-sm"
-            data-animate="fade-up"
-            data-animate-delay="4"
-          >
-            <ImageFade
-              src="/images/factory/workshop-1.jpg"
-              alt="나진테크 공장 내부"
-              width={960}
-              height={721}
-              className="w-full h-auto"
-              sizes="(max-width: 768px) 100vw, 960px"
-            />
-          </div>
         </div>
       </section>
       <PageCTA />
