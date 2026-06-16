@@ -19,13 +19,21 @@ export const revalidate = 3600;
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
+  // posts/[slug]·notices/[id]와 동일하게 locale × slug 조합을 명시적으로 prerender.
+  // (locale만 빠져 있어 en/zh 거래처 상세가 생성되지 않던 문제 수정)
+  const locales = ["ko", "en", "zh"];
   try {
     const grid = await getClientGrid();
-    if (grid.length > 0) return grid.map((c) => ({ slug: c.slug }));
+    if (grid.length > 0)
+      return grid.flatMap((c) =>
+        locales.map((locale) => ({ locale, slug: c.slug })),
+      );
   } catch {
     // fall through
   }
-  return FALLBACK_CLIENT_SLUGS.map((slug) => ({ slug }));
+  return FALLBACK_CLIENT_SLUGS.flatMap((slug) =>
+    locales.map((locale) => ({ locale, slug })),
+  );
 }
 
 export async function generateMetadata({

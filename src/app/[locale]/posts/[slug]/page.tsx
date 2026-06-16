@@ -33,6 +33,21 @@ function stripHtml(html: string) {
   return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 }
 
+// 블로그 import 본문 끝에 붙는 "출처" 섹션은 화면에 노출하지 않는다.
+function stripSourceSection(html: string) {
+  return html.replace(/<h[1-6][^>]*>\s*출처\s*<\/h[1-6]>[\s\S]*$/i, "");
+}
+
+// admin Tiptap이 생성한 신뢰 콘텐츠용 경량 새니타이저.
+// isomorphic-dompurify가 이 런타임(Turbopack SSG)에서 jsdom 의존성으로 throw할 때
+// null로 떨어져 본문이 raw 태그로 노출되던 문제의 폴백. script/style/이벤트핸들러 제거.
+function basicSanitizeHtml(html: string) {
+  return html
+    .replace(/<\/?(script|style|iframe|object|embed|form|link|meta)\b[^>]*>/gi, "")
+    .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(/(href|src)\s*=\s*(["'])\s*javascript:[^"']*\2/gi, '$1="#"');
+}
+
 const CATEGORY_KEYS: Record<string, string> = {
   제작사례: "categoryCases",
   제품: "categoryProducts",
@@ -112,15 +127,17 @@ export default async function PostDetailPage({
   const date = post.original_date || post.published_at || post.created_at;
   const images = post.image_urls || [];
 
-  // Check if content contains HTML tags
-  const isHtml = content ? /<[a-z][\s\S]*>/i.test(content) : false;
+  // "출처" 푸터 제거 후 HTML 여부 판정.
+  const cleaned = content ? stripSourceSection(content) : content;
+  const isHtml = cleaned ? /<[a-z][\s\S]*>/i.test(cleaned) : false;
   let sanitizedHtml: string | null = null;
-  if (isHtml && content) {
+  if (isHtml && cleaned) {
     try {
       const DOMPurify = (await import("isomorphic-dompurify")).default;
-      sanitizedHtml = DOMPurify.sanitize(content);
+      sanitizedHtml = DOMPurify.sanitize(cleaned);
     } catch {
-      sanitizedHtml = null;
+      // dompurify가 throw하면 raw 태그 노출 대신 경량 새니타이저로 폴백.
+      sanitizedHtml = basicSanitizeHtml(cleaned);
     }
   }
 
@@ -278,7 +295,7 @@ export default async function PostDetailPage({
               />
             ) : (
               <div className="prose prose-gray max-w-none text-brand-charcoal leading-relaxed whitespace-pre-line">
-                {content}
+                {cleaned}
               </div>
             )}
 
@@ -288,12 +305,13 @@ export default async function PostDetailPage({
                 <div className="flex items-center gap-2 flex-wrap">
                   <Tag className="w-4 h-4 text-brand-charcoal/50" />
                   {post.tags.map((tag: string) => (
-                    <span
+                    <Link
                       key={tag}
-                      className="px-2.5 py-1 bg-surface-warm-100 text-brand-charcoal/85 rounded-full text-[13px] font-medium"
+                      href={`/posts?tag=${encodeURIComponent(tag)}`}
+                      className="px-2.5 py-1 bg-surface-warm-100 text-brand-charcoal/85 rounded-full text-[13px] font-medium hover:bg-brand-copper/10 hover:text-brand-copper transition-colors"
                     >
                       #{tag}
-                    </span>
+                    </Link>
                   ))}
                 </div>
               </div>
