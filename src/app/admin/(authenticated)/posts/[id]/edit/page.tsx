@@ -16,7 +16,7 @@ export default async function EditPostPage({
 
   const { data: post } = await supabase
     .from("posts")
-    .select("id, slug, title_ko, title_en, content_ko, content_en, excerpt_ko, excerpt_en, category, thumbnail_url, tags, is_published")
+    .select("id, slug, title_ko, title_en, content_ko, content_en, excerpt_ko, excerpt_en, category, process_category, featured, thumbnail_url, tags, is_published")
     .eq("id", id)
     .is("deleted_at", null)
     .single();

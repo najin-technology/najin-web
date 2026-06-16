@@ -13,6 +13,7 @@ import { Eye, EyeOff } from "lucide-react";
 import DOMPurify from "isomorphic-dompurify";
 
 const CATEGORIES = ["제작사례", "제품"];
+const PROCESS_CATEGORIES = ["우레탄", "합성수지", "CNC", "금형", "EV", "기타"];
 
 type PostData = {
   id?: string;
@@ -24,6 +25,8 @@ type PostData = {
   excerpt_ko: string | null;
   excerpt_en: string | null;
   category: string;
+  process_category: string | null;
+  featured: boolean;
   thumbnail_url: string | null;
   tags: string[] | null;
   is_published: boolean;
@@ -41,6 +44,7 @@ export function PostForm({
   const [isPublished, setIsPublished] = useState(
     post?.is_published ?? false
   );
+  const [featured, setFeatured] = useState(post?.featured ?? false);
   const [contentKo, setContentKo] = useState(post?.content_ko || "");
   const [contentEn, setContentEn] = useState(post?.content_en || "");
   const [isPreview, setIsPreview] = useState(false);
@@ -53,6 +57,7 @@ export function PostForm({
     <form action={formAction} className="space-y-6">
       {post?.id && <input type="hidden" name="id" value={post.id} />}
       <input type="hidden" name="is_published" value={String(isPublished)} />
+      <input type="hidden" name="featured" value={String(featured)} />
       <input type="hidden" name="content_ko" value={contentKo} />
       <input type="hidden" name="content_en" value={contentEn} />
 
@@ -90,6 +95,36 @@ export function PostForm({
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="process_category">공정 분류</Label>
+          <select
+            id="process_category"
+            name="process_category"
+            defaultValue={post?.process_category || ""}
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <option value="">미지정</option>
+            {PROCESS_CATEGORIES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="featured-toggle">전면 노출 (홈·포트폴리오)</Label>
+          <label
+            htmlFor="featured-toggle"
+            className="flex items-center gap-2 h-10 px-3 text-sm font-medium cursor-pointer rounded-md border border-input bg-background"
+          >
+            <input
+              id="featured-toggle"
+              type="checkbox"
+              checked={featured}
+              onChange={(e) => setFeatured(e.target.checked)}
+              className="w-4 h-4 rounded border-gray-300 cursor-pointer"
+            />
+            대표 사례로 강조
+          </label>
         </div>
         <div className="space-y-2">
           <Label htmlFor="tags">태그 (쉼표로 구분)</Label>

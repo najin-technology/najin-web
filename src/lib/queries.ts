@@ -78,13 +78,13 @@ export const getActiveJobPostings = unstable_cache(
   { revalidate: ONE_HOUR, tags: [CACHE_TAGS.jobPostings] },
 );
 
-export async function getPublishedPosts(category?: string, tag?: string) {
+export async function getPublishedPosts(category?: string, tag?: string, process?: string) {
   return unstable_cache(
     async () => {
       let query = supabase
         .from("posts")
         .select(
-          "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, thumbnail_url, image_urls, tags, original_date, published_at, created_at",
+          "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, process_category, featured, thumbnail_url, image_urls, tags, original_date, published_at, created_at",
         )
         .eq("is_published", true)
         .is("deleted_at", null)
@@ -92,12 +92,13 @@ export async function getPublishedPosts(category?: string, tag?: string) {
 
       if (category) query = query.eq("category", category);
       if (tag) query = query.contains("tags", [tag]);
+      if (process) query = query.eq("process_category", process);
 
       const { data, error } = await query;
       if (error) throw error;
       return data;
     },
-    ["published-posts", category ?? "_all", tag ?? "_any"],
+    ["published-posts", category ?? "_all", tag ?? "_any", process ?? "_anyp"],
     { revalidate: ONE_HOUR, tags: [CACHE_TAGS.posts] },
   )();
 }
@@ -107,10 +108,11 @@ export const getHomePosts = unstable_cache(
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, thumbnail_url, image_urls, tags, original_date, published_at, created_at",
+        "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, process_category, featured, thumbnail_url, image_urls, tags, original_date, published_at, created_at",
       )
       .eq("is_published", true)
       .is("deleted_at", null)
+      .order("featured", { ascending: false })
       .order("original_date", { ascending: false })
       .limit(3);
     if (error) throw error;

@@ -43,17 +43,17 @@ const CATEGORY_COLORS: Record<string, string> = {
 export default async function PostsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; tag?: string }>;
+  searchParams: Promise<{ category?: string; tag?: string; process?: string }>;
 }) {
   const t = await getTranslations("posts");
   const locale = await getLocale();
-  const { category, tag } = await searchParams;
+  const { category, tag, process: processFilter } = await searchParams;
 
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
   let allPosts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
   try {
-    posts = await getPublishedPosts(category, tag);
-    allPosts = tag || category ? await getPublishedPosts() : posts;
+    posts = await getPublishedPosts(category, tag, processFilter);
+    allPosts = tag || category || processFilter ? await getPublishedPosts() : posts;
   } catch {
     // fallback
   }
@@ -63,6 +63,13 @@ export default async function PostsPage({
   const countByCategory: Record<string, number> = {};
   for (const p of allPosts) {
     countByCategory[p.category] = (countByCategory[p.category] || 0) + 1;
+  }
+  const PROCESS_FILTERS = ["우레탄", "합성수지", "CNC", "금형", "EV"];
+  const countByProcess: Record<string, number> = {};
+  for (const p of allPosts) {
+    if (p.process_category)
+      countByProcess[p.process_category] =
+        (countByProcess[p.process_category] || 0) + 1;
   }
   const countSuffix = t("countSuffix");
 
@@ -118,6 +125,31 @@ export default async function PostsPage({
               );
             })}
           </div>
+
+          {/* Process Filter (공정별) */}
+          {Object.keys(countByProcess).length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-8" data-animate="fade-up">
+              {PROCESS_FILTERS.filter((proc) => countByProcess[proc]).map((proc) => {
+                const active = processFilter === proc;
+                return (
+                  <Link
+                    key={proc}
+                    href={`/posts?process=${proc}`}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      active
+                        ? "bg-brand-copper text-white"
+                        : "bg-white text-brand-charcoal border border-surface-warm-200 hover:border-brand-copper"
+                    }`}
+                  >
+                    {proc}
+                    <span className={`ml-1.5 text-xs ${active ? "text-white/70" : "text-brand-charcoal/50"}`}>
+                      {countByProcess[proc]}{countSuffix}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
 
           {/* Active tag filter indicator */}
           {tag && (
