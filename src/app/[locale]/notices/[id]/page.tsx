@@ -51,6 +51,13 @@ export async function generateMetadata({
     const hasTranslation =
       locale === "ko" || (locale === "en" && Boolean(notice.title_en));
 
+    // notices엔 title_zh가 없어 zh는 색인 불가 → hreflang에서 제외 (ko + en만, sitemap과 일치)
+    const languages: Record<string, string> = {
+      ko: `${BASE_URL}/ko/notices/${id}`,
+      "x-default": `${BASE_URL}/ko/notices/${id}`,
+    };
+    if (notice.title_en) languages.en = `${BASE_URL}/en/notices/${id}`;
+
     return {
       title,
       description,
@@ -63,12 +70,7 @@ export async function generateMetadata({
       },
       alternates: {
         canonical: `${BASE_URL}/${locale}/notices/${id}`,
-        languages: {
-          ko: `${BASE_URL}/ko/notices/${id}`,
-          en: `${BASE_URL}/en/notices/${id}`,
-          zh: `${BASE_URL}/zh/notices/${id}`,
-          "x-default": `${BASE_URL}/ko/notices/${id}`,
-        },
+        languages,
       },
     };
   } catch {

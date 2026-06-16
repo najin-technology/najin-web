@@ -4,12 +4,17 @@ import { SITE_URL as BASE_URL } from "@/lib/env";
 
 const locales = ["ko", "en", "zh"];
 
-function withAlternates(route: string) {
+// 색인 가능한 언어만 hreflang/sitemap에 포함한다.
+// 번역 없는 언어는 페이지에서 noindex 처리되므로, sitemap에 넣으면
+// GSC "제출된 URL이 noindex로 표시됨" 에러가 난다 → ko는 항상, en/zh는 번역 있을 때만.
+function langsFor(hasEn: boolean, hasZh: boolean): string[] {
+  return ["ko", ...(hasEn ? ["en"] : []), ...(hasZh ? ["zh"] : [])];
+}
+
+function withAlternates(route: string, langs: string[] = locales) {
   return {
     languages: {
-      ...Object.fromEntries(
-        locales.map((l) => [l, `${BASE_URL}/${l}${route}`])
-      ),
+      ...Object.fromEntries(langs.map((l) => [l, `${BASE_URL}/${l}${route}`])),
       "x-default": `${BASE_URL}/ko${route}`,
     },
   };
@@ -31,10 +36,11 @@ const routePriorities: Record<string, number> = {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = Object.keys(routePriorities);
 
+  // 정적 페이지는 lastModified를 넣지 않는다 — 매 요청 new Date()(=현재시각)면
+  // 구글이 "매 크롤마다 전부 수정됨"으로 인식해 lastmod 신뢰를 잃는다. (동적 글은 실제 updated_at 사용)
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.flatMap((route) =>
     locales.map((locale) => ({
       url: `${BASE_URL}/${locale}${route}`,
-      lastModified: new Date(),
       changeFrequency: route === "" ? ("weekly" as const) : ("monthly" as const),
       priority: routePriorities[route] ?? 0.5,
       alternates: withAlternates(route),
@@ -47,20 +53,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (!supabase) throw new Error("Supabase not configured");
     const { data: notices } = await supabase
       .from("notices")
-      .select("id, updated_at")
+      .select("id, updated_at, title_en")
       .eq("is_published", true)
       .is("deleted_at", null);
 
     if (notices) {
-      noticeEntries = notices.flatMap((notice) =>
-        locales.map((locale) => ({
-          url: `${BASE_URL}/${locale}/notices/${notice.id}`,
+      noticeEntries = notices.flatMap((notice) => {
+        // notices엔 title_zh 컬럼이 없어 zh는 항상 noindex → 제외.
+        const langs = langsFor(Boolean(notice.title_en), false);
+        const route = `/notices/${notice.id}`;
+        return langs.map((locale) => ({
+          url: `${BASE_URL}/${locale}${route}`,
           lastModified: new Date(notice.updated_at),
           changeFrequency: "monthly" as const,
           priority: 0.5,
-          alternates: withAlternates(`/notices/${notice.id}`),
-        }))
-      );
+          alternates: withAlternates(route, langs),
+        }));
+      });
     }
   } catch (err) {
     console.error("[sitemap] notices fetch failed:", err);
@@ -72,20 +81,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (!supabase) throw new Error("Supabase not configured");
     const { data: posts } = await supabase
       .from("posts")
-      .select("slug, updated_at")
+      .select("slug, updated_at, title_en, title_zh")
       .eq("is_published", true)
       .is("deleted_at", null);
 
     if (posts) {
-      postEntries = posts.flatMap((post) =>
-        locales.map((locale) => ({
-          url: `${BASE_URL}/${locale}/posts/${post.slug}`,
+      postEntries = posts.flatMap((post) => {
+        const langs = langsFor(Boolean(post.title_en), Boolean(post.title_zh));
+        const route = `/posts/${post.slug}`;
+        return langs.map((locale) => ({
+          url: `${BASE_URL}/${locale}${route}`,
           lastModified: new Date(post.updated_at),
           changeFrequency: "monthly" as const,
           priority: 0.6,
-          alternates: withAlternates(`/posts/${post.slug}`),
-        }))
-      );
+          alternates: withAlternates(route, langs),
+        }));
+      });
     }
   } catch (err) {
     console.error("[sitemap] posts fetch failed:", err);
