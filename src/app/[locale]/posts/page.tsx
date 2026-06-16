@@ -40,20 +40,29 @@ const CATEGORY_COLORS: Record<string, string> = {
   제품: "bg-amber-100 text-amber-800",
 };
 
+// 공정 분류 라벨 (i18n 메시지 파일 대신 컴포넌트 내 매핑 — 메시지 충돌 회피)
+const PROCESS_LABELS: Record<string, Record<string, string>> = {
+  우레탄: { ko: "우레탄", en: "Urethane", zh: "聚氨酯" },
+  합성수지: { ko: "합성수지", en: "Resin", zh: "合成树脂" },
+  CNC: { ko: "CNC", en: "CNC", zh: "CNC" },
+  금형: { ko: "금형", en: "Mold", zh: "模具" },
+  EV: { ko: "EV", en: "EV", zh: "EV" },
+};
+
 export default async function PostsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; tag?: string }>;
+  searchParams: Promise<{ category?: string; tag?: string; process?: string }>;
 }) {
   const t = await getTranslations("posts");
   const locale = await getLocale();
-  const { category, tag } = await searchParams;
+  const { category, tag, process: processFilter } = await searchParams;
 
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
   let allPosts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
   try {
-    posts = await getPublishedPosts(category, tag);
-    allPosts = tag || category ? await getPublishedPosts() : posts;
+    posts = await getPublishedPosts(category, tag, processFilter);
+    allPosts = tag || category || processFilter ? await getPublishedPosts() : posts;
   } catch {
     // fallback
   }
@@ -63,6 +72,13 @@ export default async function PostsPage({
   const countByCategory: Record<string, number> = {};
   for (const p of allPosts) {
     countByCategory[p.category] = (countByCategory[p.category] || 0) + 1;
+  }
+  const PROCESS_FILTERS = ["우레탄", "합성수지", "CNC", "금형", "EV"];
+  const countByProcess: Record<string, number> = {};
+  for (const p of allPosts) {
+    if (p.process_category)
+      countByProcess[p.process_category] =
+        (countByProcess[p.process_category] || 0) + 1;
   }
   const countSuffix = t("countSuffix");
 
@@ -119,6 +135,31 @@ export default async function PostsPage({
             })}
           </div>
 
+          {/* Process Filter (공정별) */}
+          {Object.keys(countByProcess).length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-8" data-animate="fade-up">
+              {PROCESS_FILTERS.filter((proc) => countByProcess[proc]).map((proc) => {
+                const active = processFilter === proc;
+                return (
+                  <Link
+                    key={proc}
+                    href={`/posts?process=${proc}`}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      active
+                        ? "bg-brand-copper text-white"
+                        : "bg-white text-brand-charcoal border border-surface-warm-200 hover:border-brand-copper"
+                    }`}
+                  >
+                    {PROCESS_LABELS[proc]?.[locale] ?? proc}
+                    <span className={`ml-1.5 text-xs ${active ? "text-white/70" : "text-brand-charcoal/50"}`}>
+                      {countByProcess[proc]}{countSuffix}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+
           {/* Active tag filter indicator */}
           {tag && (
             <div className="flex items-center gap-2 mb-6" data-animate="fade-up">
@@ -146,11 +187,15 @@ export default async function PostsPage({
                 const title =
                   locale === "ko"
                     ? post.title_ko
-                    : post.title_en || post.title_ko;
+                    : locale === "zh"
+                      ? post.title_zh || post.title_ko
+                      : post.title_en || post.title_ko;
                 const excerpt =
                   locale === "ko"
                     ? post.excerpt_ko
-                    : post.excerpt_en || post.excerpt_ko;
+                    : locale === "zh"
+                      ? post.excerpt_zh || post.excerpt_ko
+                      : post.excerpt_en || post.excerpt_ko;
                 const date = post.original_date || post.published_at || post.created_at;
                 const thumbnail = post.thumbnail_url || post.image_urls?.[0];
 

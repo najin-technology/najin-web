@@ -69,17 +69,24 @@ export async function generateMetadata({
     if (!post) return { title: "Not Found" };
 
     const title =
-      locale === "ko" ? post.title_ko : post.title_en || post.title_ko;
+      locale === "ko"
+        ? post.title_ko
+        : locale === "zh"
+          ? post.title_zh || post.title_ko
+          : post.title_en || post.title_ko;
     const rawContent =
       locale === "ko"
         ? post.content_ko
-        : post.content_en || post.content_ko;
+        : locale === "zh"
+          ? post.content_zh || post.content_ko
+          : post.content_en || post.content_ko;
     const description = rawContent ? stripHtml(rawContent).slice(0, 160) : "";
 
-    // posts 테이블에 title_zh / content_zh 컬럼 없음 — zh 페이지는 항상 영어/한국어 fallback.
-    // en 페이지도 title_en 없으면 한국어 fallback. 이 경우 중복 콘텐츠 신호 방지 위해 noindex.
+    // 번역 없으면(en=title_en, zh=title_zh 부재) 한국어 fallback → 중복 콘텐츠 방지 위해 noindex.
     const hasTranslation =
-      locale === "ko" || (locale === "en" && Boolean(post.title_en));
+      locale === "ko" ||
+      (locale === "en" && Boolean(post.title_en)) ||
+      (locale === "zh" && Boolean(post.title_zh));
 
     return {
       title,
@@ -121,9 +128,17 @@ export default async function PostDetailPage({
   if (!post) notFound();
 
   const title =
-    locale === "ko" ? post.title_ko : post.title_en || post.title_ko;
+    locale === "ko"
+      ? post.title_ko
+      : locale === "zh"
+        ? post.title_zh || post.title_ko
+        : post.title_en || post.title_ko;
   const content =
-    locale === "ko" ? post.content_ko : post.content_en || post.content_ko;
+    locale === "ko"
+      ? post.content_ko
+      : locale === "zh"
+        ? post.content_zh || post.content_ko
+        : post.content_en || post.content_ko;
   const date = post.original_date || post.published_at || post.created_at;
   const images = post.image_urls || [];
 
