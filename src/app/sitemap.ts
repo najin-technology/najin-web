@@ -36,10 +36,11 @@ const routePriorities: Record<string, number> = {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = Object.keys(routePriorities);
 
+  // 정적 페이지는 lastModified를 넣지 않는다 — 매 요청 new Date()(=현재시각)면
+  // 구글이 "매 크롤마다 전부 수정됨"으로 인식해 lastmod 신뢰를 잃는다. (동적 글은 실제 updated_at 사용)
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.flatMap((route) =>
     locales.map((locale) => ({
       url: `${BASE_URL}/${locale}${route}`,
-      lastModified: new Date(),
       changeFrequency: route === "" ? ("weekly" as const) : ("monthly" as const),
       priority: routePriorities[route] ?? 0.5,
       alternates: withAlternates(route),
