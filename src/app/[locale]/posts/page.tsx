@@ -40,6 +40,15 @@ const CATEGORY_COLORS: Record<string, string> = {
   제품: "bg-amber-100 text-amber-800",
 };
 
+// 공정 분류 라벨 (i18n 메시지 파일 대신 컴포넌트 내 매핑 — 메시지 충돌 회피)
+const PROCESS_LABELS: Record<string, Record<string, string>> = {
+  우레탄: { ko: "우레탄", en: "Urethane", zh: "聚氨酯" },
+  합성수지: { ko: "합성수지", en: "Resin", zh: "合成树脂" },
+  CNC: { ko: "CNC", en: "CNC", zh: "CNC" },
+  금형: { ko: "금형", en: "Mold", zh: "模具" },
+  EV: { ko: "EV", en: "EV", zh: "EV" },
+};
+
 export default async function PostsPage({
   searchParams,
 }: {
@@ -141,7 +150,7 @@ export default async function PostsPage({
                         : "bg-white text-brand-charcoal border border-surface-warm-200 hover:border-brand-copper"
                     }`}
                   >
-                    {proc}
+                    {PROCESS_LABELS[proc]?.[locale] ?? proc}
                     <span className={`ml-1.5 text-xs ${active ? "text-white/70" : "text-brand-charcoal/50"}`}>
                       {countByProcess[proc]}{countSuffix}
                     </span>
