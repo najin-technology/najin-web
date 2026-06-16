@@ -60,8 +60,8 @@ export async function generateMetadata({
     path: `/clients/${slug}`,
     titles: { ko: titleKo, en: titleEn, zh: titleZh },
     descriptions: {
-      ko: `${client.name}와의 검증된 납품 이력과 협업사례를 소개합니다.`,
-      en: `Verified delivery history and collaboration with ${en}.`,
+      ko: `${client.name}와의 납품 이력과 협업사례를 소개합니다.`,
+      en: `Delivery history and collaboration with ${en}.`,
       zh: `与 ${en} 的合作交付记录。`,
     },
   });

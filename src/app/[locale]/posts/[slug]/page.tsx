@@ -88,6 +88,14 @@ export async function generateMetadata({
       (locale === "en" && Boolean(post.title_en)) ||
       (locale === "zh" && Boolean(post.title_zh));
 
+    // 색인 가능한 언어만 hreflang에 (noindex 언어로의 hreflang 방지 — sitemap과 일치)
+    const languages: Record<string, string> = {
+      ko: `${BASE_URL}/ko/posts/${slug}`,
+      "x-default": `${BASE_URL}/ko/posts/${slug}`,
+    };
+    if (post.title_en) languages.en = `${BASE_URL}/en/posts/${slug}`;
+    if (post.title_zh) languages.zh = `${BASE_URL}/zh/posts/${slug}`;
+
     return {
       title,
       description,
@@ -101,12 +109,7 @@ export async function generateMetadata({
       },
       alternates: {
         canonical: `${BASE_URL}/${locale}/posts/${slug}`,
-        languages: {
-          ko: `${BASE_URL}/ko/posts/${slug}`,
-          en: `${BASE_URL}/en/posts/${slug}`,
-          zh: `${BASE_URL}/zh/posts/${slug}`,
-          "x-default": `${BASE_URL}/ko/posts/${slug}`,
-        },
+        languages,
       },
     };
   } catch {
