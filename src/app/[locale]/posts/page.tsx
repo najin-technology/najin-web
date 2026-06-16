@@ -187,11 +187,15 @@ export default async function PostsPage({
                 const title =
                   locale === "ko"
                     ? post.title_ko
-                    : post.title_en || post.title_ko;
+                    : locale === "zh"
+                      ? post.title_zh || post.title_ko
+                      : post.title_en || post.title_ko;
                 const excerpt =
                   locale === "ko"
                     ? post.excerpt_ko
-                    : post.excerpt_en || post.excerpt_ko;
+                    : locale === "zh"
+                      ? post.excerpt_zh || post.excerpt_ko
+                      : post.excerpt_en || post.excerpt_ko;
                 const date = post.original_date || post.published_at || post.created_at;
                 const thumbnail = post.thumbnail_url || post.image_urls?.[0];
 

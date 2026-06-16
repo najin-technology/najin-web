@@ -84,7 +84,7 @@ export async function getPublishedPosts(category?: string, tag?: string, process
       let query = supabase
         .from("posts")
         .select(
-          "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, process_category, featured, thumbnail_url, image_urls, tags, original_date, published_at, created_at",
+          "id, slug, title_ko, title_en, title_zh, excerpt_ko, excerpt_en, excerpt_zh, category, process_category, featured, thumbnail_url, image_urls, tags, original_date, published_at, created_at",
         )
         .eq("is_published", true)
         .is("deleted_at", null)
@@ -108,7 +108,7 @@ export const getHomePosts = unstable_cache(
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "id, slug, title_ko, title_en, excerpt_ko, excerpt_en, category, process_category, featured, thumbnail_url, image_urls, tags, original_date, published_at, created_at",
+        "id, slug, title_ko, title_en, title_zh, excerpt_ko, excerpt_en, excerpt_zh, category, process_category, featured, thumbnail_url, image_urls, tags, original_date, published_at, created_at",
       )
       .eq("is_published", true)
       .is("deleted_at", null)

@@ -25,6 +25,9 @@ export async function createPost(
   const excerptEn = formData.get("excerpt_en") as string;
   const contentKo = formData.get("content_ko") as string;
   const contentEn = formData.get("content_en") as string;
+  const titleZh = formData.get("title_zh") as string;
+  const excerptZh = formData.get("excerpt_zh") as string;
+  const contentZh = formData.get("content_zh") as string;
   const category = formData.get("category") as string;
   const processCategory = formData.get("process_category") as string;
   const featured = formData.get("featured") === "true";
@@ -52,6 +55,9 @@ export async function createPost(
       excerpt_en: excerptEn || null,
       content_ko: contentKo || null,
       content_en: contentEn || null,
+      title_zh: titleZh || null,
+      excerpt_zh: excerptZh || null,
+      content_zh: contentZh || null,
       category,
       process_category: processCategory || null,
       featured,
@@ -95,6 +101,9 @@ export async function updatePost(
   const excerptEn = formData.get("excerpt_en") as string;
   const contentKo = formData.get("content_ko") as string;
   const contentEn = formData.get("content_en") as string;
+  const titleZh = formData.get("title_zh") as string;
+  const excerptZh = formData.get("excerpt_zh") as string;
+  const contentZh = formData.get("content_zh") as string;
   const category = formData.get("category") as string;
   const processCategory = formData.get("process_category") as string;
   const featured = formData.get("featured") === "true";
@@ -135,6 +144,9 @@ export async function updatePost(
       excerpt_en: excerptEn || null,
       content_ko: contentKo || null,
       content_en: contentEn || null,
+      title_zh: titleZh || null,
+      excerpt_zh: excerptZh || null,
+      content_zh: contentZh || null,
       category,
       process_category: processCategory || null,
       featured,
