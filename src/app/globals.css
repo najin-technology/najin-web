@@ -274,7 +274,11 @@
 /* ===== Hero gradient ===== */
 
 .hero-gradient {
-  background: linear-gradient(135deg, var(--color-brand-navy) 0%, var(--color-brand-navy-dark) 40%, var(--color-brand-navy) 100%);
+  /* background-color base must survive: when .hero-pattern is on the same element
+     its background-image overrides the gradient, so without this the hero went
+     transparent → white-on-white with text-white. */
+  background-color: var(--color-brand-navy);
+  background-image: linear-gradient(135deg, var(--color-brand-navy) 0%, var(--color-brand-navy-dark) 40%, var(--color-brand-navy) 100%);
 }
 
 /* Industrial grid pattern overlay */

@@ -16,7 +16,7 @@
     "home": "홈으로 돌아가기",
     "privacy": "개인정보처리방침",
     "ctaTitle": "견적이 필요하신가요?",
-    "ctaDesc": "도면을 보내주시면 최대한 빠르게 견적을 회신드리겠습니다.",
+    "ctaDesc": "도면을 보내주시면 검토 후 회신드리겠습니다.",
     "collaborationWith": "거래처",
     "menuToggle": "메뉴 열기/닫기"
   },
@@ -29,7 +29,7 @@
     "preferredTimePlaceholder": "예: 오후 2시~4시",
     "submit": "상담 요청하기",
     "successTitle": "요청이 접수되었습니다",
-    "successMessage": "담당자가 빠른 시간 내에 연락드리겠습니다."
+    "successMessage": "담당자가 확인 후 연락드리겠습니다."
   },
   "nav": {
     "home": "홈",
@@ -46,7 +46,6 @@
     "heroTitle": "25년 전통의 정밀 가공 전문기업",
     "heroSubtitle": "우레탄 성형 · 합성수지 가공 · CNC 정밀가공 · 금형 제작",
     "heroCta": "견적 요청하기",
-    "heroResponsePromise": "온라인 견적 → 최대한 빠른 회신 | 도면 첨부 가능",
     "statsYears": "년 역사",
     "statsClients": "주요 거래처",
     "statsCertified": "ISO 9001 인증",
@@ -59,8 +58,8 @@
     "numbersTitle": "나진테크 한눈에 보기",
     "aboutLink": "회사소개 보기",
     "ctaTitle": "프로젝트를 함께 시작하세요",
-    "ctaSubtitle": "25년의 경험으로 최적의 솔루션을 제공합니다",
-    "ctaPersuasion": "온라인 견적 요청으로 빠르게 회신 드리겠습니다",
+    "ctaSubtitle": "25년간 쌓아온 정밀 가공 경험으로 대응합니다",
+    "ctaPersuasion": "도면을 보내주시면 검토 후 회신드리겠습니다",
     "ctaPhone": "전화 상담: 055-367-2596",
     "portfolioTitle": "주요 납품 실적",
     "portfolioSubtitle": "국내외 주요 대기업에 부품을 납품하고 있습니다",
@@ -181,7 +180,7 @@
     "galleryPlaceholder": "납품 실적 갤러리가 준비 중입니다.",
     "productCountSuffix": "개 제품",
     "ctaTitle": "견적을 요청하세요",
-    "ctaDesc": "도면을 보내주시면 빠르게 견적을 회신드리겠습니다."
+    "ctaDesc": "도면을 보내주시면 검토 후 회신드리겠습니다."
   },
   "quote": {
     "pageTitle": "견적문의",
@@ -216,9 +215,9 @@
     "optionalFieldsToggle": "상세 정보 추가 (선택사항)",
     "optionalFieldsHint": "필수 정보만으로도 상담이 가능합니다",
     "successTitle": "견적 요청이 접수되었습니다",
-    "successMessage": "담당자가 확인 후 빠른 시일 내에 연락드리겠습니다.",
+    "successMessage": "담당자가 확인 후 연락드리겠습니다.",
     "contactInfo": "긴급 문의: TEL 055-367-2596",
-    "responsePromise": "최대한 빠르게 회신 드리겠습니다",
+    "responsePromise": "도면 확인 후 회신드리겠습니다",
     "nextSteps": "담당자가 요청 내용을 검토한 후 상세 견적서를 보내드립니다.",
     "processTitle": "견적 프로세스",
     "processStep1": "견적 요청서 제출",
@@ -358,7 +357,7 @@
     "question7": "특허 우레탄 금형베이스 기술이란 무엇인가요?",
     "answer7": "나진테크가 자체 개발한 우레탄 금형베이스 기술로, 우레탄 금형 제작 시 정밀도와 내구성을 강화합니다. 시제품부터 양산까지 자가공장에서 일관 대응이 가능한 것이 강점입니다.",
     "question8": "견적은 어떻게 요청하나요?",
-    "answer8": "홈페이지의 견적문의 페이지에서 양식을 작성하여 제출하시면 됩니다. 도면(DWG, STEP, PDF 등)을 첨부하시면 담당자가 최대한 빠르게 상세 견적을 회신드립니다. 전화(055-367-2596)로도 상담 가능합니다."
+    "answer8": "홈페이지의 견적문의 페이지에서 양식을 작성하여 제출하시면 됩니다. 도면(DWG, STEP, PDF 등)을 첨부하시면 담당자가 검토 후 상세 견적을 회신드립니다. 전화(055-367-2596)로도 상담 가능합니다."
   },
   "footer": {
     "address": "경상남도 양산시 산막공단남14길 170 (북정동)",
