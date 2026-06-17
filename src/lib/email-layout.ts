@@ -19,11 +19,11 @@ const T: Record<Locale, {
   cta: string; refLabel: string; attached: string;
   company: string; hours: string; site: string;
 }> = {
-  ko: { cta: "진행 상황 확인", refLabel: "견적 번호", attached: "첨부",
+  ko: { cta: "진행 상황 확인", refLabel: "견적 번호", attached: "요청하신 견적서를 첨부했습니다.",
         company: "나진테크 (NAJIN TECHNOLOGY)", hours: "평일 08:30~17:30", site: "najin-tech.com" },
-  en: { cta: "Track your request", refLabel: "Quote No.", attached: "Attached",
+  en: { cta: "Track your request", refLabel: "Quote No.", attached: "Your quotation is attached.",
         company: "NAJIN TECHNOLOGY", hours: "Mon-Fri 08:30-17:30", site: "najin-tech.com" },
-  zh: { cta: "查询进度", refLabel: "报价编号", attached: "附件",
+  zh: { cta: "查询进度", refLabel: "报价编号", attached: "已附上您的报价单。",
         company: "纳进科技 (NAJIN TECHNOLOGY)", hours: "周一至周五 08:30~17:30", site: "najin-tech.com" },
 };
 
@@ -83,8 +83,9 @@ export function renderEmailHtml(args: {
   const attachBlock = files.length
     ? `<tr><td style="padding:16px 32px 0;">
               <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#FBF6F0;border:1px solid #EBD9C6;border-radius:8px;">
-                <tr><td style="padding:12px 16px;color:#8A5A2B;font-size:13px;font-weight:600;line-height:1.5;">
-                  📎 ${esc(t.attached)}: ${files.map((f) => esc(f)).join(", ")}
+                <tr><td style="padding:12px 16px;font-size:13px;line-height:1.55;">
+                  <span style="color:#7A4E22;font-weight:700;">📎 ${esc(t.attached)}</span><br>
+                  <span style="color:#8A5A2B;font-weight:500;">${files.map((f) => esc(f)).join(", ")}</span>
                 </td></tr>
               </table>
             </td></tr>`
