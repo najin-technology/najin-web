@@ -16,7 +16,7 @@
     "home": "Back to Home",
     "privacy": "Privacy Policy",
     "ctaTitle": "Need a Quote?",
-    "ctaDesc": "Send us your drawings and we'll reply as soon as possible.",
+    "ctaDesc": "Send us your drawings and we'll review them and get back to you.",
     "collaborationWith": "Collaboration with",
     "menuToggle": "Toggle menu"
   },
@@ -29,7 +29,7 @@
     "preferredTimePlaceholder": "e.g., 2PM - 4PM",
     "submit": "Request Callback",
     "successTitle": "Request Received",
-    "successMessage": "Our team will contact you shortly."
+    "successMessage": "Our team will review your request and contact you."
   },
   "nav": {
     "home": "Home",
@@ -46,7 +46,6 @@
     "heroTitle": "Precision Manufacturing Since 2002",
     "heroSubtitle": "Urethane Molding · Synthetic Resin Processing · CNC Machining · Mold Fabrication",
     "heroCta": "Request a Quote",
-    "heroResponsePromise": "Online Quote → Fast Reply | Drawings accepted",
     "statsYears": "Years of History",
     "statsClients": "Major Clients",
     "statsCertified": "ISO 9001 Certified",
@@ -59,8 +58,8 @@
     "numbersTitle": "NAJIN TECHNOLOGY at a Glance",
     "aboutLink": "About Us",
     "ctaTitle": "Start Your Project With Us",
-    "ctaSubtitle": "25 years of experience delivering optimal solutions",
-    "ctaPersuasion": "Quick response to your online quote request",
+    "ctaSubtitle": "Backed by 25 years of precision machining experience",
+    "ctaPersuasion": "Send us your drawings and we'll review them and get back to you",
     "ctaPhone": "Call: +82-55-367-2596",
     "portfolioTitle": "Key Projects",
     "portfolioSubtitle": "Supplying parts to major domestic and international corporations",
@@ -181,7 +180,7 @@
     "galleryPlaceholder": "Gallery is being prepared.",
     "productCountSuffix": " Products",
     "ctaTitle": "Request a Quote",
-    "ctaDesc": "Send us your drawings and we'll get back to you with a quote promptly."
+    "ctaDesc": "Send us your drawings and we'll review them and get back to you."
   },
   "quote": {
     "pageTitle": "Request a Quote",
@@ -216,9 +215,9 @@
     "optionalFieldsToggle": "Add Details (Optional)",
     "optionalFieldsHint": "You can request a quote with just the required fields",
     "successTitle": "Quote request has been received",
-    "successMessage": "Our team will review and contact you shortly.",
+    "successMessage": "Our team will review your request and contact you.",
     "contactInfo": "Urgent inquiries: TEL +82-55-367-2596",
-    "responsePromise": "We'll respond as soon as possible",
+    "responsePromise": "We'll review your drawings and get back to you",
     "nextSteps": "Our team will review your request and send a detailed quotation.",
     "processTitle": "Quote Process",
     "processStep1": "Submit Quote Request",
@@ -358,7 +357,7 @@
     "question7": "What is the patented urethane mold base technology?",
     "answer7": "This is NAJIN TECHNOLOGY's in-house urethane mold base technology that strengthens precision and durability in urethane mold fabrication. The strength is end-to-end handling from prototype to mass production within our own plant.",
     "question8": "How do I request a quote?",
-    "answer8": "Simply fill out the form on our Quote Request page. Attach your drawings (DWG, STEP, PDF, etc.) and our team will respond with a detailed quote as soon as possible. You can also call us at +82-55-367-2596."
+    "answer8": "Simply fill out the form on our Quote Request page. Attach your drawings (DWG, STEP, PDF, etc.) and our team will review them and respond with a detailed quote. You can also call us at +82-55-367-2596."
   },
   "footer": {
     "address": "170, Sanmakgongdannam 14-gil, Yangsan-si, Gyeongsangnam-do, Korea",

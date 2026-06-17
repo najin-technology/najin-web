@@ -135,15 +135,6 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            {/* Response promise badge */}
-            <p
-              className="text-sm text-brand-copper font-medium mb-8"
-              data-animate="fade-up"
-              data-animate-delay="1"
-            >
-              {t("heroResponsePromise")}
-            </p>
-
             {/* Inline certifications */}
             <div
               className="flex flex-wrap gap-6 items-center"

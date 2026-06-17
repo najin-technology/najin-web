@@ -16,7 +16,7 @@
     "home": "返回首页",
     "privacy": "隐私政策",
     "ctaTitle": "需要报价吗？",
-    "ctaDesc": "发送图纸，我们将尽快回复报价。",
+    "ctaDesc": "发送图纸，我们将审核后回复您。",
     "collaborationWith": "合作企业",
     "menuToggle": "打开/关闭菜单"
   },
@@ -29,7 +29,7 @@
     "preferredTimePlaceholder": "例：下午2点~4点",
     "submit": "请求咨询",
     "successTitle": "请求已受理",
-    "successMessage": "负责人将尽快与您联系。"
+    "successMessage": "负责人确认后将与您联系。"
   },
   "nav": {
     "home": "首页",
@@ -46,7 +46,6 @@
     "heroTitle": "25年精密加工专业企业",
     "heroSubtitle": "聚氨酯成型 · 合成树脂加工 · CNC精密加工 · 模具制作",
     "heroCta": "立即询价",
-    "heroResponsePromise": "在线询价 → 快速回复 | 可附图纸",
     "statsYears": "年历史",
     "statsClients": "主要客户",
     "statsCertified": "ISO 9001认证",
@@ -59,8 +58,8 @@
     "numbersTitle": "一览纳进科技",
     "aboutLink": "了解公司",
     "ctaTitle": "开启您的项目",
-    "ctaSubtitle": "凭借25年经验为您提供最优解决方案",
-    "ctaPersuasion": "在线询价，快速回复",
+    "ctaSubtitle": "凭借25年积累的精密加工经验",
+    "ctaPersuasion": "发送图纸，我们将审核后回复您",
     "ctaPhone": "电话咨询: +82-55-367-2596",
     "portfolioTitle": "主要供货实绩",
     "portfolioSubtitle": "向国内外主要大型企业供应零部件",
@@ -181,7 +180,7 @@
     "galleryPlaceholder": "供货业绩展示区正在准备中。",
     "productCountSuffix": "个产品",
     "ctaTitle": "立即获取报价",
-    "ctaDesc": "请发送图纸，我们将尽快回复报价。"
+    "ctaDesc": "请发送图纸，我们将审核后回复您。"
   },
   "quote": {
     "pageTitle": "询价咨询",
@@ -216,9 +215,9 @@
     "optionalFieldsToggle": "添加详细信息（可选）",
     "optionalFieldsHint": "仅填写必填项即可咨询",
     "successTitle": "询价已受理",
-    "successMessage": "负责人确认后将尽快与您联系。",
+    "successMessage": "负责人确认后将与您联系。",
     "contactInfo": "紧急咨询: TEL +82-55-367-2596",
-    "responsePromise": "尽快回复",
+    "responsePromise": "审核图纸后回复您",
     "nextSteps": "负责人审核您的需求后将发送详细报价单。",
     "processTitle": "询价流程",
     "processStep1": "提交询价申请",
@@ -358,7 +357,7 @@
     "question7": "专利聚氨酯模具基座技术是什么？",
     "answer7": "这是纳进科技自主研发的聚氨酯模具基座技术，能强化聚氨酯模具制造的精度和耐久性。优势在于在自有工厂内一站式完成从样品到量产。",
     "question8": "如何提交询价？",
-    "answer8": "请通过网站的询价页面提交申请即可。附上图纸（DWG、STEP、PDF等格式），负责人将尽快回复详细报价。也可直接致电+82-55-367-2596咨询。"
+    "answer8": "请通过网站的询价页面提交申请即可。附上图纸（DWG、STEP、PDF等格式），负责人将审核后回复详细报价。也可直接致电+82-55-367-2596咨询。"
   },
   "footer": {
     "address": "庆尚南道梁山市山幕工团南14街170号",
