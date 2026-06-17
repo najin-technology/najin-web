@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { getQuoteAttachmentUrls } from "../actions";
+import { getQuoteAttachmentUrls, getQuoteQuotationUrls } from "../actions";
 import { QuoteStatusForm } from "./quote-status-form";
+import { QuotationFiles } from "./quotation-files";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { InfoGrid } from "@/components/admin/info-grid";
@@ -31,6 +32,7 @@ export default async function QuoteDetailPage({
   if (!quote) notFound();
 
   const attachments = await getQuoteAttachmentUrls(id);
+  const quotationFiles = await getQuoteQuotationUrls(id);
 
   // 이 견적에 연결된 발주가 있는지
   const { data: existingWorkOrder } = await supabase
@@ -140,6 +142,8 @@ export default async function QuoteDetailPage({
               </div>
             </div>
           )}
+
+          <QuotationFiles quoteId={id} files={quotationFiles} />
         </div>
 
         {/* Side panel */}
