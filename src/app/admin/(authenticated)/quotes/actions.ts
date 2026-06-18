@@ -345,3 +345,69 @@ export async function removeQuoteQuotationFile(
   revalidatePath(`/admin/quotes/${quoteId}`);
   return { success: true };
 }
+
+// ---- 개별 견적 취소 (사유 필수 → 고객 언어 취소 메일) ----
+export async function cancelQuote(
+  quoteId: string,
+  reason: string,
+): Promise<{ ok: boolean; error?: string }> {
+  await requireAdmin();
+  const trimmed = (reason ?? "").trim();
+  if (!trimmed) return { ok: false, error: "취소 사유를 입력해주세요." };
+
+  const supabase = await createSupabaseServerClient();
+  const { data: quote } = await supabase
+    .from("quotes")
+    .select("id, status, email, contact_name, company_name, locale")
+    .eq("id", quoteId)
+    .maybeSingle();
+
+  if (!quote) return { ok: false, error: "견적을 찾을 수 없습니다." };
+  if (quote.status === "취소") return { ok: false, error: "이미 취소된 견적입니다." };
+
+  const { error } = await supabase
+    .from("quotes")
+    .update({
+      status: "취소",
+      cancel_reason: trimmed,
+      cancelled_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", quoteId);
+
+  if (error) return { ok: false, error: "취소 처리 실패: " + error.message };
+
+  await logAudit({
+    action: "cancel",
+    targetTable: "quotes",
+    targetId: quoteId,
+    details: { reason: trimmed },
+  });
+
+  // 고객에게 취소 안내 메일 (고객 요청 언어로). 발송 실패는 취소 자체를 막지 않음.
+  if (quote.email) {
+    const locale = normalizeLocale(quote.locale);
+    const quoteIdShort = quote.id.slice(0, 8).toUpperCase();
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+    try {
+      await sendByTemplateKey({
+        key: "quote_cancelled",
+        to: quote.email,
+        locale,
+        vars: {
+          contact_name: quote.contact_name || "",
+          company_name: quote.company_name || "",
+          quote_id_short: quoteIdShort,
+          cancel_reason: trimmed,
+          status_url: `${siteUrl}/${locale}/quote/status?id=${quoteIdShort}`,
+        },
+      });
+    } catch (e) {
+      console.error(`quote_cancelled mail failed for ${quoteId}:`, e);
+    }
+  }
+
+  revalidatePath("/admin/quotes");
+  revalidatePath(`/admin/quotes/${quoteId}`);
+  return { ok: true };
+}

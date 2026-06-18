@@ -183,6 +183,12 @@
     "ctaDesc": "Send us your drawings and we'll review them and get back to you."
   },
   "quote": {
+    "paused": {
+      "title": "Quote requests are paused",
+      "defaultMessage": "We are temporarily not accepting new quote requests due to high demand. Please leave your contact below and our team will reach out as soon as we can take it on.",
+      "contactTitle": "Leave your contact",
+      "contactPrompt": "Just your company name and phone number. We will contact you first when we reopen."
+    },
     "pageTitle": "Request a Quote",
     "pageDescription": "Request a quote from NAJIN TECHNOLOGY.",
     "formTitle": "Quote Request Form",

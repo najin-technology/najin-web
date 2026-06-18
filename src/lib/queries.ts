@@ -11,6 +11,7 @@ export const CACHE_TAGS = {
   customers: "customers",
   clientDeliveries: "client-deliveries",
   siteAbout: "site-about",
+  siteSettings: "site-settings",
   certifications: "certifications",
 } as const;
 
@@ -318,6 +319,34 @@ export const getSiteAbout = unstable_cache(
   },
   ["site-about"],
   { revalidate: ONE_HOUR, tags: [CACHE_TAGS.siteAbout] },
+);
+
+export type SiteSettings = {
+  quotes_paused: boolean;
+  pause_message_ko: string;
+  pause_message_en: string;
+  pause_message_zh: string;
+};
+
+const SITE_SETTINGS_DEFAULT: SiteSettings = {
+  quotes_paused: false,
+  pause_message_ko: "",
+  pause_message_en: "",
+  pause_message_zh: "",
+};
+
+export const getSiteSettings = unstable_cache(
+  async (): Promise<SiteSettings> => {
+    const { data, error } = await supabase
+      .from("site_settings")
+      .select("quotes_paused, pause_message_ko, pause_message_en, pause_message_zh")
+      .eq("id", 1)
+      .single();
+    if (error || !data) return SITE_SETTINGS_DEFAULT;
+    return data as SiteSettings;
+  },
+  ["site-settings"],
+  { revalidate: ONE_HOUR, tags: [CACHE_TAGS.siteSettings] },
 );
 
 export type Certification = {

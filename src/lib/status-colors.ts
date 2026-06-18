@@ -21,6 +21,7 @@ export const QUOTE_STATUS_STYLES: Record<string, StatusStyle> = {
   "검토중":     { bg: "bg-blue-50",     text: "text-blue-700",     dot: "bg-blue-500" },
   "견적발송":   { bg: "bg-violet-50",   text: "text-violet-700",   dot: "bg-violet-500" },
   "완료":       { bg: "bg-emerald-50",  text: "text-emerald-700",  dot: "bg-emerald-500" },
+  "취소":       { bg: "bg-rose-50",     text: "text-rose-700",     dot: "bg-rose-500" },
 };
 
 export const APPLICATION_STATUS_STYLES: Record<string, StatusStyle> = {
