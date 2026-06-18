@@ -9,6 +9,7 @@ import { sendByTemplateKey, type Locale } from "@/lib/email-templates";
 type ActionState = {
   error?: string;
   success?: boolean;
+  warning?: string;
 };
 
 const STATUS_TO_TEMPLATE_KEY: Record<string, string | null> = {
@@ -22,7 +23,45 @@ function normalizeLocale(value: unknown): Locale {
   return value === "en" || value === "zh" ? value : "ko";
 }
 
-async function notifyStatusChange(quote: {
+// ---- Quotation file attachments (admin-uploaded, sent with '견적발송' mail) ----
+const QUOTATION_BUCKET = "quote-attachments";
+const QUOTATION_MAX_BYTES = 20 * 1024 * 1024; // per file
+const QUOTATION_TOTAL_BYTES = 38 * 1024 * 1024; // Resend ~40MB cap, leave headroom
+const QUOTATION_EXTS = ["pdf", "doc", "docx", "xls", "xlsx", "jpg", "jpeg", "png", "hwp"];
+
+type SupaClient = Awaited<ReturnType<typeof createSupabaseServerClient>>;
+
+async function fetchQuotationAttachments(
+  supabase: SupaClient,
+  quoteId: string,
+): Promise<{ filename: string; content: string }[]> {
+  const { data: rows } = await supabase
+    .from("attachments")
+    .select("file_url, file_name")
+    .eq("parent_table", "quotes")
+    .eq("parent_id", quoteId)
+    .eq("kind", "quotation");
+  if (!rows?.length) return [];
+
+  const out: { filename: string; content: string }[] = [];
+  let total = 0;
+  for (const r of rows) {
+    const { data: blob, error } = await supabase.storage
+      .from(QUOTATION_BUCKET)
+      .download(r.file_url as string);
+    if (error || !blob) continue;
+    const buf = Buffer.from(await blob.arrayBuffer());
+    if (total + buf.length > QUOTATION_TOTAL_BYTES) {
+      console.warn(`quotation attachments exceed size cap for quote ${quoteId}; skipping rest`);
+      break;
+    }
+    total += buf.length;
+    out.push({ filename: r.file_name as string, content: buf.toString("base64") });
+  }
+  return out;
+}
+
+async function notifyStatusChange(supabase: SupaClient, quote: {
   id: string;
   email: string | null;
   contact_name: string | null;
@@ -36,6 +75,11 @@ async function notifyStatusChange(quote: {
   const quoteIdShort = quote.id.slice(0, 8).toUpperCase();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
 
+  const attachments =
+    templateKey === "quote_status_sent"
+      ? await fetchQuotationAttachments(supabase, quote.id)
+      : undefined;
+
   try {
     await sendByTemplateKey({
       key: templateKey,
@@ -47,6 +91,7 @@ async function notifyStatusChange(quote: {
         quote_id_short: quoteIdShort,
         status_url: `${siteUrl}/${locale}/quote/status?id=${quoteIdShort}`,
       },
+      attachments,
     });
   } catch (e) {
     console.error(`status-change mail (${templateKey}) failed for ${quote.id}:`, e);
@@ -97,14 +142,24 @@ export async function updateQuoteStatus(
   });
 
   // Send status-change auto mail (only if status actually changed)
+  let warning: string | undefined;
   if (existing && existing.status !== status) {
-    await notifyStatusChange(existing, status);
+    await notifyStatusChange(supabase, existing, status);
+    if (status === "견적발송") {
+      const { count } = await supabase
+        .from("attachments")
+        .select("id", { count: "exact", head: true })
+        .eq("parent_table", "quotes")
+        .eq("parent_id", id)
+        .eq("kind", "quotation");
+      if (!count) warning = "견적서 파일이 없어 첨부 없이 발송되었습니다.";
+    }
   }
 
   revalidatePath("/admin/quotes");
   revalidatePath(`/admin/quotes/${id}`);
 
-  return { success: true };
+  return { success: true, warning };
 }
 
 export async function getQuoteAttachmentUrls(quoteId: string) {
@@ -117,6 +172,7 @@ export async function getQuoteAttachmentUrls(quoteId: string) {
     .select("*")
     .eq("parent_table", "quotes")
     .eq("parent_id", quoteId)
+    .neq("kind", "quotation")
     .order("created_at", { ascending: true });
 
   if (!attachments || attachments.length === 0) return [];
@@ -175,11 +231,117 @@ export async function bulkUpdateQuoteStatus(ids: string[], status: string) {
     await Promise.all(
       existingRows
         .filter((row) => row.status !== status)
-        .map((row) => notifyStatusChange(row, status)),
+        .map((row) => notifyStatusChange(supabase, row, status)),
     );
   }
 
   revalidatePath("/admin/quotes");
   revalidatePath("/admin");
   return { success: true, count: ids.length };
+}
+
+// ---- Quotation files (admin upload, attached to '견적발송' mail) ----
+
+export async function getQuoteQuotationUrls(quoteId: string) {
+  await requireAdmin();
+  const supabase = await createSupabaseServerClient();
+  const { data: rows } = await supabase
+    .from("attachments")
+    .select("id, file_url, file_name, file_size, mime_type")
+    .eq("parent_table", "quotes")
+    .eq("parent_id", quoteId)
+    .eq("kind", "quotation")
+    .order("created_at", { ascending: true });
+  if (!rows?.length) return [];
+  return Promise.all(
+    rows.map(async (att) => {
+      const { data } = await supabase.storage
+        .from(QUOTATION_BUCKET)
+        .createSignedUrl(att.file_url as string, 3600);
+      return {
+        id: att.id as string,
+        fileName: att.file_name as string,
+        fileSize: att.file_size as number,
+        mimeType: att.mime_type as string,
+        signedUrl: data?.signedUrl ?? null,
+      };
+    }),
+  );
+}
+
+export async function addQuoteQuotationFile(
+  quoteId: string,
+  formData: FormData,
+): Promise<ActionState> {
+  await requireAdmin();
+  const file = formData.get("file") as File | null;
+  if (!file || file.size === 0) return { error: "파일이 비어있습니다." };
+  if (file.size > QUOTATION_MAX_BYTES) return { error: "파일은 20MB 이하만 업로드할 수 있습니다." };
+
+  const ext = file.name.split(".").pop()?.toLowerCase();
+  if (!ext || !QUOTATION_EXTS.includes(ext)) {
+    return { error: "허용되지 않는 형식입니다 (PDF/DOC/XLS/HWP/이미지)." };
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const filePath = `${quoteId}/quotation-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+  const { error: upErr } = await supabase.storage.from(QUOTATION_BUCKET).upload(filePath, file);
+  if (upErr) return { error: "업로드 실패: " + upErr.message };
+
+  const { error: insErr } = await supabase.from("attachments").insert({
+    parent_table: "quotes",
+    parent_id: quoteId,
+    file_url: filePath,
+    file_name: file.name,
+    file_size: file.size,
+    mime_type: file.type || "application/octet-stream",
+    kind: "quotation",
+  });
+  if (insErr) {
+    await supabase.storage.from(QUOTATION_BUCKET).remove([filePath]);
+    return { error: "메타데이터 저장 실패: " + insErr.message };
+  }
+
+  await logAudit({
+    action: "attach_quotation",
+    targetTable: "quotes",
+    targetId: quoteId,
+    details: { file_name: file.name, file_size: file.size },
+  });
+
+  revalidatePath(`/admin/quotes/${quoteId}`);
+  return { success: true };
+}
+
+export async function removeQuoteQuotationFile(
+  attachmentId: string,
+  quoteId: string,
+): Promise<ActionState> {
+  await requireAdmin();
+  const supabase = await createSupabaseServerClient();
+
+  const { data: att } = await supabase
+    .from("attachments")
+    .select("file_url, file_name")
+    .eq("id", attachmentId)
+    .eq("parent_table", "quotes")
+    .eq("parent_id", quoteId)
+    .eq("kind", "quotation")
+    .maybeSingle();
+  if (!att) return { error: "첨부를 찾을 수 없습니다." };
+
+  await supabase.storage.from(QUOTATION_BUCKET).remove([att.file_url as string]);
+  const { error } = await supabase.from("attachments").delete().eq("id", attachmentId);
+  if (error) return { error: "삭제 실패: " + error.message };
+
+  await logAudit({
+    action: "detach_quotation",
+    targetTable: "quotes",
+    targetId: quoteId,
+    details: { file_name: att.file_name },
+  });
+
+  revalidatePath(`/admin/quotes/${quoteId}`);
+  return { success: true };
 }

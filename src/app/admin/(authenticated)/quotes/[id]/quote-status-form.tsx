@@ -46,8 +46,11 @@ export function QuoteStatusForm({
       {state.error && (
         <AlertMessage>{state.error}</AlertMessage>
       )}
-      {state.success && (
+      {state.success && !state.warning && (
         <AlertMessage variant="success">저장되었습니다.</AlertMessage>
+      )}
+      {state.warning && (
+        <AlertMessage variant="warning">{state.warning}</AlertMessage>
       )}
 
       {/* Step indicator */}

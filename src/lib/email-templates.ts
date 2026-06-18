@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { getSupabaseAdmin } from "./supabase-admin";
+import { renderEmailHtml, buildEmailText, subjectToTitle } from "./email-layout";
 
 const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
 const REPLY_TO_EMAIL = process.env.REPLY_TO_EMAIL || process.env.NOTIFICATION_EMAIL || "";
@@ -25,6 +26,7 @@ export async function sendByTemplateKey(args: {
   to: string;
   locale: Locale;
   vars: Vars;
+  attachments?: { filename: string; content: string }[];
 }): Promise<{ ok: boolean; reason?: string }> {
   const supabase = getSupabaseAdmin();
   if (!supabase) return { ok: false, reason: "service_role_unavailable" };
@@ -59,12 +61,25 @@ export async function sendByTemplateKey(args: {
   if (!resend) return { ok: false, reason: "resend_unavailable" };
 
   try {
+    const renderedSubject = renderTemplate(subject, args.vars);
+    const renderedBody = renderTemplate(body, args.vars);
+    const statusUrl = args.vars.status_url;
     await resend.emails.send({
       from: FROM_EMAIL,
       to: args.to,
       ...(REPLY_TO_EMAIL ? { reply_to: REPLY_TO_EMAIL } : {}),
-      subject: renderTemplate(subject, args.vars),
-      text: renderTemplate(body, args.vars),
+      subject: renderedSubject,
+      html: renderEmailHtml({
+        title: subjectToTitle(renderedSubject),
+        bodyText: renderedBody,
+        locale: args.locale,
+        statusUrl,
+        referenceValue: args.vars.quote_id_short,
+        attachmentNames: args.attachments?.map((a) => a.filename),
+        siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+      }),
+      text: buildEmailText({ bodyText: renderedBody, locale: args.locale, statusUrl, referenceValue: args.vars.quote_id_short }),
+      ...(args.attachments?.length ? { attachments: args.attachments } : {}),
     });
     return { ok: true };
   } catch (e) {

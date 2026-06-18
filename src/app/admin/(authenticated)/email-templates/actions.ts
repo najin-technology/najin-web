@@ -8,6 +8,7 @@ import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { renderTemplate, type Locale } from "@/lib/email-templates";
+import { renderEmailHtml, buildEmailText, subjectToTitle } from "@/lib/email-layout";
 
 const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
 
@@ -147,11 +148,22 @@ export async function sendTestEmail(input: {
   if (!resend) return { ok: false, error: "메일 서버가 구성되지 않았습니다 (RESEND_API_KEY 누락)." };
 
   try {
+    const renderedSubject = renderTemplate(subject, SAMPLE_VARS);
+    const renderedBody = renderTemplate(body, SAMPLE_VARS);
+    const statusUrl = SAMPLE_VARS.status_url;
     await resend.emails.send({
       from: FROM_EMAIL,
       to: input.to,
-      subject: `[테스트] ${renderTemplate(subject, SAMPLE_VARS)}`,
-      text: renderTemplate(body, SAMPLE_VARS),
+      subject: `[테스트] ${renderedSubject}`,
+      html: renderEmailHtml({
+        title: subjectToTitle(renderedSubject),
+        bodyText: renderedBody,
+        locale: input.locale,
+        statusUrl,
+        referenceValue: SAMPLE_VARS.quote_id_short,
+        siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+      }),
+      text: buildEmailText({ bodyText: renderedBody, locale: input.locale, statusUrl, referenceValue: SAMPLE_VARS.quote_id_short }),
     });
   } catch (e) {
     console.error("sendTestEmail failed:", e);
