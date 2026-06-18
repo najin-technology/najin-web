@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { saveTemplate, sendTestEmail } from "../actions";
+import { renderEmailHtml, subjectToTitle } from "@/lib/email-layout";
 import { toast } from "sonner";
 
 export type TemplateData = {
@@ -27,6 +28,17 @@ const LOCALES: Array<{ code: Locale; label: string }> = [
   { code: "en", label: "English" },
   { code: "zh", label: "中文" },
 ];
+
+// 미리보기/테스트에 쓰이는 샘플 변수 (서버 SAMPLE_VARS 와 동일 + cancel_reason).
+const PREVIEW_VARS: Record<string, string> = {
+  contact_name: "홍길동",
+  company_name: "테스트회사",
+  quote_id_short: "TEST1234",
+  status_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.najin-tech.com"}/ko/quote/status?id=TEST1234`,
+  processing_type: "우레탄 가공",
+  cancel_reason: "현재 해당 가공 라인이 예약으로 가득 차 일정 내 진행이 어렵습니다.",
+};
+const fillVars = (t: string) => t.replace(/\{\{(\w+)\}\}/g, (_, k) => PREVIEW_VARS[k] ?? "");
 
 export function TemplateEditor({ template }: { template: TemplateData }) {
   const [enabled, setEnabled] = useState(template.enabled);
@@ -95,15 +107,29 @@ export function TemplateEditor({ template }: { template: TemplateData }) {
       return;
     }
     startTest(async () => {
-      const res = await sendTestEmail({
-        key: template.key,
-        to: testEmail,
-        locale: activeLocale,
-      });
-      if (res.ok) toast.success(`${activeLocale.toUpperCase()} 테스트 메일을 발송했습니다.`);
-      else toast.error(res.error ?? "발송 실패");
+      try {
+        const res = await sendTestEmail({
+          key: template.key,
+          to: testEmail,
+          locale: activeLocale,
+        });
+        if (res.ok) toast.success(`${activeLocale.toUpperCase()} 테스트 메일을 발송했습니다.`);
+        else toast.error(res.error ?? "발송 실패");
+      } catch {
+        toast.error("발송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      }
     });
   }
+
+  const previewSubject = fillVars(subjects[activeLocale] || subjects.ko);
+  const previewHtml = renderEmailHtml({
+    title: subjectToTitle(previewSubject),
+    bodyText: fillVars(bodies[activeLocale] || bodies.ko),
+    locale: activeLocale,
+    statusUrl: PREVIEW_VARS.status_url,
+    referenceValue: PREVIEW_VARS.quote_id_short,
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+  });
 
   return (
     <div className="space-y-6">
@@ -186,6 +212,23 @@ export function TemplateEditor({ template }: { template: TemplateData }) {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Live preview — 실제 발송되는 HTML 메일 형태 (샘플 변수 적용) */}
+      <div className="space-y-2 rounded-xl border border-gray-200 bg-white p-5">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-brand-navy">미리보기 ({activeLocale.toUpperCase()})</h3>
+          <span className="text-xs text-gray-500">샘플 변수 적용 · 실제 발송 형태</span>
+        </div>
+        <div className="rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm">
+          <span className="text-gray-500">제목: </span>
+          <span className="font-semibold text-brand-charcoal">{previewSubject}</span>
+        </div>
+        <iframe
+          title="email-preview"
+          srcDoc={previewHtml}
+          className="w-full h-[520px] rounded-md border border-gray-200 bg-white"
+        />
       </div>
 
       {/* Test send */}

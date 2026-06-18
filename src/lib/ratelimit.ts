@@ -69,6 +69,8 @@ function buildLimiter(limiter: ReturnType<typeof Ratelimit.slidingWindow>, prefi
 
 export const loginLimiter = buildLimiter(Ratelimit.slidingWindow(5, "15 m"), "rl:login");
 export const formLimiter = buildLimiter(Ratelimit.slidingWindow(3, "10 m"), "rl:form");
+// 관리자 테스트 메일 발송 (시간당 10건). 동일하게 najin_kv_* 우선 + KV 장애 시 fail-open.
+export const testEmailLimiter = buildLimiter(Ratelimit.slidingWindow(10, "1 h"), "rl:test-email");
 
 export function getClientIp(headers: Headers): string {
   return (

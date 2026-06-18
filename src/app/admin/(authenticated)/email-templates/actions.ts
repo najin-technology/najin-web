@@ -2,13 +2,12 @@
 
 import { Resend } from "resend";
 import { revalidatePath } from "next/cache";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { renderTemplate, type Locale } from "@/lib/email-templates";
 import { renderEmailHtml, buildEmailText, subjectToTitle } from "@/lib/email-layout";
+import { testEmailLimiter } from "@/lib/ratelimit";
 
 const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
 
@@ -77,37 +76,6 @@ export async function saveTemplate(input: SaveTemplateInput): Promise<ActionResu
   return { ok: true };
 }
 
-// ---- Rate limit for test send (10/hour per admin) ----
-let testEmailLimiter: { limit: (k: string) => Promise<{ success: boolean }> } | null = null;
-function getTestEmailLimiter() {
-  if (testEmailLimiter) return testEmailLimiter;
-  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
-  if (!url || !token) {
-    // Fail closed when rate-limit infra absent — only in production.
-    if (process.env.NODE_ENV === "production") {
-      testEmailLimiter = { async limit() { return { success: false }; } };
-    } else {
-      testEmailLimiter = { async limit() { return { success: true }; } };
-    }
-    return testEmailLimiter;
-  }
-  const redis = new Redis({ url, token });
-  const rl = new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(10, "1 h"),
-    analytics: true,
-    prefix: "rl:test-email",
-  });
-  testEmailLimiter = {
-    async limit(k: string) {
-      const r = await rl.limit(k);
-      return { success: r.success };
-    },
-  };
-  return testEmailLimiter;
-}
-
 export async function sendTestEmail(input: {
   key: string;
   to: string;
@@ -122,8 +90,7 @@ export async function sendTestEmail(input: {
     return { ok: false, error: "잘못된 locale" };
   }
 
-  const limiter = getTestEmailLimiter();
-  const { success } = await limiter.limit(`test-email:${user.id}`);
+  const { success } = await testEmailLimiter.limit(`test-email:${user.id}`);
   if (!success) return { ok: false, error: "테스트 발송 한도(시간당 10건)를 초과했습니다." };
 
   const supabase = await createSupabaseServerClient();
