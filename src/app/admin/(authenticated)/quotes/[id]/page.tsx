@@ -4,6 +4,7 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { getQuoteAttachmentUrls, getQuoteQuotationUrls } from "../actions";
 import { QuoteStatusForm } from "./quote-status-form";
 import { QuotationFiles } from "./quotation-files";
+import { CancelQuote } from "./cancel-quote";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { InfoGrid } from "@/components/admin/info-grid";
@@ -195,6 +196,19 @@ export default async function QuoteDetailPage({
                 quoteId={quote.id}
                 currentStatus={quote.status}
                 currentMemo={quote.admin_memo}
+              />
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden h-fit">
+            <div className="px-6 py-3.5 border-b border-gray-100">
+              <h2 className="text-sm font-semibold text-brand-navy">견적 취소</h2>
+            </div>
+            <div className="p-6">
+              <CancelQuote
+                quoteId={quote.id}
+                locale={quote.locale === "en" || quote.locale === "zh" ? quote.locale : "ko"}
+                cancelled={quote.status === "취소"}
               />
             </div>
           </div>

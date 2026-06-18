@@ -2,9 +2,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { QuoteForm } from "./quote-form";
+import { QuotePausedNotice } from "./quote-paused-notice";
 import Image from "next/image";
 import { Phone, MapPin, Mail } from "lucide-react";
 
+import { getSiteSettings } from "@/lib/queries";
 import { createPageMetadata } from "@/lib/metadata";
 
 // 폼 자체는 client component, 페이지 셸은 정적 → ISR.
@@ -33,6 +35,25 @@ export default async function QuotePage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("quote");
+
+  // 견적 접수 일시중지 시: 견적 폼 대신 안내 + 콜드 연락처(콜백 폼).
+  const settings = await getSiteSettings();
+  if (settings.quotes_paused) {
+    const localeKey = locale === "en" || locale === "zh" ? locale : "ko";
+    const pauseMsg = settings[`pause_message_${localeKey}` as const] || settings.pause_message_ko;
+    return (
+      <>
+        <PageHeader
+          titleKey="pageTitle"
+          namespace="quote"
+          descriptionKey="pageDescription"
+          bgImage="/images/factory/factory-new-1.jpg"
+        />
+        <Breadcrumb items={[{ label: t("pageTitle") }]} />
+        <QuotePausedNotice message={pauseMsg} />
+      </>
+    );
+  }
 
   return (
     <>

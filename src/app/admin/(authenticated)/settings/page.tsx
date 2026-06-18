@@ -1,6 +1,8 @@
 import { requireAdmin } from "@/lib/auth";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import { getSiteSettings } from "@/lib/queries";
 import { ConnectedAccounts } from "./_components/connected-accounts";
+import { QuoteIntakeSettings } from "./_components/quote-intake-settings";
 
 export const metadata = {
   title: "설정",
@@ -40,6 +42,7 @@ export default async function SettingsPage({
     }
   }
 
+  const settings = await getSiteSettings();
   const naverLinked = Boolean(user.app_metadata?.naver_id);
   const naverEmail = (user.app_metadata?.naver_email as string | undefined) ?? null;
   const hasGoogle = identities.some((i) => i.provider === "google");
@@ -77,6 +80,8 @@ export default async function SettingsPage({
         googleEmail={identities.find((i) => i.provider === "google")?.email ?? null}
         hasEmail={hasEmail}
       />
+
+      <QuoteIntakeSettings initial={settings} />
 
       <footer className="text-[13px] text-gray-600 pt-6 border-t border-gray-100 leading-relaxed font-medium">
         Tip: 한 관리자에 여러 로그인 수단을 연결해두면 특정 서비스가 장애여도 다른 방법으로 접속할 수 있습니다.
