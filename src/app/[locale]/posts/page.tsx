@@ -1,4 +1,4 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
@@ -50,12 +50,15 @@ const PROCESS_LABELS: Record<string, Record<string, string>> = {
 };
 
 export default async function PostsPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ category?: string; tag?: string; process?: string }>;
 }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("posts");
-  const locale = await getLocale();
   const { category, tag, process: processFilter } = await searchParams;
 
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];

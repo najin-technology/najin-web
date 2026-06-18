@@ -28,9 +28,14 @@ export default async function LocaleLayout({
   }
 
   setRequestLocale(locale);
+  // Load messages directly by locale and pass them to the provider. During
+  // static prerender, client components (forms) read the provider's messages;
+  // getMessages()/propless provider can fall back to the default locale here,
+  // so we import the locale's messages explicitly to guarantee correctness.
+  const messages = (await import(`../../messages/${locale}.json`)).default;
 
   return (
-    <NextIntlClientProvider>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang="${locale}"` }} />
       <a
         href="#main-content"

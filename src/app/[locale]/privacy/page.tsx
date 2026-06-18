@@ -1,4 +1,4 @@
-import { useTranslations, useLocale } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 
@@ -22,9 +22,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   });
 }
 
-export default function PrivacyPage() {
-  const t = useTranslations("privacy");
-  const locale = useLocale();
+export default async function PrivacyPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("privacy");
 
   return (
     <>

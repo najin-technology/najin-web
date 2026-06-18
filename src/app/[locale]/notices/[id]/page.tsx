@@ -1,4 +1,4 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getNoticeById } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
@@ -83,8 +83,8 @@ export default async function NoticeDetailPage({
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
-  const { id } = await params;
-  const locale = await getLocale();
+  const { locale, id } = await params;
+  setRequestLocale(locale);
   const tc = await getTranslations("common");
 
   const notice = await getNoticeById(id);

@@ -1,4 +1,4 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
@@ -25,9 +25,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   });
 }
 
-export default async function NoticesPage() {
+export default async function NoticesPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("notices");
-  const locale = await getLocale();
 
   let notices: Awaited<ReturnType<typeof getPublishedNotices>> = [];
   try {
