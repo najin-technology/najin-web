@@ -1,4 +1,4 @@
-import { useTranslations, useLocale } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
@@ -82,9 +82,14 @@ const SERVICE_CATALOG = [
   },
 ];
 
-export default function BusinessPage() {
-  const t = useTranslations("business");
-  const locale = useLocale();
+export default async function BusinessPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("business");
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [SEGMENTS.business]);
 

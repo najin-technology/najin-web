@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -66,7 +66,13 @@ const businessAreas: {
   { key: "ev", icon: Zap, image: "/images/products/db-4421a7e9-0.jpg", tag: "EV" },
 ];
 
-export default async function HomePage() {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const [t, tc, tb] = await Promise.all([
     getTranslations("home"),
     getTranslations("common"),

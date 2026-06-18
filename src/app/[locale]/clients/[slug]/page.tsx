@@ -1,4 +1,4 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
@@ -72,7 +72,8 @@ export default async function ClientPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   let client;
   try {
     client = await getClientGridRowBySlug(slug);
@@ -84,7 +85,6 @@ export default async function ClientPage({
   const t = await getTranslations("clients");
   const tc = await getTranslations("common");
   const tp = await getTranslations("portfolio");
-  const locale = await getLocale();
 
   let deliveries: Awaited<ReturnType<typeof getClientDeliveries>> = [];
   let relatedPosts: Awaited<ReturnType<typeof getPostsForClient>> = [];

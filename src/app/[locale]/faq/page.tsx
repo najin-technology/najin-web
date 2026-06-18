@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
@@ -37,8 +37,14 @@ export async function generateMetadata({
 
 const faqItems = [1, 2, 3, 4, 5, 6, 7, 8] as const;
 
-export default function FAQPage() {
-  const t = useTranslations("faq");
+export default async function FAQPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("faq");
 
   const faqJsonLd = {
     "@context": "https://schema.org",

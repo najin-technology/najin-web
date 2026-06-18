@@ -1,4 +1,4 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { Link } from "@/i18n/routing";
@@ -39,11 +39,16 @@ const fallbackGallery = [
   { src: "/images/products/pe-rod-2.jpg", title: "PE 환봉 소재", category: "합성수지" },
 ];
 
-export default async function PortfolioPage() {
+export default async function PortfolioPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("portfolio");
   const tc = await getTranslations("common");
   const tq = await getTranslations("quote");
-  const locale = await getLocale();
 
   // Fetch products from DB
   let products: Awaited<ReturnType<typeof getProductsByCategory>> = [];

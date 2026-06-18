@@ -1,4 +1,4 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 
 // ISR: 1시간 캐시. admin 편집 시 revalidatePath/Tag 로 즉시 무효화.
@@ -53,9 +53,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   });
 }
 
-export default async function AboutPage() {
+export default async function AboutPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("about");
-  const locale = await getLocale();
 
   // 세 DB 쿼리 병렬 실행
   const [historyResult, siteAbout, certifications] = await Promise.all([

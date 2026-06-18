@@ -1,4 +1,4 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
@@ -122,8 +122,8 @@ export default async function PostDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const locale = await getLocale();
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   const tc = await getTranslations("common");
   const t = await getTranslations("posts");
 
