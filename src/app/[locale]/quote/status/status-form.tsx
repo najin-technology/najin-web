@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, Search } from "lucide-react";
+import { CheckCircle2, Search, XCircle } from "lucide-react";
 import { lookupQuoteStatus } from "./actions";
 
 const STATUS_TO_KEY: Record<string, "received" | "reviewing" | "sent" | "completed"> = {
@@ -26,8 +26,9 @@ const STEP_ORDER: Array<"received" | "reviewing" | "sent" | "completed"> = [
 type Result =
   | { kind: "idle" }
   | { kind: "loading" }
-  | { kind: "ok"; status: string; updated_at: string }
-  | { kind: "error"; reason: "rate_limited" | "not_found" | "service_unavailable" };
+  | { kind: "ok"; status: string; updated_at: string; cancel_reason: string | null }
+  | { kind: "error"; reason: "rate_limited"; retryAfterSec: number }
+  | { kind: "error"; reason: "not_found" | "service_unavailable" };
 
 export function StatusForm() {
   const t = useTranslations("quote.status");
@@ -49,7 +50,9 @@ export function StatusForm() {
     startTransition(async () => {
       const res = await lookupQuoteStatus({ quoteIdShort: quoteId, email });
       if (res.ok) {
-        setResult({ kind: "ok", status: res.status, updated_at: res.updated_at });
+        setResult({ kind: "ok", status: res.status, updated_at: res.updated_at, cancel_reason: res.cancel_reason });
+      } else if (res.reason === "rate_limited") {
+        setResult({ kind: "error", reason: "rate_limited", retryAfterSec: res.retryAfterSec });
       } else {
         setResult({ kind: "error", reason: res.reason });
       }
@@ -96,13 +99,31 @@ export function StatusForm() {
 
       {result.kind === "error" && (
         <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-medium">
-          {result.reason === "rate_limited" && t("rateLimited")}
+          {result.reason === "rate_limited" && t("rateLimited", { min: Math.max(1, Math.ceil(result.retryAfterSec / 60)) })}
           {result.reason === "not_found" && t("notFound")}
           {result.reason === "service_unavailable" && t("serviceUnavailable")}
         </div>
       )}
 
-      {result.kind === "ok" && (
+      {result.kind === "ok" && result.status === "취소" && (
+        <div className="rounded-xl border border-rose-200 bg-rose-50 p-6 shadow-sm space-y-3">
+          <div className="flex items-center gap-2">
+            <XCircle className="w-5 h-5 text-rose-600" />
+            <p className="text-lg font-bold text-rose-700">{t("cancelled.title")}</p>
+          </div>
+          {result.cancel_reason ? (
+            <div>
+              <p className="text-xs font-bold text-rose-700/70 uppercase tracking-wide">{t("cancelled.reasonLabel")}</p>
+              <p className="mt-1 text-sm text-brand-charcoal/85 whitespace-pre-line">{result.cancel_reason}</p>
+            </div>
+          ) : null}
+          <p className="text-sm text-brand-charcoal/70 font-medium">
+            {t("lastUpdated")}: <span className="tabular-nums">{new Date(result.updated_at).toLocaleString()}</span>
+          </p>
+        </div>
+      )}
+
+      {result.kind === "ok" && result.status !== "취소" && (
         <div className="rounded-xl border border-surface-warm-200 bg-white p-6 shadow-sm space-y-6">
           <div>
             <p className="text-xs font-bold text-brand-charcoal/65 uppercase tracking-wide">

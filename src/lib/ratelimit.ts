@@ -71,6 +71,8 @@ export const loginLimiter = buildLimiter(Ratelimit.slidingWindow(5, "15 m"), "rl
 export const formLimiter = buildLimiter(Ratelimit.slidingWindow(3, "10 m"), "rl:form");
 // 관리자 테스트 메일 발송 (시간당 10건). 동일하게 najin_kv_* 우선 + KV 장애 시 fail-open.
 export const testEmailLimiter = buildLimiter(Ratelimit.slidingWindow(10, "1 h"), "rl:test-email");
+// 견적 상태조회(읽기 전용) — 오타 재시도 여유를 위해 10분당 20회로 완화. KV 장애 시 fail-open.
+export const quoteStatusLimiter = buildLimiter(Ratelimit.slidingWindow(20, "10 m"), "rl:quote-status");
 
 export function getClientIp(headers: Headers): string {
   return (
