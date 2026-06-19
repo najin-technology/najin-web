@@ -257,7 +257,8 @@
       "emailLabel": "Email",
       "submit": "Look up",
       "notFound": "We couldn't find a matching quote. Please check your quote number and email.",
-      "rateLimited": "Too many lookups. Please try again in about {min} min.",
+      "rateLimited": "Too many lookups. You can try again in {time}.",
+      "retryIn": "Retry in {time}",
       "serviceUnavailable": "Lookup is temporarily unavailable. Please try again shortly.",
       "cancelled": {
         "title": "This quote was cancelled",
