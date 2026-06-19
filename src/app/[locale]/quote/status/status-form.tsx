@@ -39,10 +39,29 @@ export function StatusForm() {
   const [email, setEmail] = useState("");
   const [result, setResult] = useState<Result>({ kind: "idle" });
   const [pending, startTransition] = useTransition();
+  // 레이트리밋 해제까지 남은 시간(초) — KV reset 기준 실시간 카운트다운.
+  const [retryAt, setRetryAt] = useState<number | null>(null);
+  const [remainingSec, setRemainingSec] = useState(0);
 
   useEffect(() => {
     setQuoteId(prefillId);
   }, [prefillId]);
+
+  useEffect(() => {
+    if (retryAt === null) return;
+    const tick = () => {
+      const sec = Math.max(0, Math.ceil((retryAt - Date.now()) / 1000));
+      setRemainingSec(sec);
+      if (sec <= 0) {
+        setRetryAt(null);
+        // 시간이 지나면 자동으로 풀어주고 안내 메시지 제거 → 재시도 가능.
+        setResult((r) => (r.kind === "error" && r.reason === "rate_limited" ? { kind: "idle" } : r));
+      }
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [retryAt]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -52,6 +71,7 @@ export function StatusForm() {
       if (res.ok) {
         setResult({ kind: "ok", status: res.status, updated_at: res.updated_at, cancel_reason: res.cancel_reason });
       } else if (res.reason === "rate_limited") {
+        setRetryAt(Date.now() + Math.max(1, res.retryAfterSec) * 1000);
         setResult({ kind: "error", reason: "rate_limited", retryAfterSec: res.retryAfterSec });
       } else {
         setResult({ kind: "error", reason: res.reason });
@@ -61,6 +81,9 @@ export function StatusForm() {
 
   const currentStepKey = result.kind === "ok" ? STATUS_TO_KEY[result.status] : null;
   const currentIdx = currentStepKey ? STEP_ORDER.indexOf(currentStepKey) : -1;
+
+  const locked = retryAt !== null && remainingSec > 0;
+  const retryTime = `${Math.floor(remainingSec / 60)}:${String(remainingSec % 60).padStart(2, "0")}`;
 
   return (
     <div className="space-y-6">
@@ -88,18 +111,18 @@ export function StatusForm() {
         </div>
         <Button
           type="submit"
-          disabled={pending}
+          disabled={pending || locked}
           className="w-full bg-brand-blue hover:bg-brand-blue-hover text-white font-bold"
           size="lg"
         >
           <Search className="w-4 h-4 mr-2" />
-          {pending ? "..." : t("submit")}
+          {pending ? "..." : locked ? t("retryIn", { time: retryTime }) : t("submit")}
         </Button>
       </form>
 
       {result.kind === "error" && (
         <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-medium">
-          {result.reason === "rate_limited" && t("rateLimited", { min: Math.max(1, Math.ceil(result.retryAfterSec / 60)) })}
+          {result.reason === "rate_limited" && t("rateLimited", { time: retryTime })}
           {result.reason === "not_found" && t("notFound")}
           {result.reason === "service_unavailable" && t("serviceUnavailable")}
         </div>
