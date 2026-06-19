@@ -5,7 +5,7 @@ import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { formLimiter, getClientIp } from "@/lib/ratelimit";
 
 type LookupResult =
-  | { ok: true; status: string; updated_at: string }
+  | { ok: true; status: string; updated_at: string; cancel_reason: string | null }
   | { ok: false; reason: "rate_limited" | "not_found" | "service_unavailable" };
 
 export async function lookupQuoteStatus(input: {
@@ -25,12 +25,17 @@ export async function lookupQuoteStatus(input: {
 
   const { data } = await supabase
     .from("quotes")
-    .select("id, status, updated_at, email")
+    .select("id, status, updated_at, email, cancel_reason")
     .ilike("id", `${id}%`)
     .ilike("email", email)
     .limit(1)
     .maybeSingle();
 
   if (!data) return { ok: false, reason: "not_found" };
-  return { ok: true, status: data.status, updated_at: data.updated_at };
+  return {
+    ok: true,
+    status: data.status,
+    updated_at: data.updated_at,
+    cancel_reason: data.cancel_reason ?? null,
+  };
 }

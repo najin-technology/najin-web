@@ -259,6 +259,10 @@
       "notFound": "We couldn't find a matching quote. Please check your quote number and email.",
       "rateLimited": "Too many lookups. Please try again later.",
       "serviceUnavailable": "Lookup is temporarily unavailable. Please try again shortly.",
+      "cancelled": {
+        "title": "This quote was cancelled",
+        "reasonLabel": "Reason"
+      },
       "currentStep": "Current Status",
       "lastUpdated": "Last Updated",
       "steps": {

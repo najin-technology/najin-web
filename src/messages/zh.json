@@ -259,6 +259,10 @@
       "notFound": "未找到匹配的报价。请重新确认报价编号和邮箱。",
       "rateLimited": "查询过于频繁。请稍后再试。",
       "serviceUnavailable": "暂时无法查询。请稍后再试。",
+      "cancelled": {
+        "title": "该报价已取消",
+        "reasonLabel": "取消原因"
+      },
       "currentStep": "当前状态",
       "lastUpdated": "最近更新",
       "steps": {
