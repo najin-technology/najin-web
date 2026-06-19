@@ -27,7 +27,8 @@ type Result =
   | { kind: "idle" }
   | { kind: "loading" }
   | { kind: "ok"; status: string; updated_at: string; cancel_reason: string | null }
-  | { kind: "error"; reason: "rate_limited" | "not_found" | "service_unavailable" };
+  | { kind: "error"; reason: "rate_limited"; retryAfterSec: number }
+  | { kind: "error"; reason: "not_found" | "service_unavailable" };
 
 export function StatusForm() {
   const t = useTranslations("quote.status");
@@ -50,6 +51,8 @@ export function StatusForm() {
       const res = await lookupQuoteStatus({ quoteIdShort: quoteId, email });
       if (res.ok) {
         setResult({ kind: "ok", status: res.status, updated_at: res.updated_at, cancel_reason: res.cancel_reason });
+      } else if (res.reason === "rate_limited") {
+        setResult({ kind: "error", reason: "rate_limited", retryAfterSec: res.retryAfterSec });
       } else {
         setResult({ kind: "error", reason: res.reason });
       }
@@ -96,7 +99,7 @@ export function StatusForm() {
 
       {result.kind === "error" && (
         <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-medium">
-          {result.reason === "rate_limited" && t("rateLimited")}
+          {result.reason === "rate_limited" && t("rateLimited", { min: Math.max(1, Math.ceil(result.retryAfterSec / 60)) })}
           {result.reason === "not_found" && t("notFound")}
           {result.reason === "service_unavailable" && t("serviceUnavailable")}
         </div>

@@ -257,7 +257,7 @@
       "emailLabel": "邮箱",
       "submit": "查询",
       "notFound": "未找到匹配的报价。请重新确认报价编号和邮箱。",
-      "rateLimited": "查询过于频繁。请稍后再试。",
+      "rateLimited": "查询过于频繁。请约 {min} 分钟后再试。",
       "serviceUnavailable": "暂时无法查询。请稍后再试。",
       "cancelled": {
         "title": "该报价已取消",
