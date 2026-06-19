@@ -44,6 +44,7 @@ next-env.d.ts
 .context/
 .claude/
 .impeccable.md
+.impeccable/
 package-lock.json
 package-lock.json
 qa-round*.png
@@ -57,6 +58,14 @@ scripts/seed/*.sql
 # Internal deployment / operational notes (private wiki only)
 docs/post-deploy-checklist.md
 docs/private/
+
+# Internal working docs (specs, plans, SEO ops) — private wiki only
+docs/superpowers/
+docs/seo/
+
+# Internal AI-agent prompts / instructions — public repo 미노출
+/CLAUDE.md
+/AGENTS.md
 
 # Autopilot local logs
 .autopilot.log/
