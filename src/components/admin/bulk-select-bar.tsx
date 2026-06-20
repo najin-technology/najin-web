@@ -11,6 +11,10 @@ type BulkSelectBarProps = {
   statusOptions: string[];
   onApply: (status: string) => Promise<{ error?: string; count?: number; success?: boolean }>;
   labelPrefix?: string;
+  /** When set, shows a "취소" button; parent owns the reason dialog. */
+  onCancelClick?: () => void;
+  /** When set, shows a "삭제" button; parent owns the warning dialog. */
+  onDeleteClick?: () => void;
 };
 
 /**
@@ -23,6 +27,8 @@ export function BulkSelectBar({
   statusOptions,
   onApply,
   labelPrefix = "선택",
+  onCancelClick,
+  onDeleteClick,
 }: BulkSelectBarProps) {
   const [pending, startTransition] = useTransition();
 
@@ -60,6 +66,27 @@ export function BulkSelectBar({
           </Button>
         ))}
       </div>
+      {(onCancelClick || onDeleteClick) && <div className="h-4 w-px bg-white/20" />}
+      {onCancelClick && (
+        <Button
+          size="sm"
+          disabled={pending}
+          onClick={onCancelClick}
+          className="bg-rose-500/20 hover:bg-rose-500/30 text-white h-8 px-3 text-[13px] font-semibold"
+        >
+          취소
+        </Button>
+      )}
+      {onDeleteClick && (
+        <Button
+          size="sm"
+          disabled={pending}
+          onClick={onDeleteClick}
+          className="bg-red-600/80 hover:bg-red-600 text-white h-8 px-3 text-[13px] font-semibold"
+        >
+          삭제
+        </Button>
+      )}
       {pending && <Loader2 className="w-4 h-4 animate-spin text-white/80" />}
       <Button
         variant="ghost"

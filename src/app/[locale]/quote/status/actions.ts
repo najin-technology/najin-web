@@ -43,6 +43,7 @@ export async function lookupQuoteStatus(input: {
     .gte("id", lower)
     .lte("id", upper)
     .ilike("email", emailPattern)
+    .is("deleted_at", null)
     .limit(1)
     .maybeSingle();
 

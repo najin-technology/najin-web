@@ -1,10 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { HighlightText } from "@/components/admin/highlight-text";
 import { BulkSelectBar } from "@/components/admin/bulk-select-bar";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -13,7 +24,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { bulkUpdateQuoteStatus } from "./actions";
+import { bulkUpdateQuoteStatus, bulkCancelQuotes, softDeleteQuotes } from "./actions";
+import { QuoteDeleteDialog } from "./quote-delete-dialog";
 
 type Quote = {
   id: string;
@@ -45,6 +57,47 @@ export function BulkQuotesTable({
   searchQuery?: string;
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const router = useRouter();
+  const [cancelOpen, setCancelOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
+  const [pending, start] = useTransition();
+
+  const runCancel = () => {
+    const reason = cancelReason.trim();
+    if (!reason) {
+      toast.error("취소 사유를 입력해주세요.");
+      return;
+    }
+    const ids = Array.from(selected);
+    start(async () => {
+      const res = await bulkCancelQuotes(ids, reason);
+      if (res.error) {
+        toast.error(res.error);
+        return;
+      }
+      toast.success(`${res.count ?? ids.length}건을 취소하고 안내 메일을 발송했습니다`);
+      setCancelOpen(false);
+      setCancelReason("");
+      setSelected(new Set());
+      router.refresh();
+    });
+  };
+
+  const runDelete = () => {
+    const ids = Array.from(selected);
+    start(async () => {
+      const res = await softDeleteQuotes(ids);
+      if (res.error) {
+        toast.error(res.error);
+        return;
+      }
+      toast.success(`${res.count ?? ids.length}건을 삭제했습니다`);
+      setDeleteOpen(false);
+      setSelected(new Set());
+      router.refresh();
+    });
+  };
 
   const toggleRow = (id: string, e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -74,6 +127,53 @@ export function BulkQuotesTable({
           const ids = Array.from(selected);
           return await bulkUpdateQuoteStatus(ids, status);
         }}
+        onCancelClick={() => setCancelOpen(true)}
+        onDeleteClick={() => setDeleteOpen(true)}
+      />
+
+      {/* 일괄 취소: 공유 사유 입력 → 각 고객 언어로 취소 메일 */}
+      <Dialog
+        open={cancelOpen}
+        onOpenChange={(v) => {
+          setCancelOpen(v);
+          if (!v) setCancelReason("");
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>견적 {selected.size}건 일괄 취소</DialogTitle>
+            <DialogDescription>
+              선택한 견적 전체에 동일한 사유로 취소 안내 메일이 발송됩니다. 이미 취소된 건은 제외됩니다.
+            </DialogDescription>
+          </DialogHeader>
+          <textarea
+            value={cancelReason}
+            onChange={(e) => setCancelReason(e.target.value)}
+            rows={3}
+            placeholder="고객에게 전달될 취소 사유"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm leading-relaxed focus:border-rose-400 focus:outline-none focus:ring-1 focus:ring-rose-400"
+          />
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setCancelOpen(false)} disabled={pending}>
+              닫기
+            </Button>
+            <Button
+              onClick={runCancel}
+              disabled={pending || !cancelReason.trim()}
+              className="bg-rose-600 hover:bg-rose-700 text-white"
+            >
+              {pending ? "취소 중..." : `${selected.size}건 취소`}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <QuoteDeleteDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        count={selected.size}
+        pending={pending}
+        onConfirm={runDelete}
       />
 
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
