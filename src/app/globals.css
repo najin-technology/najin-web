@@ -289,6 +289,65 @@
   background-size: 40px 40px;
 }
 
+/* ===== Article prose (post / notice / privacy body) ===== */
+/* Markup uses `prose` utility classes, but @tailwindcss/typography isn't installed,
+   so headings, lists, and spacing render flat. These rules supply the needed
+   typography in brand colors. Scoped to `.prose` so only article bodies are affected. */
+.prose > * + * {
+  margin-top: 1.1em;
+}
+.prose h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-brand-navy);
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+.prose h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-brand-navy);
+  margin-top: 1.6em;
+  margin-bottom: 0.5em;
+}
+.prose h2:first-child,
+.prose h3:first-child {
+  margin-top: 0;
+}
+.prose strong {
+  font-weight: 700;
+  color: var(--color-brand-navy);
+}
+.prose a {
+  color: var(--color-brand-copper);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose ul {
+  list-style: disc;
+  padding-left: 1.4em;
+}
+.prose ol {
+  list-style: decimal;
+  padding-left: 1.4em;
+}
+.prose li {
+  margin: 0.3em 0;
+}
+.prose li::marker {
+  color: var(--color-brand-copper);
+}
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-surface-warm-200);
+  margin: 2em 0;
+}
+.prose img {
+  border-radius: 0.5rem;
+}
+
 /* ===== Accessibility ===== */
 
 @media (prefers-reduced-motion: reduce) {
