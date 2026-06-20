@@ -98,6 +98,39 @@ async function notifyStatusChange(supabase: SupaClient, quote: {
   }
 }
 
+// 고객 언어로 취소 안내 메일. 발송 실패는 취소 처리 자체를 막지 않는다.
+async function sendQuoteCancelledMail(
+  quote: {
+    id: string;
+    email: string | null;
+    contact_name: string | null;
+    company_name: string | null;
+    locale: string | null;
+  },
+  reason: string,
+) {
+  if (!quote.email) return;
+  const locale = normalizeLocale(quote.locale);
+  const quoteIdShort = quote.id.slice(0, 8).toUpperCase();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+  try {
+    await sendByTemplateKey({
+      key: "quote_cancelled",
+      to: quote.email,
+      locale,
+      vars: {
+        contact_name: quote.contact_name || "",
+        company_name: quote.company_name || "",
+        quote_id_short: quoteIdShort,
+        cancel_reason: reason,
+        status_url: `${siteUrl}/${locale}/quote/status?id=${quoteIdShort}`,
+      },
+    });
+  } catch (e) {
+    console.error(`quote_cancelled mail failed for ${quote.id}:`, e);
+  }
+}
+
 export async function updateQuoteStatus(
   prevState: ActionState,
   formData: FormData
@@ -384,30 +417,104 @@ export async function cancelQuote(
     details: { reason: trimmed },
   });
 
-  // 고객에게 취소 안내 메일 (고객 요청 언어로). 발송 실패는 취소 자체를 막지 않음.
-  if (quote.email) {
-    const locale = normalizeLocale(quote.locale);
-    const quoteIdShort = quote.id.slice(0, 8).toUpperCase();
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
-    try {
-      await sendByTemplateKey({
-        key: "quote_cancelled",
-        to: quote.email,
-        locale,
-        vars: {
-          contact_name: quote.contact_name || "",
-          company_name: quote.company_name || "",
-          quote_id_short: quoteIdShort,
-          cancel_reason: trimmed,
-          status_url: `${siteUrl}/${locale}/quote/status?id=${quoteIdShort}`,
-        },
-      });
-    } catch (e) {
-      console.error(`quote_cancelled mail failed for ${quoteId}:`, e);
-    }
-  }
+  // 고객에게 취소 안내 메일 (고객 요청 언어로).
+  await sendQuoteCancelledMail(quote, trimmed);
 
   revalidatePath("/admin/quotes");
   revalidatePath(`/admin/quotes/${quoteId}`);
   return { ok: true };
+}
+
+// ---- 견적 일괄 취소 (사유 1개 공유 → 각 고객 언어로 취소 메일) ----
+export async function bulkCancelQuotes(
+  ids: string[],
+  reason: string,
+): Promise<{ error?: string; success?: boolean; count?: number }> {
+  await requireAdmin();
+  if (!Array.isArray(ids) || ids.length === 0) return { error: "선택된 항목이 없습니다." };
+  const trimmed = (reason ?? "").trim();
+  if (!trimmed) return { error: "취소 사유를 입력해주세요." };
+
+  const supabase = await createSupabaseServerClient();
+
+  // 이미 취소됐거나 삭제된 건은 제외하고 대상만 조회.
+  const { data: targets } = await supabase
+    .from("quotes")
+    .select("id, status, email, contact_name, company_name, locale")
+    .in("id", ids)
+    .neq("status", "취소")
+    .is("deleted_at", null);
+
+  if (!targets || targets.length === 0) {
+    return { error: "취소할 수 있는 견적이 없습니다 (이미 취소되었거나 삭제됨)." };
+  }
+
+  const targetIds = targets.map((t) => t.id);
+  const now = new Date().toISOString();
+  const { error } = await supabase
+    .from("quotes")
+    .update({ status: "취소", cancel_reason: trimmed, cancelled_at: now, updated_at: now })
+    .in("id", targetIds);
+
+  if (error) return { error: "일괄 취소 실패: " + error.message };
+
+  await logAudit({
+    action: "bulk_cancel",
+    targetTable: "quotes",
+    details: { count: targetIds.length, reason: trimmed },
+  });
+
+  // 각 고객에게 취소 안내 메일.
+  await Promise.all(targets.map((t) => sendQuoteCancelledMail(t, trimmed)));
+
+  revalidatePath("/admin/quotes");
+  revalidatePath("/admin");
+  return { success: true, count: targetIds.length };
+}
+
+// ---- 견적 기록 삭제 (소프트: deleted_at 설정 → 관리자 목록·분석·고객 조회에서 숨김) ----
+// 행과 첨부는 보존되어 DB 차원 복구가 가능하다. 고객은 더 이상 상태조회 페이지에서 조회할 수 없다.
+export async function softDeleteQuotes(
+  ids: string[],
+): Promise<{ error?: string; success?: boolean; count?: number }> {
+  await requireAdmin();
+  if (!Array.isArray(ids) || ids.length === 0) return { error: "선택된 항목이 없습니다." };
+
+  const supabase = await createSupabaseServerClient();
+
+  // 감사 로그 스냅샷 — 행이 숨겨져도 누가 무엇을 지웠는지 추적 가능하게.
+  const { data: targets } = await supabase
+    .from("quotes")
+    .select("id, company_name, contact_name, email, status")
+    .in("id", ids)
+    .is("deleted_at", null);
+
+  if (!targets || targets.length === 0) return { error: "삭제할 견적이 없습니다." };
+
+  const targetIds = targets.map((t) => t.id);
+  const { error } = await supabase
+    .from("quotes")
+    .update({ deleted_at: new Date().toISOString() })
+    .in("id", targetIds);
+
+  if (error) return { error: "삭제 실패: " + error.message };
+
+  await logAudit({
+    action: "soft_delete",
+    targetTable: "quotes",
+    details: {
+      count: targetIds.length,
+      quotes: targets.map((t) => ({
+        id: t.id,
+        company: t.company_name,
+        contact: t.contact_name,
+        email: t.email,
+        status: t.status,
+      })),
+    },
+  });
+
+  revalidatePath("/admin/quotes");
+  revalidatePath("/admin");
+  return { success: true, count: targetIds.length };
 }

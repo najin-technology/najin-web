@@ -5,6 +5,7 @@ import { getQuoteAttachmentUrls, getQuoteQuotationUrls } from "../actions";
 import { QuoteStatusForm } from "./quote-status-form";
 import { QuotationFiles } from "./quotation-files";
 import { CancelQuote } from "./cancel-quote";
+import { DeleteQuote } from "./delete-quote";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { DetailPageHeader } from "@/components/admin/detail-page-header";
 import { InfoGrid } from "@/components/admin/info-grid";
@@ -210,6 +211,18 @@ export default async function QuoteDetailPage({
                 locale={quote.locale === "en" || quote.locale === "zh" ? quote.locale : "ko"}
                 cancelled={quote.status === "취소"}
               />
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-red-100 overflow-hidden h-fit">
+            <div className="px-6 py-3.5 border-b border-gray-100">
+              <h2 className="text-sm font-semibold text-red-600">기록 삭제</h2>
+            </div>
+            <div className="p-6 space-y-3">
+              <p className="text-[13px] leading-relaxed text-gray-500">
+                삭제하면 관리자 목록·통계에서 사라지고, 고객이 견적조회 페이지에서 더 이상 조회할 수 없습니다.
+              </p>
+              <DeleteQuote quoteId={quote.id} />
             </div>
           </div>
         </div>
