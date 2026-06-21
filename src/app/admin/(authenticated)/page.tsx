@@ -10,8 +10,6 @@ import {
   Bell,
   ArrowRight,
   TrendingUp,
-  ExternalLink,
-  BarChart3,
 } from "lucide-react";
 
 export const metadata = { title: "대시보드", description: "나진테크 관리자 대시보드", robots: "noindex, nofollow" };
@@ -249,16 +247,6 @@ export default async function AdminDashboard() {
             <QuickAction href="/admin/job-postings/new" label="새 채용공고" />
             <QuickAction href="/admin/invites" label="관리자 초대" />
           </div>
-          <a
-            href="https://vercel.com/presentjays-projects/najin-webapp/analytics"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[13px] text-violet-700 hover:text-violet-800 font-semibold pt-2 mt-2 border-t border-gray-100"
-          >
-            <BarChart3 className="w-4 h-4" />
-            방문자 통계 (Vercel)
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
         </div>
       </div>
     </div>
