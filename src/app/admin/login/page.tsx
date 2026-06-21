@@ -10,11 +10,33 @@ import { Label } from "@/components/ui/label";
 import { AlertMessage } from "@/components/admin/alert-message";
 import { TurnstileWidget } from "@/components/turnstile-widget";
 
-function IdleNotice() {
+const ERROR_MESSAGES: Record<string, string> = {
+  naver_not_admin: "관리자 권한이 없는 계정입니다.",
+  naver_profile_no_email: "네이버 계정 이메일 제공에 동의해야 로그인할 수 있습니다.",
+  naver_state_mismatch: "세션이 만료되었습니다. 다시 시도해주세요.",
+  naver_token_failed: "네이버 로그인에 실패했습니다. 다시 시도해주세요.",
+  naver_session_failed: "네이버 로그인에 실패했습니다. 다시 시도해주세요.",
+  naver_link_failed: "네이버 로그인에 실패했습니다. 다시 시도해주세요.",
+  naver_not_configured: "네이버 로그인이 설정되지 않았습니다.",
+  admin_not_configured: "서버 설정 오류로 로그인할 수 없습니다.",
+  admin_lookup_failed: "로그인 처리 중 오류가 발생했습니다. 다시 시도해주세요.",
+  unauthorized: "로그인 권한이 없습니다.",
+};
+
+function UrlNotice() {
   const searchParams = useSearchParams();
-  const reason = searchParams.get("reason");
-  if (reason !== "idle") return null;
-  return <AlertMessage>세션이 만료되어 자동으로 로그아웃되었습니다. 다시 로그인해주세요.</AlertMessage>;
+  const error = searchParams.get("error");
+  if (error) {
+    return (
+      <AlertMessage>
+        {ERROR_MESSAGES[error] ?? `로그인 실패: ${error.replace(/_/g, " ")}`}
+      </AlertMessage>
+    );
+  }
+  if (searchParams.get("reason") === "idle") {
+    return <AlertMessage>세션이 만료되어 자동으로 로그아웃되었습니다. 다시 로그인해주세요.</AlertMessage>;
+  }
+  return null;
 }
 
 export default function AdminLoginPage() {
@@ -102,7 +124,7 @@ export default function AdminLoginPage() {
           <form action={formAction} className="space-y-4">
             {!state.error && (
               <Suspense fallback={null}>
-                <IdleNotice />
+                <UrlNotice />
               </Suspense>
             )}
             {state.error && (

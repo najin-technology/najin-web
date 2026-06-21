@@ -1,4 +1,4 @@
-import { requireAdmin } from "@/lib/auth";
+import { requireAdmin, loginMethods, canDisconnect } from "@/lib/auth";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { getSiteSettings } from "@/lib/queries";
 import { ConnectedAccounts } from "./_components/connected-accounts";
@@ -20,10 +20,10 @@ type IdentityRow = {
 export default async function SettingsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ linked?: string; error?: string }>;
+  searchParams: Promise<{ linked?: string; error?: string; unlinked?: string }>;
 }) {
   const user = await requireAdmin();
-  const { linked, error } = await searchParams;
+  const { linked, error, unlinked } = await searchParams;
 
   const admin = getSupabaseAdmin();
   const identities: IdentityRow[] = [];
@@ -48,6 +48,10 @@ export default async function SettingsPage({
   const hasGoogle = identities.some((i) => i.provider === "google");
   const hasEmail = identities.some((i) => i.provider === "email");
 
+  const methods = loginMethods(identities, user.app_metadata);
+  const naverDisconnectDisabled = !canDisconnect("naver", methods);
+  const googleDisconnectDisabled = !canDisconnect("google", methods);
+
   return (
     <div className="space-y-8 max-w-2xl">
       <header className="space-y-1.5">
@@ -66,6 +70,12 @@ export default async function SettingsPage({
           {linked === "google" && "Google 계정이 연결되었습니다."}
         </div>
       )}
+      {unlinked && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 text-sm text-emerald-900">
+          {unlinked === "naver" && "네이버 연결이 해제되었습니다."}
+          {unlinked === "google" && "Google 연결이 해제되었습니다."}
+        </div>
+      )}
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-800">
           연결 실패: {error.replace(/_/g, " ")}
@@ -76,8 +86,10 @@ export default async function SettingsPage({
         email={user.email ?? null}
         naverLinked={naverLinked}
         naverEmail={naverEmail}
+        naverDisconnectDisabled={naverDisconnectDisabled}
         hasGoogle={hasGoogle}
         googleEmail={identities.find((i) => i.provider === "google")?.email ?? null}
+        googleDisconnectDisabled={googleDisconnectDisabled}
         hasEmail={hasEmail}
       />
 
