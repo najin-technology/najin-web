@@ -1,10 +1,13 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase-client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Loader2, Check, AlertCircle, Mail } from "lucide-react";
+import { signUpWithInvite } from "./actions";
 
 export function AcceptInviteClient({
   token,
@@ -25,6 +28,7 @@ export function AcceptInviteClient({
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [pending, startTransition] = useTransition();
+  const [signupState, signupAction, signupPending] = useActionState(signUpWithInvite, {});
 
   const handleAccept = () => {
     if (!isAlreadyAuthenticated) return;
@@ -120,9 +124,70 @@ export function AcceptInviteClient({
         </>
       ) : (
         <>
-          <p className="text-sm text-gray-700 text-center font-medium">
-            아래 계정 중 하나로 로그인하여 초대를 수락하세요.
-          </p>
+          <form action={signupAction} className="space-y-3">
+            <input type="hidden" name="token" value={token} />
+            <p className="text-sm text-gray-700 font-medium">
+              이메일과 비밀번호로 관리자 계정을 만드세요.
+            </p>
+            <div className="space-y-1.5">
+              <Label htmlFor="email">이메일</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+                defaultValue={emailHint && emailHint.includes("@") ? emailHint : undefined}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="password">비밀번호 (8자 이상)</Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                required
+                minLength={8}
+                autoComplete="new-password"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="confirm">비밀번호 확인</Label>
+              <Input
+                id="confirm"
+                name="confirm"
+                type="password"
+                required
+                minLength={8}
+                autoComplete="new-password"
+              />
+            </div>
+            {signupState.error && (
+              <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <span>{signupState.error}</span>
+              </div>
+            )}
+            <Button
+              type="submit"
+              disabled={signupPending}
+              className="w-full h-11 bg-brand-navy hover:bg-brand-navy-light text-white font-semibold"
+            >
+              {signupPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "이메일로 가입"}
+            </Button>
+          </form>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-white px-3 text-xs text-gray-500 uppercase tracking-widest font-semibold">
+                또는
+              </span>
+            </div>
+          </div>
+
           <div className="space-y-2">
             <Button
               onClick={handleGoogleSignIn}
@@ -161,7 +226,7 @@ export function AcceptInviteClient({
             </Button>
           </div>
           <p className="text-xs text-gray-600 text-center font-medium">
-            로그인 후 자동으로 관리자 권한이 부여됩니다.
+            SSO로 로그인하면 자동으로 관리자 권한이 부여됩니다. SSO 연동은 가입 후 설정에서도 가능합니다.
           </p>
         </>
       )}
