@@ -72,3 +72,49 @@ export async function disconnectNaver(): Promise<Result> {
 
   return { ok: true };
 }
+
+export async function changePassword(input: {
+  currentPassword?: string;
+  newPassword: string;
+}): Promise<Result> {
+  const user = await requireAdmin();
+
+  if (input.newPassword.length < 8) {
+    return { ok: false, error: "비밀번호는 8자 이상이어야 합니다." };
+  }
+
+  const supabase = await createSupabaseServerClient();
+
+  // 기존 비밀번호(email identity)가 있으면 현재 비밀번호 확인을 요구해 세션 탈취 시 무단 변경을 막는다.
+  // ponytail: email identity 유무를 "비밀번호 보유"로 근사 — SSO 전용 계정은 현재 비번 없이 새로 설정(=비밀번호 추가).
+  // identities는 admin API가 권위 있으므로 그걸 우선 사용(세션 user.identities는 누락될 수 있음).
+  const admin = getSupabaseAdmin();
+  const fullUser = admin ? (await admin.auth.admin.getUserById(user.id)).data?.user : null;
+  const identities = fullUser?.identities ?? user.identities ?? [];
+  const hasPassword = identities.some((i) => i.provider === "email");
+  if (hasPassword) {
+    if (!input.currentPassword) {
+      return { ok: false, error: "현재 비밀번호를 입력해주세요." };
+    }
+    const { error: verifyErr } = await supabase.auth.signInWithPassword({
+      email: user.email ?? "",
+      password: input.currentPassword,
+    });
+    if (verifyErr) {
+      return { ok: false, error: "현재 비밀번호가 올바르지 않습니다." };
+    }
+  }
+
+  const { error } = await supabase.auth.updateUser({ password: input.newPassword });
+  if (error) {
+    return { ok: false, error: `변경 실패: ${error.message}` };
+  }
+
+  await logAudit({
+    action: "update",
+    targetTable: "auth",
+    details: { field: "password" },
+  });
+
+  return { ok: true };
+}
