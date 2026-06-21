@@ -29,6 +29,10 @@ export function AcceptInviteClient({
   const [success, setSuccess] = useState(false);
   const [pending, startTransition] = useTransition();
   const [signupState, signupAction, signupPending] = useActionState(signUpWithInvite, {});
+  const [pw, setPw] = useState("");
+  const [pwConfirm, setPwConfirm] = useState("");
+  const pwMismatch = pwConfirm.length > 0 && pw !== pwConfirm;
+  const signupReady = pw.length >= 8 && pw === pwConfirm;
 
   const handleAccept = () => {
     if (!isAlreadyAuthenticated) return;
@@ -149,6 +153,8 @@ export function AcceptInviteClient({
                 required
                 minLength={8}
                 autoComplete="new-password"
+                value={pw}
+                onChange={(e) => setPw(e.target.value)}
               />
             </div>
             <div className="space-y-1.5">
@@ -160,7 +166,13 @@ export function AcceptInviteClient({
                 required
                 minLength={8}
                 autoComplete="new-password"
+                value={pwConfirm}
+                onChange={(e) => setPwConfirm(e.target.value)}
+                aria-invalid={pwMismatch}
               />
+              {pwMismatch && (
+                <p className="text-xs text-red-600 font-medium">비밀번호가 일치하지 않습니다.</p>
+              )}
             </div>
             {signupState.error && (
               <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 flex items-start gap-2">
@@ -170,7 +182,7 @@ export function AcceptInviteClient({
             )}
             <Button
               type="submit"
-              disabled={signupPending}
+              disabled={signupPending || !signupReady}
               className="w-full h-11 bg-brand-navy hover:bg-brand-navy-light text-white font-semibold"
             >
               {signupPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "이메일로 가입"}

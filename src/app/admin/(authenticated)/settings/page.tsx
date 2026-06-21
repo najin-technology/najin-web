@@ -2,6 +2,7 @@ import { requireAdmin, loginMethods, canDisconnect } from "@/lib/auth";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { getSiteSettings } from "@/lib/queries";
 import { ConnectedAccounts } from "./_components/connected-accounts";
+import { PasswordSettings } from "./_components/password-settings";
 import { QuoteIntakeSettings } from "./_components/quote-intake-settings";
 
 export const metadata = {
@@ -92,6 +93,8 @@ export default async function SettingsPage({
         googleDisconnectDisabled={googleDisconnectDisabled}
         hasEmail={hasEmail}
       />
+
+      <PasswordSettings hasPassword={hasEmail} />
 
       <QuoteIntakeSettings initial={settings} />
 
