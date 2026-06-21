@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { SITE_URL } from "@/lib/env";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { logAudit } from "@/lib/audit";
 
 const NAVER_TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
@@ -158,13 +158,23 @@ export async function GET(request: NextRequest) {
     });
   }
 
+  // 매직링크 토큰 해시를 받아 서버에서 직접 세션을 설정한다.
+  // (action_link 리다이렉트는 토큰을 URL 해시로 돌려줘 서버 컴포넌트가 못 읽으므로 사용하지 않음.)
   const { data: linkData, error: linkError } = await admin.auth.admin.generateLink({
     type: "magiclink",
     email: match.email!,
-    options: { redirectTo: `${SITE_URL}/admin` },
   });
-  if (linkError || !linkData.properties?.action_link) {
+  if (linkError || !linkData.properties?.hashed_token) {
     return redirectError(request, "naver_link_failed");
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const { error: verifyError } = await supabase.auth.verifyOtp({
+    type: "magiclink",
+    token_hash: linkData.properties.hashed_token,
+  });
+  if (verifyError) {
+    return redirectError(request, "naver_session_failed");
   }
 
   await logAudit({
@@ -178,7 +188,7 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  const res = NextResponse.redirect(linkData.properties.action_link);
+  const res = NextResponse.redirect(new URL("/admin", request.url));
   res.cookies.delete(STATE_COOKIE);
   res.cookies.delete(INVITE_COOKIE);
   return res;
