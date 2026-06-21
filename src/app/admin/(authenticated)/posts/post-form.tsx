@@ -78,16 +78,6 @@ export function PostForm({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="slug">슬러그 (URL) *</Label>
-          <Input
-            id="slug"
-            name="slug"
-            defaultValue={post?.slug || ""}
-            required
-            placeholder="slug-format"
-          />
-        </div>
-        <div className="space-y-2">
           <Label htmlFor="category">카테고리 *</Label>
           <select
             id="category"
@@ -140,16 +130,10 @@ export function PostForm({
             placeholder="태그1, 태그2, 태그3"
           />
         </div>
-        <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="thumbnail_url">썸네일 URL</Label>
-          <Input
-            id="thumbnail_url"
-            name="thumbnail_url"
-            defaultValue={post?.thumbnail_url || ""}
-            placeholder="/images/posts/example.jpg"
-          />
-        </div>
       </div>
+      <p className="text-xs text-gray-500 -mt-2">
+        썸네일은 본문에 첨부한 첫 번째 이미지가 자동으로 사용됩니다. URL을 따로 입력할 필요가 없습니다.
+      </p>
 
       <div className="border-t border-gray-200 pt-5 mt-4">
         <p className="text-xs font-bold text-gray-600 uppercase tracking-[0.1em]">콘텐츠</p>

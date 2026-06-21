@@ -6,11 +6,22 @@ import { requireAdmin } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { CACHE_TAGS } from "@/lib/queries";
+import { randomUUID } from "node:crypto";
 
 type ActionState = {
   error?: string;
   success?: boolean;
 };
+
+// ponytail: naive first-<img> extractor over the post body (ko→en→zh). Good enough
+// for picking a thumbnail; swap for a DOM parser only if richer extraction is needed.
+function firstImageUrl(...htmls: (string | null)[]): string | null {
+  for (const html of htmls) {
+    const m = html?.match(/<img[^>]+\bsrc\s*=\s*["']([^"']+)["']/i);
+    if (m) return m[1];
+  }
+  return null;
+}
 
 export async function createPost(
   prevState: ActionState,
@@ -18,7 +29,6 @@ export async function createPost(
 ): Promise<ActionState> {
   await requireAdmin();
 
-  const slug = formData.get("slug") as string;
   const titleKo = formData.get("title_ko") as string;
   const titleEn = formData.get("title_en") as string;
   const excerptKo = formData.get("excerpt_ko") as string;
@@ -32,12 +42,15 @@ export async function createPost(
   const processCategory = formData.get("process_category") as string;
   const featured = formData.get("featured") === "true";
   const tagsStr = formData.get("tags") as string;
-  const thumbnailUrl = formData.get("thumbnail_url") as string;
   const isPublished = formData.get("is_published") === "true";
 
-  if (!slug || !titleKo || !category) {
-    return { error: "슬러그, 제목(한국어), 카테고리는 필수 항목입니다." };
+  if (!titleKo || !category) {
+    return { error: "제목(한국어), 카테고리는 필수 항목입니다." };
   }
+
+  // 슬러그는 자동 생성(랜덤), 썸네일은 본문 첫 이미지에서 추출
+  const slug = randomUUID();
+  const thumbnailUrl = firstImageUrl(contentKo, contentEn, contentZh);
 
   const supabase = await createSupabaseServerClient();
 
@@ -94,7 +107,6 @@ export async function updatePost(
   await requireAdmin();
 
   const id = formData.get("id") as string;
-  const slug = formData.get("slug") as string;
   const titleKo = formData.get("title_ko") as string;
   const titleEn = formData.get("title_en") as string;
   const excerptKo = formData.get("excerpt_ko") as string;
@@ -108,12 +120,14 @@ export async function updatePost(
   const processCategory = formData.get("process_category") as string;
   const featured = formData.get("featured") === "true";
   const tagsStr = formData.get("tags") as string;
-  const thumbnailUrl = formData.get("thumbnail_url") as string;
   const isPublished = formData.get("is_published") === "true";
 
-  if (!id || !slug || !titleKo || !category) {
-    return { error: "슬러그, 제목(한국어), 카테고리는 필수 항목입니다." };
+  if (!id || !titleKo || !category) {
+    return { error: "제목(한국어), 카테고리는 필수 항목입니다." };
   }
+
+  // 슬러그는 생성 시 자동 부여된 값을 그대로 유지, 썸네일은 본문 첫 이미지에서 재추출
+  const thumbnailUrl = firstImageUrl(contentKo, contentEn, contentZh);
 
   const supabase = await createSupabaseServerClient();
 
@@ -137,7 +151,6 @@ export async function updatePost(
   const { error } = await supabase
     .from("posts")
     .update({
-      slug,
       title_ko: titleKo,
       title_en: titleEn || null,
       excerpt_ko: excerptKo || null,
@@ -166,7 +179,7 @@ export async function updatePost(
     action: "update",
     targetTable: "posts",
     targetId: id,
-    details: { slug, title_ko: titleKo },
+    details: { title_ko: titleKo },
   });
 
   updateTag(CACHE_TAGS.posts);
