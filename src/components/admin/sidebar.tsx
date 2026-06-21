@@ -24,6 +24,7 @@ import {
   UserCog,
   Mail,
   ShieldCheck,
+  Tags,
 } from "lucide-react";
 
 const navGroups = [
@@ -45,6 +46,7 @@ const navGroups = [
       { href: "/admin/posts", label: "제작사례", icon: BookOpen },
       { href: "/admin/notices", label: "회사소식", icon: Bell },
       { href: "/admin/products", label: "제품 관리", icon: Package },
+      { href: "/admin/categories", label: "카테고리 관리", icon: Tags },
       { href: "/admin/job-postings", label: "채용공고", icon: Briefcase },
       { href: "/admin/certifications", label: "인증서", icon: ShieldCheck },
       { href: "/admin/site/about", label: "회사 정보", icon: UserCog },

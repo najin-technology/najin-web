@@ -18,14 +18,6 @@ import { AlertMessage } from "@/components/admin/alert-message";
 import { FormStatusBar } from "@/components/admin/form-status-bar";
 import { Upload, X } from "lucide-react";
 
-const CATEGORIES = [
-  { value: "우레탄", label: "우레탄" },
-  { value: "합성수지", label: "합성수지" },
-  { value: "CNC", label: "CNC" },
-  { value: "금형", label: "금형" },
-  { value: "EV", label: "EV" },
-];
-
 type ProductData = {
   id?: string;
   name_ko: string;
@@ -34,16 +26,17 @@ type ProductData = {
   description_en: string | null;
   category: string;
   image_urls: string[] | null;
-  sort_order: number;
   is_active: boolean;
 };
 
 export function ProductForm({
   product,
   mode,
+  categories,
 }: {
   product?: ProductData;
   mode: "create" | "edit";
+  categories: string[];
 }) {
   const action = mode === "create" ? createProduct : updateProduct;
   const [state, formAction, pending] = useActionState(action, {});
@@ -80,31 +73,23 @@ export function ProductForm({
         <p className="text-xs font-bold text-gray-600 uppercase tracking-[0.1em]">기본 정보</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label>카테고리 *</Label>
-          <Select name="category" defaultValue={product?.category || ""} required>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="카테고리 선택" />
-            </SelectTrigger>
-            <SelectContent>
-              {CATEGORIES.map((c) => (
-                <SelectItem key={c.value} value={c.value}>
-                  {c.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="sort_order">정렬순서</Label>
-          <Input
-            id="sort_order"
-            name="sort_order"
-            type="number"
-            defaultValue={product?.sort_order ?? 0}
-          />
-        </div>
+      <div className="space-y-2 sm:max-w-xs">
+        <Label>카테고리 *</Label>
+        <Select name="category" defaultValue={product?.category || ""} required>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="카테고리 선택" />
+          </SelectTrigger>
+          <SelectContent>
+            {categories.map((c) => (
+              <SelectItem key={c} value={c}>
+                {c}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {mode === "create" && (
+          <p className="text-xs text-gray-500 font-medium">새 제품은 해당 카테고리 맨 앞에 등록됩니다. 순서는 목록에서 드래그로 조정하세요.</p>
+        )}
       </div>
 
       <div className="border-t border-gray-200 pt-5 mt-4">

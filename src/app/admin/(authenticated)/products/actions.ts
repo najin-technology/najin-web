@@ -23,7 +23,6 @@ export async function createProduct(
   const descriptionKo = formData.get("description_ko") as string;
   const descriptionEn = formData.get("description_en") as string;
   const category = formData.get("category") as string;
-  const sortOrder = parseInt(formData.get("sort_order") as string) || 0;
   const isActive = formData.get("is_active") === "true";
 
   if (!nameKo || !category) {
@@ -31,6 +30,17 @@ export async function createProduct(
   }
 
   const supabase = await createSupabaseServerClient();
+
+  // 새 제품은 해당 카테고리 맨 앞에 배치 (현재 최소 sort_order - 10)
+  const { data: top } = await supabase
+    .from("products")
+    .select("sort_order")
+    .eq("category", category)
+    .is("deleted_at", null)
+    .order("sort_order", { ascending: true })
+    .limit(1)
+    .maybeSingle();
+  const sortOrder = (top?.sort_order ?? 20) - 10;
 
   // Handle image uploads
   const imageUrls: string[] = [];
@@ -107,7 +117,6 @@ export async function updateProduct(
   const descriptionKo = formData.get("description_ko") as string;
   const descriptionEn = formData.get("description_en") as string;
   const category = formData.get("category") as string;
-  const sortOrder = parseInt(formData.get("sort_order") as string) || 0;
   const isActive = formData.get("is_active") === "true";
   const existingUrls = formData.get("existing_image_urls") as string;
 
@@ -157,7 +166,6 @@ export async function updateProduct(
       description_en: descriptionEn || null,
       category,
       image_urls: imageUrls.length > 0 ? imageUrls : null,
-      sort_order: sortOrder,
       is_active: isActive,
       updated_at: new Date().toISOString(),
     })
