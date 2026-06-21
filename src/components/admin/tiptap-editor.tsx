@@ -41,6 +41,7 @@ export function TiptapEditor({
   placeholder?: string;
 }) {
   const editor = useEditor({
+    immediatelyRender: false, // Next SSR 하이드레이션 불일치 방지 (TipTap v3)
     extensions: [
       StarterKit,
       Link.configure({ openOnClick: false }),
