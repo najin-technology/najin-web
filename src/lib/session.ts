@@ -3,6 +3,9 @@
 // 유지하고(긴 쿠키 maxAge) 30분 유휴 자동로그아웃을 해제한다. 이메일/비밀번호 로그인 전용.
 
 export const PERSIST_COOKIE = "admin_persist_until";
+// 마지막으로 성공한 로그인 방법 힌트 (이 기기, httpOnly 아님 — 로그인 화면 클라가 읽음)
+export const LAST_LOGIN_METHOD_COOKIE = "najin_last_method";
+export const LAST_LOGIN_METHOD_MAX_AGE = 365 * 24 * 60 * 60; // 1년
 export const DEFAULT_SESSION_MAX_AGE = 28800; // 8시간 (기본 세션)
 export const PERSIST_DURATION_MS = 30 * 24 * 60 * 60 * 1000; // 30일
 export const PERSIST_DURATION_SEC = 30 * 24 * 60 * 60;

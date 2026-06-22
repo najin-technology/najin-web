@@ -66,6 +66,10 @@ function PrivacyKo() {
           정보
         </li>
         <li>채용 지원 접수 및 처리: 성명, 연락처, 이메일, 이력서, 자기소개</li>
+        <li>
+          관리자 로그인(네이버 아이디로 로그인): 네이버 계정 이메일, 네이버 회원
+          고유 식별자 — 관리자 인증 및 로그인 목적
+        </li>
       </ul>
 
       <h2 className="text-lg font-semibold text-brand-navy mt-8">
@@ -75,6 +79,7 @@ function PrivacyKo() {
       <ul className="list-disc pl-6 space-y-1">
         <li>견적 문의 관련 정보: 문의 처리 완료 후 3년</li>
         <li>채용 지원 관련 정보: 채용 절차 완료 후 1년</li>
+        <li>관리자 로그인 관련 정보: 관리자 권한 해제 또는 회원 탈퇴 시까지</li>
       </ul>
 
       <h2 className="text-lg font-semibold text-brand-navy mt-8">
@@ -143,6 +148,10 @@ function PrivacyEn() {
         <li>
           Job applications: Name, phone, email, resume, cover letter
         </li>
+        <li>
+          Admin login (Login with Naver): Naver account email, Naver unique
+          identifier — for administrator authentication and login
+        </li>
       </ul>
 
       <h2 className="text-lg font-semibold text-brand-navy mt-8">
@@ -151,6 +160,7 @@ function PrivacyEn() {
       <ul className="list-disc pl-6 space-y-1">
         <li>Quote inquiry information: 3 years after inquiry completion</li>
         <li>Job application information: 1 year after recruitment process completion</li>
+        <li>Admin login information: until administrator access is revoked or the account is deleted</li>
       </ul>
 
       <h2 className="text-lg font-semibold text-brand-navy mt-8">
@@ -209,6 +219,7 @@ function PrivacyZh() {
       <ul className="list-disc pl-6 space-y-1">
         <li>报价咨询受理及处理：公司名称、负责人姓名、联系方式、邮箱、加工相关信息</li>
         <li>招聘申请受理及处理：姓名、联系方式、邮箱、简历、自我介绍</li>
+        <li>管理员登录（Naver 账号登录）：Naver 账号邮箱、Naver 会员唯一标识 — 用于管理员身份验证及登录</li>
       </ul>
 
       <h2 className="text-lg font-semibold text-brand-navy mt-8">
@@ -217,6 +228,7 @@ function PrivacyZh() {
       <ul className="list-disc pl-6 space-y-1">
         <li>报价咨询相关信息：咨询处理完成后3年</li>
         <li>招聘申请相关信息：招聘流程完成后1年</li>
+        <li>管理员登录相关信息：直至管理员权限被解除或账号注销为止</li>
       </ul>
 
       <h2 className="text-lg font-semibold text-brand-navy mt-8">

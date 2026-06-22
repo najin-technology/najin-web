@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { logAudit } from "@/lib/audit";
+import { LAST_LOGIN_METHOD_COOKIE, LAST_LOGIN_METHOD_MAX_AGE } from "@/lib/session";
 
 const NAVER_TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
 const NAVER_PROFILE_URL = "https://openapi.naver.com/v1/nid/me";
@@ -144,7 +145,11 @@ export async function GET(request: NextRequest) {
   }
 
   if (!match) {
-    return redirectError(request, "naver_not_admin");
+    // 네이버 인증은 성공했으나 관리자 권한이 없는 계정 — 에러가 아닌 안내로 처리.
+    // (검수자가 본인 네이버로 로그인해도 "로그인 성공, 권한 없음"으로 보이게.)
+    return NextResponse.redirect(
+      new URL("/admin/login?notice=naver_no_admin", request.url)
+    );
   }
 
   // 최초 이메일 매칭이면 naver_id를 app_metadata에 저장
@@ -191,5 +196,11 @@ export async function GET(request: NextRequest) {
   const res = NextResponse.redirect(new URL("/admin", request.url));
   res.cookies.delete(STATE_COOKIE);
   res.cookies.delete(INVITE_COOKIE);
+  res.cookies.set(LAST_LOGIN_METHOD_COOKIE, "naver", {
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: LAST_LOGIN_METHOD_MAX_AGE,
+  });
   return res;
 }

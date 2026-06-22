@@ -2,8 +2,21 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { logAudit } from "@/lib/audit";
+import { LAST_LOGIN_METHOD_COOKIE, LAST_LOGIN_METHOD_MAX_AGE } from "@/lib/session";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// /admin 으로 리다이렉트하며 "최근 로그인 = google" 힌트 쿠키를 심는다.
+function adminRedirect(request: NextRequest) {
+  const res = NextResponse.redirect(new URL("/admin", request.url));
+  res.cookies.set(LAST_LOGIN_METHOD_COOKIE, "google", {
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: LAST_LOGIN_METHOD_MAX_AGE,
+  });
+  return res;
+}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -29,7 +42,7 @@ export async function GET(request: NextRequest) {
           });
           // Refresh session so JWT picks up new role
           await supabase.auth.refreshSession();
-          return NextResponse.redirect(new URL("/admin", request.url));
+          return adminRedirect(request);
         }
         // Fall through — invite redemption failed; let the role check below decide
       }
@@ -41,7 +54,7 @@ export async function GET(request: NextRequest) {
           targetTable: "auth",
           details: { email: data.user.email, provider: "google" },
         });
-        return NextResponse.redirect(new URL("/admin", request.url));
+        return adminRedirect(request);
       }
 
       // Not admin — sign out and redirect with error

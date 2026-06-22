@@ -6,7 +6,13 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { logAudit } from "@/lib/audit";
 import { loginLimiter, getClientIp } from "@/lib/ratelimit";
 import { verifyTurnstileToken } from "@/lib/turnstile";
-import { PERSIST_COOKIE, PERSIST_DURATION_MS, PERSIST_DURATION_SEC } from "@/lib/session";
+import {
+  PERSIST_COOKIE,
+  PERSIST_DURATION_MS,
+  PERSIST_DURATION_SEC,
+  LAST_LOGIN_METHOD_COOKIE,
+  LAST_LOGIN_METHOD_MAX_AGE,
+} from "@/lib/session";
 
 type LoginState = {
   error: string;
@@ -74,6 +80,13 @@ export async function loginAction(
     action: "login",
     targetTable: "auth",
     details: { email },
+  });
+
+  cookieStore.set(LAST_LOGIN_METHOD_COOKIE, "email", {
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: LAST_LOGIN_METHOD_MAX_AGE,
   });
 
   redirect("/admin");
