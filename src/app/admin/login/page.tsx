@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useActionState } from "react";
+import { Suspense, useActionState, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { loginAction } from "./actions";
 import { createSupabaseBrowserClient } from "@/lib/supabase-client";
@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertMessage } from "@/components/admin/alert-message";
 import { TurnstileWidget } from "@/components/turnstile-widget";
+
+const REMEMBER_EMAIL_KEY = "admin_remember_email";
 
 const ERROR_MESSAGES: Record<string, string> = {
   naver_not_admin: "관리자 권한이 없는 계정입니다.",
@@ -43,6 +45,21 @@ export default function AdminLoginPage() {
   const [state, formAction, pending] = useActionState(loginAction, {
     error: "",
   });
+  // 이 기기에 저장된 이메일을 초기값으로 (lazy init — SSR 시엔 빈 값).
+  const [email, setEmail] = useState(() =>
+    typeof window === "undefined" ? "" : localStorage.getItem(REMEMBER_EMAIL_KEY) ?? ""
+  );
+  const [rememberEmail, setRememberEmail] = useState(
+    () => typeof window !== "undefined" && localStorage.getItem(REMEMBER_EMAIL_KEY) !== null
+  );
+  const [autoLogin, setAutoLogin] = useState(false);
+  const [showAutoWarning, setShowAutoWarning] = useState(false);
+
+  // 이메일 기억 토글/입력에 따라 localStorage 동기화
+  useEffect(() => {
+    if (rememberEmail && email) localStorage.setItem(REMEMBER_EMAIL_KEY, email);
+    else if (!rememberEmail) localStorage.removeItem(REMEMBER_EMAIL_KEY);
+  }, [rememberEmail, email]);
 
   const handleGoogleLogin = () => {
     const supabase = createSupabaseBrowserClient();
@@ -140,6 +157,9 @@ export default function AdminLoginPage() {
                 required
                 autoComplete="email"
                 autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                suppressHydrationWarning
                 className="focus-visible:ring-2 focus-visible:ring-brand-navy/20 focus-visible:border-brand-navy/40"
               />
             </div>
@@ -156,6 +176,31 @@ export default function AdminLoginPage() {
               />
             </div>
 
+            <div className="space-y-2.5 pt-0.5">
+              <label className="flex items-center gap-2 text-[13px] text-gray-700 font-medium cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={rememberEmail}
+                  onChange={(e) => setRememberEmail(e.target.checked)}
+                  className="w-4 h-4 accent-brand-navy"
+                />
+                이메일 기억하기
+              </label>
+              <label className="flex items-center gap-2 text-[13px] text-gray-700 font-medium cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  name="persist"
+                  checked={autoLogin}
+                  onChange={(e) => {
+                    if (e.target.checked) setShowAutoWarning(true);
+                    else setAutoLogin(false);
+                  }}
+                  className="w-4 h-4 accent-brand-navy"
+                />
+                자동 로그인 <span className="text-gray-400">(이 기기에서 30일 유지)</span>
+              </label>
+            </div>
+
             <TurnstileWidget onToken={() => {}} />
 
             <Button
@@ -166,6 +211,47 @@ export default function AdminLoginPage() {
               {pending ? "로그인 중..." : "이메일로 로그인"}
             </Button>
           </form>
+
+          {showAutoWarning && (
+            <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+              <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full">
+                <div className="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">⚠️</span>
+                </div>
+                <h3 className="text-base font-bold text-brand-charcoal text-center mb-2">
+                  자동 로그인 주의
+                </h3>
+                <p className="text-[13px] text-gray-600 leading-relaxed mb-5">
+                  이 기기에서 <strong>30일간 로그인 상태가 유지</strong>되고 유휴 자동 로그아웃이
+                  해제됩니다.{" "}
+                  <span className="text-red-600 font-semibold">
+                    공용·공유 PC에서는 절대 사용하지 마세요.
+                  </span>{" "}
+                  로그아웃 전까지 누구나 관리자 페이지에 접근할 수 있습니다.
+                </p>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => setShowAutoWarning(false)}
+                  >
+                    취소
+                  </Button>
+                  <Button
+                    type="button"
+                    className="flex-1 bg-brand-navy hover:bg-brand-navy-light text-white"
+                    onClick={() => {
+                      setAutoLogin(true);
+                      setShowAutoWarning(false);
+                    }}
+                  >
+                    이해했고 사용
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
         <p className="text-center text-xs text-gray-500 mt-4 font-medium">
           Enter 키로 로그인할 수 있습니다

@@ -1,8 +1,11 @@
+import { cookies } from "next/headers";
 import { requireAdmin, loginMethods, canDisconnect } from "@/lib/auth";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { getSiteSettings } from "@/lib/queries";
+import { PERSIST_COOKIE, persistRemainingMs } from "@/lib/session";
 import { ConnectedAccounts } from "./_components/connected-accounts";
 import { PasswordSettings } from "./_components/password-settings";
+import { LoginOptionsSettings } from "./_components/login-options-settings";
 import { QuoteIntakeSettings } from "./_components/quote-intake-settings";
 
 export const metadata = {
@@ -53,6 +56,10 @@ export default async function SettingsPage({
   const naverDisconnectDisabled = !canDisconnect("naver", methods);
   const googleDisconnectDisabled = !canDisconnect("google", methods);
 
+  const persistRemaining = persistRemainingMs(
+    (await cookies()).get(PERSIST_COOKIE)?.value
+  );
+
   return (
     <div className="space-y-8 max-w-2xl">
       <header className="space-y-1.5">
@@ -95,6 +102,8 @@ export default async function SettingsPage({
       />
 
       <PasswordSettings hasPassword={hasEmail} />
+
+      <LoginOptionsSettings email={user.email ?? null} persistRemainingMs={persistRemaining} />
 
       <QuoteIntakeSettings initial={settings} />
 

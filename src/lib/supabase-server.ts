@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { PERSIST_COOKIE, sessionMaxAge } from "./session";
 
 export async function createSupabaseServerClient() {
   const cookieStore = await cookies();
@@ -14,13 +15,15 @@ export async function createSupabaseServerClient() {
         },
         setAll(cookiesToSet) {
           try {
+            // 자동 로그인 활성 시 세션 쿠키 수명을 길게(최대 30일) 설정.
+            const maxAge = sessionMaxAge(cookieStore.get(PERSIST_COOKIE)?.value);
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, {
                 ...options,
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 sameSite: "lax",
-                maxAge: 28800, // 8 hours
+                maxAge,
               })
             );
           } catch {

@@ -1,11 +1,13 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { revalidatePath, updateTag } from "next/cache";
 import { requireAdmin, loginMethods, canDisconnect } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { CACHE_TAGS } from "@/lib/queries";
+import { PERSIST_COOKIE, PERSIST_DURATION_MS, PERSIST_DURATION_SEC } from "@/lib/session";
 
 type Result = { ok: boolean; error?: string };
 
@@ -117,4 +119,32 @@ export async function changePassword(input: {
   });
 
   return { ok: true };
+}
+
+// 자동 로그인(이 기기 30일 유지) 켜기/끄기. extend도 동일하게 만료 시각을 갱신.
+export async function setAutoLogin(enabled: boolean): Promise<Result> {
+  await requireAdmin();
+  const cookieStore = await cookies();
+  if (enabled) {
+    cookieStore.set(PERSIST_COOKIE, String(Date.now() + PERSIST_DURATION_MS), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: PERSIST_DURATION_SEC,
+    });
+  } else {
+    cookieStore.delete(PERSIST_COOKIE);
+  }
+  await logAudit({
+    action: "update",
+    targetTable: "auth",
+    details: { field: "auto_login", enabled },
+  });
+  revalidatePath("/admin/settings");
+  return { ok: true };
+}
+
+export async function extendAutoLogin(): Promise<Result> {
+  return setAutoLogin(true);
 }
