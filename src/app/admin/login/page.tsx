@@ -9,8 +9,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertMessage } from "@/components/admin/alert-message";
 import { TurnstileWidget } from "@/components/turnstile-widget";
+import { LAST_LOGIN_METHOD_COOKIE } from "@/lib/session";
 
 const REMEMBER_EMAIL_KEY = "admin_remember_email";
+
+const METHOD_LABELS: Record<string, string> = {
+  email: "이메일",
+  google: "Google",
+  naver: "네이버",
+};
 
 const ERROR_MESSAGES: Record<string, string> = {
   naver_not_admin: "관리자 권한이 없는 계정입니다.",
@@ -35,6 +42,13 @@ function UrlNotice() {
       </AlertMessage>
     );
   }
+  if (searchParams.get("notice") === "naver_no_admin") {
+    return (
+      <AlertMessage variant="info">
+        네이버 로그인은 정상적으로 완료되었습니다. 다만 이 계정은 관리자 권한이 없어 접근할 수 없습니다.
+      </AlertMessage>
+    );
+  }
   if (searchParams.get("reason") === "idle") {
     return <AlertMessage>세션이 만료되어 자동으로 로그아웃되었습니다. 다시 로그인해주세요.</AlertMessage>;
   }
@@ -54,6 +68,14 @@ export default function AdminLoginPage() {
   );
   const [autoLogin, setAutoLogin] = useState(false);
   const [showAutoWarning, setShowAutoWarning] = useState(false);
+  // 최근 로그인 방법 힌트 (이 기기 쿠키, lazy init)
+  const [lastMethod] = useState<string | null>(() => {
+    if (typeof document === "undefined") return null;
+    const c = document.cookie
+      .split("; ")
+      .find((x) => x.startsWith(LAST_LOGIN_METHOD_COOKIE + "="));
+    return c ? decodeURIComponent(c.split("=")[1]) : null;
+  });
 
   // 이메일 기억 토글/입력에 따라 localStorage 동기화
   useEffect(() => {
@@ -85,6 +107,20 @@ export default function AdminLoginPage() {
             </div>
             <h1 className="text-xl font-bold text-brand-navy">나진테크 관리자</h1>
             <p className="text-sm text-gray-600 mt-1.5 font-medium">로그인하여 대시보드에 접속하세요</p>
+            <p
+              className={lastMethod ? "text-[13px] text-gray-500 mt-2" : ""}
+              suppressHydrationWarning
+            >
+              {lastMethod ? (
+                <>
+                  최근{" "}
+                  <span className="font-semibold text-brand-navy">
+                    {METHOD_LABELS[lastMethod] ?? lastMethod}
+                  </span>
+                  (으)로 로그인했어요
+                </>
+              ) : null}
+            </p>
           </div>
 
           {/* Google Login */}
