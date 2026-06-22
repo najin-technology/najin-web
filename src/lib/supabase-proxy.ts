@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { PERSIST_COOKIE, sessionMaxAge } from "./session";
 
 export function createSupabaseProxyClient(request: NextRequest) {
   let response = NextResponse.next({ request });
@@ -13,6 +14,7 @@ export function createSupabaseProxyClient(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
+          const maxAge = sessionMaxAge(request.cookies.get(PERSIST_COOKIE)?.value);
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
@@ -23,7 +25,7 @@ export function createSupabaseProxyClient(request: NextRequest) {
               httpOnly: true,
               secure: process.env.NODE_ENV === "production",
               sameSite: "lax",
-              maxAge: 28800, // 8 hours
+              maxAge, // 자동 로그인 시 최대 30일
             })
           );
         },

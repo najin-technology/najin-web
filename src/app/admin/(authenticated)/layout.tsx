@@ -1,9 +1,11 @@
+import { cookies } from "next/headers";
 import { requireAdmin } from "@/lib/auth";
 import { AdminSidebar } from "@/components/admin/sidebar";
 import { AdminTopbar } from "@/components/admin/topbar";
 import { ScrollToTop } from "@/components/admin/scroll-to-top";
 import { SessionGuard } from "@/components/admin/session-guard";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { PERSIST_COOKIE, persistRemainingMs } from "@/lib/session";
 
 export default async function AuthenticatedAdminLayout({
   children,
@@ -11,6 +13,8 @@ export default async function AuthenticatedAdminLayout({
   children: React.ReactNode;
 }) {
   const user = await requireAdmin();
+
+  const persistRemaining = persistRemainingMs((await cookies()).get(PERSIST_COOKIE)?.value);
 
   const supabase = await createSupabaseServerClient();
   const [{ count: pendingQuotes }, { count: pendingApps }] = await Promise.all([
@@ -43,7 +47,7 @@ export default async function AuthenticatedAdminLayout({
         <AdminTopbar userEmail={user.email || ""} pendingCount={(pendingQuotes || 0) + (pendingApps || 0)} />
         <main id="main-content" className="p-6 pb-20 lg:p-8 lg:pb-8 max-w-7xl mx-auto">{children}</main>
       </div>
-      <SessionGuard />
+      <SessionGuard persistRemainingMs={persistRemaining} />
       <ScrollToTop />
     </div>
   );
