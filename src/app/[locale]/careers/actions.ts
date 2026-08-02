@@ -1,7 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { sendApplicationNotification } from "@/lib/email";
 import { formLimiter, getClientIp } from "@/lib/ratelimit";
 import { verifyTurnstileToken } from "@/lib/turnstile";
@@ -61,7 +61,16 @@ export async function submitApplication(
     }
   }
 
-  const { data: application, error: insertError } = await supabase
+  // 견적과 동일하게 service-role 로 쓴다. anon 클라이언트로는
+  // `.insert().select()` 가 INSERT..RETURNING 을 만들어 applications 의
+  // SELECT 정책 부재로 42501 이 나고 트랜잭션 전체가 롤백된다 → 지원서 전량 유실.
+  const db = getSupabaseAdmin();
+  if (!db) {
+    console.error("Application insert: SUPABASE_SERVICE_ROLE_KEY missing");
+    return { success: false, error: "", errorKey: "submitFailed" };
+  }
+
+  const { data: application, error: insertError } = await db
     .from("applications")
     .insert({
       name,
@@ -84,7 +93,7 @@ export async function submitApplication(
     const fileExt = file.name.split(".").pop()?.toLowerCase();
     const filePath = `${application.id}/${Date.now()}.${fileExt}`;
 
-    const { error: uploadError } = await supabase.storage
+    const { error: uploadError } = await db.storage
       .from("resumes")
       .upload(filePath, file);
 
@@ -93,7 +102,7 @@ export async function submitApplication(
       return { success: false, error: "", errorKey: "fileUploadFailed" };
     }
 
-    await supabase.from("attachments").insert({
+    const { error: attachError } = await db.from("attachments").insert({
       parent_table: "applications",
       parent_id: application.id,
       file_url: filePath,
@@ -101,6 +110,7 @@ export async function submitApplication(
       file_size: file.size,
       mime_type: file.type || "application/octet-stream",
     });
+    if (attachError) console.error("Resume attachment insert error:", attachError);
   }
 
   await sendApplicationNotification({

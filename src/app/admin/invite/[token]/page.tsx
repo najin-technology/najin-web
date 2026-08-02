@@ -1,13 +1,18 @@
 import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { AcceptInviteClient } from "./client";
 import { ShieldAlert, Clock, X } from "lucide-react";
 
 export const metadata = { title: "관리자 초대", robots: "noindex, nofollow" };
 
+// 초대 조회는 반드시 service-role 로 한다. anon 에게 SELECT 를 열어두면
+// RLS 의 USING 절이 "token = ?" 를 강제하지 못해서, anon 키만으로 유효 초대
+// 토큰 전체를 긁어갈 수 있다 (migration 041 에서 해당 정책 제거).
 async function loadInvite(token: string) {
-  const supabase = await createSupabaseServerClient();
-  const { data } = await supabase
+  const admin = getSupabaseAdmin();
+  if (!admin) return null;
+  const { data } = await admin
     .from("admin_invites")
     .select("id, token, email_hint, invited_by_email, expires_at, used_at, revoked_at, notes")
     .eq("token", token)

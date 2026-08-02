@@ -40,7 +40,10 @@ export function SortableList<T extends SortableItem>({
   onReorder: (newOrder: string[]) => Promise<{ error?: string } | void>;
   reorderDisabled?: boolean;
 }) {
-  const [order, setOrder] = useState(items.map((i) => i.id));
+  // `order` 는 "드래그로 덮어쓴 순서"일 뿐, 렌더의 진실 원천은 항상 props 의 items 다.
+  // (예전엔 order 를 마운트 시 한 번만 만들고 items 와 동기화하지 않아서,
+  //  카테고리/제품을 새로 추가하면 헤더 카운트만 늘고 행은 안 나타났다.)
+  const [order, setOrder] = useState<string[]>(() => items.map((i) => i.id));
   const [pending, startTransition] = useTransition();
   const [justSaved, setJustSaved] = useState(false);
 
@@ -49,20 +52,30 @@ export function SortableList<T extends SortableItem>({
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
+  // items 전체를 항상 렌더하되, order 에 있는 id 는 그 순서를 따르고
+  // order 가 모르는 신규 id 는 뒤에 붙인다(=서버가 준 순서 유지).
+  const rank = new Map(order.map((id, i) => [id, i] as const));
+  const orderedItems = items
+    .map((item, i) => ({ item, key: rank.get(item.id) ?? order.length + i }))
+    .sort((a, b) => a.key - b.key)
+    .map((x) => x.item);
+  const currentOrder = orderedItems.map((i) => i.id);
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = order.indexOf(String(active.id));
-    const newIndex = order.indexOf(String(over.id));
-    const newOrder = arrayMove(order, oldIndex, newIndex);
+    const oldIndex = currentOrder.indexOf(String(active.id));
+    const newIndex = currentOrder.indexOf(String(over.id));
+    if (oldIndex < 0 || newIndex < 0) return;
+    const newOrder = arrayMove(currentOrder, oldIndex, newIndex);
     setOrder(newOrder);
 
     startTransition(async () => {
       const result = await onReorder(newOrder);
       if (result && "error" in result && result.error) {
         // rollback on error
-        setOrder(order);
+        setOrder(currentOrder);
         toast.error(result.error);
       } else {
         setJustSaved(true);
@@ -70,9 +83,6 @@ export function SortableList<T extends SortableItem>({
       }
     });
   };
-
-  const itemsById = new Map(items.map((i) => [i.id, i] as const));
-  const orderedItems = order.map((id) => itemsById.get(id)).filter(Boolean) as T[];
 
   return (
     <div className="relative">
@@ -96,7 +106,7 @@ export function SortableList<T extends SortableItem>({
         collisionDetection={closestCenter}
         onDragEnd={reorderDisabled ? undefined : handleDragEnd}
       >
-        <SortableContext items={order} strategy={verticalListSortingStrategy}>
+        <SortableContext items={currentOrder} strategy={verticalListSortingStrategy}>
           <div className="divide-y divide-gray-100">
             {orderedItems.map((item) => (
               <SortableRow key={item.id} id={item.id} disabled={reorderDisabled}>
