@@ -1,0 +1,14 @@
+-- 043: customers.updated_at 을 anon 읽기 목록에 추가 (041 회귀 수정)
+--
+-- 041 에서 customers 를 컬럼 단위 GRANT 로 좁힐 때 updated_at 을 빠뜨렸다.
+-- src/app/sitemap.ts 가 `.select("client_slug, updated_at")` 로 조회하는데
+-- 42501 이 나면서 sitemap 의 /{locale}/clients/* URL 33개(거래처 11 × 로케일 3)가
+-- 통째로 사라졌다. sitemap URL 86 → 53.
+--
+-- 거래처 상세 페이지 자체는 다른 쿼리(queries.ts)를 써서 정상 동작했기 때문에
+-- 페이지 스모크 테스트로는 안 잡혔고, sitemap URL 수를 세면서 발견했다.
+--
+-- updated_at 은 단순 갱신 시각이라 노출 위험이 없다. 내부 필드
+-- (primary_contact_*, notes, status, source, tags, created_at,
+--  company_name_normalized)는 계속 차단된 상태를 유지한다.
+GRANT SELECT (updated_at) ON public.customers TO anon;
