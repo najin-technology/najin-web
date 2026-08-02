@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, after, type NextRequest } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import {
   categorizeReferrer,
@@ -58,8 +58,10 @@ export async function POST(request: NextRequest) {
   const db = getSupabaseAdmin();
   if (!db) return NextResponse.json({ ok: true, skipped: "no-admin-client" });
 
-  // fire-and-forget: ASN lookup + insert
-  (async () => {
+  // 응답을 먼저 보내되, 뒷작업은 after() 로 넘겨 런타임이 끝날 때까지 살려둔다.
+  // 맨손 fire-and-forget 은 응답 직후 인스턴스가 얼면 그대로 유실된다
+  // (실측: ip_asn_cache SELECT 까지만 찍히고 page_views INSERT 는 아예 발사 안 됨).
+  after(async () => {
     let asnOrg: string | null = null;
     let asnCompany: string | null = null;
     if (deviceClass !== "ai-crawler") {
@@ -82,7 +84,7 @@ export async function POST(request: NextRequest) {
       asn_company: asnCompany,
     });
     if (error) console.warn("[analytics] insert failed", error.message);
-  })().catch((e) => console.warn("[analytics] async failure", e));
+  });
 
   return NextResponse.json({ ok: true });
 }

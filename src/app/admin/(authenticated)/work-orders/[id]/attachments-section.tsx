@@ -20,7 +20,8 @@ type Attachment = {
 };
 
 const VIEWABLE_2D = ["dxf"];
-const VIEWABLE_3D = ["step", "stp", "igs", "iges", "stl", "obj"];
+// step/stp/igs/iges 는 뷰어에서 제거됨(cad-viewer.tsx 주석 참고) → 버튼도 숨긴다.
+const VIEWABLE_3D = ["stl", "obj"];
 const VIEWABLE_NATIVE = ["pdf", "jpg", "jpeg", "png"];
 
 function getExt(name: string): string {

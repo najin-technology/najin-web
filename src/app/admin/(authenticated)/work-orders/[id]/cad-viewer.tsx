@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { X, Loader2, AlertCircle } from "lucide-react";
+// 타입 전용 import — 컴파일 시 지워지므로 three 가 번들에 들어가지 않는다.
+import type * as ThreeNS from "three";
 
 type Props = {
   url: string;
@@ -11,7 +13,11 @@ type Props = {
 };
 
 const SUPPORTED_2D = ["dxf"];
-const SUPPORTED_3D = ["step", "stp", "igs", "iges", "stl", "obj"];
+// ponytail: STEP/IGES 는 occt-import-js(7.6MB wasm)가 필요한데, emscripten 이
+// 런타임에 경로를 조립해서 번들러가 wasm 을 emit 하지 못한다 → 배포본에 파일이
+// 없어 100% 실패했다. 첨부 이력 0건이라 wasm 을 커밋하는 대신 제거하고
+// 다운로드 안내로 넘긴다. 필요해지면 public/wasm/ 에 넣고 locateFile 지정.
+const SUPPORTED_3D = ["stl", "obj"];
 
 export function CadViewer({ url, fileName, ext, onClose }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,22 +29,33 @@ export function CadViewer({ url, fileName, ext, onClose }: Props) {
     const container = containerRef.current;
     if (!container) return;
 
+    // 정리해야 할 자원들. cleanup 이 container.innerHTML="" 만 하면
+    // WebGL 컨텍스트·지오메트리·리스너가 그대로 남는다(브라우저당 컨텍스트
+    // 상한이 있어서 뷰어를 여러 번 열면 결국 렌더가 죽는다).
+    const disposers: Array<() => void> = [];
+    let objectUrl: string | null = null;
+
     async function load() {
       try {
         if (SUPPORTED_2D.includes(ext)) {
-          const mod = await import("dxf-viewer");
+          const [mod, THREE] = await Promise.all([import("dxf-viewer"), import("three")]);
           if (cancelled || !container) return;
+          // clearColor 는 THREE.Color 여야 한다. 평범한 {r,g,b,a} 객체를 넘기면
+          // DxfViewer 생성자의 this.options.clearColor.getHex() 에서 즉시
+          // TypeError → DXF 미리보기가 100% 실패했다.
           const viewer = new mod.DxfViewer(container, {
-            clearColor: { r: 0.98, g: 0.97, b: 0.95, a: 1 },
+            clearColor: new THREE.Color(0xfaf8f5),
+            clearAlpha: 1,
           });
+          disposers.push(() => viewer.Destroy());
           const buf = await fetch(url).then((r) => r.arrayBuffer());
           if (cancelled) return;
-          await viewer.Load({ url: URL.createObjectURL(new Blob([buf])) });
+          objectUrl = URL.createObjectURL(new Blob([buf]));
+          await viewer.Load({ url: objectUrl });
           if (cancelled) return;
           setLoading(false);
         } else if (SUPPORTED_3D.includes(ext)) {
-          const [{ default: occtImportJs }, THREE, { OrbitControls }] = await Promise.all([
-            import("occt-import-js"),
+          const [THREE, { OrbitControls }] = await Promise.all([
             import("three"),
             import("three/examples/jsm/controls/OrbitControls.js"),
           ]);
@@ -81,37 +98,6 @@ export function CadViewer({ url, fileName, ext, onClose }: Props) {
               const text = new TextDecoder().decode(buf);
               const obj = loader.parse(text);
               scene.add(obj);
-            } else if (ext === "step" || ext === "stp" || ext === "igs" || ext === "iges") {
-              const occt = await occtImportJs();
-              const result =
-                ext === "step" || ext === "stp"
-                  ? occt.ReadStepFile(new Uint8Array(buf), null)
-                  : occt.ReadIgesFile(new Uint8Array(buf), null);
-              if (result?.meshes) {
-                for (const mesh of result.meshes) {
-                  const geom = new THREE.BufferGeometry();
-                  geom.setAttribute(
-                    "position",
-                    new THREE.Float32BufferAttribute(mesh.attributes.position.array, 3)
-                  );
-                  if (mesh.attributes.normal) {
-                    geom.setAttribute(
-                      "normal",
-                      new THREE.Float32BufferAttribute(mesh.attributes.normal.array, 3)
-                    );
-                  } else {
-                    geom.computeVertexNormals();
-                  }
-                  geom.setIndex(mesh.index.array);
-                  const material = new THREE.MeshStandardMaterial({
-                    color: mesh.color
-                      ? new THREE.Color(mesh.color[0], mesh.color[1], mesh.color[2])
-                      : 0x4a90e2,
-                    flatShading: false,
-                  });
-                  scene.add(new THREE.Mesh(geom, material));
-                }
-              }
             }
           } catch (e) {
             console.error(e);
@@ -132,9 +118,10 @@ export function CadViewer({ url, fileName, ext, onClose }: Props) {
           if (cancelled) return;
           setLoading(false);
 
+          let raf = 0;
           const animate = () => {
             if (cancelled) return;
-            requestAnimationFrame(animate);
+            raf = requestAnimationFrame(animate);
             controls.update();
             renderer.render(scene, camera);
           };
@@ -147,6 +134,23 @@ export function CadViewer({ url, fileName, ext, onClose }: Props) {
             renderer.setSize(container.clientWidth, container.clientHeight);
           };
           window.addEventListener("resize", onResize);
+
+          disposers.push(() => {
+            cancelAnimationFrame(raf);
+            window.removeEventListener("resize", onResize);
+            controls.dispose();
+            scene.traverse((o) => {
+              const m = o as ThreeNS.Mesh;
+              m.geometry?.dispose?.();
+              const mat = m.material;
+              if (Array.isArray(mat)) mat.forEach((x) => x.dispose());
+              else mat?.dispose?.();
+            });
+            // WebGL 컨텍스트를 명시적으로 반납한다. dispose() 만으로는
+            // 컨텍스트가 GC 될 때까지 남아 상한(보통 16개)을 잡아먹는다.
+            renderer.forceContextLoss();
+            renderer.dispose();
+          });
         }
       } catch (e) {
         console.error(e);
@@ -161,6 +165,14 @@ export function CadViewer({ url, fileName, ext, onClose }: Props) {
 
     return () => {
       cancelled = true;
+      for (const d of disposers) {
+        try {
+          d();
+        } catch {
+          /* 정리 실패가 언마운트를 막지 않게 한다 */
+        }
+      }
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
       if (container) container.innerHTML = "";
     };
   }, [url, ext]);
