@@ -58,22 +58,31 @@ export async function GET() {
       .eq("is_active", true)
       .is("deleted_at", null);
 
+    // 제품은 전부 /ko/portfolio 한 페이지에 실린다. 제품마다 <url> 을 만들면
+    // 같은 <loc> 이 N번 반복돼 이미지 사이트맵 스펙 위반이다(구글이 첫 항목만
+    // 보고 나머지를 버린다). 페이지당 <url> 1개로 묶고 이미지만 누적한다.
     if (products) {
+      const seen = new Set<string>();
+      const productImages: string[] = [];
       for (const pr of products) {
-        const pageUrl = `${BASE_URL}/ko/portfolio`;
         const images: string[] = Array.isArray(pr.image_urls) ? (pr.image_urls as string[]) : [];
-        if (images.length === 0) continue;
-        urls.push(
-          `<url>
-    <loc>${pageUrl}</loc>
-    ${images
-      .map(
-        (img) => `<image:image>
-      <image:loc>${escapeXml(imgUrl(img))}</image:loc>
+        for (const img of images) {
+          const abs = imgUrl(img);
+          if (seen.has(abs)) continue;
+          seen.add(abs);
+          productImages.push(
+            `<image:image>
+      <image:loc>${escapeXml(abs)}</image:loc>
       <image:title>${escapeXml(pr.name_ko as string)}</image:title>
     </image:image>`
-      )
-      .join("\n    ")}
+          );
+        }
+      }
+      if (productImages.length > 0) {
+        urls.push(
+          `<url>
+    <loc>${BASE_URL}/ko/portfolio</loc>
+    ${productImages.join("\n    ")}
   </url>`
         );
       }
