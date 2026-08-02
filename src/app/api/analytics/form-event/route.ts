@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { sessionHash, isBot } from "@/lib/analytics/classify";
 
 type EventPayload = {
@@ -33,12 +33,17 @@ export async function POST(request: NextRequest) {
   const ip = forwarded?.split(",")[0]?.trim() ?? request.headers.get("x-real-ip") ?? "unknown";
   const session = sessionHash(ip, userAgent);
 
-  supabase
-    .from("quote_form_events")
-    .insert({ session_hash: session, field, action })
-    .then(({ error }) => {
-      if (error) console.warn("[form-event] insert failed", error.message);
-    });
+  // quote_form_events 의 anon INSERT 정책 제거됨(migration 041) → service-role 로 쓴다.
+  const db = getSupabaseAdmin();
+  if (!db) return NextResponse.json({ ok: true, skipped: "no-admin-client" });
+
+  // fire-and-forget. rejection 을 잡아주지 않으면 unhandled rejection 이 된다.
+  void (async () => {
+    const { error } = await db
+      .from("quote_form_events")
+      .insert({ session_hash: session, field, action });
+    if (error) console.warn("[form-event] insert failed", error.message);
+  })().catch((e) => console.warn("[form-event] async failure", e));
 
   return NextResponse.json({ ok: true });
 }

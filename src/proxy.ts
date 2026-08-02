@@ -109,5 +109,10 @@ export const config = {
   // catch-all except api, Next.js internals, and files with extensions.
   // 비-locale URL(/about, /posts 등)도 intl middleware 거쳐 /ko/* 로 리다이렉트
   // → GSC 404 이슈 해결, 외부 링크 SEO 가치 회복.
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  //
+  // opengraph-image / twitter-image / icon / apple-icon 은 [locale] 밖 루트
+  // 세그먼트인데 확장자가 없어 위 규칙에 걸렸다 → /ko/opengraph-image 로
+  // 리다이렉트되고 404. 전 페이지의 og:image·twitter:image 가 이 URL 을 가리켜
+  // 카톡·네이버·페북·슬랙 공유 미리보기가 전부 깨져 있었다.
+  matcher: ["/((?!api|_next|_vercel|opengraph-image|twitter-image|apple-icon|icon|.*\\..*).*)"],
 };

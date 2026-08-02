@@ -67,7 +67,8 @@ export async function sendByTemplateKey(args: {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: args.to,
-      ...(REPLY_TO_EMAIL ? { reply_to: REPLY_TO_EMAIL } : {}),
+      // resend v6 는 camelCase `replyTo` 만 읽는다 (snake_case 는 조용히 무시됨).
+      ...(REPLY_TO_EMAIL ? { replyTo: REPLY_TO_EMAIL } : {}),
       subject: renderedSubject,
       html: renderEmailHtml({
         title: subjectToTitle(renderedSubject),

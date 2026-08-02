@@ -1,11 +1,27 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+// edge runtime 을 쓰면 정적 생성이 꺼진다(빌드 경고). 이 이미지는 완전 정적이라
+// 기본 Node 런타임 + 빌드 타임 생성이 맞다.
 export const alt = "나진테크 | NAJIN TECHNOLOGY";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// next/og 가 번들하는 폰트는 Geist-Regular 하나뿐이고 한글 글리프가 0개다.
+// 폰트를 넘기지 않으면 아래 한글 문구가 전부 두부(□)로 렌더된다.
+// 실제 사용 글자만 담은 Noto Sans KR 서브셋(각 ~10KB)을 public/fonts 에 동봉해 쓴다.
+// (fetch(new URL(..., import.meta.url)) 패턴은 Turbopack Node 런타임에서
+//  /_next/static/media/... 상대경로로 해석돼 ERR_INVALID_URL 이 난다 → fs 로 읽는다.)
+const loadFont = (file: string) =>
+  readFile(path.join(process.cwd(), "public", "fonts", file));
+
 export default async function Image() {
+  const [regular, bold] = await Promise.all([
+    loadFont("og-noto-kr-400.ttf"),
+    loadFont("og-noto-kr-700.ttf"),
+  ]);
+
   return new ImageResponse(
     (
       <div
@@ -18,7 +34,7 @@ export default async function Image() {
           justifyContent: "center",
           alignItems: "flex-start",
           padding: "80px",
-          fontFamily: "sans-serif",
+          fontFamily: "Noto Sans KR",
         }}
       >
         <div
@@ -85,6 +101,12 @@ export default async function Image() {
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        { name: "Noto Sans KR", data: regular, weight: 400, style: "normal" },
+        { name: "Noto Sans KR", data: bold, weight: 700, style: "normal" },
+      ],
+    }
   );
 }

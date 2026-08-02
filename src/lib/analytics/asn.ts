@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
 const CACHE_TTL_DAYS = 7;
 const IPINFO_URL = "https://ipinfo.io";
@@ -108,6 +108,11 @@ export async function lookupAsn(ip: string): Promise<AsnLookup | null> {
   if (ip === "127.0.0.1" || ip === "::1" || ip.startsWith("10.") || ip.startsWith("192.168.")) {
     return null;
   }
+
+  // ip_asn_cache 는 anon 에게 FOR ALL(읽기·쓰기·삭제)이 열려 있었다 → 정책 제거
+  // (migration 041). 서버 전용 캐시이므로 service-role 로 접근한다.
+  const supabase = getSupabaseAdmin();
+  if (!supabase) return null;
 
   const ipHash = hashIp(ip);
   const { data: cached } = await supabase

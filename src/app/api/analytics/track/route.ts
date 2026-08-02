@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import {
   categorizeReferrer,
   classifyAiCrawler,
@@ -53,6 +53,11 @@ export async function POST(request: NextRequest) {
     : null;
   const locale = typeof body.locale === "string" ? body.locale.slice(0, 8) : null;
 
+  // page_views 의 anon INSERT 정책은 제거됐다(migration 041). 이 라우트가 유일한
+  // 쓰기 경로이므로 service-role 로 쓴다. 키가 없으면 분석만 조용히 꺼진다.
+  const db = getSupabaseAdmin();
+  if (!db) return NextResponse.json({ ok: true, skipped: "no-admin-client" });
+
   // fire-and-forget: ASN lookup + insert
   (async () => {
     let asnOrg: string | null = null;
@@ -63,7 +68,7 @@ export async function POST(request: NextRequest) {
       asnCompany = asn?.asnCompany ?? null;
     }
 
-    const { error } = await supabase.from("page_views").insert({
+    const { error } = await db.from("page_views").insert({
       path,
       session_hash: session,
       referrer_host: referrerHost,

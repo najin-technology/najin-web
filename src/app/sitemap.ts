@@ -2,6 +2,10 @@ import type { MetadataRoute } from "next";
 import { supabase } from "@/lib/supabase";
 import { SITE_URL as BASE_URL } from "@/lib/env";
 
+// 형제 라우트(feed.xml, sitemap-images.xml, llms.txt)는 모두 3600 인데 여기만 빠져
+// 있어서, 새 글·공지·거래처를 등록해도 재배포 전까지 sitemap 에 반영되지 않았다.
+export const revalidate = 3600;
+
 const locales = ["ko", "en", "zh"];
 
 // 색인 가능한 언어만 hreflang/sitemap에 포함한다.
