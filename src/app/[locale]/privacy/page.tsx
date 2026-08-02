@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -34,6 +35,10 @@ export default async function PrivacyPage({
   return (
     <>
       <PageHeader titleKey="pageTitle" namespace="privacy" bgImage="/images/factory/workshop-1.jpg" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbJsonLd(locale, [SEGMENTS.privacy])) }}
+      />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       <section className="py-12 md:py-16">

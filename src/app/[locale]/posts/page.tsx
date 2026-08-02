@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
 import { getPublishedPosts } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
@@ -93,6 +94,10 @@ export default async function PostsPage({
         descriptionKey="pageDescription"
         bgImage="/images/factory/milling.jpg"
         cta={{ labelKey: "requestQuote", href: "/quote", ns: "common" }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbJsonLd(locale, [SEGMENTS.posts])) }}
       />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 

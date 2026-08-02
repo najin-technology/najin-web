@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
 import { getPublishedNotices } from "@/lib/queries";
 import { Link } from "@/i18n/routing";
@@ -48,6 +49,10 @@ export default async function NoticesPage({
         namespace="notices"
         descriptionKey="pageDescription"
         bgImage="/images/factory/milling.jpg"
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbJsonLd(locale, [SEGMENTS.notices])) }}
       />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
