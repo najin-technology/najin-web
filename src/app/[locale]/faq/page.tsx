@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 import { PageCTA } from "@/components/page-cta";
 import {
   Accordion,
@@ -67,6 +68,10 @@ export default async function FAQPage({
       />
 
       <PageHeader titleKey="pageTitle" namespace="faq" descriptionKey="pageDescription" bgImage="/images/factory/urethane-machine.jpg" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbJsonLd(locale, [SEGMENTS.faq])) }}
+      />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 
       <section className="py-12 md:py-20 bg-surface-warm-50">

@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbJsonLd, SEGMENTS } from "@/lib/schema/breadcrumb";
 import { QuoteForm } from "./quote-form";
 import { QuotePausedNotice } from "./quote-paused-notice";
 import Image from "next/image";
@@ -49,6 +50,10 @@ export default async function QuotePage({
           descriptionKey="pageDescription"
           bgImage="/images/factory/factory-new-1.jpg"
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbJsonLd(locale, [SEGMENTS.quote])) }}
+        />
         <Breadcrumb items={[{ label: t("pageTitle") }]} />
         <QuotePausedNotice message={pauseMsg} />
       </>
@@ -62,6 +67,10 @@ export default async function QuotePage({
         namespace="quote"
         descriptionKey="pageDescription"
         bgImage="/images/factory/factory-new-1.jpg"
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbJsonLd(locale, [SEGMENTS.quote])) }}
       />
       <Breadcrumb items={[{ label: t("pageTitle") }]} />
 

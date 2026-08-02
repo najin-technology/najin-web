@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ImageFade } from "@/components/image-fade";
 import { X } from "lucide-react";
@@ -29,6 +29,18 @@ export function PortfolioGallery({
 }) {
   const [filter, setFilter] = useState("all");
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  // 예전엔 그냥 div 오버레이라 Esc 로 못 닫고, 포커스가 뒤 페이지에 남아
+  // 탭하면 라이트박스 뒤 링크들로 새어나갔고, 닫아도 포커스가 돌아오지 않았다.
+  // <dialog>.showModal() 은 Esc 닫기 · 포커스 트랩 · 포커스 복귀 · 배경 inert 를
+  // 브라우저가 전부 처리한다. 직접 구현할 이유가 없다.
+  useEffect(() => {
+    const d = dialogRef.current;
+    if (!d) return;
+    if (lightbox && !d.open) d.showModal();
+    else if (!lightbox && d.open) d.close();
+  }, [lightbox]);
 
   const filtered =
     filter === "all" ? items : items.filter((item) => item.category === filter);
@@ -107,38 +119,47 @@ export function PortfolioGallery({
       </div>
 
       {/* Lightbox */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={() => setLightbox(null)}
-        >
-          <button
-            onClick={() => setLightbox(null)}
-            className="absolute top-4 right-4 text-white/80 hover:text-white z-10"
-            aria-label="이미지 닫기"
-          >
-            <X className="w-8 h-8" />
-          </button>
-          <div
-            className="relative max-w-4xl w-full max-h-[85vh] rounded-xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Image
-              src={lightbox.src}
-              alt={lightbox.title}
-              width={1200}
-              height={900}
-              className="w-full h-auto max-h-[80vh] object-contain bg-white rounded-xl"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 rounded-b-xl">
-              <span className="text-xs font-medium text-white bg-brand-copper px-2 py-0.5 rounded-full">
-                {lightbox.category}
-              </span>
-              <p className="text-white font-semibold mt-1">{lightbox.title}</p>
+      {/* ref 를 잡아야 해서 dialog 자체는 항상 렌더하고 내용만 조건부로 둔다. */}
+      <dialog
+        ref={dialogRef}
+        aria-label={lightbox ? `${lightbox.title} 크게 보기` : undefined}
+        // Esc 로 닫힐 때도 이 핸들러가 불려서 state 가 항상 DOM 과 동기화된다.
+        onClose={() => setLightbox(null)}
+        // 백드롭(=dialog 자기 영역) 클릭으로 닫기. 내부 div 는 stopPropagation.
+        onClick={() => setLightbox(null)}
+        className="m-0 max-w-none max-h-none w-full h-full bg-transparent p-4 backdrop:bg-black/80 backdrop:backdrop-blur-sm"
+      >
+        {lightbox && (
+          <div className="w-full h-full flex items-center justify-center">
+            <button
+              type="button"
+              onClick={() => setLightbox(null)}
+              className="absolute top-4 right-4 text-white/80 hover:text-white z-10"
+              aria-label="이미지 닫기"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <div
+              className="relative max-w-4xl w-full max-h-[85vh] rounded-xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={lightbox.src}
+                alt={lightbox.title}
+                width={1200}
+                height={900}
+                className="w-full h-auto max-h-[80vh] object-contain bg-white rounded-xl"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 rounded-b-xl">
+                <span className="text-xs font-medium text-white bg-brand-copper px-2 py-0.5 rounded-full">
+                  {lightbox.category}
+                </span>
+                <p className="text-white font-semibold mt-1">{lightbox.title}</p>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </dialog>
     </>
   );
 }
