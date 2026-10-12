@@ -37,10 +37,11 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
+  const { locale, id } = await params;
+  const notice = await getNoticeById(id);
+  if (!notice) notFound();
+
   try {
-    const { locale, id } = await params;
-    const notice = await getNoticeById(id);
-    if (!notice) return { title: "Not Found" };
 
     const title = locale === "ko" ? notice.title_ko : (notice.title_en || notice.title_ko);
     const rawContent = locale === "ko" ? notice.content_ko : (notice.content_en || notice.content_ko);

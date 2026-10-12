@@ -308,7 +308,7 @@ export function QuoteForm() {
         </Label>
       </div>
 
-      <TurnstileWidget onToken={() => {}} />
+      <TurnstileWidget onToken={() => {}} locale={locale} />
 
       <Button
         type="submit"

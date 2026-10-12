@@ -180,7 +180,29 @@
     "galleryPlaceholder": "납품 실적 갤러리가 준비 중입니다.",
     "productCountSuffix": "개 제품",
     "ctaTitle": "견적을 요청하세요",
-    "ctaDesc": "도면을 보내주시면 검토 후 회신드리겠습니다."
+    "ctaDesc": "도면을 보내주시면 검토 후 회신드리겠습니다.",
+    "gallery": {
+      "filters": {
+        "all": "전체",
+        "urethane": "우레탄",
+        "resin": "합성수지",
+        "cnc": "CNC",
+        "mold": "금형",
+        "ev": "EV"
+      },
+      "categories": {
+        "우레탄": "우레탄",
+        "합성수지": "합성수지",
+        "CNC": "CNC",
+        "금형": "금형",
+        "EV": "EV",
+        "3D가공": "3D가공",
+        "CNC/MCT": "CNC/MCT"
+      },
+      "viewImage": "{title} 크게 보기",
+      "closeImage": "이미지 닫기",
+      "productNames": {}
+    }
   },
   "quote": {
     "paused": {

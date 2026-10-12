@@ -180,7 +180,29 @@
     "galleryPlaceholder": "Gallery is being prepared.",
     "productCountSuffix": " Products",
     "ctaTitle": "Request a Quote",
-    "ctaDesc": "Send us your drawings and we'll review them and get back to you."
+    "ctaDesc": "Send us your drawings and we'll review them and get back to you.",
+    "gallery": {
+      "filters": {
+        "all": "All",
+        "urethane": "Urethane",
+        "resin": "Resin",
+        "cnc": "CNC",
+        "mold": "Mold",
+        "ev": "EV"
+      },
+      "categories": {
+        "우레탄": "Urethane",
+        "합성수지": "Resin",
+        "CNC": "CNC",
+        "금형": "Mold",
+        "EV": "EV",
+        "3D가공": "3D Machining",
+        "CNC/MCT": "CNC/MCT"
+      },
+      "viewImage": "Enlarge {title}",
+      "closeImage": "Close image",
+      "productNames": {}
+    }
   },
   "quote": {
     "paused": {

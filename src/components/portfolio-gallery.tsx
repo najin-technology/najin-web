@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ImageFade } from "@/components/image-fade";
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface GalleryItem {
   src: string;
@@ -12,21 +13,22 @@ interface GalleryItem {
 }
 
 const categories = [
-  { key: "all", label: "전체", labelEn: "All" },
-  { key: "우레탄", label: "우레탄", labelEn: "Urethane" },
-  { key: "합성수지", label: "합성수지", labelEn: "Resin" },
-  { key: "CNC", label: "CNC", labelEn: "CNC" },
-  { key: "금형", label: "금형", labelEn: "Mold" },
-  { key: "EV", label: "EV", labelEn: "EV" },
+  { key: "all", labelKey: "all" },
+  { key: "우레탄", labelKey: "urethane" },
+  { key: "합성수지", labelKey: "resin" },
+  { key: "CNC", labelKey: "cnc" },
+  { key: "금형", labelKey: "mold" },
+  { key: "EV", labelKey: "ev" },
 ];
 
 export function PortfolioGallery({
   items,
-  locale,
 }: {
   items: GalleryItem[];
-  locale: string;
 }) {
+  const t = useTranslations("portfolio.gallery");
+  const categoryLabels = t.raw("categories") as Record<string, string>;
+  const categoryLabel = (category: string) => categoryLabels[category] || category;
   const [filter, setFilter] = useState("all");
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -54,6 +56,8 @@ export function PortfolioGallery({
           return (
             <button
               key={cat.key}
+              type="button"
+              aria-pressed={isActive}
               onClick={() => setFilter(cat.key)}
               className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 isActive
@@ -61,7 +65,7 @@ export function PortfolioGallery({
                   : "bg-white text-brand-charcoal/85 border border-surface-warm-200 hover:bg-surface-warm-50 hover:text-brand-navy"
               }`}
             >
-              {locale === "ko" ? cat.label : cat.labelEn}
+              {t(`filters.${cat.labelKey}`)}
             </button>
           );
         })}
@@ -74,6 +78,8 @@ export function PortfolioGallery({
           return (
             <button
               key={`${item.src}-${i}`}
+              type="button"
+              aria-label={t("viewImage", { title: item.title })}
               onClick={() => setLightbox(item)}
               className={`group bg-white rounded-xl overflow-hidden border border-surface-warm-200 hover-lift text-left ${
                 isLarge ? "md:col-span-2 md:row-span-2" : ""
@@ -100,7 +106,7 @@ export function PortfolioGallery({
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent md:from-black/40 md:opacity-0 md:group-hover:opacity-100 transition-opacity" />
                 <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3 md:translate-y-full md:group-hover:translate-y-0 transition-transform">
                   <span className="inline-block text-[10px] md:text-xs font-medium text-white bg-brand-copper px-1.5 py-0.5 rounded-full">
-                    {item.category}
+                    {categoryLabel(item.category)}
                   </span>
                   <p
                     className={`font-medium text-white mt-0.5 ${
@@ -122,7 +128,7 @@ export function PortfolioGallery({
       {/* ref 를 잡아야 해서 dialog 자체는 항상 렌더하고 내용만 조건부로 둔다. */}
       <dialog
         ref={dialogRef}
-        aria-label={lightbox ? `${lightbox.title} 크게 보기` : undefined}
+        aria-label={lightbox ? t("viewImage", { title: lightbox.title }) : undefined}
         // Esc 로 닫힐 때도 이 핸들러가 불려서 state 가 항상 DOM 과 동기화된다.
         onClose={() => setLightbox(null)}
         // 백드롭(=dialog 자기 영역) 클릭으로 닫기. 내부 div 는 stopPropagation.
@@ -135,7 +141,7 @@ export function PortfolioGallery({
               type="button"
               onClick={() => setLightbox(null)}
               className="absolute top-4 right-4 text-white/80 hover:text-white z-10"
-              aria-label="이미지 닫기"
+              aria-label={t("closeImage")}
             >
               <X className="w-8 h-8" />
             </button>
@@ -152,7 +158,7 @@ export function PortfolioGallery({
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 rounded-b-xl">
                 <span className="text-xs font-medium text-white bg-brand-copper px-2 py-0.5 rounded-full">
-                  {lightbox.category}
+                  {categoryLabel(lightbox.category)}
                 </span>
                 <p className="text-white font-semibold mt-1">{lightbox.title}</p>
               </div>

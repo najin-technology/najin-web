@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { submitApplication } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { TurnstileWidget } from "@/components/turnstile-widget";
 
 export function ApplyForm() {
+  const locale = useLocale();
   const t = useTranslations("careers");
   const tc = useTranslations("common");
   const [state, formAction, pending] = useActionState(submitApplication, {
@@ -136,7 +137,7 @@ export function ApplyForm() {
         </Label>
       </div>
 
-      <TurnstileWidget onToken={() => {}} />
+      <TurnstileWidget onToken={() => {}} locale={locale} />
 
       <Button
         type="submit"
