@@ -49,6 +49,12 @@ export default async function PortfolioPage({
   const t = await getTranslations("portfolio");
   const tc = await getTranslations("common");
   const tq = await getTranslations("quote");
+  const productNames = t.raw("gallery.productNames") as Record<string, string>;
+  // Products currently have ko/en names. Keep reviewed Chinese catalog names in
+  // the locale messages, and preserve the source name for newly added products.
+  const productTitle = (nameKo: string, nameEn?: string | null) =>
+    locale === "zh" ? productNames[nameKo] || nameEn || nameKo
+      : locale === "en" ? nameEn || nameKo : nameKo;
 
   // Fetch products from DB
   let products: Awaited<ReturnType<typeof getProductsByCategory>> = [];
@@ -68,10 +74,10 @@ export default async function PortfolioPage({
         .filter((p) => p.image_urls && p.image_urls.length > 0)
         .map((p) => ({
           src: p.image_urls[0],
-          title: locale === "ko" ? p.name_ko : (p.name_en || p.name_ko),
+          title: productTitle(p.name_ko, p.name_en),
           category: p.category,
         }))
-    : fallbackGallery;
+    : fallbackGallery.map((item) => ({ ...item, title: productTitle(item.title) }));
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [SEGMENTS.portfolio]);
 
@@ -244,7 +250,7 @@ export default async function PortfolioPage({
             }
           </p>
 
-          <PortfolioGallery items={galleryItems} locale={locale} />
+          <PortfolioGallery items={galleryItems} />
         </div>
       </section>
 

@@ -63,10 +63,11 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
+  const { locale, slug } = await params;
+  const post = await getPostBySlug(slug);
+  if (!post) notFound();
+
   try {
-    const { locale, slug } = await params;
-    const post = await getPostBySlug(slug);
-    if (!post) return { title: "Not Found" };
 
     const title =
       locale === "ko"
