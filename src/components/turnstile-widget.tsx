@@ -1,7 +1,7 @@
 "use client";
 
 import { DEFAULT_SCRIPT_ID, Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Props = {
   onToken: (token: string) => void;
@@ -37,33 +37,71 @@ type Failure = "error" | "expired" | "unsupported";
 // env injection can append a trailing newline that Turnstile rejects as "Invalid input".
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() ?? "";
 
+function hasFailedScript() {
+  return typeof window !== "undefined" && !window.turnstile &&
+    document.getElementById(DEFAULT_SCRIPT_ID)?.dataset.turnstileLoadState === "failed";
+}
+
 export function TurnstileWidget({ onToken, name = "turnstileToken", locale = "ko" }: Props) {
   const siteKey = SITE_KEY;
   const inputRef = useRef<HTMLInputElement>(null);
   const widgetRef = useRef<TurnstileInstance>(null);
-  const scriptFailed = useRef(false);
-  const [failure, setFailure] = useState<Failure | null>(null);
+  // The shared script outlives this component during client-side navigation.
+  // Read its failure marker when a form mounts again, rather than losing the
+  // retry UI together with the previous component's state.
+  const [failure, setFailure] = useState<Failure | null>(() =>
+    hasFailedScript() ? "error" : null
+  );
   const [attempt, setAttempt] = useState(0);
   const text = messages[locale === "en" || locale === "zh" ? locale : "ko"];
 
-  function updateToken(token: string) {
+  const updateToken = useCallback((token: string) => {
     if (inputRef.current) inputRef.current.value = token;
     onToken(token);
-  }
+  }, [onToken]);
 
-  function invalidate(reason: Failure) {
+  const invalidate = useCallback((reason: Failure) => {
     updateToken("");
     setFailure(reason);
-  }
+  }, [updateToken]);
+
+  useEffect(() => {
+    if (!siteKey) return;
+    let script: HTMLElement | null = null;
+    const handleError = () => invalidate("error");
+    const watchScript = () => {
+      const nextScript = document.getElementById(DEFAULT_SCRIPT_ID);
+      if (script === nextScript) return;
+      script?.removeEventListener("error", handleError);
+      script = nextScript;
+      if (!script) return;
+      if (!script.dataset.turnstileLoadState) {
+        // Keep this marker listener with the script even when the form leaves.
+        // An in-flight request may fail while no widget component is mounted.
+        const trackedScript = script;
+        trackedScript.dataset.turnstileLoadState = "loading";
+        trackedScript.addEventListener("error", () => {
+          trackedScript.dataset.turnstileLoadState = "failed";
+        }, { once: true });
+      }
+      script.addEventListener("error", handleError);
+    };
+    const observer = new MutationObserver(watchScript);
+    observer.observe(document.head, { childList: true });
+    watchScript();
+    return () => {
+      observer.disconnect();
+      script?.removeEventListener("error", handleError);
+    };
+  }, [attempt, invalidate, siteKey]);
 
   function retry() {
     updateToken("");
     setFailure(null);
-    if (scriptFailed.current && !window.turnstile) {
+    if (hasFailedScript()) {
       // A failed script remains in the DOM, so the library will not inject it
       // again until it is removed. Remount only the widget, preserving the form.
       document.getElementById(DEFAULT_SCRIPT_ID)?.remove();
-      scriptFailed.current = false;
       setAttempt((n) => n + 1);
     } else {
       widgetRef.current?.reset();
@@ -87,12 +125,6 @@ export function TurnstileWidget({ onToken, name = "turnstileToken", locale = "ko
         onError={() => invalidate("error")}
         onTimeout={() => invalidate("error")}
         onUnsupported={() => invalidate("unsupported")}
-        scriptOptions={{
-          onError: () => {
-            scriptFailed.current = true;
-            invalidate("error");
-          },
-        }}
         options={{ appearance: "interaction-only", theme: "auto", size: "compact", language: locale, responseField: false }}
       />
       {failure && (
